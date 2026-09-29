@@ -4864,6 +4864,8 @@ class JevActionPolicy:
 
         if questions and not isinstance(self.client, DummyClient):
             state = commander_state(step, snap, self._recent, self._hp_trend)
+            if isinstance(self.client, ForceClient):
+                self.client.defaults = dict(snap["_catalog_defaults"])
             result = self.client.system_one(state, questions)
             self.n_calls += 1
             self.n_questions += len(questions)
@@ -5171,6 +5173,7 @@ class ForceClient:
 
     def __init__(self, picks: Dict[str, str]):
         self.picks = dict(picks)
+        self.defaults: Dict[str, str] = {}
         self.n_calls = 0
         self.infer_s = 0.0
         self.last_usage: Dict[str, int] = {}
@@ -5192,6 +5195,13 @@ class ForceClient:
                 answers[qid] = {"noul": 0.99 if yes else 0.01, "probability": 0.99 if yes else 0.01}
             elif qtype == "choice" and qid in self.picks:
                 pick = self.picks[qid]
+                if pick == "!default":
+                    # Pin the first option that is not the code default.
+                    opts = list((q or {}).get("criteria") or {})
+                    alt = [o for o in opts if o != self.defaults.get(qid)]
+                    if not alt:
+                        continue
+                    pick = alt[0]
                 answers[qid] = {"choice": pick, "probabilities": {pick: 0.99}}
         return {"answers": answers}
 
