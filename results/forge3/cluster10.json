@@ -1,0 +1,173 @@
+{
+ "cluster": "10",
+ "members": [
+  "g0207"
+ ],
+ "dummy_sel": {
+  "g0207": 1
+ },
+ "dummy_confirm": {
+  "g0207": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "range_stutter_open",
+     "rules": [
+      {
+       "when": {
+        "reach": "we_outrange",
+        "enemy_melee": true
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "weakest_in_range",
+        "stand": "step",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat"
+     },
+     "why": "Hydras outrange even-speed zealots in open field; stutter-kiting with spacing preserves the gap that standing still would lose to equal-speed chase.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "safe_stutter_threat",
+     "rules": [
+      {
+       "when": {
+        "reach": "we_outrange",
+        "if_we_stand_to_shoot": "gap_holds"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "threat",
+        "stand": "shoot",
+        "wounded": "rotate",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "formation": "keep",
+        "ranged": "stack",
+        "target": "weakest_in_range",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "stand": "shoot"
+     },
+     "why": "Same-speed hydras must take every safe 0.5s shot while spacing so all three fire; threat-focus plus rotate-wounded keeps the gap that equal-speed chase never opens.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "stutter_open_threat_rotate",
+     "rules": [
+      {
+       "when": {
+        "reach": "we_outrange",
+        "if_we_stand_to_shoot": "gap_holds"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "threat",
+        "stand": "shoot",
+        "wounded": "rotate",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "weakest_in_range",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "stand": "shoot"
+     },
+     "why": "Equal-speed hydras take every safe 0.5s volley, spread so all three fire, threat-focus one zealot, and peel wounded so the chase never closes the gap.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 0
+ },
+ "admitted": null
+}

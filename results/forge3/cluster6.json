@@ -1,0 +1,195 @@
+{
+ "cluster": "6",
+ "members": [
+  "g0583",
+  "g0033",
+  "g0354",
+  "g0486"
+ ],
+ "dummy_sel": {
+  "g0583": 1,
+  "g0033": 2,
+  "g0354": 0,
+  "g0486": 1
+ },
+ "dummy_confirm": {
+  "g0583": 0,
+  "g0033": 5,
+  "g0354": 0,
+  "g0486": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    1,
+    2,
+    3,
+    5,
+    -1,
+    0
+   ],
+   "round_best": {
+    "sel": 5,
+    "confirm": -4,
+    "program": {
+     "name": "rally_kiter",
+     "rules": [
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "kite": "all",
+        "target": "healer",
+        "wing": "stay"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "bait_one",
+        "target": "frontline"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "weakest_in_range"
+     },
+     "why": "Whenever a rally exists behind us, walk all guns to it then hold; otherwise bait one kiter.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    1,
+    -1,
+    1,
+    4,
+    4,
+    1
+   ],
+   "round_best": {
+    "sel": 4,
+    "confirm": -1,
+    "program": {
+     "name": "guns_then_healers",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "concave",
+        "wing": "step",
+        "target": "guns"
+       }
+      },
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stutter",
+        "target": "healer",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "guns"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "guns"
+     },
+     "why": "Prioritize enemy ranged (stalkers/hydras/marines) over melee, then medivacs; concave ring on approach, stack once we can shoot.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -3,
+    4,
+    -1,
+    3,
+    1,
+    1
+   ],
+   "round_best": {
+    "sel": 4,
+    "confirm": -1,
+    "program": {
+     "name": "concave_guns_priority",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "concave",
+        "wing": "step",
+        "target": "guns"
+       }
+      },
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "healer"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "guns"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "guns",
+      "wing": "stay"
+     },
+     "why": "Fan a ring on approach and always snipe enemy guns (hydras, stalkers, marines) rather than lings; stack once we can actually shoot so shots are not wasted walking.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": -1
+ },
+ "admitted": null
+}

@@ -1,0 +1,257 @@
+{
+ "cluster": "0",
+ "members": [
+  "g1061",
+  "g0874",
+  "g0081",
+  "g0298",
+  "g0726",
+  "g0005",
+  "g0922",
+  "g0242"
+ ],
+ "dummy_sel": {
+  "g1061": 4,
+  "g0874": 3,
+  "g0081": 4,
+  "g0298": 2,
+  "g0726": 4,
+  "g0005": 1,
+  "g0922": 1,
+  "g0242": 3
+ },
+ "dummy_confirm": {
+  "g1061": 2,
+  "g0874": 5,
+  "g0081": 0,
+  "g0298": 2,
+  "g0726": 5,
+  "g0005": 1,
+  "g0922": 3,
+  "g0242": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -8,
+    -6,
+    -1,
+    -9,
+    2,
+    1
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "healers_then_splash",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer",
+        "ranged": "stutter"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 2
+        }
+       },
+       "set": {
+        "bar": "bar",
+        "stand": "shoot"
+       }
+      },
+      {
+       "when": {
+        "ally_spacing": "open"
+       },
+       "set": {
+        "ranged": "stack"
+       }
+      }
+     ],
+     "else": {
+      "target": "heaviest",
+      "ranged": "hold",
+      "formation": "keep",
+      "bar": "pack"
+     },
+     "why": "Kill medivacs first when present, otherwise heaviest, lasers on bar splash; keep standing to trade.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -8,
+    -8,
+    8,
+    -9,
+    -4,
+    2
+   ],
+   "round_best": {
+    "sel": 8,
+    "confirm": 8,
+    "program": {
+     "name": "guns_first_stack",
+     "rules": [
+      {
+       "when": {
+        "enemy_guns": {
+         ">=": 1
+        },
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "target": "guns",
+        "ranged": "stack"
+       }
+      },
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer"
+       }
+      },
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "guns",
+      "formation": "keep",
+      "kite": "all"
+     },
+     "why": "Delete enemy ranged first so leftover banelings are the only threat; pure stack otherwise. Different target priority from splash/clump.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -8,
+    -9,
+    1,
+    -1,
+    -4,
+    -9
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 4,
+    "program": {
+     "name": "never_step_bar",
+     "rules": [
+      {
+       "when": {
+        "suicide_blast": "would_chain"
+       },
+       "set": {
+        "bar": "bar",
+        "target": "clump",
+        "formation": "keep"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "gap_holds"
+       },
+       "set": {
+        "ranged": "hold",
+        "stand": "shoot"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "target": "frontline",
+      "bar": "bar",
+      "formation": "keep"
+     },
+     "why": "Refuse kiting: stand, shoot, aim splash bars at densest pack; opposite of stutter.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "nets": [
+    -8,
+    -9,
+    9,
+    -9,
+    -1,
+    -1
+   ],
+   "round_best": {
+    "sel": 9,
+    "confirm": 4,
+    "program": {
+     "name": "concave_threat_stack",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "threat"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "threat",
+      "formation": "keep",
+      "wing": "stay"
+     },
+     "why": "Fan a concave then attack-move onto highest DPS-per-HP; ignore kiting and splash bars.",
+     "menu": "open"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": 4
+ },
+ "admitted": {
+  "sel": 9,
+  "confirm": 4
+ }
+}

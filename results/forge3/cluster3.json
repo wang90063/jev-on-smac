@@ -1,0 +1,189 @@
+{
+ "cluster": "3",
+ "members": [
+  "g0778",
+  "g0271",
+  "g0134",
+  "g0070",
+  "g0453"
+ ],
+ "dummy_sel": {
+  "g0778": 4,
+  "g0271": 1,
+  "g0134": 4,
+  "g0070": 4,
+  "g0453": 0
+ },
+ "dummy_confirm": {
+  "g0778": 5,
+  "g0271": 1,
+  "g0134": 4,
+  "g0070": 5,
+  "g0453": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 0,
+    "program": {
+     "name": "kite_only_guns",
+     "rules": [
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "contact": "almost_in_range"
+       },
+       "set": {
+        "ranged": "fall_back"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "fall_back",
+      "melee": "hold",
+      "formation": "open",
+      "target": "weakest_in_range"
+     },
+     "why": "Never commit melee; stutter and fall back forever.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    1,
+    2,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 2,
+    "program": {
+     "name": "concave_threat",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 2
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "allied_melee": true
+       },
+       "set": {
+        "melee": "charge"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "melee": "charge",
+      "target": "threat",
+      "formation": "open",
+      "bar": "bar"
+     },
+     "why": "Fan a wide ring, focus highest dps/hp, no special suicide logic.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 2,
+    "program": {
+     "name": "concave_threat_bar",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 2
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "target": "threat",
+        "bar": "bar"
+       }
+      },
+      {
+       "when": {
+        "allied_melee": true
+       },
+       "set": {
+        "melee": "charge"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "melee": "charge",
+      "target": "threat",
+      "formation": "open",
+      "bar": "bar"
+     },
+     "why": "Fan a wide ring and lasers, focus highest dps per remaining hp, no special suicide peel.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 3,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "nets": [],
+   "round_best": null
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": 2
+ },
+ "admitted": {
+  "sel": 2,
+  "confirm": 2
+ }
+}

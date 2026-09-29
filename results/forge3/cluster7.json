@@ -1,0 +1,279 @@
+{
+ "cluster": "7",
+ "members": [
+  "g0491",
+  "g0832",
+  "g0233"
+ ],
+ "dummy_sel": {
+  "g0491": 1,
+  "g0832": 2,
+  "g0233": 1
+ },
+ "dummy_confirm": {
+  "g0491": 1,
+  "g0832": 4,
+  "g0233": 1
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -1,
+    -1,
+    0,
+    2,
+    -2,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 0,
+    "program": {
+     "name": "splash_concave_clump",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true,
+        "if_we_stand_to_shoot": "melee_reaches_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "kite": "all",
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Fan a concave and dump splash/colossus bars into the densest pack instead of holding a choke.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    3,
+    0,
+    -2,
+    0,
+    2
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": -2,
+    "program": {
+     "name": "always_hold_neck",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold_choke",
+        "formation": "keep"
+       }
+      },
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "melee": "hold",
+        "ranged": "hold",
+        "target": "frontline"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "hold",
+      "melee": "hold_choke",
+      "kite": "all",
+      "target": "guns",
+      "stand": "shoot"
+     },
+     "why": "Geography only: never step through the gap. Guns hold or fall back; melee sits on the choke regardless of speed or splash.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -1,
+    0,
+    0,
+    1,
+    2,
+    -1
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 0,
+    "program": {
+     "name": "splash_fan_clump",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "wing": "step",
+        "ranged": "concave",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "melee_reaches_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "kite": "all",
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Pure splash geometry: widen, concave, colossus bar on densest pack. Melee charges. Not a choke hold.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "nets": [
+    1,
+    0,
+    0,
+    1,
+    2,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 0,
+    "program": {
+     "name": "splash_fan_only",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "wing": "step",
+        "ranged": "concave",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "melee_reaches_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "kite": "all",
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Widen the line, fan a concave, aim colossus bars at the densest clump. Melee always charges. Pure splash geometry.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": -1
+ },
+ "admitted": null
+}

@@ -1,0 +1,178 @@
+{
+ "cluster": "9",
+ "members": [
+  "g0517",
+  "g0083"
+ ],
+ "dummy_sel": {
+  "g0517": 4,
+  "g0083": 3
+ },
+ "dummy_confirm": {
+  "g0517": 1,
+  "g0083": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -3,
+    0,
+    0,
+    -3,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 1,
+    "program": {
+     "name": "hold_and_concave",
+     "rules": [
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "melee": "hold_choke",
+        "ranged": "hold"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "frontline",
+      "wing": "step"
+     },
+     "why": "Fan a concave, stand ground at the choke, never chase; melee holds the mouth.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -3,
+    0,
+    -3,
+    -3,
+    0,
+    -2
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 1,
+    "program": {
+     "name": "pure_stack_front",
+     "rules": [
+      {
+       "when": {
+        "enemy_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "frontline",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 10
+        }
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "frontline"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "frontline",
+      "kite": "all",
+      "wing": "stay"
+     },
+     "why": "Never kite; attack-move the nearest damage dealer so both compositions crash like default AM.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -2,
+    0,
+    0,
+    -1,
+    -3,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "pure_am_threat",
+     "rules": [
+      {
+       "when": {
+        "enemy_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "threat",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stack",
+        "kite": "all"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "threat",
+      "wing": "stay"
+     },
+     "why": "Never kite: crash attack-move onto highest DPS-per-HP so both armies behave like default AM.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 1
+ },
+ "admitted": {
+  "sel": 0,
+  "confirm": 1
+ }
+}

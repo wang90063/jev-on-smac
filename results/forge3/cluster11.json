@@ -1,0 +1,289 @@
+{
+ "cluster": "11",
+ "members": [
+  "g0350",
+  "g0747",
+  "g0467",
+  "g0457",
+  "g0209",
+  "g0102",
+  "g0073"
+ ],
+ "dummy_sel": {
+  "g0350": 3,
+  "g0747": 0,
+  "g0467": 4,
+  "g0457": 3,
+  "g0209": 0,
+  "g0102": 4,
+  "g0073": 0
+ },
+ "dummy_confirm": {
+  "g0350": 5,
+  "g0747": 0,
+  "g0467": 5,
+  "g0457": 3,
+  "g0209": 0,
+  "g0102": 5,
+  "g0073": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -2,
+    0,
+    0,
+    0,
+    0,
+    -2
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "rally_turtle",
+     "rules": [
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "weakest_in_range"
+     },
+     "why": "Walk everything to rally/choke and never re-engage; opposite of aggression.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    5,
+    -2,
+    -2,
+    -2,
+    0,
+    6
+   ],
+   "round_best": {
+    "sel": 6,
+    "confirm": 1,
+    "program": {
+     "name": "double_bait_splash_bar",
+     "rules": [
+      {
+       "when": {
+        "suicide_blast": "would_chain"
+       },
+       "set": {
+        "formation": "open",
+        "bait": "bait_two",
+        "melee": "snipe",
+        "target": "clump",
+        "bar": "bar"
+       }
+      },
+      {
+       "when": {
+        "our_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "formation": "keep",
+        "melee": "charge",
+        "target": "clump",
+        "bar": "pack"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar"
+     },
+     "why": "Send two melee into the bomb pack and aim splash bars at densest bodies; keep formation clumped for our own bombs.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    12,
+    3,
+    0,
+    0,
+    0,
+    -2
+   ],
+   "round_best": {
+    "sel": 12,
+    "confirm": 10,
+    "program": {
+     "name": "amove_if_guns_snipe_if_thin",
+     "rules": [
+      {
+       "when": {
+        "our_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "formation": "keep",
+        "melee": "charge",
+        "target": "clump",
+        "ranged": "stack"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 2
+        }
+       },
+       "set": {
+        "formation": "keep",
+        "ranged": "stack",
+        "melee": "charge",
+        "target": "frontline",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "suicide_blast": "would_chain"
+       },
+       "set": {
+        "formation": "open",
+        "melee": "snipe",
+        "bait": "bait_two",
+        "target": "clump"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "threat"
+     },
+     "why": "A-move wins mixed-range trades; when we have 0-1 guns vs chain bombs, spread and send two bait walkers so the rest stay outside blast; own bombs still ball onto the densest clump.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "nets": [
+    11,
+    -2,
+    -2,
+    -2,
+    1,
+    0
+   ],
+   "round_best": {
+    "sel": 11,
+    "confirm": 10,
+    "program": {
+     "name": "amove_guns_snipe_chain",
+     "rules": [
+      {
+       "when": {
+        "our_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "formation": "keep",
+        "melee": "charge",
+        "target": "clump",
+        "ranged": "stack"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 2
+        }
+       },
+       "set": {
+        "formation": "keep",
+        "ranged": "stack",
+        "melee": "charge",
+        "target": "frontline",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "suicide_blast": "would_chain",
+        "our_ranged": 0
+       },
+       "set": {
+        "formation": "open",
+        "melee": "snipe",
+        "bait": "bait_two",
+        "target": "clump"
+       }
+      },
+      {
+       "when": {
+        "suicide_blast": "would_chain"
+       },
+       "set": {
+        "formation": "keep",
+        "melee": "snipe",
+        "bait": "bait_one",
+        "ranged": "stutter",
+        "target": "guns"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "threat"
+     },
+     "why": "Keep a-move when we have guns or own bombs so mixed trades stay even; only spread and send two bait walkers into enemy bombs when we have no guns and a chain blast would wipe the clump.",
+     "menu": "open"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": 0
+ },
+ "admitted": {
+  "sel": 12,
+  "confirm": 10
+ }
+}

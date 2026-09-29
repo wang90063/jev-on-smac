@@ -1,0 +1,258 @@
+{
+ "cluster": "2",
+ "members": [
+  "g0804",
+  "g0573",
+  "g0119",
+  "g1139",
+  "g0427",
+  "g0277",
+  "g0595",
+  "g0682",
+  "g0289",
+  "g1132",
+  "g1014",
+  "g0859"
+ ],
+ "dummy_sel": {
+  "g0804": 2,
+  "g0573": 4,
+  "g0119": 2,
+  "g1139": 4,
+  "g0427": 2,
+  "g0277": 4,
+  "g0595": 4,
+  "g0682": 2,
+  "g0289": 4,
+  "g1132": 3,
+  "g1014": 3,
+  "g0859": 4
+ },
+ "dummy_confirm": {
+  "g0804": 5,
+  "g0573": 5,
+  "g0119": 2,
+  "g1139": 2,
+  "g0427": 1,
+  "g0277": 4,
+  "g0595": 3,
+  "g0682": 0,
+  "g0289": 4,
+  "g1132": 4,
+  "g1014": 2,
+  "g0859": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    2,
+    -2,
+    -1,
+    0,
+    8,
+    0
+   ],
+   "round_best": {
+    "sel": 8,
+    "confirm": 6,
+    "program": {
+     "name": "weakest_concave_fan",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "target": "weakest_in_range",
+        "ranged": "concave"
+       }
+      },
+      {
+       "when": {
+        "hp_trend": "they_are_bleeding"
+       },
+       "set": {
+        "target": "weakest_in_range",
+        "ranged": "stack"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "weakest_in_range",
+      "wing": "step",
+      "tie": "first"
+     },
+     "why": "Fan a ring then pick lowest hp already in range; ignore healers and kiting safety.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    6,
+    -2,
+    -1,
+    0,
+    1,
+    1
+   ],
+   "round_best": {
+    "sel": 6,
+    "confirm": -1,
+    "program": {
+     "name": "concave_weak_healer",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        },
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "target": "healer",
+        "ranged": "concave",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "formation": "open",
+        "target": "weakest_in_range"
+       }
+      },
+      {
+       "when": {
+        "hp_trend": "they_are_bleeding"
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "weakest_in_range"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "concave",
+        "target": "weakest_in_range",
+        "tie": "first"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "target": "weakest_in_range",
+      "wing": "step",
+      "wounded": "stay"
+     },
+     "why": "Best prior idea: fan a ring on approach, pick lowest-hp already in range, snipe medivacs when they exist, stack only after they start bleeding. Unclump first so splash and focus fire land.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    4,
+    2,
+    2,
+    1,
+    1,
+    0
+   ],
+   "round_best": {
+    "sel": 4,
+    "confirm": -4,
+    "program": {
+     "name": "concave_weak_heal_hold",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer",
+        "ranged": "concave",
+        "formation": "open",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "numbers": "they_outnumber_badly"
+       },
+       "set": {
+        "ranged": "hold",
+        "target": "weakest_in_range",
+        "formation": "keep"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "formation": "open",
+        "target": "weakest_in_range"
+       }
+      },
+      {
+       "when": {
+        "hp_trend": "they_are_bleeding"
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "weakest_in_range"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "target": "weakest_in_range",
+      "wing": "step",
+      "tie": "first"
+     },
+     "why": "Best prior: fan a concave, focus lowest-hp in range, snipe healers, but HOLD when badly outnumbered instead of walking into 15 stalkers.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": -6
+ },
+ "admitted": {
+  "sel": 8,
+  "confirm": 6
+ }
+}

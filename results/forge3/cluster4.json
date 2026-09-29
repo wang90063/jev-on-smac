@@ -1,0 +1,247 @@
+{
+ "cluster": "4",
+ "members": [
+  "g0032",
+  "g0831",
+  "g0224",
+  "g0767",
+  "g0746",
+  "g1085",
+  "g0544"
+ ],
+ "dummy_sel": {
+  "g0032": 3,
+  "g0831": 1,
+  "g0224": 3,
+  "g0767": 3,
+  "g0746": 4,
+  "g1085": 3,
+  "g0544": 4
+ },
+ "dummy_confirm": {
+  "g0032": 4,
+  "g0831": 1,
+  "g0224": 3,
+  "g0767": 3,
+  "g0746": 5,
+  "g1085": 3,
+  "g0544": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    2,
+    -3,
+    0,
+    1,
+    -1,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 1,
+    "program": {
+     "name": "splash_open_kite_heal",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer",
+        "formation": "open",
+        "ranged": "stutter",
+        "melee": "charge",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "enemy_air": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer",
+        "formation": "open",
+        "ranged": "stutter",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "melee": "charge",
+        "target": "threat",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "target": "threat",
+        "formation": "open",
+        "melee": "charge"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge",
+      "target": "threat",
+      "wounded": "rotate",
+      "wing": "step"
+     },
+     "why": "Shared pattern is far contact vs guns/splash/healers with our melee tanks: spread, charge lings/zealots, stutter kite, snipe medivacs then threat.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    2,
+    -3,
+    0,
+    0,
+    -1,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 1,
+    "program": {
+     "name": "open_stutter_healer_threat",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "kite": "all",
+        "melee": "charge",
+        "target": "healer",
+        "wounded": "rotate",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "melee": "charge",
+        "target": "threat",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter",
+        "target": "threat",
+        "melee": "charge",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge",
+      "target": "threat",
+      "wounded": "rotate",
+      "wing": "step"
+     },
+     "why": "Vs colossus splash and medivacs: spread, charge melee tanks, stutter kite all guns, kill healers then highest dps/hp, rotate wounded.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    2,
+    2,
+    0,
+    0,
+    0,
+    -1
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 1,
+    "program": {
+     "name": "pure_stack_amove",
+     "rules": [
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "healer",
+        "ranged": "stack",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stack",
+        "melee": "charge",
+        "target": "frontline"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "frontline",
+      "formation": "keep"
+     },
+     "why": "Baseline attack-move: never kite, always charge, focus nearest frontline so sim defaults do the walking.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 1
+ },
+ "admitted": {
+  "sel": 2,
+  "confirm": 1
+ }
+}

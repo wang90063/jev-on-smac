@@ -1,0 +1,174 @@
+{
+ "cluster": "5",
+ "members": [
+  "g1129",
+  "g0805"
+ ],
+ "dummy_sel": {
+  "g1129": 4,
+  "g0805": 1
+ },
+ "dummy_confirm": {
+  "g1129": 5,
+  "g0805": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -1,
+    -2,
+    0,
+    -2,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "wide_concave",
+     "rules": [
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "concave",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee_n": {
+         ">=": 5
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "target": "clump",
+        "kite": "bait_one"
+       }
+      }
+     ],
+     "else": {
+      "formation": "open",
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump",
+      "bar": "bar"
+     },
+     "why": "Fan a ring so more guns fire at once and splash/colossus lines miss the clump.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    -2,
+    0,
+    0,
+    0,
+    -2
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "stand_ground_volleys",
+     "rules": [
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "hold",
+        "stand": "shoot",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "hold",
+        "formation": "keep"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "formation": "keep",
+      "target": "heaviest",
+      "wounded": "stay",
+      "wing": "stay"
+     },
+     "why": "Never chase; hold and shoot whatever walks in, hoping the ravine/choke is the kill zone.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -3,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "bait_one_concave",
+     "rules": [
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "concave",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "concave",
+        "kite": "bait_one",
+        "target": "clump",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "kite": "bait_one",
+      "formation": "open",
+      "target": "clump",
+      "wing": "step"
+     },
+     "why": "Sacrifice the closest gun as a lure so the rest can fan a ring and shoot a packed zealot/colossus blob without being body-blocked.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 0
+ },
+ "admitted": null
+}

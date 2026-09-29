@@ -1,0 +1,172 @@
+{
+ "cluster": "8",
+ "members": [
+  "g0088",
+  "g0559"
+ ],
+ "dummy_sel": {
+  "g0088": 1,
+  "g0559": 4
+ },
+ "dummy_confirm": {
+  "g0088": 2,
+  "g0559": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "nets": [
+    -1,
+    0,
+    0,
+    -1,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "stand-and-hold",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "hold",
+        "stand": "shoot",
+        "melee": "hold"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "weakest_in_range",
+      "formation": "keep"
+     },
+     "why": "Never step; hold ground and shoot whoever walks in, melee hold too.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    0,
+    -1,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "pure-stutter-kite",
+     "rules": [
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "stand": "step",
+        "melee": "charge"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "formation": "open",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge",
+      "target": "weakest_in_range",
+      "stand": "step"
+     },
+     "why": "Every gun always stutters and steps; melee charges. Opposite of hold/stack. Tests if kiting alone beats both fights.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    0,
+    -1,
+    0,
+    -1,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "concave-threat-stack",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "formation": "open",
+        "melee": "charge",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "concave"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "kite": "all",
+      "melee": "charge",
+      "target": "threat",
+      "wing": "step"
+     },
+     "why": "Fan guns into a ring then stutter; always shoot highest DPS-per-HP; melee charges. Geometry-first, not bomb or hold.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": -1
+ },
+ "admitted": null
+}
