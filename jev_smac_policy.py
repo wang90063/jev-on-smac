@@ -20,6 +20,10 @@ from typing import Any, Dict, List, Optional, Tuple
 from jev_api import JevClient
 from smac_laya_policy import hypot, last_action_name, living, _group_away_lab
 
+# ----------------------------------------------------------------------
+# Physics: geometry, range, speed, chokes
+# ----------------------------------------------------------------------
+
 WALK = {
     2: ("walk_north", "north", (0.0, 2.0)),
     3: ("walk_south", "south", (0.0, -2.0)),
@@ -457,6 +461,10 @@ def _close_walk_key(
         return best
     return _walk_toward_key(ally, _rally_point(snap))
 
+
+# ----------------------------------------------------------------------
+# Plans and target rules
+# ----------------------------------------------------------------------
 
 def legal_plans(snap: Dict[str, Any]) -> List[str]:
     """Physics mask over army plans. Never a map name."""
@@ -1432,6 +1440,10 @@ def _ring_slot_key(ally: Dict[str, Any], snap: Dict[str, Any]) -> Optional[str]:
     ang = base + off
     return _walk_to_xy(ally, snap, mx + desired * math.cos(ang), my + desired * math.sin(ang))
 
+
+# ----------------------------------------------------------------------
+# Motor: job executors (code walks, Jev never does)
+# ----------------------------------------------------------------------
 
 def _pick_fire(pick, snap: Dict[str, Any]) -> Optional[int]:
     fid = snap.get("_focus_id")
@@ -2442,6 +2454,10 @@ def _unit_record(unit: Dict[str, Any], snap: Dict[str, Any], prefix: str) -> Dic
     return rec
 
 
+# ----------------------------------------------------------------------
+# Exam criteria text
+# ----------------------------------------------------------------------
+
 MATCHUP_RULES = {
     "ranged_trade": (
         "Equal-range trade. If fire_* is listed, pick it. "
@@ -2968,11 +2984,9 @@ def _can_kite_line(snap: Dict[str, Any], line: List[Dict[str, Any]]) -> bool:
     return True
 
 
-def _filter_jobs_to_plan(kind: str, jobs: List[str], snap: Dict[str, Any]) -> List[str]:
-    """Keep jobs that are physically possible. Do not drop a job because a
-    matchup table already picked a winner."""
-    return list(jobs)
-
+# ----------------------------------------------------------------------
+# Menus: physics decides which jobs are legal
+# ----------------------------------------------------------------------
 
 def formation_jobs(snap: Dict[str, Any]) -> List[str]:
     if _suicide_blast(snap) == "none":
@@ -3815,6 +3829,10 @@ def _bucket_building(ehp: float, volley: float) -> str:
     return "healthy"
 
 
+# ----------------------------------------------------------------------
+# Commander state and exam catalog
+# ----------------------------------------------------------------------
+
 def commander_state(
     step: int, snap: Dict[str, Any], recent: List[str], hp_trend: str = "unknown"
 ) -> Dict[str, Any]:
@@ -4322,6 +4340,10 @@ def build_state(map_name: str, step: int, snap: Dict[str, Any], recent: List[str
 
 
 
+# ----------------------------------------------------------------------
+# Fallback motor
+# ----------------------------------------------------------------------
+
 def _fallback_action(
     ally: Dict[str, Any], snap: Dict[str, Any], options: List[Tuple[int, str, Dict[str, Any]]]
 ) -> int:
@@ -4664,14 +4686,30 @@ def _exam_needed(
         return True
     # Target/heal option lists flicker every tick; keep the sticky pick.
     if kind in {"stand", "bomb"}:
-        if st is None or prev_sig != sig:
-            return True
         return st[0] != spec.get("default")
     if kind in {"target", "heal"}:
         return False
     if tuple(spec["options"]) != opts:
         return True
     return False
+
+
+# ----------------------------------------------------------------------
+# Main loop
+# ----------------------------------------------------------------------
+
+LINE_MODES = ("local", "shared")
+WING_CALLS = ("stay", "step")
+# Two-word exams that hold their pick until it goes illegal:
+# kind -> (legal picks, snap key the motor reads, physics gate).
+STICKY_EXAMS = {
+    "stand": (("shoot", "step"), "_stand_call", lambda snap: True),
+    "span": (("lower", "next"), "_tie_span", lambda snap: _tie_pair_count(snap) >= 2),
+    "bomb": (("step", "hold"), "_bomb_call", lambda snap: True),
+    "bar": (("pack", "bar"), "_bar_aim", lambda snap: bool(_laser_allies(snap))),
+}
+# Exams whose answer is applied after the menu write-back.
+PENDING_EXAMS = ("tie", "stand", "blade", "mark", "line", "span", "bomb", "bar", "wing")
 
 
 class JevActionPolicy:
@@ -4688,8 +4726,16 @@ class JevActionPolicy:
         self.infer_s = 0.0
         self.tactic_counts: Dict[str, int] = {}
         self.plan_counts: Dict[str, int] = {}
-        self._recent: List[str] = []
         self._input_tokens = 0
+        self.n_override = 0
+        self.overrides: List[str] = []
+        self.n_asked = 0
+        self.asked_counts: Dict[str, int] = {}
+        self.n_live_prune = 0
+        self._reset_episode()
+
+    def _reset_episode(self) -> None:
+        self._recent: List[str] = []
         self._focus_id: Optional[int] = None
         self._focus_rule: str = ""
         self._prev_our_hp: Optional[float] = None
@@ -4698,25 +4744,31 @@ class JevActionPolicy:
         self._stance_age = 0
         self._last_stance = ""
         self._prev_xy: Dict[int, Tuple[float, float]] = {}
-        self.n_override = 0
-        self.overrides: List[str] = []
-        self.n_asked = 0
-        self.asked_counts: Dict[str, int] = {}
-        self.n_live_prune = 0
         self._sticky: Dict[str, Tuple[str, Tuple[str, ...]]] = {}
         self._force_sig: Optional[Tuple[int, ...]] = None
-        self._tie_pick: Optional[str] = None
-        self._tie_other: bool = False
-        self._stand_call: Optional[str] = None
-        self._blade_pick: Optional[str] = None
-        self._mark_pick: Optional[str] = None
+        # Answers from this tick's exams, consumed after the menu write-back.
+        self._pending: Dict[str, Any] = {}
         self._block_stand: bool = False
-        self._line_mode: Optional[str] = None
-        self._span_mode: Optional[str] = None
-        self._bomb_call: Optional[str] = None
-        self._bar_aim: Optional[str] = None
-        self._wing_call: Optional[str] = None
         self._laser_id: Optional[int] = None
+
+    def _held_pick(self, kind: str, legal: Tuple[str, ...]) -> Optional[str]:
+        """This tick's answer if legal, else the held sticky pick if still legal."""
+        val = self._pending.pop(kind, None)
+        if val in legal:
+            return val
+        held = self._sticky.get(kind)
+        if held and held[0] in legal:
+            return held[0]
+        return None
+
+    def _apply_sticky_exam(self, kind: str, snap: Dict[str, Any]) -> None:
+        legal, snap_key, gate = STICKY_EXAMS[kind]
+        val = self._held_pick(kind, legal)
+        if val is not None and gate(snap):
+            snap[snap_key] = val
+            self._sticky[kind] = (val, legal)
+        else:
+            self._sticky.pop(kind, None)
 
     def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
         n = snap["n_agents"]
@@ -4731,28 +4783,7 @@ class JevActionPolicy:
         healers = [a for a in allies if a.get("role") == "heal"]
 
         if step == 0:
-            self._focus_id = None
-            self._focus_rule = ""
-            self._prev_our_hp = None
-            self._prev_their_hp = None
-            self._hp_trend = "no_trade_yet"
-            self._recent = []
-            self._stance_age = 0
-            self._last_stance = ""
-            self._prev_xy = {}
-            self._sticky = {}
-            self._force_sig = None
-            self._tie_pick = None
-            self._stand_call = None
-            self._blade_pick = None
-            self._mark_pick = None
-            self._block_stand = False
-            self._line_mode = None
-            self._span_mode = None
-            self._bomb_call = None
-            self._bar_aim = None
-            self._wing_call = None
-            self._laser_id = None
+            self._reset_episode()
 
         stuck = set()
         for a in allies:
@@ -4822,29 +4853,23 @@ class JevActionPolicy:
         b_job = default_bait_style(b_jobs, snap)
         sig = _force_signature(snap)
         prev_sig = self._force_sig
+        menus = {"formation": form_opts, "ranged": r_jobs, "melee": m_jobs, "kite": k_jobs, "bait": b_jobs}
         if prev_sig != sig:
-            allowed = {
-                "formation": form_opts,
-                "ranged": r_jobs,
-                "melee": m_jobs,
-                "kite": k_jobs,
-                "bait": b_jobs,
-            }
             self._sticky = {
                 k: v for k, v in self._sticky.items()
-                if v[0] in (allowed.get(k) or [v[0]])
+                if v[0] in (menus.get(k) or [v[0]])
             }
         if not isinstance(self.client, DummyClient):
-            if "formation" in self._sticky and self._sticky["formation"][0] in (form_opts or [self._sticky["formation"][0]]):
-                form = self._sticky["formation"][0]
-            if "ranged" in self._sticky and self._sticky["ranged"][0] in (r_jobs or [self._sticky["ranged"][0]]):
-                r_job = self._sticky["ranged"][0]
-            if "melee" in self._sticky and self._sticky["melee"][0] in (m_jobs or [self._sticky["melee"][0]]):
-                m_job = self._sticky["melee"][0]
-            if "kite" in self._sticky and self._sticky["kite"][0] in (k_jobs or [self._sticky["kite"][0]]):
-                k_job = self._sticky["kite"][0]
-            if "bait" in self._sticky and self._sticky["bait"][0] in (b_jobs or [self._sticky["bait"][0]]):
-                b_job = self._sticky["bait"][0]
+            held_jobs = {}
+            for kind, opts in menus.items():
+                held = self._sticky.get(kind)
+                if held and held[0] in (opts or [held[0]]):
+                    held_jobs[kind] = held[0]
+            form = held_jobs.get("formation", form)
+            r_job = held_jobs.get("ranged", r_job)
+            m_job = held_jobs.get("melee", m_job)
+            k_job = held_jobs.get("kite", k_job)
+            b_job = held_jobs.get("bait", b_job)
         form, r_job, m_job = apply_physics_veto(snap, form, r_job, m_job)
         snap["_live_tactic"] = _live_tactic(snap)
 
@@ -4897,25 +4922,9 @@ class JevActionPolicy:
                         heal_id = int(str(pick)[1:])
                     except (TypeError, ValueError):
                         heal_id = None
-                if "tie" in asked:
-                    pick = picks.get("tie")
-                    self._tie_pick = pick
-                if "stand" in asked:
-                    self._stand_call = picks.get("stand")
-                if "blade" in asked:
-                    self._blade_pick = picks.get("blade")
-                if "mark" in asked:
-                    self._mark_pick = picks.get("mark")
-                if "line" in asked:
-                    self._line_mode = picks.get("line")
-                if "span" in asked:
-                    self._span_mode = picks.get("span")
-                if "bomb" in asked:
-                    self._bomb_call = picks.get("bomb")
-                if "bar" in asked:
-                    self._bar_aim = picks.get("bar")
-                if "wing" in asked:
-                    self._wing_call = picks.get("wing")
+                for kind in PENDING_EXAMS:
+                    if kind in asked:
+                        self._pending[kind] = picks.get(kind)
                 for kind, before, after in (
                     ("formation", def_form, form),
                     ("ranged", def_r, r_job),
@@ -4931,119 +4940,53 @@ class JevActionPolicy:
                         if len(self.overrides) < 48:
                             self.overrides.append(f"t={step} {kind} {before}->{after}")
 
-        if form_opts:
-            self._sticky["formation"] = (form, tuple(form_opts))
-        if r_jobs:
-            self._sticky["ranged"] = (r_job, tuple(r_jobs))
-        if m_jobs:
-            self._sticky["melee"] = (m_job, tuple(m_jobs))
-        if k_jobs:
-            self._sticky["kite"] = (k_job, tuple(k_jobs))
-        if b_jobs:
-            self._sticky["bait"] = (b_job, tuple(b_jobs))
+        chosen_jobs = {"formation": form, "ranged": r_job, "melee": m_job, "kite": k_job, "bait": b_job}
+        for kind, opts in menus.items():
+            if opts:
+                self._sticky[kind] = (chosen_jobs[kind], tuple(opts))
         self._sticky["target"] = (rule, tuple(rules))
         pair = _one_shot_pair(snap)
-        tie_labels = [f"E{e['id']}" for e in pair]
-        tie_pick = None
-        if getattr(self, "_tie_other", False) and len(pair) == 2:
-            tie_pick = tie_labels[1]
-        elif len(pair) == 2:
-            held = self._sticky.get("tie")
-            if held and held[0] in tie_labels:
-                tie_pick = held[0]
-            if getattr(self, "_tie_pick", None) in tie_labels:
-                tie_pick = self._tie_pick
-        self._tie_pick = None
+        tie_labels = tuple(f"E{e['id']}" for e in pair) if len(pair) == 2 else ()
+        tie_pick = self._held_pick("tie", tie_labels)
         if tie_pick is not None:
             try:
                 snap["_tie_prefer"] = int(str(tie_pick)[1:])
             except (TypeError, ValueError):
                 pass
-            self._sticky["tie"] = (tie_pick, tuple(tie_labels))
+            self._sticky["tie"] = (tie_pick, tie_labels)
         else:
             self._sticky.pop("tie", None)
-        stand_call = getattr(self, "_stand_call", None)
-        if stand_call not in {"shoot", "step"}:
-            held_stand = self._sticky.get("stand")
-            if held_stand and held_stand[0] in {"shoot", "step"}:
-                stand_call = held_stand[0]
-        if stand_call in {"shoot", "step"}:
-            snap["_stand_call"] = stand_call
-            self._sticky["stand"] = (stand_call, ("shoot", "step"))
-        else:
-            self._sticky.pop("stand", None)
-        self._stand_call = None
-        if getattr(self, "_blade_pick", None):
+        self._apply_sticky_exam("stand", snap)
+        blade_pick = self._pending.pop("blade", None)
+        if blade_pick:
             try:
-                snap["_blade_prefer"] = int(str(self._blade_pick)[1:])
+                snap["_blade_prefer"] = int(str(blade_pick)[1:])
             except (TypeError, ValueError):
                 pass
-        self._blade_pick = None
         mark_id = None
-        if getattr(self, "_mark_pick", None):
+        mark_pick = self._pending.pop("mark", None)
+        if mark_pick:
             try:
-                mark_id = int(str(self._mark_pick)[1:])
+                mark_id = int(str(mark_pick)[1:])
             except (TypeError, ValueError):
                 mark_id = None
-        self._mark_pick = None
         snap["_mark_id"] = mark_id
-        line_mode = getattr(self, "_line_mode", None)
-        if line_mode not in {"local", "shared"}:
-            held_line = self._sticky.get("line")
-            if held_line and held_line[0] in {"local", "shared"}:
-                line_mode = held_line[0]
-            else:
-                line_mode = "local"
+        line_mode = self._held_pick("line", LINE_MODES) or "local"
         if _pure_gunline(snap):
-            self._sticky["line"] = (line_mode, ("local", "shared"))
+            self._sticky["line"] = (line_mode, LINE_MODES)
             snap["_line_mode"] = line_mode
-        self._line_mode = None
-        span_mode = getattr(self, "_span_mode", None)
-        if span_mode not in {"lower", "next"}:
-            held_span = self._sticky.get("span")
-            if held_span and held_span[0] in {"lower", "next"}:
-                span_mode = held_span[0]
-        if span_mode in {"lower", "next"} and _tie_pair_count(snap) >= 2:
-            snap["_tie_span"] = span_mode
-            self._sticky["span"] = (span_mode, ("lower", "next"))
-        else:
-            self._sticky.pop("span", None)
-        self._span_mode = None
-        bomb_call = getattr(self, "_bomb_call", None)
-        if bomb_call not in {"step", "hold"}:
-            held_bomb = self._sticky.get("bomb")
-            if held_bomb and held_bomb[0] in {"step", "hold"}:
-                bomb_call = held_bomb[0]
-        if bomb_call in {"step", "hold"}:
-            snap["_bomb_call"] = bomb_call
-            self._sticky["bomb"] = (bomb_call, ("step", "hold"))
-        else:
-            self._sticky.pop("bomb", None)
-        self._bomb_call = None
-        bar_aim = getattr(self, "_bar_aim", None)
-        if bar_aim not in {"pack", "bar"}:
-            held_bar = self._sticky.get("bar")
-            if held_bar and held_bar[0] in {"pack", "bar"}:
-                bar_aim = held_bar[0]
-        if bar_aim in {"pack", "bar"} and _laser_allies(snap):
-            snap["_bar_aim"] = bar_aim
-            self._sticky["bar"] = (bar_aim, ("pack", "bar"))
-        else:
-            self._sticky.pop("bar", None)
-        self._bar_aim = None
-        wing_call = getattr(self, "_wing_call", None)
-        if wing_call not in {"stay", "step"}:
-            held_wing = self._sticky.get("wing")
-            if held_wing and held_wing[0] in {"stay", "step"}:
-                wing_call = held_wing[0]
+        self._apply_sticky_exam("span", snap)
+        self._apply_sticky_exam("bomb", snap)
+        self._apply_sticky_exam("bar", snap)
+        wing_call = self._held_pick("wing", WING_CALLS)
         if wing_call == "step" and _wing_frame(snap) is not None:
             snap["_pre_fan"] = True
-            self._sticky["wing"] = ("step", ("stay", "step"))
+            self._sticky["wing"] = ("step", WING_CALLS)
         elif wing_call == "stay":
-            self._sticky["wing"] = ("stay", ("stay", "step"))
+            self._sticky["wing"] = ("stay", WING_CALLS)
         else:
             self._sticky.pop("wing", None)
-        self._wing_call = None
+        self._pending.clear()
         snap.pop("_shot_plan", None)
 
         if _pure_gunline(snap):
@@ -5167,6 +5110,10 @@ class JevActionPolicy:
         }
         return actions
 
+
+# ----------------------------------------------------------------------
+# Test clients: Force pins picks, Dummy takes defaults
+# ----------------------------------------------------------------------
 
 class ForceClient:
     """Stub that sits chosen exams and picks given jobs. Motor + Jev-out-of-loop tests."""
