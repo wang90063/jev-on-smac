@@ -1,0 +1,1280 @@
+{
+ "id": "g1129",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "wall_rally_hold_funnel",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Use the long wall: immediately fall back to rally, freeze, and only shoot what funnels in so zealots cannot surround and hydras must walk the choke."
+     },
+     "wins": 1,
+     "margin": -121.7
+    },
+    {
+     "program": {
+      "name": "safe_stutter_guns_first",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns"
+      },
+      "why": "Never let zealots close: every gun uses stutter and only stands when the 0.5s window is safe; always snipe enemy guns so leftover melee walks into empty space."
+     },
+     "wins": 2,
+     "margin": -186.3
+    },
+    {
+     "program": {
+      "name": "concave_then_freeze_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Fan a ring while still far so all ten guns fire together, then lock in place at the mouth of the ravine so zealots cannot wrap."
+     },
+     "wins": 1,
+     "margin": -115.9
+    },
+    {
+     "program": {
+      "name": "bait_one_kiter_focus_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat"
+      },
+      "why": "Sacrifice the closest marine as a walking bait so zealots chase one body while the hydras and remaining marines freely dump DPS into the highest dps-per-hp target."
+     },
+     "wins": 4,
+     "margin": 23.0
+    },
+    {
+     "program": {
+      "name": "open_space_weakest_rotate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Unclump immediately so overlapping zealot pathing is wasted, pick the lowest-hp unit already in range, and peel any marine under 40% so the hydras keep shooting."
+     },
+     "wins": 0,
+     "margin": -661.8
+    },
+    {
+     "program": {
+      "name": "two_shot_window_then_stack",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "heaviest",
+       "stand": "step"
+      },
+      "why": "Take the guaranteed two shots while the gap still holds, focus heaviest so zealots die before they arrive, then attack-move once melee is gone or numbers crash."
+     },
+     "wins": 2,
+     "margin": -160.3
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_kiter_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Keep the 4/5 bait idea: closest marine always walks so zealots chase a decoy while hydras dump threat DPS; peel wounded so the hydras stay alive after the first two-shot window."
+     },
+     "wins": 4,
+     "margin": 12.4
+    },
+    {
+     "program": {
+      "name": "snipe_enemy_hydras_then_kite",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "enemy_guns": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns"
+      },
+      "why": "Enemy hydras are the real DPS; delete them first with heaviest/guns while the gap still holds, then stutter so leftover zealots walk into empty space."
+     },
+     "wins": 0,
+     "margin": -270.2
+    },
+    {
+     "program": {
+      "name": "wall_kite_not_hold",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.3
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline"
+      },
+      "why": "Previous wall-hold lost because zealots still arrived; fall back to the rally then stutter-kite along the wall so melee never wraps while guns fire down the choke."
+     },
+     "wins": 2,
+     "margin": -101.5
+    },
+    {
+     "program": {
+      "name": "open_concave_bait_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "bait_one",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Unclump and fan a ring so all ten guns fire, but keep one marine walking as bait so zealots cannot close the ring; focus threat so hydras die first."
+     },
+     "wins": 0,
+     "margin": -692.4
+    },
+    {
+     "program": {
+      "name": "two_volleys_then_retreat_choke",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "tick_frac": {
+          ">=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "stand": "step",
+       "target": "heaviest"
+      },
+      "why": "Take the guaranteed two shots standing (gap holds) into the heaviest body, then immediately fall back to rally before zealots arrive within the next window."
+     },
+     "wins": 0,
+     "margin": -264.8
+    },
+    {
+     "program": {
+      "name": "bar_funnel_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wing": "step",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "frontline"
+      },
+      "why": "Use the ravine wall as a laser bar: hold a wide line, aim the perpendicular bar through the densest pack, and always hit the nearest damage dealer so zealots eat overlapping marine/hydra shots while funneling."
+     },
+     "wins": 2,
+     "margin": -27.5
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_threat_rotate_cleanup",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Best prior idea: closest gun walks so zealots chase a decoy while hydras dump threat DPS; peel wounded hydras; stack only after melee is gone."
+     },
+     "wins": 3,
+     "margin": -54.0
+    },
+    {
+     "program": {
+      "name": "bait_guns_then_heaviest",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 3
+         },
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns"
+      },
+      "why": "Decoy the zealots with one walker, snipe enemy guns first so leftover melee walks into empty space, then crush remaining tanks."
+     },
+     "wins": 2,
+     "margin": -41.5
+    },
+    {
+     "program": {
+      "name": "rally_then_bait_kite",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Use the wall: first ticks fall back so the ravine funnels, then bait-kite along the choke so zealots never wrap the hydras."
+     },
+     "wins": 2,
+     "margin": -170.6
+    },
+    {
+     "program": {
+      "name": "open_concave_bait",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "kite": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "clump"
+      },
+      "why": "Spread a ring so ten guns fire at once, keep one bait walking, focus the densest body so overlapping hydra shots melt the pack."
+     },
+     "wins": 2,
+     "margin": -82.7
+    },
+    {
+     "program": {
+      "name": "two_shot_hold_then_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "tick_frac": {
+          "<=": 0.08
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Take the free first volley while gap holds, then immediately switch to bait-one stutter so zealots never close the last step."
+     },
+     "wins": 1,
+     "margin": -107.9
+    },
+    {
+     "program": {
+      "name": "frontline_rotate_all_stutter",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "No bait: every gun stutters equally, always peel the nearest damage dealer, rotate wounded hydras so the 90hp bodies outlast zealots."
+     },
+     "wins": 1,
+     "margin": -233.3
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "rally_then_bait_threat",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Sprint to the wall first so zealots funnel, then one bait marine walks while hydras dump threat DPS; peel wounded hydras so the two-shot window is not our last."
+     },
+     "wins": 1,
+     "margin": -186.5
+    },
+    {
+     "program": {
+      "name": "wide_concave_guns_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline"
+      },
+      "why": "Fan a ring before contact so ten guns fire together, snipe enemy hydras/marines while the gap holds, then bait-kite leftover zealots."
+     },
+     "wins": 2,
+     "margin": -96.9
+    },
+    {
+     "program": {
+      "name": "hold_bar_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "heaviest"
+      },
+      "why": "Freeze on the ravine lip, aim a perpendicular bar through the pack, and always focus the tankiest zealot so melee dies in the funnel before wrapping."
+     },
+     "wins": 1,
+     "margin": -107.1
+    },
+    {
+     "program": {
+      "name": "all_stutter_open_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Spread immediately and every gun uses true stutter (no dedicated bait) so the whole line slides along the wall; always hit max dps-per-hp."
+     },
+     "wins": 0,
+     "margin": -661.8
+    },
+    {
+     "program": {
+      "name": "fall_back_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Anchor at rally, never chase, and pick lowest-hp already in range so overlapping hydra shots finish units before zealots close."
+     },
+     "wins": 1,
+     "margin": -103.4
+    },
+    {
+     "program": {
+      "name": "bait_frontline_then_stack",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "frontline",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Closest marine decoys zealots while the army focuses nearest damage-dealer; once melee count drops, attack-move to mop remaining guns."
+     },
+     "wins": 1,
+     "margin": -187.9
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_one_kiter_focus_threat",
+   "rules": [
+    {
+     "when": {
+      "enemy_melee": true,
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "target": "threat",
+      "stand": "step"
+     }
+    },
+    {
+     "when": {
+      "if_we_withdraw": "gap_stays_they_chase"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "wounded": "rotate"
+     }
+    },
+    {
+     "when": {
+      "their_alive": {
+       "<=": 5
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "target": "threat"
+   },
+   "why": "Sacrifice the closest marine as a walking bait so zealots chase one body while the hydras and remaining marines freely dump DPS into the highest dps-per-hp target."
+  },
+  "wins": 4,
+  "margin": 23.0,
+  "score": 40023.0
+ }
+}

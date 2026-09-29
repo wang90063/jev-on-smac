@@ -1,0 +1,358 @@
+{
+ "id": "g0682",
+ "dummy": 2,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_bar_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Colossi splash is wasted in a clump; fall to the gap, fan a line, and fire the bar across the densest stalker pile so each shot deletes a pack instead of one armored body."
+     },
+     "wins": 2,
+     "margin": 73.8
+    },
+    {
+     "program": {
+      "name": "mouth_concave_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Park a wide ring at the mouth so all three lasers see the same blob, then concave-stutter if they try to wrap; splash on clump still wins the count even while they outnumber."
+     },
+     "wins": 5,
+     "margin": 352.7
+    },
+    {
+     "program": {
+      "name": "half_range_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "We barely outrange them; stutter-kite at 7 so they walk into splash while we never idle cooldowns, then rotate a wounded colossus behind the wall."
+     },
+     "wins": 0,
+     "margin": -225.5
+    },
+    {
+     "program": {
+      "name": "hold_delete_front",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "stand": "shoot"
+      },
+      "why": "Stand ground at the choke, never chase, and always snipe the nearest stalker so splash plus focused fire flips the frontline before the back rank arrives."
+     },
+     "wins": 4,
+     "margin": 269.2
+    },
+    {
+     "program": {
+      "name": "open_then_stack_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "they_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Space first so splash does not self-block, then attack-move and hard-focus guns (all of them) once they enter range so cooldowns never idle against 15 DPS sources."
+     },
+     "wins": 0,
+     "margin": -1795.9
+    },
+    {
+     "program": {
+      "name": "threat_and_bar_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "bar": "bar",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "bar": "bar",
+       "wounded": "rotate"
+      },
+      "why": "Always shoot the highest DPS-per-HP stalker while aiming the bar through the pack; if a colossus drops under 40% it steps behind the wall so the remaining two keep the splash online."
+     },
+     "wins": 0,
+     "margin": -487.5
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "mouth_concave_clump",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "at_mouth",
+       "in_neck"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "bar": "pack",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Park a wide ring at the mouth so all three lasers see the same blob, then concave-stutter if they try to wrap; splash on clump still wins the count even while they outnumber."
+  },
+  "wins": 5,
+  "margin": 352.7,
+  "score": 50352.7
+ }
+}

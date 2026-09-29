@@ -1,0 +1,1236 @@
+{
+ "id": "g0083",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_bait_banes",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "clump",
+       "melee": "hold"
+      },
+      "why": "Open the clump so one blast cannot wipe zealots, send closest melee into the baneling pack while colossus holds the gap and lasers the densest light bodies."
+     },
+     "wins": 0,
+     "margin": -363.9
+    },
+    {
+     "program": {
+      "name": "choke_funnel_splash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold_choke"
+      },
+      "why": "Withdraw to the wall mouth so melee and banelings string into a neck; freeze guns there with bar splash on packed lights and keep zealots as a plug."
+     },
+     "wins": 0,
+     "margin": -200.8
+    },
+    {
+     "program": {
+      "name": "zealot_charge_guns_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "bar": "pack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Throw zealots into their melee to occupy lings and soak banelings while colossus attack-moves and deletes marines so we stop taking ranged chip."
+     },
+     "wins": 3,
+     "margin": 68.3
+    },
+    {
+     "program": {
+      "name": "safe_stutter_then_concave",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "melee": "hold"
+      },
+      "why": "While the 0.5s stand is still safe, kite and fan a ring; never stand if melee would arrive before the next shot, and always pick splash-dense targets."
+     },
+     "wins": 1,
+     "margin": -241.1
+    },
+    {
+     "program": {
+      "name": "hold_gap_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "they_catch_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Do not chase faster melee; stand and shoot while the gap holds, rotate wounded zealots out, and bar-splash whatever is packed in front of the wall."
+     },
+     "wins": 0,
+     "margin": -3.9
+    },
+    {
+     "program": {
+      "name": "snipe_then_focus_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "target": "threat",
+         "ranged": "stack",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "melee": "charge",
+       "bar": "pack"
+      },
+      "why": "Sacrifice one or two zealots to detonate banelings early, then switch colossus onto highest dps-per-hp (marines/remaining banes) while remaining melee holds."
+     },
+     "wins": 1,
+     "margin": -277.8
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "charge_delete_marines",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "melee": "charge",
+         "ranged": "stack",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "bait": "bait_one",
+         "melee": "snipe"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Occupy lings and soak banelings with zealots while the colossus attack-moves and deletes the marine guns that actually chip through armor."
+     },
+     "wins": 0,
+     "margin": -804.7
+    },
+    {
+     "program": {
+      "name": "plug_wall_bar_splash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "stand": "shoot",
+         "target": "clump",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold_choke"
+      },
+      "why": "Zealots hold the ravine mouth as a plug so banelings cannot surround; colossus freezes and bars splash across packed lights."
+     },
+     "wins": 1,
+     "margin": -111.1
+    },
+    {
+     "program": {
+      "name": "early_bane_snipe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "target": "threat",
+         "ranged": "stack",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "hold"
+      },
+      "why": "Open spacing then walk one or two zealots into the baneling clump so chain blasts happen far from the colossus, then switch to threat fire."
+     },
+     "wins": 1,
+     "margin": -556.3
+    },
+    {
+     "program": {
+      "name": "safe_stutter_ring",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "melee": "hold"
+      },
+      "why": "While the 0.5s stand is still safe, fan a concave and stutter-kite; step off if melee would arrive before the next shot."
+     },
+     "wins": 1,
+     "margin": -241.1
+    },
+    {
+     "program": {
+      "name": "fall_then_freeze_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack",
+       "melee": "hold"
+      },
+      "why": "Withdraw first so suicide units string out, then freeze guns at the mouth and always pick the densest body for overlapping colossus bars."
+     },
+     "wins": 2,
+     "margin": -5.2
+    },
+    {
+     "program": {
+      "name": "threat_rotate_no_chase",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "melee": "hold",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "they_catch_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Never chase faster melee; stand and shoot while the gap holds, rotate wounded zealots, and always pick highest dps-per-hp."
+     },
+     "wins": 0,
+     "margin": -3.9
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "charge_delete_marines",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "melee": "charge",
+         "ranged": "stack",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Throw zealots into lings and banelings to soak while colossus never kites and deletes enemy guns so chip stops; after marines die switch to densest remaining bodies."
+     },
+     "wins": 3,
+     "margin": 67.2
+    },
+    {
+     "program": {
+      "name": "plug_mouth_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "stand": "shoot",
+         "target": "clump",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold_choke"
+      },
+      "why": "Zealots freeze at the ravine choke as a plug so banelings cannot surround; colossus holds and lays a perpendicular bar across the packed lights."
+     },
+     "wins": 1,
+     "margin": -111.1
+    },
+    {
+     "program": {
+      "name": "two_zealot_bane_trip",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "stack",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Open the clump then walk two zealots into the suicide pack so chain detonations happen away from the colossus; remaining melee holds and guns stack onto densest leftover."
+     },
+     "wins": 1,
+     "margin": -404.7
+    },
+    {
+     "program": {
+      "name": "fan_then_freeze_ring",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump",
+         "stand": "shoot",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "melee": "hold"
+      },
+      "why": "While the 0.5s stand is still safe, fan a concave so the colossus line covers the wall; if melee would arrive before the next shot, stutter-step instead of freezing."
+     },
+     "wins": 1,
+     "margin": -241.1
+    },
+    {
+     "program": {
+      "name": "fall_string_then_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack",
+       "melee": "hold"
+      },
+      "why": "Withdraw first so suicide units string out along the wall, then freeze guns at the mouth and always pick the densest body for overlapping bars."
+     },
+     "wins": 2,
+     "margin": -5.2
+    },
+    {
+     "program": {
+      "name": "threat_hold_rotate",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "melee": "hold",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "they_catch_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Never chase faster melee; stand and shoot while the gap holds, rotate wounded zealots, and always pick highest dps-per-hp so marines and remaining banelings die first."
+     },
+     "wins": 0,
+     "margin": -3.9
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "snipe_banes_then_guns",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain",
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "ranged": "stack",
+         "target": "guns",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Closest zealots walk into the baneling pack so they detonate on tanks not the colossus; remaining melee hold outside blast while the laser never kites and deletes marines first then densest leftovers."
+     },
+     "wins": 0,
+     "margin": -716.1
+    },
+    {
+     "program": {
+      "name": "plug_and_bar_hold",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "bar": "bar",
+         "stand": "shoot",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Zealots freeze as a wall plug at the ravine mouth so banelings cannot wrap; colossus stands and lays a perpendicular splash bar across packed lights while the 0.5s stand is still safe."
+     },
+     "wins": 0,
+     "margin": -502.3
+    },
+    {
+     "program": {
+      "name": "charge_threat_stack",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "threat",
+         "bar": "pack",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Send all zealots attack-move into the densest melee so they soak lings and banelings; colossus attack-moves without kiting and always picks the highest-DPS-per-HP body so marines die before chip snowballs."
+     },
+     "wins": 3,
+     "margin": -94.8
+    },
+    {
+     "program": {
+      "name": "two_bait_open_hold",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "snipe",
+         "formation": "open",
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Two closest zealots suicide into the baneling clump to pop them early; rest of melee hold; guns open spacing then freeze and bar splash so chain never hits the colossus."
+     },
+     "wins": 0,
+     "margin": -315.1
+    },
+    {
+     "program": {
+      "name": "stutter_bait_gun_kite",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "melee": "charge",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Only the nearest gun walks as bait while others take safe 0.5s shots; zealots charge to occupy melee so the colossus keeps range; switch to threat once blades arrive."
+     },
+     "wins": 5,
+     "margin": 262.0
+    },
+    {
+     "program": {
+      "name": "fall_then_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "at_mouth",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "First tick walk back to unclump and string suicide units along the wall, then attack-move so colossus splash never stops; zealots hold choke after the pull so they do not feed banelings in the open."
+     },
+     "wins": 0,
+     "margin": -382.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "stutter_bait_gun_kite",
+   "rules": [
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds",
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "stand": "shoot",
+      "melee": "charge",
+      "target": "guns",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "melee_arrives_before_next_shot"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "kite": "all"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "target": "threat",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "melee": "charge",
+    "target": "weakest_in_range"
+   },
+   "why": "Only the nearest gun walks as bait while others take safe 0.5s shots; zealots charge to occupy melee so the colossus keeps range; switch to threat once blades arrive."
+  },
+  "wins": 5,
+  "margin": 262.0,
+  "score": 50262.0
+ }
+}

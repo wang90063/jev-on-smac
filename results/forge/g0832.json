@@ -1,0 +1,315 @@
+{
+ "id": "g0832",
+ "dummy": 2,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_freeze_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "melee": "hold_choke",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "frontline",
+       "bar": "pack"
+      },
+      "why": "Park zealots in the gap so hydras and lings cannot surround; colossus stands and bars splash through the clump of lights while still outranging hydras."
+     },
+     "wins": 4,
+     "margin": 213.9
+    },
+    {
+     "program": {
+      "name": "fan_then_snipe_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "guns",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "melee": "hold_choke"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "melee": "hold"
+      },
+      "why": "Widen before contact so the colossus can fire every hydra as they funnel; then freeze at the mouth and pick enemy guns so hydras die before lings fill the gap."
+     },
+     "wins": 4,
+     "margin": 351.5
+    },
+    {
+     "program": {
+      "name": "bait_gun_zealot_charge",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "melee": "charge",
+         "target": "clump",
+         "bar": "bar",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Nearest gun walks as bait while colossus takes only safe 0.5s shots; zealots charge to pin melee so splash keeps hitting lights instead of kiting into hydra range."
+     },
+     "wins": 0,
+     "margin": -574.7
+    },
+    {
+     "program": {
+      "name": "stack_and_dump_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "target": "threat",
+         "wounded": "rotate",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Do not kite because they catch us; attack-move the colossus through the choke onto the highest DPS-per-HP unit so hydras melt while zealots absorb the first wave."
+     },
+     "wins": 2,
+     "margin": -90.3
+    },
+    {
+     "program": {
+      "name": "hold_mouth_weakest_bar",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "hold",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Stand ground at the gap, never step forward; always paint the lowest-HP body already in range so overlapping colossus bars finish wounded lings before they touch zealots."
+     },
+     "wins": 5,
+     "margin": 412.1
+    },
+    {
+     "program": {
+      "name": "open_then_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "hold_choke",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.3
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "hold_choke"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "wounded": "stay",
+       "target": "frontline"
+      },
+      "why": "Unclump first so splash does not waste on overlapping zealots; after contact, peel units under 40% while remaining guns keep a concave and zealots stay in the neck."
+     },
+     "wins": 0,
+     "margin": -777.3
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "hold_mouth_weakest_bar",
+   "rules": [
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold_choke",
+      "stand": "shoot",
+      "target": "weakest_in_range",
+      "bar": "bar",
+      "tie": "first"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "melee": "hold",
+      "ranged": "hold",
+      "target": "threat"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "melee": "hold_choke",
+    "target": "clump",
+    "bar": "pack"
+   },
+   "why": "Stand ground at the gap, never step forward; always paint the lowest-HP body already in range so overlapping colossus bars finish wounded lings before they touch zealots."
+  },
+  "wins": 5,
+  "margin": 412.1,
+  "score": 50412.1
+ }
+}

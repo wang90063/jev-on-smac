@@ -1,0 +1,366 @@
+{
+ "id": "g0278",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "snipe_bane_hydra_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "stutter",
+         "target": "clump",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Send closest zealots into their baneling pack so our bombs and theirs trade away from the hydra; hydra stutter-kites guns and never stands into melee."
+     },
+     "wins": 5,
+     "margin": 240.8
+    },
+    {
+     "program": {
+      "name": "mass_charge_splash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "clump",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "All melee attack-moves the densest pack so our four banelings detonate on stalkers and marauder while hydra attack-moves; spacing opens first so we do not chain ourselves."
+     },
+     "wins": 0,
+     "margin": -25.4
+    },
+    {
+     "program": {
+      "name": "fall_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Walk hydra back so even-speed stalkers string out, then hold and shoot guns; zealots only snipe bombs if they would chain, otherwise hold so we do not feed their banelings."
+     },
+     "wins": 0,
+     "margin": 343.1
+    },
+    {
+     "program": {
+      "name": "threat_focus_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "target": "threat",
+         "wounded": "rotate",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Kill highest dps-per-hp first (stalkers then marauder) with hydra stutter and wounded rotate; melee charges only after gap is gone so tanks soak rather than suicide first."
+     },
+     "wins": 2,
+     "margin": 54.6
+    },
+    {
+     "program": {
+      "name": "bait_two_concave",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Two closest melee walk into their baneling clump; remaining zealots hold outside blast while hydra fans a concave and kites, focusing clump then frontline."
+     },
+     "wins": 5,
+     "margin": 412.3
+    },
+    {
+     "program": {
+      "name": "hydra_hold_zealot_charge_weak",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "allied_melee": true
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Hydra never chases: hold ground and pick weakest already in range; zealots charge frontline so banelings explode on whatever is tanking while we keep the one gun safe."
+     },
+     "wins": 2,
+     "margin": -49.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_two_concave",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 3
+      }
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "target": "frontline",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "clump"
+   },
+   "why": "Two closest melee walk into their baneling clump; remaining zealots hold outside blast while hydra fans a concave and kites, focusing clump then frontline."
+  },
+  "wins": 5,
+  "margin": 412.3,
+  "score": 50412.3
+ }
+}

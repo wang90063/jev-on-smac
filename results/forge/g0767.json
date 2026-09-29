@@ -1,0 +1,832 @@
+{
+ "id": "g0767",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "lings_first_colossus_focus",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "heaviest",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "heaviest",
+         "kite": "all",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Send the 18 lings in immediately to occupy the two enemy colossi while our 6 guns stutter and delete the heaviest splash threats before they volley the light swarm."
+     },
+     "wins": 2,
+     "margin": -100.6
+    },
+    {
+     "program": {
+      "name": "hold_line_snipe_weak",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 8
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Never chase; guns hold a concave and always pick the lowest-HP armored unit already in range so marauder bonus snowballs a count flip while lings soak the first shots."
+     },
+     "wins": 0,
+     "margin": -703.0
+    },
+    {
+     "program": {
+      "name": "splash_pack_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "bar",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Our colossus wants packed bodies: charge lings to clump the enemy, bar/pack fire on the densest knot, then attack-move once they start bleeding."
+     },
+     "wins": 2,
+     "margin": -127.4
+    },
+    {
+     "program": {
+      "name": "guns_first_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "melee": "hold",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Enemy marauders are the DPS; stutter-kite and focus guns so our armored line trades up, lings only charge after their guns are dropping."
+     },
+     "wins": 2,
+     "margin": -79.5
+    },
+    {
+     "program": {
+      "name": "threat_rotate_concave",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Fan a concave, always shoot the highest DPS-per-HP, and peel wounded units so the colossus and marauders stay alive through the even-range armored brawl."
+     },
+     "wins": 0,
+     "margin": -1571.2
+    },
+    {
+     "program": {
+      "name": "late_stack_after_first_volley",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "frontline",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Keep guns walking back until lings have eaten the opening colossus volleys, then everyone attack-moves and focuses frontline so remaining DPS is continuous."
+     },
+     "wins": 0,
+     "margin": -705.9
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "lings_occupy_delete_colossi",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "heaviest",
+         "formation": "open",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "heaviest",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Send all 18 light melee into both enemy colossi so splash is wasted on zerglings while our one colossus plus marauders stutter-delete the two heaviest splash sources first."
+     },
+     "wins": 2,
+     "margin": -112.9
+    },
+    {
+     "program": {
+      "name": "clump_for_our_colossus_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "bar",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Charge lings to pack the enemy armored ball, fire our colossus on the densest knot with bar/pack, then stack once they bleed so remaining splash finishes the marauders."
+     },
+     "wins": 2,
+     "margin": -127.4
+    },
+    {
+     "program": {
+      "name": "hold_guns_snipe_marauders",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Keep zerglings charging to tank while ranged never chase: hold a line, always pick enemy guns so our marauder anti-armored bonus snowballs a gun-count flip."
+     },
+     "wins": 0,
+     "margin": -672.8
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "melee": "charge",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Kite every gun on highest DPS-per-HP until the trade starts, then attack-move so our remaining guns and lings stay continuous instead of walking."
+     },
+     "wins": 2,
+     "margin": -185.5
+    },
+    {
+     "program": {
+      "name": "delay_guns_until_lings_eat_volley",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "frontline",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Walk our six guns back until the opening colossus volleys have already landed on charging lings, then stack and focus frontline so DPS never idles."
+     },
+     "wins": 0,
+     "margin": -705.9
+    },
+    {
+     "program": {
+      "name": "open_concave_weakest_rotate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "weakest_in_range",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 10
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Fan spacing so two enemy colossi cannot splash both lines, hold concave on lowest-HP already in range, and peel sub-40% units so the armored core lasts the even-range brawl."
+     },
+     "wins": 0,
+     "margin": -1571.2
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "commit_stack_delete_colossi",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Ignore kiting: send 18 lings in as meat while every gun attack-moves the two enemy colossi so their splash is wasted on cheap bodies and our one colossus plus marauders delete the heaviest splash first."
+     },
+     "wins": 1,
+     "margin": -91.4
+    },
+    {
+     "program": {
+      "name": "concave_bar_on_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "bar",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Charge lings to pack the enemy armored ball, fan our guns, and fire the colossus bar/pack on the densest knot so splash plus marauder bonus melts the marauder clump."
+     },
+     "wins": 3,
+     "margin": 83.8
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "Until the trade starts, every gun kites and picks highest DPS-per-HP; once they bleed, stack and peel wounded so remaining guns stay alive versus the extra colossus."
+     },
+     "wins": 2,
+     "margin": -185.5
+    },
+    {
+     "program": {
+      "name": "fall_back_hold_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Walk guns back into a hold line so the 7-range colossus cones miss the first approach, then stand-ground snipe the nearest damage dealer while lings keep charging."
+     },
+     "wins": 0,
+     "margin": -736.6
+    },
+    {
+     "program": {
+      "name": "open_stutter_guns_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "melee": "charge",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Spread, kite all guns onto enemy ranged so marauder-vs-marauder bonus snowballs a gun-count flip while lings occupy colossi; commit stack only after enemy guns drop."
+     },
+     "wins": 0,
+     "margin": -1575.0
+    },
+    {
+     "program": {
+      "name": "hold_melee_bait_then_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "stutter",
+         "target": "weakest_in_range",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Keep lings holding until almost in range so they do not suicide into both colossi early; then charge and stack weakest-in-range so splash-damaged marauders die first."
+     },
+     "wins": 0,
+     "margin": -376.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "concave_bar_on_clump",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "concave",
+      "target": "clump",
+      "bar": "pack",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "clump",
+      "bar": "bar",
+      "melee": "charge"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack",
+    "target": "clump",
+    "bar": "pack"
+   },
+   "why": "Charge lings to pack the enemy armored ball, fan our guns, and fire the colossus bar/pack on the densest knot so splash plus marauder bonus melts the marauder clump."
+  },
+  "wins": 3,
+  "margin": 83.8,
+  "score": 30083.8
+ }
+}

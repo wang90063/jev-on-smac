@@ -1,0 +1,1215 @@
+{
+ "id": "g1132",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_snipe_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "They outrange and outrun us so chasing dies; stand still, only shoot what walks in, always finish the lowest-HP gun so count flips despite extra stalkers."
+     },
+     "wins": 0,
+     "margin": -732.4
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Hydra DPS-per-HP is best; stutter and peel until they bleed, then attack-move so cooldowns never idle and threat (stalkers on armored) dies first."
+     },
+     "wins": 0,
+     "margin": -440.8
+    },
+    {
+     "program": {
+      "name": "fan_concave_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Arena is open; fan a ring so all eleven hydras fire together into the densest pack, then stutter only if someone can already shoot."
+     },
+     "wins": 3,
+     "margin": -128.9
+    },
+    {
+     "program": {
+      "name": "stack_delete_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "formation": "keep",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.6
+         }
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Ignore kiting; walk in as a blob, focus enemy ranged (stalkers then hydras) so their extra range never gets a second volley."
+     },
+     "wins": 3,
+     "margin": -102.2
+    },
+    {
+     "program": {
+      "name": "hold_heaviest_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Stand ground and chew the tankiest damage-dealer first (stalker shields) while rotating wounded hydras out so we keep eleven barrels longer."
+     },
+     "wins": 0,
+     "margin": -966.8
+    },
+    {
+     "program": {
+      "name": "frontline_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "First volley on the nearest dealer to collapse their line, then lock hold on lowest HP in range so overkill does not waste DPS."
+     },
+     "wins": 0,
+     "margin": -732.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_fan_threat_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Spread before they close so all eleven hydras fire; snipe highest DPS-per-HP (stalkers) while far, then attack-move so hydra cooldowns never idle once trading starts."
+     },
+     "wins": 0,
+     "margin": -1668.2
+    },
+    {
+     "program": {
+      "name": "blob_walk_delete_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "guns",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.55
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Refuse to kite into extra stalker range; march as one pack and always focus enemy guns so their extra range never gets a clean second volley."
+     },
+     "wins": 3,
+     "margin": -77.9
+    },
+    {
+     "program": {
+      "name": "pull_to_rally_then_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "They outrange and outrun us; walk to the back of the octagon, stand still, and always finish the lowest-HP gun already in our range so count flips despite extra stalkers."
+     },
+     "wins": 0,
+     "margin": -732.4
+    },
+    {
+     "program": {
+      "name": "stutter_until_bleed_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Hydra DPS-per-HP is best; stutter-kite threat (stalkers) until they start bleeding, then attack-move so no cooldown idles while wounded hydras peel."
+     },
+     "wins": 0,
+     "margin": -440.8
+    },
+    {
+     "program": {
+      "name": "concave_clump_splash_ring",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Open arena: fan a ring so every hydra shoots the densest enemy pack at once; keep concave even after first shots so splash-like focus collapses a clump."
+     },
+     "wins": 0,
+     "margin": -1668.2
+    },
+    {
+     "program": {
+      "name": "heaviest_first_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Chew stalker shields (highest remaining HP dealers) first while rotating sub-40% hydras out of reach so we keep more barrels alive through the longer fight."
+     },
+     "wins": 0,
+     "margin": -551.6
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "concave_clump_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Fan a ring immediately so all 11 hydras fire together into the densest pack; no retreat because falling back lets stalker range farm us."
+     },
+     "wins": 4,
+     "margin": -24.6
+    },
+    {
+     "program": {
+      "name": "blob_stack_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "wing": "stay",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.5
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "March as one pack and always delete enemy guns so extra stalker range never gets clean volleys; rotate only when we are bleeding."
+     },
+     "wins": 3,
+     "margin": -47.0
+    },
+    {
+     "program": {
+      "name": "threat_stutter_open",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "kite": "all",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Open spacing and stutter-kite the highest DPS-per-HP (stalkers on armored hydras) for the whole fight so their range advantage is wasted on empty space."
+     },
+     "wins": 4,
+     "margin": -24.6
+    },
+    {
+     "program": {
+      "name": "frontline_concave_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "Concave onto the nearest dealer first to collapse their line, then lock onto lowest HP already in range so overkill does not idle barrels."
+     },
+     "wins": 4,
+     "margin": -24.6
+    },
+    {
+     "program": {
+      "name": "heaviest_stack_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Chew the highest remaining-HP dealers (stalker shields) while rotating sub-40% hydras out so more barrels stay alive through the longer shield-strip."
+     },
+     "wins": 0,
+     "margin": -579.8
+    },
+    {
+     "program": {
+      "name": "guns_then_clump_concave",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "guns"
+      },
+      "why": "Walk in focusing guns until someone can shoot, then fan a ring onto the clump so splash-free hydra volleys still overlap on the same bodies."
+     },
+     "wins": 4,
+     "margin": -24.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_snipe_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "Never chase into stalker range; stand and always pick the lowest-HP already in hydra range so overkill snowballs a count flip."
+     },
+     "wins": 0,
+     "margin": -732.4
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.55
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Kite the highest DPS-per-HP (stalkers) until they bleed, then attack-move so hydra cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -469.6
+    },
+    {
+     "program": {
+      "name": "concave_clump_ring",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Fan a wide ring immediately so all eleven hydras fire the same clump; take the shot rather than stepping when the window is tight."
+     },
+     "wins": 4,
+     "margin": -24.6
+    },
+    {
+     "program": {
+      "name": "guns_first_hold_line",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns"
+      },
+      "why": "Delete enemy ranged (stalkers then hydras) so extra range never gets a clean second volley; hold ground once anyone can shoot."
+     },
+     "wins": 0,
+     "margin": -568.3
+    },
+    {
+     "program": {
+      "name": "heaviest_stalker_focus",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "heaviest",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Dump all DPS into the highest-HP dealer (shielded stalkers) so armored bonus never cycles through many hydras."
+     },
+     "wins": 4,
+     "margin": -24.6
+    },
+    {
+     "program": {
+      "name": "open_rotate_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.6
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Spread, always peel units under 40% out of stalker range, and collapse the nearest dealer so their line folds."
+     },
+     "wins": 0,
+     "margin": -551.6
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "concave_clump_commit",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "wing": "step",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Fan a ring immediately so all 11 hydras fire together into the densest pack; no retreat because falling back lets stalker range farm us."
+  },
+  "wins": 4,
+  "margin": -24.6,
+  "score": 39975.4
+ }
+}

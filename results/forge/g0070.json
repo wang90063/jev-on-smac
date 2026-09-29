@@ -1,0 +1,1056 @@
+{
+ "id": "g0070",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "baneling_clump_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "We have seven bombs and no guns; close immediately and detonate on the densest marine-stalker pack so one blast deletes the clump."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "zealot_front_guns_first",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Zealots soak the first volley while banes path onto marines; killing guns first stops the cheap DPS before stalkers can kiting-peel."
+     },
+     "wins": 4,
+     "margin": 336.4
+    },
+    {
+     "program": {
+      "name": "heaviest_stalker_break",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Stalkers have huge shield+hp and armored bonus vs zealots; focus the tankiest damage-dealer so remaining marines melt to splash instead of kiting forever."
+     },
+     "wins": 4,
+     "margin": 388.6
+    },
+    {
+     "program": {
+      "name": "spread_then_crash",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Start clumped so we get focused; open the line on the approach so marines cannot all shoot the same bane, then crash together onto clump."
+     },
+     "wins": 0,
+     "margin": 257.2
+    },
+    {
+     "program": {
+      "name": "threat_dps_then_detonate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Pick the enemy with highest DPS per remaining HP (marines) until trade starts, then switch to clump so leftover banes wipe the pack."
+     },
+     "wins": 4,
+     "margin": 336.2
+    },
+    {
+     "program": {
+      "name": "hold_gap_then_all_in",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": "almost_in_range"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "If they are still far, keep charging; once melee is on us, stand and hit only what enters reach so banes do not over-chase kiting stalkers off the pack."
+     },
+     "wins": 4,
+     "margin": 387.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "all_in_clump_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump",
+       "wounded": "stay"
+      },
+      "why": "Seven banelings win if they detonate together on the densest marine-stalker pack; charge immediately and never switch off clump so splash and bombs share one target."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "open_line_then_crash",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Start clumped so marines focus-fire; spread on the approach so each bane is a separate shot, then crash onto clump once almost in range."
+     },
+     "wins": 0,
+     "margin": 257.2
+    },
+    {
+     "program": {
+      "name": "zealots_tank_guns_then_pack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Zealots soak the first volley while we path onto marines (cheap DPS); once our bombs are in blast range, switch to clump so leftover banes wipe the pack."
+     },
+     "wins": 4,
+     "margin": 336.4
+    },
+    {
+     "program": {
+      "name": "break_stalker_then_splash",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Stalkers have huge shield+hp and armored bonus vs zealots and can kite forever; focus the tankiest dealer until the pack is small, then clump-detonate remaining marines."
+     },
+     "wins": 4,
+     "margin": 388.6
+    },
+    {
+     "program": {
+      "name": "bane_snipe_bait",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump",
+       "bait": "bait_one"
+      },
+      "why": "Closest zealots walk into the suicide group as bait so banes detonate on the densest guns; remaining melee hold outside the blast instead of chasing kiting stalkers."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "threat_marines_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Marines are highest DPS per remaining HP; pick threat until trade starts so cheap guns die first, then clump and rotate wounded zealots so they do not die in the splash."
+     },
+     "wins": 4,
+     "margin": 336.2
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_then_clump_detonate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Spread first so banes do not explode each other, then charge the densest pack so splash and bombs share one detonation."
+     },
+     "wins": 0,
+     "margin": 257.2
+    },
+    {
+     "program": {
+      "name": "zealot_bait_two_then_hold_blast",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Send two closest zealots into the suicide group as decoys so banes connect; remaining melee hold outside blast instead of chasing kiting stalkers."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "threat_marines_until_bleed",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Marines are cheap high DPS-per-HP; zealots charge while we focus threat so the first bane hits the squishy gun line, then clump the leftovers."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "guns_then_heaviest_stalker",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 7
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Delete marines first to stop cheap DPS, then switch to heaviest so armored stalkers cannot kite the remaining zealots forever."
+     },
+     "wins": 4,
+     "margin": 394.0
+    },
+    {
+     "program": {
+      "name": "late_commit_after_approach",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Keep charging while far; once almost in range lock onto clump and never rotate wounded so bombs stay in the pack instead of peeling."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "snipe_bombs_on_clump",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "target": "clump"
+      },
+      "why": "Closest melee walks onto enemy suicide-adjacent densest bodies so banelings detonate together; rest hold outside the blast radius."
+     },
+     "wins": 4,
+     "margin": 368.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_then_pack_detonate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump",
+       "wounded": "stay"
+      },
+      "why": "Start clumped so marines shred the blob; open spacing on the approach so banes arrive from more angles, then lock clump+stay so the first connections chain."
+     },
+     "wins": 0,
+     "margin": 257.2
+    },
+    {
+     "program": {
+      "name": "two_zealot_suicide_path",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Always send two zealots into the densest suicide group so banes walk a shorter, tanked path instead of eating stalker kiting; remaining melee snipe rather than chase."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "delete_marines_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Marines are unarmored high DPS; guns-target until their gun count drops, then splash the leftover stalkers so they cannot kite forever."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "bleed_then_chain",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Charge threat (marines) until someone is actually bleeding so the first bane is not wasted on full shields, then clump-detonate the wounded pack."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "hold_after_contact",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Charge to close the far gap; once blades are in, hold so zealots stay in the splash radius instead of peeling after kiting stalkers, keeping bombs on the clump."
+     },
+     "wins": 4,
+     "margin": 387.4
+    },
+    {
+     "program": {
+      "name": "front_then_heaviest_then_pack",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Crash the nearest dealer while the line is intact, switch to heaviest stalkers once a few die so shields drop, then clump remaining bodies for the last baneling waves."
+     },
+     "wins": 4,
+     "margin": 368.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "guns_then_heaviest_stalker",
+   "rules": [
+    {
+     "when": {
+      "enemy_guns": {
+       ">=": 7
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "their_alive": {
+       "<=": 6
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "target": "heaviest",
+      "wounded": "stay"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "target": "guns"
+   },
+   "why": "Delete marines first to stop cheap DPS, then switch to heaviest so armored stalkers cannot kite the remaining zealots forever."
+  },
+  "wins": 4,
+  "margin": 394.0,
+  "score": 40394.0
+ }
+}

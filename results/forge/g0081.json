@@ -1,0 +1,974 @@
+{
+ "id": "g0081",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "fall_then_stutter_clump: rule 0: unknown exam 'rally_is_behind_us'"
+   ],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Open the clump immediately so a baneling chain cannot wipe the pack, then stutter-kite every marine because the 0.5s stand still keeps melee off us; focus the five stalkers so remaining dps is only suicide bodies that cannot shoot back."
+     },
+     "wins": 0,
+     "margin": -856.0
+    },
+    {
+     "program": {
+      "name": "concave_then_freeze",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Fan a wide ring while still far so all 24 guns fire together without stacking for a blast, then lock in place the instant the gap still holds; pick heaviest so the stalkers die before banelings close."
+     },
+     "wins": 0,
+     "margin": -517.7
+    },
+    {
+     "program": {
+      "name": "bait_kiter_plus_stack",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat"
+      },
+      "why": "One marine always walks so the baneling pack is pulled off the rest; remaining guns attack-move and pick threat (high dps/hp) once spacing is open, never chasing into blades."
+     },
+     "wins": 0,
+     "margin": -879.5
+    },
+    {
+     "program": {
+      "name": "hold_gap_rotate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Never step forward; stand-ground the moment we can shoot because the gap still holds, spread first, and rotate any marine under 40% out of the coming blast radius while focusing front-line stalkers."
+     },
+     "wins": 0,
+     "margin": -838.5
+    },
+    {
+     "program": {
+      "name": "fall_then_stutter_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "clump",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Walk the rally even though they chase, using the extra ticks to unclump; once someone can fire, switch to stutter and hit the densest body so overlapping marine shots still land on the same stalker or baneling cluster."
+     },
+     "wins": 0,
+     "margin": -850.9
+    },
+    {
+     "program": {
+      "name": "weakest_stack_after_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "kite": "all"
+      },
+      "why": "Force open spacing first, then attack-move so ready guns never idle; always pick the lowest-hp unit already in range so stalkers drop one-by-one before any baneling explosion, stepping only when the 0.5s window would let melee in."
+     },
+     "wins": 0,
+     "margin": -874.2
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_then_guns_stutter",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Unclump first so a baneling chain cannot wipe the pack, then every marine uses the 0.5s-safe stutter while always focusing stalkers (the only units that shoot back); wounded rotate out of the blast."
+     },
+     "wins": 0,
+     "margin": -856.0
+    },
+    {
+     "program": {
+      "name": "concave_wing_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "While still far, fan a wide ring and step the wings so 24 guns fire together without stacking; once anyone can shoot, switch to stutter-all and pick the densest body so overlapping shots land on one stalker or baneling knot."
+     },
+     "wins": 0,
+     "margin": -770.8
+    },
+    {
+     "program": {
+      "name": "hold_the_gap_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Never chase; spread immediately then freeze and take every safe 0.5s shot the moment the melee gap still holds, always deleting stalkers first so remaining dps is only suicide bodies."
+     },
+     "wins": 0,
+     "margin": -838.5
+    },
+    {
+     "program": {
+      "name": "bait_one_pull_then_stack",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open"
+        },
+        "set": {
+         "ranged": "stack",
+         "kite": "bait_one",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "The closest marine always walks so the baneling pack is peeled off the body of the army; remaining guns attack-move once spacing is open and pick threat so high dps/hp stalkers die first."
+     },
+     "wins": 0,
+     "margin": -830.4
+    },
+    {
+     "program": {
+      "name": "rally_then_freeze",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Walk the rally even though they chase, using those ticks to unclump; once a gun can fire, lock in place at the rally and shoot whatever walks in, rotating wounded out of blast radius."
+     },
+     "wins": 2,
+     "margin": -322.8
+    },
+    {
+     "program": {
+      "name": "heaviest_stutter_window",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Keep the 0.5s stand only while melee still cannot arrive, pick the highest-hp damage dealer so stalkers vanish before banelings close, and step away the instant that window would let blades in."
+     },
+     "wins": 0,
+     "margin": -597.7
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_bait_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "wounded": "rotate",
+       "formation": "open"
+      },
+      "why": "Unclump immediately so a chain blast cannot wipe the ball, peel the closest marine as bait so banelings detonate off the main body, then stutter-kite while always deleting stalkers first."
+     },
+     "wins": 0,
+     "margin": -861.8
+    },
+    {
+     "program": {
+      "name": "rally_open_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Even though they chase, walking the rally buys ticks to unclump; once anyone can fire, stutter all and pick threat so high dps/hp stalkers die before remaining suicide bodies close."
+     },
+     "wins": 0,
+     "margin": -850.9
+    },
+    {
+     "program": {
+      "name": "concave_then_kite_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest",
+       "stand": "step",
+       "wounded": "rotate"
+      },
+      "why": "Fan a wide ring while still far so 24 guns fire together without stacking, then switch to full stutter and dump into the highest-hp dealer so stalkers vanish first."
+     },
+     "wins": 0,
+     "margin": -770.8
+    },
+    {
+     "program": {
+      "name": "hold_rally_guns_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Fall back and freeze at the rally so melee must walk into a firing line; always delete remaining guns and rotate wounded out of blast radius."
+     },
+     "wins": 0,
+     "margin": -549.9
+    },
+    {
+     "program": {
+      "name": "stutter_clump_then_front",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "frontline",
+       "wounded": "rotate",
+       "kite": "all"
+      },
+      "why": "While suicide units can still chain, pick the densest body so overlapping marine volleys pop a knot; after that switch to frontline so remaining stalkers die."
+     },
+     "wins": 0,
+     "margin": -856.0
+    },
+    {
+     "program": {
+      "name": "wing_open_stack_weakest",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Step the wings and open spacing so the line is not a blast target, then attack-move onto the lowest-hp unit already in range so marines never idle and finish wounded stalkers quickly."
+     },
+     "wins": 0,
+     "margin": -810.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "rally_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Walk to rally while unclumping so chain blasts miss; freeze and delete stalkers first so remaining melee walks into a firing squad without return fire."
+     },
+     "wins": 0,
+     "margin": -549.9
+    },
+    {
+     "program": {
+      "name": "stutter_threat_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "stand": "step",
+       "wounded": "rotate"
+      },
+      "why": "Never clump; stutter every gun so 0.5s stands only happen while the gap holds, and always dump into highest dps/hp so stalkers die before banelings arrive."
+     },
+     "wins": 0,
+     "margin": -856.0
+    },
+    {
+     "program": {
+      "name": "concave_then_hold_front",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Fan a ring while still far so 24 guns volley together without stacking, then lock the line and shoot the nearest dealer so banelings soak overlapping fire as they walk in."
+     },
+     "wins": 0,
+     "margin": -517.7
+    },
+    {
+     "program": {
+      "name": "fall_stack_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Give ground until someone can shoot, then attack-move so cooldown never idles; pick already-in-range weakest so wounded stalkers finish instead of spreading damage."
+     },
+     "wins": 1,
+     "margin": -405.0
+    },
+    {
+     "program": {
+      "name": "bait_stutter_heaviest",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "heaviest",
+       "stand": "step",
+       "wounded": "rotate"
+      },
+      "why": "Closest marine always walks to peel the baneling pack off the clump; remaining guns stutter-shoot the highest-hp dealer so stalkers vanish first."
+     },
+     "wins": 0,
+     "margin": -861.8
+    },
+    {
+     "program": {
+      "name": "hold_clump_step",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "stand": "shoot",
+       "wounded": "rotate"
+      },
+      "why": "Stand ground and focus the densest body so overlapping marine volleys splash the baneling knot; step away the instant the 0.5s window would let blades in."
+     },
+     "wins": 0,
+     "margin": -706.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "rally_then_freeze",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "frontline",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline",
+    "wounded": "rotate"
+   },
+   "why": "Walk the rally even though they chase, using those ticks to unclump; once a gun can fire, lock in place at the rally and shoot whatever walks in, rotating wounded out of blast radius."
+  },
+  "wins": 2,
+  "margin": -322.8,
+  "score": 19677.2
+ }
+}

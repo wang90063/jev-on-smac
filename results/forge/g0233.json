@@ -1,0 +1,1289 @@
+{
+ "id": "g0233",
+ "dummy": 1,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Zerglings plug the gap so zealots cannot flood; stalker kites in the pocket, only shooting when the 0.5s stand still holds the gap."
+     },
+     "wins": 0,
+     "margin": -540.4
+    },
+    {
+     "program": {
+      "name": "lings_charge_stalker_kites",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "Throw the 10 lings as a meat wall while the faster stalker stutter-kites and peels wounded; focus the nearest zealot so the clump melts."
+     },
+     "wins": 0,
+     "margin": -225.6
+    },
+    {
+     "program": {
+      "name": "fall_back_then_hold_fire",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "frontline"
+      },
+      "why": "Walk the whole army to the choke first, then stand-ground guns so zealots waste time walking while the stalker never overextends."
+     },
+     "wins": 0,
+     "margin": -329.0
+    },
+    {
+     "program": {
+      "name": "bait_one_concave_focus_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "ranged": "concave",
+         "kite": "bait_one",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_one",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "hold",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "One ling soaks first contact, remaining melee hold the neck; stalker fans a concave and always kites the highest DPS/HP zealot."
+     },
+     "wins": 0,
+     "margin": -124.8
+    },
+    {
+     "program": {
+      "name": "stack_guns_rotate_wounded",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "formation": "keep",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Attack-move the stalker so it never idles, lings charge, always shoot the lowest-HP zealot already in range and peel units under 40%."
+     },
+     "wins": 0,
+     "margin": -186.0
+    },
+    {
+     "program": {
+      "name": "pocket_stutter_heaviest",
+      "rules": [
+       {
+        "when": {
+         "pocket": "open"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "If we are still in the open pocket, keep spacing and kite; once at the mouth, hold the choke and burn the tankiest zealot first so armor bonuses matter."
+     },
+     "wins": 0,
+     "margin": -595.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "gap_plug_heaviest_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "melee": "hold_choke",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "heaviest",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Lings never leave the choke so zealots funnel one-wide; stalker only takes 0.5s shots that still keep the gap, always burning the tankiest armored zealot for the +5 bonus."
+     },
+     "wins": 0,
+     "margin": -523.6
+    },
+    {
+     "program": {
+      "name": "lings_hold_guns_hold_never_chase",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "weakest_in_range"
+      },
+      "why": "Both lines stand their ground at the mouth: stalker never steps forward so zealots eat the full walk, lings only hit what enters the gap, focus whoever is already in range."
+     },
+     "wins": 0,
+     "margin": -329.0
+    },
+    {
+     "program": {
+      "name": "bait_ling_then_charge_rest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline",
+       "kite": "all"
+      },
+      "why": "One ling soaks first blades while the stalker kites; once any gun can fire, remaining lings charge so zealots stay glued to melee instead of the stalker."
+     },
+     "wins": 0,
+     "margin": -176.7
+    },
+    {
+     "program": {
+      "name": "concave_neck_then_stack",
+      "rules": [
+       {
+        "when": {
+         "pocket": "open"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "hold_choke",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold_choke",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold_choke",
+       "target": "heaviest"
+      },
+      "why": "Fan a concave while still open so the single stalker has a clean firing lane through the gap; after first shots, attack-move so it never idles while lings pin the neck."
+     },
+     "wins": 0,
+     "margin": -592.2
+    },
+    {
+     "program": {
+      "name": "withdraw_gap_always_kite",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "hold_choke",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "threat",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Because we are faster, every tick we walk away if a 0.5s stand would let blades arrive; lings hold the choke as a speed bump while the stalker peels wounded and focuses highest DPS/HP."
+     },
+     "wins": 0,
+     "margin": -575.1
+    },
+    {
+     "program": {
+      "name": "stack_when_ready_charge_when_ratio_high",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready",
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "If a gun is ready, attack-move so damage is never wasted; while we still outnumber badly, throw lings as a meat wall; peel and stutter only after blades actually arrive."
+     },
+     "wins": 0,
+     "margin": -249.8
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stalker_forever_kite_lings_wall",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Stalker only takes safe 0.5s shots and otherwise walks because we are faster; lings charge so zealots glue to melee instead of closing the kite; always burn the highest-hp armored zealot for the +5 bonus."
+     },
+     "wins": 0,
+     "margin": -317.5
+    },
+    {
+     "program": {
+      "name": "choke_plug_then_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "melee": "hold_choke",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "frontline",
+       "kite": "all"
+      },
+      "why": "Melee never leaves the gap so zealots funnel one-wide; stalker falls back to the mouth then only stutters while focusing the nearest zealot; peel wounded if blades arrive."
+     },
+     "wins": 0,
+     "margin": -538.9
+    },
+    {
+     "program": {
+      "name": "concave_bait_kite_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "bait_one",
+         "melee": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.5
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Stalker fans a concave then stutters; closest gun always walks as bait so the pack never gets surrounded; lings charge once we can shoot so zealots stay occupied."
+     },
+     "wins": 0,
+     "margin": -202.4
+    },
+    {
+     "program": {
+      "name": "hold_ground_guns_lings_charge_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "formation": "open",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Once in range the stalker never chases—stand-ground so zealots walk the full gap; lings charge into the funnel; pick the lowest-hp zealot already in range."
+     },
+     "wins": 0,
+     "margin": -342.7
+    },
+    {
+     "program": {
+      "name": "stack_ready_charge_ratio_peel",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready",
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "If the gun is ready, attack-move so no damage is wasted; while we still outnumber, throw lings as a meat wall; only stutter-and-peel after blades actually arrive."
+     },
+     "wins": 0,
+     "margin": -249.8
+    },
+    {
+     "program": {
+      "name": "open_wings_threat_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Widen the line before contact, kite with all guns, always shoot the highest DPS-per-HP zealot, and rotate any unit under 40% out of reach so the stalker survives the last zealots."
+     },
+     "wins": 0,
+     "margin": -253.4
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_stalker_kites",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Lings never walk through the gap; they hold the neck so zealots bottleneck. Stalker kites in the pocket, always taking the 0.5s shot while gap_holds, focusing the nearest zealot so the pile melts one by one."
+     },
+     "wins": 0,
+     "margin": -535.2
+    },
+    {
+     "program": {
+      "name": "lings_wall_stalker_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "hold",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Throw the ten lings into the gap as a living wall and freeze the stalker on hold so it never walks into blades; it only shoots whoever enters range, focusing heaviest so armored bonus is spent on one zealot."
+     },
+     "wins": 0,
+     "margin": -337.1
+    },
+    {
+     "program": {
+      "name": "fall_open_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Until first blood, back the whole army through the choke so zealots string. Then stutter-kite the stalker on threat (DPS/HP) while remaining lings charge to glue zealots."
+     },
+     "wins": 0,
+     "margin": -305.5
+    },
+    {
+     "program": {
+      "name": "concave_hold_choke_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "melee": "hold_choke",
+         "formation": "open",
+         "wing": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "hold_choke",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "weakest_in_range"
+      },
+      "why": "Stalker fans a concave from the pocket while melee parks on the choke; once a shot is legal, pick weakest-in-range so each volley finishes a zealot instead of spreading damage."
+     },
+     "wins": 0,
+     "margin": -522.0
+    },
+    {
+     "program": {
+      "name": "bait_ling_gap_then_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline",
+       "kite": "all"
+      },
+      "why": "One closest ling walks as bait so zealots commit into the gap; remaining melee hold the neck. Stalker stutters and peels; after contact the rest of the lings charge so the stalker is never the closest unit."
+     },
+     "wins": 0,
+     "margin": -176.7
+    },
+    {
+     "program": {
+      "name": "stack_pocket_focus_front",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold_choke",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Attack-move the stalker so cooldown is never wasted; lings charge only after we can shoot so they arrive as a pack in the neck. Always frontline, rotate wounded, and step away if blades reach the 0.5s window."
+     },
+     "wins": 0,
+     "margin": -522.2
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_one_concave_focus_threat",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "melee": "hold",
+      "ranged": "concave",
+      "kite": "bait_one",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "enemy_melee": true
+     },
+     "set": {
+      "melee": "charge",
+      "bait": "bait_one",
+      "target": "threat",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "alive_ratio": {
+       ">=": 2
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "melee": "hold",
+    "target": "threat",
+    "kite": "all"
+   },
+   "why": "One ling soaks first contact, remaining melee hold the neck; stalker fans a concave and always kites the highest DPS/HP zealot."
+  },
+  "wins": 0,
+  "margin": -124.8,
+  "score": -124.8
+ }
+}

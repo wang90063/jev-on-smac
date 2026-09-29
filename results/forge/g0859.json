@@ -1,0 +1,291 @@
+{
+ "id": "g0859",
+ "dummy": 4,
+ "hand_rules": 5,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "colossus_bar_fan",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "bar",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Use our extra range and colossus splash: fan a concave while far, then bar the densest hydra pack so one laser deletes clumps before their extra bodies matter."
+     },
+     "wins": 0,
+     "margin": -138.4
+    },
+    {
+     "program": {
+      "name": "kiting_threat_open",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "We share speed but outrange with the colossus; stutter-kite the highest DPS-per-HP hydra so their numbers melt without ever closing."
+     },
+     "wins": 5,
+     "margin": 255.6
+    },
+    {
+     "program": {
+      "name": "fall_back_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "bar": "pack"
+      },
+      "why": "Give ground until they walk into our 7-range, then stand and snipe guns so the colossus farms walking hydras without chasing."
+     },
+     "wins": 1,
+     "margin": -59.4
+    },
+    {
+     "program": {
+      "name": "commit_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack",
+       "kite": "all"
+      },
+      "why": "Once anyone can shoot, attack-move as a clump so cooldowns never idle and splash plus hydra volleys hit the same pack."
+     },
+     "wins": 4,
+     "margin": 182.0
+    },
+    {
+     "program": {
+      "name": "weakest_first_concave",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "kite": "all"
+      },
+      "why": "Fan then always delete the lowest-HP hydra already in range so count flips before their extra two bodies fire a full volley."
+     },
+     "wins": 5,
+     "margin": 334.5
+    },
+    {
+     "program": {
+      "name": "heaviest_front_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.6
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "frontline",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "bar": "bar",
+       "wounded": "stay"
+      },
+      "why": "Focus the tankiest hydra so splash overkill is not wasted, rotate wounded hydras out, keep colossus firing the front line."
+     },
+     "wins": 0,
+     "margin": -356.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "weakest_first_concave",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "wing": "step",
+      "target": "weakest_in_range"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "weakest_in_range",
+      "stand": "shoot",
+      "tie": "first"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "target": "weakest_in_range",
+    "kite": "all"
+   },
+   "why": "Fan then always delete the lowest-HP hydra already in range so count flips before their extra two bodies fire a full volley."
+  },
+  "wins": 5,
+  "margin": 334.5,
+  "score": 50334.5
+ }
+}

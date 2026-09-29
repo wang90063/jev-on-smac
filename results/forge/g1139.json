@@ -1,0 +1,1063 @@
+{
+ "id": "g1139",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_hold_kill_stalkers",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "They outrange and outspeed us so we never chase; unclump, stand, and melt the 160-hp stalkers first so their 13-dmg shots vanish."
+     },
+     "wins": 0,
+     "margin": -807.3
+    },
+    {
+     "program": {
+      "name": "fall_back_rally_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Rally is already behind us; walk to it, form a wall, and only shoot what walks in so we never eat extra stalker range."
+     },
+     "wins": 0,
+     "margin": -807.3
+    },
+    {
+     "program": {
+      "name": "concave_melt_marines",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Ignore stalkers, fan a ring, and delete the 24 enemy marines first so remaining stalkers cannot trade volume."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "commit_stack_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "We outnumber; attack-move immediately, always shoot highest DPS-per-HP, never idle cooldowns on an open field."
+     },
+     "wins": 1,
+     "margin": -204.7
+    },
+    {
+     "program": {
+      "name": "stutter_try_anyway",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "weakest_in_range",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline"
+      },
+      "why": "Even though they are faster, stutter plus open spacing can still desync stalker volleys while we pick weakest in range."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "wide_line_guns_then_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "wing": "step",
+         "formation": "open",
+         "ranged": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 7
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Step wings out, hold a long firing line, kill enemy marines first, then switch to remaining stalkers once their numbers drop."
+     },
+     "wins": 0,
+     "margin": -807.3
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_then_stack_threat_stalkers",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Unclump while far, then attack-move the highest DPS-per-HP (stalkers) so extra armored damage dies first and our volume is never idle."
+     },
+     "wins": 1,
+     "margin": -186.4
+    },
+    {
+     "program": {
+      "name": "stack_guns_delete_marines",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 7
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Ignore the three stalkers and melt the 24 enemy marines with continuous attack-move so we keep the numbers advantage."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "hold_line_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Do not walk into stalker range; stand and shoot what enters, then commit stack once trading starts so cooldowns stay busy."
+     },
+     "wins": 0,
+     "margin": -733.2
+    },
+    {
+     "program": {
+      "name": "concave_ring_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "threat"
+      },
+      "why": "Fan a ring for more guns on target, then focus threat so stalkers and overlapping marines die under a wide firing arc."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "weakest_volume_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "With 30 guns, always attack-move the lowest-HP unit already in range so overkill is low and bodies drop fast."
+     },
+     "wins": 3,
+     "margin": 3.2
+    },
+    {
+     "program": {
+      "name": "stutter_until_trade_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Kite on the approach to desync first volleys despite being slower, then lock stack and threat once anyone is bleeding."
+     },
+     "wins": 1,
+     "margin": -208.1
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "volume_weakest_open_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Best prior idea: unclump then always attack-move the lowest-HP unit already in range so 30 guns drop bodies with little overkill."
+     },
+     "wins": 3,
+     "margin": 2.2
+    },
+    {
+     "program": {
+      "name": "concave_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Fan a ring on approach so more marines shoot at once, then lock volume fire on the lowest HP already in range."
+     },
+     "wins": 0,
+     "margin": -314.2
+    },
+    {
+     "program": {
+      "name": "kill_marines_then_stalkers",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 9
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Enemy marines are the bulk of DPS; delete guns first, then switch to heaviest stalkers once their marine count collapses."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "threat_stack_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Always attack-move the highest DPS-per-HP (stalkers) so armored bonus shots die first; peel the wounded so they do not feed free kills."
+     },
+     "wins": 1,
+     "margin": -205.6
+    },
+    {
+     "program": {
+      "name": "stutter_open_then_weakest_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "frontline",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Desync first stalker volleys with stutter while clumped, then dump all cooldowns into weakest-in-range once anyone can shoot."
+     },
+     "wins": 1,
+     "margin": -218.0
+    },
+    {
+     "program": {
+      "name": "frontline_then_clump_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Burn the nearest damage-dealer to collapse their line, then pile onto the densest pack so simultaneous marine volleys overkill the same clump."
+     },
+     "wins": 0,
+     "margin": -281.8
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "unclump_then_weakest_volume",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Best prior: spread while far so 30 guns do not overkill, then always attack-move the lowest-HP already in range so bodies drop before stalker bonus shots matter."
+     },
+     "wins": 4,
+     "margin": 70.6
+    },
+    {
+     "program": {
+      "name": "kill_stalkers_first_then_marines",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 25
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Stalkers have armored bonus and extra range; dump volume into heaviest/threat until they die, then switch to weakest marines so remaining guns finish cheap bodies."
+     },
+     "wins": 0,
+     "margin": -1557.6
+    },
+    {
+     "program": {
+      "name": "hold_the_line_never_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Even range; stand ground so cooldowns fire without walking into a stalker concave, peel wounded, only stack once they are already in our range."
+     },
+     "wins": 0,
+     "margin": -733.2
+    },
+    {
+     "program": {
+      "name": "concave_stutter_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Fan a ring so more marines shoot at once, stutter the first volley to desync stalkers, then lock stack on weakest so DPS never idles."
+     },
+     "wins": 1,
+     "margin": -218.0
+    },
+    {
+     "program": {
+      "name": "fall_back_rally_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Rally is behind us; walk to it, unclump, then hold and shoot whoever walks in so we never feed a chase into their extra stalker range."
+     },
+     "wins": 0,
+     "margin": -807.3
+    },
+    {
+     "program": {
+      "name": "threat_focus_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Always pick the highest DPS-per-HP (stalkers then marines) with attack-move so 30 guns never idle, and rotate sub-40% units so they stop feeding free kills."
+     },
+     "wins": 0,
+     "margin": -251.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "unclump_then_weakest_volume",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "wing": "step",
+      "ranged": "stack",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "weakest_in_range",
+    "formation": "keep"
+   },
+   "why": "Best prior: spread while far so 30 guns do not overkill, then always attack-move the lowest-HP already in range so bodies drop before stalker bonus shots matter."
+  },
+  "wins": 4,
+  "margin": 70.6,
+  "score": 40070.6
+ }
+}

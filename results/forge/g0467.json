@@ -1,0 +1,980 @@
+{
+ "id": "g0467",
+ "dummy": 4,
+ "hand_rules": 5,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "double_bait_concave_clump",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Send two closest zerglings into the baneling pack so the rest of melee hold outside the chain while hydras and colossi fan a concave, stutter-kite, and splash the densest bodies."
+     },
+     "wins": 0,
+     "margin": -1009.9
+    },
+    {
+     "program": {
+      "name": "unclump_fall_then_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "pack",
+       "formation": "keep"
+      },
+      "why": "Walk back first so our clump opens and their banelings string out, then freeze on the line and shoot into range; never chase so even-speed zealots never close."
+     },
+     "wins": 3,
+     "margin": 237.4
+    },
+    {
+     "program": {
+      "name": "guns_first_stutter_snipe",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "guns"
+      },
+      "why": "Pick off the three stalkers before they trade, while one zergling baits the baneling clump and remaining melee hold; stutter whenever the 0.5s stand is unsafe."
+     },
+     "wins": 0,
+     "margin": -982.3
+    },
+    {
+     "program": {
+      "name": "colossus_bar_charge",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "bar",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Open spacing then attack-move so colossus bars sweep the densest pack while zerglings charge after the suicide threat is baited away."
+     },
+     "wins": 0,
+     "margin": -968.4
+    },
+    {
+     "program": {
+      "name": "bait_one_hold_choke_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "bait": "bait_one",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "One ling walks the banelings; other melee freeze as a wall, ranged hold ground and rotate wounded so even-speed chase never collapses the gap."
+     },
+     "wins": 4,
+     "margin": 351.6
+    },
+    {
+     "program": {
+      "name": "threat_kite_wing_step",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "wing": "step",
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "wing": "stay"
+      },
+      "why": "Widen the gun line before contact, kite with all hydras/colossi focusing highest DPS-per-HP, and only charge melee once suicide units are gone."
+     },
+     "wins": 1,
+     "margin": -261.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_wall_bait_one_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "hold",
+         "bait": "bait_one",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "bait": "bait_one",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "One ling baits banelings; remaining melee freeze as a wall so even-speed zealots never close. Guns hold and splash the densest pack, rotating wounded."
+     },
+     "wins": 2,
+     "margin": -44.2
+    },
+    {
+     "program": {
+      "name": "fall_open_then_freeze_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Walk back first so our clump unclumps and banelings string out, then freeze and let colossus bars sweep; never chase."
+     },
+     "wins": 3,
+     "margin": 166.0
+    },
+    {
+     "program": {
+      "name": "snipe_hold_guns_priority",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Closest melee walks into banelings; rest hold. Guns pick stalkers first then clump, stuttering only if melee would arrive."
+     },
+     "wins": 0,
+     "margin": -515.7
+    },
+    {
+     "program": {
+      "name": "concave_stutter_snipe_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "wing": "step",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Fan guns, kite on threat-per-hp, two lings bait the blast, remaining melee hold until suicide is gone then charge."
+     },
+     "wins": 0,
+     "margin": -533.0
+    },
+    {
+     "program": {
+      "name": "hold_choke_bait_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 1.0
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "bait": "bait_one",
+       "wounded": "rotate",
+       "target": "clump"
+      },
+      "why": "Melee holds a choke wall while one bait walks bombs; guns never step forward, rotate wounded so even chase fails."
+     },
+     "wins": 2,
+     "margin": -207.4
+    },
+    {
+     "program": {
+      "name": "stack_bar_after_unclump",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "bar",
+       "melee": "hold",
+       "target": "clump"
+      },
+      "why": "Open spacing and fall until suicide strings, then attack-move so colossus bars never idle on the densest remaining pack."
+     },
+     "wins": 0,
+     "margin": -734.2
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_two_hold_choke_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "bait": "bait_two",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "bait": "bait_two",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Two closest lings walk the baneling pack; remaining melee freeze as a choke wall. Guns hold, splash clump, rotate wounded so even-speed zealots never close."
+     },
+     "wins": 2,
+     "margin": 339.4
+    },
+    {
+     "program": {
+      "name": "fall_open_then_bar_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "bar",
+       "wounded": "rotate"
+      },
+      "why": "Walk back first so our clump unclumps and bombs string out, then freeze; colossus bars sweep densest bodies, never chase."
+     },
+     "wins": 3,
+     "margin": 81.6
+    },
+    {
+     "program": {
+      "name": "snipe_two_concave_stutter",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "concave",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Two baits detonate the chain; hydras/colossi fan a concave and only shoot when the 0.5s stand is safe, focusing splash then frontline."
+     },
+     "wins": 0,
+     "margin": -854.7
+    },
+    {
+     "program": {
+      "name": "guns_first_hold_wall",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Delete stalkers first while melee holds a wall and one ling baits bombs; stutter only if blades would arrive on the shot window."
+     },
+     "wins": 0,
+     "margin": -886.4
+    },
+    {
+     "program": {
+      "name": "wing_step_threat_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "wing": "step",
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 0
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Widen the gun line before contact, kite all guns on highest DPS-per-HP, two lings bait; remaining melee charge only after bombs are gone."
+     },
+     "wins": 1,
+     "margin": -622.3
+    },
+    {
+     "program": {
+      "name": "fall_then_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Retreat until they string, then attack-move so colossus splash never idles on the densest pack while hydras keep firing and wounded peel."
+     },
+     "wins": 5,
+     "margin": 423.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "fall_then_stack_clump",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "melee": "hold",
+      "bar": "bar",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "bar": "pack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "bar": "pack",
+    "target": "clump",
+    "melee": "hold",
+    "wounded": "rotate"
+   },
+   "why": "Retreat until they string, then attack-move so colossus splash never idles on the densest pack while hydras keep firing and wounded peel."
+  },
+  "wins": 5,
+  "margin": 423.1,
+  "score": 50423.1
+ }
+}

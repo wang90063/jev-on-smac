@@ -1,0 +1,1169 @@
+{
+ "id": "g0583",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stutter_banelings",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Open ranks so chain blasts cannot wipe several marauders, stutter-kite while the gap holds, and pick the suicide bodies first so the remaining melee is trivial."
+     },
+     "wins": 0,
+     "margin": -1054.2
+    },
+    {
+     "program": {
+      "name": "hold_and_focus_armored",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "open",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Never chase; stand and dump concussive shots into zealots (armored bonus) while they walk in, rotating hurt marauders so banelings cannot finish them."
+     },
+     "wins": 0,
+     "margin": -901.0
+    },
+    {
+     "program": {
+      "name": "concave_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "formation": "open",
+       "target": "frontline"
+      },
+      "why": "Fan a wide ring before they arrive so each baneling hits at most one body, then attack-move once melee is in our faces so cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -978.0
+    },
+    {
+     "program": {
+      "name": "bait_closest_and_kite_rest",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "weakest_in_range"
+      },
+      "why": "Sacrifice the closest marauder as a walking bait so the baneling pack detonates off-axis while the rest stutter-kite the leftover zealots and lings."
+     },
+     "wins": 0,
+     "margin": -1078.3
+    },
+    {
+     "program": {
+      "name": "fall_back_to_shot_window",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.4
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "They catch a full withdraw, but a short fall-back still buys the 0.5s stand window; then hold and delete the densest pack before they explode."
+     },
+     "wins": 0,
+     "margin": -707.3
+    },
+    {
+     "program": {
+      "name": "threat_priority_commit",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Ignore kiting once anyone can fire: attack-move the highest DPS-per-HP unit so zealots die before they swing and leftover banelings are mopped as weakest-in-range."
+     },
+     "wins": 0,
+     "margin": -507.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_stutter_clump_banes",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Spread so one blast cannot wipe a clump, stutter-kite while the 0.5s window still holds, and dump concussive into the densest suicide pack so remaining melee is cheap."
+     },
+     "wins": 0,
+     "margin": -1058.0
+    },
+    {
+     "program": {
+      "name": "concave_then_threat_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "kite": "all",
+         "target": "clump",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "formation": "open",
+       "target": "frontline"
+      },
+      "why": "Fan a ring so each baneling touches at most one marauder; once they bleed, attack-move threat so cooldowns never idle and armored zealots melt under bonus damage."
+     },
+     "wins": 0,
+     "margin": -974.5
+    },
+    {
+     "program": {
+      "name": "hold_line_armored_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "open",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Never chase into blasts; stand and shoot heaviest (zealots) on the approach, then step the 0.5s window and rotate wounded so banelings cannot finish a low-HP body."
+     },
+     "wins": 0,
+     "margin": -901.0
+    },
+    {
+     "program": {
+      "name": "short_fall_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "A brief fall-back still buys the safe shot window even though a full withdraw is caught; then stack onto threat so remaining DPS is continuous after the first volleys."
+     },
+     "wins": 1,
+     "margin": -380.9
+    },
+    {
+     "program": {
+      "name": "bait_one_gun_delete_pack",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "weakest_in_range"
+      },
+      "why": "Walk only the closest gun into the suicide clump so the chain detonates off-axis; everyone else stutter-kites leftover zealots and lings with threat priority."
+     },
+     "wins": 0,
+     "margin": -1076.7
+    },
+    {
+     "program": {
+      "name": "wing_widen_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Step outer guns sideways before contact to break the clump, stutter while the gap holds, then attack-move once anyone can shoot so no gun idles on cooldown."
+     },
+     "wins": 0,
+     "margin": -507.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stutter_armored",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Open spacing so chain blasts cannot wipe the pack; stutter-kite while the 0.5s window is safe and dump concussive bonus into zealots first so remaining melee DPS collapses."
+     },
+     "wins": 0,
+     "margin": -1047.8
+    },
+    {
+     "program": {
+      "name": "hold_window_then_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "open",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Never walk into the explosion; hold the safe shot window and laser the densest pack so banelings die together, then attack-move remaining bodies."
+     },
+     "wins": 0,
+     "margin": -980.4
+    },
+    {
+     "program": {
+      "name": "bait_gun_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Sacrifice the closest gun as a walking bait so the rest keep a clean stutter volley on highest DPS-per-HP; rotate wounded so one blast cannot finish the line."
+     },
+     "wins": 0,
+     "margin": -1052.4
+    },
+    {
+     "program": {
+      "name": "brief_fall_then_threat_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "A short fall-back still buys the gap even though they catch a full retreat; once anyone can fire, commit attack-move onto threat so cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -436.2
+    },
+    {
+     "program": {
+      "name": "concave_open_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "kite": "all",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "formation": "open",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Fan a ring and step wings so each explosion hits one body; pick lowest-HP already in range to delete banelings and lings before they connect."
+     },
+     "wins": 0,
+     "margin": -1037.2
+    },
+    {
+     "program": {
+      "name": "bar_clump_then_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "formation": "open",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Aim bars across the densest suicide pack while still far, then switch to nearest damage-dealer once blades arrive so splash and concussive both stay busy."
+     },
+     "wins": 0,
+     "margin": -967.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_stutter_zealots",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "formation": "open",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Spread so one baneling cannot wipe several, then stutter-kite while the 0.5s window is still safe, dumping concussive + armored bonus into zealots so they never close as a wall."
+     },
+     "wins": 0,
+     "margin": -1047.8
+    },
+    {
+     "program": {
+      "name": "concave_then_hold_window",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "formation": "open",
+       "target": "heaviest"
+      },
+      "why": "Fan into a ring so baneling splash is wasted, then hold the safe shot window and never chase into melee."
+     },
+     "wins": 0,
+     "margin": -983.2
+    },
+    {
+     "program": {
+      "name": "bait_none_kill_bombs_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "No allied melee to bait with, so snipe the densest suicide pack at range (clump) before they touch, then mop leftover melee as threat."
+     },
+     "wins": 0,
+     "margin": -1008.0
+    },
+    {
+     "program": {
+      "name": "kite_all_threat_always",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Marauders are slower but still outrange; every gun uses stutter on the highest DPS-per-HP body so zealots and banelings die in the order they actually hurt."
+     },
+     "wins": 0,
+     "margin": -718.9
+    },
+    {
+     "program": {
+      "name": "commit_once_in_range",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Do not waste cooldowns kiting after the first shot is legal: attack-move so every marauder stays firing, rotating only the wounded so a chain blast cannot finish them."
+     },
+     "wins": 0,
+     "margin": -648.1
+    },
+    {
+     "program": {
+      "name": "short_open_then_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "bar": "pack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Open the clump first, then fire laser-bars across the densest pack so splash-like focus deletes banelings together; step the 0.5s window only when melee actually arrives."
+     },
+     "wins": 0,
+     "margin": -663.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "short_fall_then_commit",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "shoot",
+      "target": "threat"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "trading",
+       "we_are_bleeding"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "wounded": "rotate",
+      "target": "weakest_in_range"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "threat",
+    "wounded": "rotate"
+   },
+   "why": "A brief fall-back still buys the safe shot window even though a full withdraw is caught; then stack onto threat so remaining DPS is continuous after the first volleys."
+  },
+  "wins": 1,
+  "margin": -380.9,
+  "score": 9619.1
+ }
+}

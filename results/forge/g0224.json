@@ -1,0 +1,961 @@
+{
+ "id": "g0224",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "snipe_healers_then_colossus",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "healer",
+         "ranged": "stack",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_air": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "target": "threat",
+       "ranged": "stack",
+       "melee": "charge",
+       "wounded": "rotate"
+      },
+      "why": "Medivacs keep marauders alive; kill air healers first while zealots eat marauder fire, then dump DPS into the two colossi before they shred our light units."
+     },
+     "wins": 3,
+     "margin": 372.8
+    },
+    {
+     "program": {
+      "name": "wall_funnel_hold",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "heaviest"
+      },
+      "why": "Terrain is a ravine with a long wall; pull guns to the choke, zealots hold the mouth so colossi cannot freely bar our clump, then only stack once they are already bleeding."
+     },
+     "wins": 0,
+     "margin": -753.9
+    },
+    {
+     "program": {
+      "name": "open_spread_vs_splash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Colossus bars reward clumped lights; open spacing and concave so each splash hits fewer bodies while zealots still tank in front."
+     },
+     "wins": 0,
+     "margin": -1159.0
+    },
+    {
+     "program": {
+      "name": "threat_kite_marines",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "melee": "charge",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Stalkers outrange marauders; stutter-kite so marines never stand in colossus bars while focusing highest DPS-per-HP, then crash in once the enemy line is broken."
+     },
+     "wins": 2,
+     "margin": -94.3
+    },
+    {
+     "program": {
+      "name": "stalker_guns_first",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stack",
+         "melee": "charge",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stutter",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "target": "frontline",
+       "ranged": "stack",
+       "melee": "charge"
+      },
+      "why": "Marauders melt armored stalkers; focus enemy guns so stalkers live, zealots pin the marauder ball, marines finish colossi after the armored threat is gone."
+     },
+     "wins": 2,
+     "margin": 62.2
+    },
+    {
+     "program": {
+      "name": "rotate_and_stack_late",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "wounded": "rotate"
+      },
+      "why": "Let zealots soak the first volleys with marines slightly back; once shields drop and trades start, everyone attack-moves and rotates the wounded so medivac heals cannot keep their ball forever."
+     },
+     "wins": 2,
+     "margin": -202.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "medivac_first_then_colossus",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "healer",
+         "ranged": "stack",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_air": {
+          ">=": 1
+         },
+         "enemy_heal": 0
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "target": "weakest_in_range",
+         "ranged": "stack",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "target": "threat",
+       "ranged": "stack",
+       "melee": "charge",
+       "wounded": "rotate"
+      },
+      "why": "Medivacs keep marauders and colossi alive; dump all guns into healers while zealots pin, then switch to heaviest so the two colossi die before their LIGHT bonus shreds marines."
+     },
+     "wins": 3,
+     "margin": 372.8
+    },
+    {
+     "program": {
+      "name": "open_concave_vs_bars",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Colossus bars punish clumps of marines; open then fan a concave so splash hits fewer bodies while zealots still charge the marauder ball."
+     },
+     "wins": 0,
+     "margin": -1159.0
+    },
+    {
+     "program": {
+      "name": "choke_hold_then_crash",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          "<=": 0.2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "heaviest"
+      },
+      "why": "Ravine wall is a funnel; pull guns back and hold so colossi cannot freely bar, zealots hold the mouth, then crash once they start bleeding."
+     },
+     "wins": 0,
+     "margin": -989.2
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "rotate",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 12
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Stalkers outrange marauders; stutter so marines never stand in bars while focusing DPS-per-HP, then stack once the enemy line is already bleeding."
+     },
+     "wins": 2,
+     "margin": -257.3
+    },
+    {
+     "program": {
+      "name": "guns_before_armored",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stack",
+         "melee": "charge",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 3
+         },
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "healer",
+         "ranged": "stutter",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "target": "frontline",
+       "ranged": "stack",
+       "melee": "charge"
+      },
+      "why": "Marauder bonus melts stalkers; focus enemy guns first so stalkers live, zealots pin, then dump remaining DPS into colossi."
+     },
+     "wins": 3,
+     "margin": 179.5
+    },
+    {
+     "program": {
+      "name": "late_stack_rotate_wounded",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "wounded": "rotate"
+      },
+      "why": "Let zealots soak first volleys with guns slightly back; once shields drop everyone attack-moves and rotates hurt marines so medivac heals cannot keep their ball forever."
+     },
+     "wins": 2,
+     "margin": -202.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "medivac_then_colossus_spread",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "healer",
+         "ranged": "stack",
+         "melee": "charge",
+         "wing": "step",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_air": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "charge",
+         "wing": "step"
+        }
+       }
+      ],
+      "else": {
+       "target": "threat",
+       "ranged": "stack",
+       "melee": "charge",
+       "wounded": "rotate",
+       "wing": "stay"
+      },
+      "why": "Kill the two medivacs so marauders stop regenerating, spread the gun line with wing-step so colossus bars cannot hit clumped marines, then dump remaining DPS into the armored heaviest (colossi)."
+     },
+     "wins": 0,
+     "margin": -939.1
+    },
+    {
+     "program": {
+      "name": "wall_anchor_hold",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "target": "healer",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "frontline"
+      },
+      "why": "Terrain is a ravine wall: immediately fall back, hold choke so colossi and marauders must funnel, zealots hold the neck while guns shoot only what enters range."
+     },
+     "wins": 0,
+     "margin": -753.9
+    },
+    {
+     "program": {
+      "name": "concave_stutter_vs_bars",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "stand": "step",
+         "wing": "step",
+         "formation": "open",
+         "melee": "charge",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "heaviest",
+       "kite": "all"
+      },
+      "why": "Colossus perpendicular splash punishes a stacked line; fan a concave then stutter-step so marines never eat a full bar, zealots charge to pin marauders."
+     },
+     "wins": 2,
+     "margin": -122.5
+    },
+    {
+     "program": {
+      "name": "guns_first_armored_survive",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stack",
+         "melee": "charge",
+         "tie": "first",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "enemy_guns": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "target": "healer",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "target": "heaviest",
+       "ranged": "stack",
+       "melee": "charge"
+      },
+      "why": "Marauder ARMORED bonus deletes stalkers; wipe enemy guns first so stalkers live to snipe medivacs and then the two colossi."
+     },
+     "wins": 2,
+     "margin": -144.6
+    },
+    {
+     "program": {
+      "name": "zealot_soak_marines_hold",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true,
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "hold",
+         "target": "healer",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Send zealots in immediately to tank marauder and colossus fire; marines hold ground so they never walk into bars, stalkers stutter on healers."
+     },
+     "wins": 2,
+     "margin": -488.2
+    },
+    {
+     "program": {
+      "name": "threat_clump_late_crash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat",
+         "melee": "charge",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2.0
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Early kite focusing highest DPS-per-HP (marauders then colossi), then once they bleed crash attack-move so remaining marine volume finishes the ball before medivacs can reset HP."
+     },
+     "wins": 2,
+     "margin": -94.3
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "snipe_healers_then_colossus",
+   "rules": [
+    {
+     "when": {
+      "enemy_heal": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "target": "healer",
+      "ranged": "stack",
+      "melee": "charge",
+      "wounded": "rotate"
+     }
+    },
+    {
+     "when": {
+      "enemy_air": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "target": "heaviest",
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge"
+     }
+    }
+   ],
+   "else": {
+    "target": "threat",
+    "ranged": "stack",
+    "melee": "charge",
+    "wounded": "rotate"
+   },
+   "why": "Medivacs keep marauders alive; kill air healers first while zealots eat marauder fire, then dump DPS into the two colossi before they shred our light units."
+  },
+  "wins": 3,
+  "margin": 372.8,
+  "score": 30372.8
+ }
+}

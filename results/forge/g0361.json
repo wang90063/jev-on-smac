@@ -1,0 +1,1265 @@
+{
+ "id": "g0361",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "double_bait_clump_kite",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Send two closest banelings into their suicide pack so the chain eats lings and enemy banes; remaining banes hold out of blast while the stalker kites a concave on the densest remaining clump."
+     },
+     "wins": 4,
+     "margin": 61.3
+    },
+    {
+     "program": {
+      "name": "all_in_chain",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "ranged": "stack",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Trade our whole baneling mass into theirs immediately so the blast wipes their melee before they surround; stalker attack-moves and focuses the densest leftover after the detonation."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "single_snipe_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "hold",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "One bait baneling walks their suicide group; the other five hold outside blast radius so we keep a second wave; stalker holds ground and never steps into melee."
+     },
+     "wins": 2,
+     "margin": 54.2
+    },
+    {
+     "program": {
+      "name": "fall_string_then_fire",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump"
+      },
+      "why": "Walk away first so their clumped banes and lings string out on even speed, then freeze and shoot whatever enters the stalker range without chasing."
+     },
+     "wins": 2,
+     "margin": 53.0
+    },
+    {
+     "program": {
+      "name": "stalker_only_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Keep our banelings holding so they do not suicide early; the faster stalker kites the whole fight, baiting their melee while focusing threat then weakest in range."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "wing_open_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Widen spacing first so our bombs do not chain ourselves; then one melee bait walks their pack while the stalker fans a concave and peels if blades arrive."
+     },
+     "wins": 4,
+     "margin": 29.5
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "mass_detonate_now",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Dump the whole baneling wave into their densest suicide/melee clump immediately so our blast trades theirs plus lings; stalker attack-moves leftover clump and never kites away from the explosion."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "two_bait_then_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "bait": "bait_two",
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "Two closest bombs walk their suicide pack; remaining four hold outside chain radius; stalker holds and only shoots when the 0.5s window still keeps melee off, focusing the pack then frontline."
+     },
+     "wins": 2,
+     "margin": 54.2
+    },
+    {
+     "program": {
+      "name": "string_then_charge",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Walk the stalker and hold bombs first so even-speed chase strings their banes; once we can shoot, dump remaining melee into the thinned pack while guns stack on clump."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "stalker_kites_bombs_idle",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.6
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Banelings never walk in so they cannot chain ourselves or die first; faster stalker stutters the whole fight focusing threat, then remaining melee charges only if we still have a numbers edge."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "one_snipe_concave_peel",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Single closest bomb walks their suicide group; other bombs hold outside blast; stalker fans a concave, stutters, and rotates wounded so we keep a second detonation wave."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "hold_mouth_then_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Freeze on even speed so melee never closes; once they enter gun range, send one bait into remaining suicide while guns hold and bar-splash the densest bodies."
+     },
+     "wins": 2,
+     "margin": 53.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "delay_then_bait_two",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Hold and open first so even-speed chase strings their banes; once anyone can shoot, two closest bombs walk the remaining pack while stalker stutters clump."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "rally_hold_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Walk guns to rally and freeze melee so their suicide arrives first; then one bait detonates the clump while guns hold ground and never chase."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "threat_kite_then_mass_charge",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 12
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 11
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stalker kites threat until their numbers drop, then dump remaining bombs into leftover melee instead of trading early."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "concave_heaviest_then_front",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Fan a concave and pick the fattest baneling first so splash/detonation value is high; switch to frontline once shots start, peel if blades arrive."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "late_tick_dump",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "tick_frac": {
+          ">=": 0.26
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Idle bombs and kite until mid fight, then all-in charge so our blast hits after they have already bunched on the stalker."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "bar_splash_hold_mouth",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "melee": "hold",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Open spacing then freeze guns at the mouth using bar aim so splash/laser covers the densest bodies; only the closest bomb walks in."
+     },
+     "wins": 2,
+     "margin": 53.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_then_one_snipe_hold",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "melee": "hold",
+         "ranged": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump"
+      },
+      "why": "Spread first so we do not chain ourselves; stalker never chases; a single bait walks their suicide pack once anyone can shoot, remaining bombs freeze outside the radius."
+     },
+     "wins": 2,
+     "margin": 54.2
+    },
+    {
+     "program": {
+      "name": "immediate_mass_snipe_clump",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Dump two closest bombs into their packed suicide+lings right away so the chain deletes their army while the stalker stacks onto the densest leftover body."
+     },
+     "wins": 4,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "stalker_kites_threat_forever",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "target": "heaviest",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Banelings stay idle the whole fight so they cannot be traded or chained; the faster stalker stutters threat forever and peels if blades arrive."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "fall_back_then_bait_two",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Walk the stalker away first so even-speed chase strings their bombs; then two baits detonate the remaining pack while guns freeze and never step forward."
+     },
+     "wins": 2,
+     "margin": 54.2
+    },
+    {
+     "program": {
+      "name": "concave_healerless_frontline",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 12
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "stutter",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "melee": "hold",
+       "target": "frontline"
+      },
+      "why": "Fan a concave and pick nearest damage dealer so the stalker chips lings while one bait later pops their remaining suicide after they bunch on the ring."
+     },
+     "wins": 4,
+     "margin": 61.1
+    },
+    {
+     "program": {
+      "name": "ratio_gate_charge",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 9
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Kite and hold bombs until their numbers drop below 10, then all-in charge so our remaining blasts hit a thinned pack rather than a fresh clump of seven enemy bombs."
+     },
+     "wins": 4,
+     "margin": 29.3
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "double_bait_clump_kite",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 3
+      }
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "shoot",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "clump",
+    "kite": "all"
+   },
+   "why": "Send two closest banelings into their suicide pack so the chain eats lings and enemy banes; remaining banes hold out of blast while the stalker kites a concave on the densest remaining clump."
+  },
+  "wins": 4,
+  "margin": 61.3,
+  "score": 40061.3
+ }
+}

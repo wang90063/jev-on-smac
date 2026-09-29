@@ -1,0 +1,1243 @@
+{
+ "id": "g0005",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_splash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "wing": "stay",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack",
+       "formation": "keep"
+      },
+      "why": "Open spacing then freeze at the gap so banelings string out; colossus bar-splashes the densest pack while guns never chase into blades."
+     },
+     "wins": 3,
+     "margin": 514.9
+    },
+    {
+     "program": {
+      "name": "stutter_guns_first",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Always kite at even speed, pick hydras so banelings waste themselves, rotate hurt marines, never stack into a chain blast."
+     },
+     "wins": 4,
+     "margin": 333.1
+    },
+    {
+     "program": {
+      "name": "concave_bar_colossus",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "bar": "bar",
+         "target": "clump",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Fan a ring so colossus laser bars across the choke pack while outer guns step wide and only shoot if the 0.5s stand is safe."
+     },
+     "wins": 0,
+     "margin": -357.3
+    },
+    {
+     "program": {
+      "name": "funnel_then_stack_neck",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Walk off until they squeeze the gap, then attack-move so splash never idles and remaining DPS stays continuous."
+     },
+     "wins": 4,
+     "margin": 205.9
+    },
+    {
+     "program": {
+      "name": "early_hold_rotate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.5
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "We already outrange; stand and shoot immediately after unclumping, rotate anything under 40% so baneling splash never finishes a marine."
+     },
+     "wins": 0,
+     "margin": -432.2
+    },
+    {
+     "program": {
+      "name": "bait_kite_hydras",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "tie": "first",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "wounded": "rotate",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "heaviest",
+       "kite": "all"
+      },
+      "why": "Closest gun baits banelings while the rest stutter-fire hydras; heaviest hydra first so remaining bane body-block is thin."
+     },
+     "wins": 0,
+     "margin": -299.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "funnel_open_then_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Unclump and walk to the choke first so banelings string out; once they pack the neck, attack-move so colossus splash never idles on the densest bodies."
+     },
+     "wins": 4,
+     "margin": 205.9
+    },
+    {
+     "program": {
+      "name": "fall_then_freeze_mouth",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Pull back until the gap is ours, then stand-ground so even-speed melee never closes; bar-splash the pack and rotate anything under 40%."
+     },
+     "wins": 3,
+     "margin": 517.9
+    },
+    {
+     "program": {
+      "name": "stutter_pick_hydras",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "kite": "bait_one",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Always kite at even speed and delete hydras first so leftover banelings waste themselves on empty ground; bait the closest gun if a chain blast is live."
+     },
+     "wins": 4,
+     "margin": 333.1
+    },
+    {
+     "program": {
+      "name": "concave_bar_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "bar": "bar",
+         "target": "clump",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Fan a ring so the colossus laser bars across the choke; outer guns step wide, then stutter the instant melee would arrive in the 0.5s window."
+     },
+     "wins": 0,
+     "margin": -357.3
+    },
+    {
+     "program": {
+      "name": "hold_gap_rotate_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.5
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "We already outrange; after a one-tick unclump, freeze at the gap, shoot the highest dps-per-hp, and peel wounded marines so a baneling never finishes them."
+     },
+     "wins": 0,
+     "margin": -432.2
+    },
+    {
+     "program": {
+      "name": "heaviest_first_then_clump_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Chunk the fattest hydra while they are still far, then switch to attack-move clump so splash and remaining DPS finish the pack once they squeeze the neck."
+     },
+     "wins": 4,
+     "margin": 308.4
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "funnel_stack_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Open and fall back until the wall neck packs them, then attack-move so colossus splash never idles on the densest bodies while hydras stay under fire."
+     },
+     "wins": 4,
+     "margin": 205.9
+    },
+    {
+     "program": {
+      "name": "freeze_the_gap",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Pull off the clump first so banelings string, then stand-ground at the mouth so even-speed melee never closes; bar-splash the pack and never chase."
+     },
+     "wins": 3,
+     "margin": 517.9
+    },
+    {
+     "program": {
+      "name": "concave_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "bar": "pack"
+      },
+      "why": "Fan a wider firing ring before contact so splash and marines cover the gap, then freeze and shoot hydras first so leftover banelings waste the detonation."
+     },
+     "wins": 0,
+     "margin": -339.4
+    },
+    {
+     "program": {
+      "name": "stutter_delete_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "kite": "bait_one",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Always kite at even speed, pick hydras so banelings detonate on empty ground, step rather than eat the 0.5s window, rotate hurt marines."
+     },
+     "wins": 4,
+     "margin": 333.1
+    },
+    {
+     "program": {
+      "name": "threat_funnel_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Chunk highest DPS-per-hp while they are far, then once they squeeze the choke attack-move clump so remaining splash and marines finish the pack."
+     },
+     "wins": 4,
+     "margin": 308.4
+    },
+    {
+     "program": {
+      "name": "wing_open_hold_mouth",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "fall_back"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "bar": "pack"
+      },
+      "why": "Step outer guns sideways to unclump before the gap, then hold and bar-splash; if blades arrive switch to stutter so even-speed chase never pins the line."
+     },
+     "wins": 0,
+     "margin": -373.5
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "retreat_open_then_hold_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Spread and fall back so banelings string at the gap; then freeze at the mouth and let colossus bar splash the packed hydras without ever chasing into even-speed melee."
+     },
+     "wins": 3,
+     "margin": 514.9
+    },
+    {
+     "program": {
+      "name": "concave_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "kite": "bait_one",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Fan a ring so splash and marine shots wrap the choke; always stutter-kite hydras first so leftover banelings detonate on empty ground."
+     },
+     "wins": 4,
+     "margin": 374.1
+    },
+    {
+     "program": {
+      "name": "wing_widen_then_stack_neck",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "wing": "step",
+         "formation": "open",
+         "ranged": "fall_back",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Outer guns step sideways before contact to unclump the blast radius, then attack-move once they squeeze the neck so colossus splash never idles."
+     },
+     "wins": 4,
+     "margin": 401.7
+    },
+    {
+     "program": {
+      "name": "hold_choke_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Walk to the gap then stand ground on highest DPS-per-hp, rotating wounded marines so even-speed banelings never catch a low-hp body."
+     },
+     "wins": 3,
+     "margin": 508.8
+    },
+    {
+     "program": {
+      "name": "stutter_clump_bar_bait",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "bar": "pack",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Kite at even speed with bar splash on densest pack; closest gun baits chain blasts while others keep shooting hydras."
+     },
+     "wins": 0,
+     "margin": -311.3
+    },
+    {
+     "program": {
+      "name": "frontline_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "bar": "pack"
+      },
+      "why": "Chunk the nearest hydra while far, then freeze and pick lowest-hp already in range so leftover banelings arrive after guns are gone."
+     },
+     "wins": 5,
+     "margin": 410.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "frontline_then_weakest_hold",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "frontline",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": [
+       "melee_arrives_within_two_shots",
+       "melee_arrives_before_next_shot"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "weakest_in_range",
+    "bar": "pack"
+   },
+   "why": "Chunk the nearest hydra while far, then freeze and pick lowest-hp already in range so leftover banelings arrive after guns are gone."
+  },
+  "wins": 5,
+  "margin": 410.8,
+  "score": 50410.8
+ }
+}

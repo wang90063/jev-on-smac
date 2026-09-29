@@ -1,0 +1,939 @@
+{
+ "id": "g0747",
+ "dummy": 0,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_snipe_banes",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "target": "clump"
+      },
+      "why": "Open spacing so a detonation cannot chain through the ball, then send only the nearest melee into the suicide pack while everyone else stays outside the blast and later focuses hydras."
+     },
+     "wins": 0,
+     "margin": -60.2
+    },
+    {
+     "program": {
+      "name": "two_bait_then_hydra_charge",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "snipe"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Sacrifice two closest bodies to detonate the baneling clump, keep the rest out of splash, then all remaining melee attack-move onto hydras."
+     },
+     "wins": 0,
+     "margin": 0.6
+    },
+    {
+     "program": {
+      "name": "hold_spread_let_them_walk_in",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold",
+       "target": "guns"
+      },
+      "why": "Do not run into the bombs: open ranks and stand still so hydras walk into blades after banelings detonate on empty space or a lone bait."
+     },
+     "wins": 0,
+     "margin": 25.0
+    },
+    {
+     "program": {
+      "name": "mass_charge_after_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest",
+       "formation": "open"
+      },
+      "why": "First tick only opens the clump so chain blast is impossible, then the whole melee wad attack-moves and focuses highest DPS-per-HP so hydras die before a second explosion cycle."
+     },
+     "wins": 0,
+     "margin": 52.7
+    },
+    {
+     "program": {
+      "name": "zealot_front_lings_snipe",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Use the two high-HP zealots as the bait into suicide while zerglings stay just outside blast radius, then everyone piles onto remaining guns."
+     },
+     "wins": 0,
+     "margin": 0.6
+    },
+    {
+     "program": {
+      "name": "rotate_and_pick_hydras_first",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "target": "weakest_in_range",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Ignore splash targeting: always focus enemy guns, open formation, charge, and peel units under 40% so baneling trades do not snowball."
+     },
+     "wins": 0,
+     "margin": -39.8
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "instant_threat_charge",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Do not spend ticks spreading or holding: all melee attack-move immediately onto highest DPS-per-HP (hydras) so banelings detonate while hydras are already melting."
+     },
+     "wins": 0,
+     "margin": -234.8
+    },
+    {
+     "program": {
+      "name": "open_then_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold",
+       "target": "guns"
+      },
+      "why": "Spread first so chain blast cannot wipe the wad, then freeze at current ground so hydras walk into blades after banelings pop on empty space."
+     },
+     "wins": 0,
+     "margin": 20.4
+    },
+    {
+     "program": {
+      "name": "lone_bait_then_guns",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Sacrifice only the closest body into the suicide pack, keep the rest outside splash, then pile remaining HP onto hydras."
+     },
+     "wins": 0,
+     "margin": -46.2
+    },
+    {
+     "program": {
+      "name": "heaviest_first_no_open",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Ignore spacing: zealots and lings charge the highest-HP damage dealers (hydras) so splash is paid on bodies that already delivered damage."
+     },
+     "wins": 0,
+     "margin": -234.8
+    },
+    {
+     "program": {
+      "name": "frontline_charge_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Always attack-move the nearest dealer, peel units under 40% so one baneling does not cascade, never wait for open formation."
+     },
+     "wins": 0,
+     "margin": -234.8
+    },
+    {
+     "program": {
+      "name": "snipe_clump_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "ally_spacing": "open"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "After opening, send closest melee into the densest suicide cluster so one detonation clears multiple banelings, then mop remaining with weakest-in-range."
+     },
+     "wins": 0,
+     "margin": 33.9
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_hold_then_threat_charge",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "First open the wad so chain bang cannot wipe us; hold until contact so banelings spend on empty air or a thin front, then the whole melee wad attack-moves onto highest DPS-per-HP hydras and rotates wounded."
+     },
+     "wins": 0,
+     "margin": 72.0
+    },
+    {
+     "program": {
+      "name": "lone_snipe_after_spread",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain",
+         "ally_spacing": "open"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Spread first, then send only the closest body into the densest suicide pack so one detonation clears several banelings while the rest stay outside splash; mop remaining hydras by threat."
+     },
+     "wins": 0,
+     "margin": 33.9
+    },
+    {
+     "program": {
+      "name": "two_bait_then_frontline",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Two closest bodies (ideally the tanky zealots) walk into the suicide clump; everyone else holds outside blast radius, then remaining melee piles onto the nearest hydra."
+     },
+     "wins": 0,
+     "margin": -7.2
+    },
+    {
+     "program": {
+      "name": "never_walk_into_bombs",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us",
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold",
+       "target": "guns"
+      },
+      "why": "Refuse to approach while suicide units exist: keep ranks open and hold so hydras must walk into blades after banelings pop on empty space; only charge once bombs are gone."
+     },
+     "wins": 0,
+     "margin": 4.2
+    },
+    {
+     "program": {
+      "name": "heaviest_after_first_trade",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Open and charge the highest-hp damage dealers (hydras) immediately after spacing so remaining HP is concentrated; rotate wounded so a second bang cannot snowball."
+     },
+     "wins": 0,
+     "margin": -39.8
+    },
+    {
+     "program": {
+      "name": "choke_freeze_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Pretend the open field is a choke: freeze melee so the enemy closes; once they are almost in, send a single bait into the pack then charge leftover guns."
+     },
+     "wins": 0,
+     "margin": -61.9
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "open_hold_then_threat_charge",
+   "rules": [
+    {
+     "when": {
+      "ally_spacing": "clumped"
+     },
+     "set": {
+      "formation": "open",
+      "melee": "hold",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "melee": "hold",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 1
+      },
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_one",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "enemy_suicide": 0
+     },
+     "set": {
+      "melee": "charge",
+      "target": "threat",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "formation": "open",
+    "melee": "charge",
+    "target": "guns",
+    "wounded": "rotate"
+   },
+   "why": "First open the wad so chain bang cannot wipe us; hold until contact so banelings spend on empty air or a thin front, then the whole melee wad attack-moves onto highest DPS-per-HP hydras and rotates wounded."
+  },
+  "wins": 0,
+  "margin": 72.0,
+  "score": 72.0
+ }
+}

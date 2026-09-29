@@ -1,0 +1,1066 @@
+{
+ "id": "g0088",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_concave_hold_colossus",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "hold",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "While far, fan the two stalkers and keep zealots from clumping under colossus splash; freeze and dump armored bonus into the colossus while the stand still keeps enemy melee out."
+     },
+     "wins": 0,
+     "margin": -749.4
+    },
+    {
+     "program": {
+      "name": "speed_gap_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "We are faster so walking away opens a gap; kite with stutter so stalkers never eat zealot blades, and pick marauders first so their armored bonus never lands on stalkers."
+     },
+     "wins": 0,
+     "margin": -620.4
+    },
+    {
+     "program": {
+      "name": "zealots_front_stalkers_stack_threat",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Send melee in as a meat wall so the colossus and marauders waste shots on cheap zealots; stalkers attack-move and always pick the highest DPS-per-HP body."
+     },
+     "wins": 1,
+     "margin": -160.2
+    },
+    {
+     "program": {
+      "name": "fall_then_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Pull to open space first so the colossus cannot splash a clump, then stand ground and pick whatever is already in stalker range so no one overcommits into melee."
+     },
+     "wins": 0,
+     "margin": -802.9
+    },
+    {
+     "program": {
+      "name": "bait_melee_focus_frontline",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "frontline"
+      },
+      "why": "Closest zealot soaks, rest of melee holds the line, stalkers kite and always delete the nearest damage-dealer so marauders and colossus never all fire together."
+     },
+     "wins": 0,
+     "margin": -649.6
+    },
+    {
+     "program": {
+      "name": "ratio_collapse_heaviest_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         },
+         "hp_trend": [
+          "no_trade_yet",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "While even, peel wounded units and keep shooting the colossus; if we start winning on bodies, stack in and finish the heaviest remaining gun."
+     },
+     "wins": 0,
+     "margin": -641.5
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "meatwall_stack_threat",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Send cheap zealots first so colossus and marauders waste shots on light melee; stalkers attack-move the highest DPS-per-HP body and only stutter if already in blades."
+     },
+     "wins": 0,
+     "margin": -471.8
+    },
+    {
+     "program": {
+      "name": "open_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "hold",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Spread so colossus splash cannot hit a pack, freeze stalkers while the 0.5s stand still keeps enemy zealots out, and dump every shot into the colossus."
+     },
+     "wins": 0,
+     "margin": -749.4
+    },
+    {
+     "program": {
+      "name": "kite_gap_guns",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "melee": "charge",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "We are faster so walking opens a gap; every stalker stutters, never stands into blades, and deletes marauders first so armored bonus never lands."
+     },
+     "wins": 0,
+     "margin": -824.0
+    },
+    {
+     "program": {
+      "name": "concave_then_freeze_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Fan a wide ring while still far so both stalkers fire together, then freeze because standing keeps melee out and focus enemy guns not zealots."
+     },
+     "wins": 0,
+     "margin": -757.4
+    },
+    {
+     "program": {
+      "name": "bait_one_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "frontline"
+      },
+      "why": "Closest zealot soaks, remaining melee hold, stalkers kite with bait_one and always delete the nearest damage-dealer so colossus and marauders cannot fire as a group."
+     },
+     "wins": 0,
+     "margin": -836.2
+    },
+    {
+     "program": {
+      "name": "ratio_stutter_then_commit",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         },
+         "hp_trend": [
+          "no_trade_yet",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "While even, kite and peel wounded while focusing the colossus; once their body count collapses, stack in and finish remaining guns."
+     },
+     "wins": 0,
+     "margin": -707.6
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "meat_open_guns_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Spread so colossus splash does not wipe zealots, send melee first as light tanks, and stutter-kite stalkers onto marauders so armored bonus never lands."
+     },
+     "wins": 0,
+     "margin": -602.3
+    },
+    {
+     "program": {
+      "name": "hold_gap_then_stack_threat",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "melee": "hold",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "While standing still still keeps enemy melee out, freeze and pick the highest DPS-per-HP gun; once the gap is gone, attack-move with zealots in front."
+     },
+     "wins": 0,
+     "margin": -628.8
+    },
+    {
+     "program": {
+      "name": "withdraw_string_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "We are faster so walking away strings the colossus and marauders; after they string, stack and dump into the heaviest remaining gun while wounded peel."
+     },
+     "wins": 0,
+     "margin": -456.5
+    },
+    {
+     "program": {
+      "name": "concave_charge_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline",
+       "kite": "all"
+      },
+      "why": "Fan stalkers onto a ring while still far, charge zealots into the nearest damage dealer, and keep stuttering so blades never catch the guns."
+     },
+     "wins": 0,
+     "margin": -470.1
+    },
+    {
+     "program": {
+      "name": "bait_one_weakest_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Closest zealot soaks, other melee holds a line, stalkers always shoot the lowest-HP body already in range and peel under 40%."
+     },
+     "wins": 0,
+     "margin": -1014.0
+    },
+    {
+     "program": {
+      "name": "clump_splash_ignore_then_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "target": "clump",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "If we ever clump, still focus the packed enemy so leftover splash from anything hits more than one body; otherwise delete guns first and only charge once they are thinning."
+     },
+     "wins": 0,
+     "margin": -1046.8
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_meat_colossus_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Open spacing so colossus splash wastes shots on spread zealots; charge melee as light tanks while stalkers stutter onto the heaviest armored gun (colossus) and peel wounded."
+     },
+     "wins": 0,
+     "margin": -1014.0
+    },
+    {
+     "program": {
+      "name": "freeze_gap_dump_marauders",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "melee": "hold",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "While standing still still keeps enemy melee out, hold fire and dump stalker armored bonus into marauders; only kite once blades arrive."
+     },
+     "wins": 0,
+     "margin": -711.2
+    },
+    {
+     "program": {
+      "name": "fan_ring_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Fan a concave while far so both stalkers fire together, charge zealots, then always pick highest DPS-per-HP and step away if the 0.5s window is unsafe."
+     },
+     "wins": 0,
+     "margin": -540.5
+    },
+    {
+     "program": {
+      "name": "string_then_stack_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Use speed to fall back and string their line; once someone can shoot, attack-move and pick the lowest-hp body already in range while wounded rotate."
+     },
+     "wins": 0,
+     "margin": -456.5
+    },
+    {
+     "program": {
+      "name": "bait_one_kiter_rest_shoot",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Closest gun always walks as bait so marauder/colossus chase it; remaining stalker shoots if the stand is safe; zealots charge frontline."
+     },
+     "wins": 0,
+     "margin": -1046.8
+    },
+    {
+     "program": {
+      "name": "meatwall_stack_frontline",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "frontline",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Keep spacing tight, send zealots first so enemy guns waste cooldown on cheap light, stalkers attack-move the nearest damage dealer and only peel if already in blades."
+     },
+     "wins": 0,
+     "margin": -473.6
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "zealots_front_stalkers_stack_threat",
+   "rules": [
+    {
+     "when": {
+      "allied_melee": true
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stack",
+      "formation": "keep",
+      "target": "threat"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "threat"
+   },
+   "why": "Send melee in as a meat wall so the colossus and marauders waste shots on cheap zealots; stalkers attack-move and always pick the highest DPS-per-HP body."
+  },
+  "wins": 1,
+  "margin": -160.2,
+  "score": 9839.8
+ }
+}

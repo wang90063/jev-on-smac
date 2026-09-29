@@ -1,0 +1,1200 @@
+{
+ "id": "g0831",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "lings_eat_splash_hydra_fall",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Colossus 7-range light splash will melt clumped lings if hydras step up first; send melee in while hydras fall back until lings are already in blades, then stack onto the colossus."
+     },
+     "wins": 0,
+     "margin": -655.6
+    },
+    {
+     "program": {
+      "name": "cut_the_healers",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "healer"
+      },
+      "why": "Two medivacs will undo marine/marauder trades; hydras kite and snipe air healers while lings occupy the bio front so heals cannot land on the colossus."
+     },
+     "wins": 1,
+     "margin": -381.0
+    },
+    {
+     "program": {
+      "name": "corridor_hold_rally",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "target": "guns",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "frontline"
+      },
+      "why": "Long diagonal plus rally behind us: pull hydras to the choke, hold lings at the mouth so the colossus cannot freely walk the full 7-range cone, then shoot whatever enters."
+     },
+     "wins": 0,
+     "margin": -885.6
+    },
+    {
+     "program": {
+      "name": "spread_and_threat_kite",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Open the clump so colossus bar/splash hits fewer lings; hydras stutter-kite the highest DPS-per-HP (colossus then marauders) while melee charges."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "all_in_guns_first",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": 0.0
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Ignore kiting; attack-move everyone immediately, hydras stack onto enemy guns (marines/marauders) so the bio dies before medivacs can stabilize, lings absorb splash."
+     },
+     "wins": 1,
+     "margin": -403.1
+    },
+    {
+     "program": {
+      "name": "hydra_concave_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ],
+         "our_ranged": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Fan hydras onto a ring so more of them shoot the colossus at once without walking into 7 range; once trading starts, drop the fan and stack with wounded rotation."
+     },
+     "wins": 0,
+     "margin": -637.5
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "colossus_allin_stack",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Kill the 7-range splash first: lings charge to occupy bio while hydras attack-move the colossus so its light bonus never farms the pack."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "medivac_stack_commit",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "healer"
+      },
+      "why": "Do not kite; stack hydras onto medivacs immediately so bio cannot be topped off, lings soak splash in an opened line."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "threat_stack_no_kite",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Highest DPS-per-HP first (colossus then marauders) with continuous hydra fire; kiting wasted cooldowns in earlier tries."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "guns_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "tie": "first",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Delete marines and marauders so medivacs have nothing to heal; then finish leftovers by lowest HP in range."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "hydra_hold_lings_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Hydras never walk into 7 range: stand and shoot what enters while 14 lings close the diagonal and pin the colossus."
+     },
+     "wins": 0,
+     "margin": -491.9
+    },
+    {
+     "program": {
+      "name": "stutter_guns_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "guns",
+         "formation": "open",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Hydras stutter only when a 0.5s stand is unsafe, always prioritize enemy guns, peel wounded so splash does not chain-wipe."
+     },
+     "wins": 0,
+     "margin": -736.6
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "commit_colossus_now",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "open",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "The colossus 7-range light splash is the only thing that can wipe 14 lings; everyone attack-moves onto heaviest from tick 0 so lings pin it and hydras never idle on cooldown."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "healers_then_threat_stack",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "healer",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "healer"
+      },
+      "why": "Medivacs keep bio and colossus alive; stack guns onto healers immediately (no kite delay) then switch to threat once air is gone."
+     },
+     "wins": 1,
+     "margin": -489.6
+    },
+    {
+     "program": {
+      "name": "threat_stack_from_contact",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Highest DPS-per-HP is marauders and marines; ignore kiting, attack-move threat so hydra 12 dmg lands every cooldown while lings occupy the colossus cone."
+     },
+     "wins": 0,
+     "margin": -736.6
+    },
+    {
+     "program": {
+      "name": "guns_concave_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "melee": "charge",
+         "target": "guns",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Fan hydras so more 5-range shots land on bio without walking into 7 range; after first shots land, drop the fan and stack guns so medivacs have nothing left."
+     },
+     "wins": 0,
+     "margin": -377.4
+    },
+    {
+     "program": {
+      "name": "hold_line_shoot_front",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Hydras never chase into the colossus cone: hold and shoot frontline while 14 faster lings charge through the corridor and soak splash."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "weakest_in_range_allin",
+      "rules": [
+       {
+        "when": {
+         "our_alive": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "tie": "first",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 7
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Finish whatever is already in hydra range first so overkill is low; lings charge regardless so splash is eaten on melee not on the 4 hydras."
+     },
+     "wins": 0,
+     "margin": -588.8
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "rally_hold_cut_air",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": 0
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "healer"
+      },
+      "why": "Pull hydras all the way to the rear rally so colossus 7-range never finds them; lings still charge the bio while guns snipe medivacs then the colossus once air is gone."
+     },
+     "wins": 0,
+     "margin": -524.9
+    },
+    {
+     "program": {
+      "name": "open_stutter_threat_forever",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Never commit hydras: keep spacing open and stutter-kite the highest DPS-per-HP while 14 lings occupy splash; rotate wounded so the 4 hydras last the whole fight."
+     },
+     "wins": 0,
+     "margin": -1080.0
+    },
+    {
+     "program": {
+      "name": "bio_first_then_colossus",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "tie": "first",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Medivacs only matter if bio lives; stack hydras onto marines/marauders immediately so heal has no patients, then dump remaining DPS into the colossus."
+     },
+     "wins": 0,
+     "margin": -457.6
+    },
+    {
+     "program": {
+      "name": "concave_air_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ],
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "charge",
+         "target": "healer",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "healer"
+      },
+      "why": "Fan hydras sideways on the corridor so 5-range shots reach medivacs without walking into 7 range; after first air dies, drop the fan and stack remaining guns onto the colossus."
+     },
+     "wins": 1,
+     "margin": -381.0
+    },
+    {
+     "program": {
+      "name": "lings_hold_choke_hydras_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "stack",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "ranged": "stack",
+       "target": "healer"
+      },
+      "why": "Instead of feeding lings into splash, park melee at the rally choke so the corridor funnels bio into hydra range; hydras attack-move onto healers then threat."
+     },
+     "wins": 0,
+     "margin": -924.0
+    },
+    {
+     "program": {
+      "name": "weakest_shot_window_then_heaviest",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "their_alive": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Once any hydra can actually fire, finish the lowest-HP unit already in range to deny medivac overheal, then swap to the colossus; lings always charge so splash lands on meat not hydras."
+     },
+     "wins": 0,
+     "margin": -505.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "cut_the_healers",
+   "rules": [
+    {
+     "when": {
+      "enemy_heal": {
+       ">=": 1
+      },
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge",
+      "target": "healer",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "enemy_heal": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "healer"
+     }
+    },
+    {
+     "when": {
+      "enemy_heal": 0
+     },
+     "set": {
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "threat"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "target": "healer"
+   },
+   "why": "Two medivacs will undo marine/marauder trades; hydras kite and snipe air healers while lings occupy the bio front so heals cannot land on the colossus."
+  },
+  "wins": 1,
+  "margin": -381.0,
+  "score": 9619.0
+ }
+}

@@ -1,0 +1,352 @@
+{
+ "id": "g0277",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_anchor_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "wing": "stay",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Fall back to the gap immediately, hold the funnel so marauders enter one at a time, and snipe the nearest gun that walks in."
+     },
+     "wins": 4,
+     "margin": 97.6
+    },
+    {
+     "program": {
+      "name": "open_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Spread before contact so five marauder shots do not stack, then stutter-kite the highest DPS-per-HP marauder while the choke still delays them."
+     },
+     "wins": 4,
+     "margin": 219.6
+    },
+    {
+     "program": {
+      "name": "bait_one_gun_and_focus_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.9
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "heaviest"
+      },
+      "why": "One hydra always walks to drag marauder fire while the rest shoot; focus the tankiest marauder so the pack loses its front HP sponge."
+     },
+     "wins": 1,
+     "margin": -88.5
+    },
+    {
+     "program": {
+      "name": "commit_after_first_blood",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Hold and pick weakest until a marauder is bleeding, then attack-move so hydra cooldowns never idle against their slower fire cycle."
+     },
+     "wins": 5,
+     "margin": 97.1
+    },
+    {
+     "program": {
+      "name": "concave_ring_at_mouth",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Fan into a ring at the mouth of the choke so all four hydras shoot together, then stutter if melee pressure never arrives."
+     },
+     "wins": 5,
+     "margin": 187.6
+    },
+    {
+     "program": {
+      "name": "rotate_wounded_and_snipe_front",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Hurt hydras step out of marauder range while healthy guns hold the gap and always cover the nearest marauder first."
+     },
+     "wins": 4,
+     "margin": 87.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "concave_ring_at_mouth",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "at_mouth",
+       "in_neck"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "frontline"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Fan into a ring at the mouth of the choke so all four hydras shoot together, then stutter if melee pressure never arrives."
+  },
+  "wins": 5,
+  "margin": 187.6,
+  "score": 50187.6
+ }
+}

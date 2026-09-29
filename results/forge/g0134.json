@@ -1,0 +1,1127 @@
+{
+ "id": "g0134",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_rush_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_two"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Sprint the gap and detonate on the densest hydra pack; splash plus suicide wins the 8v3."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "open_then_swallow",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Spread so hydra volleys do not pre-kill stacked banes, then charge so overlapping blasts still land."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "hold_gap_until_in_neck",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ],
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Sit the choke so hydras must funnel; only charge once we occupy the neck so blasts cannot miss."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "snipe_closest_hydra",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": [
+          "none",
+          "our_bombs"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Send the lead baneling into the nearest hydra so the rest survive the first volley and follow into the clump."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "threat_commit_no_kiting",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Ignore kiting; hydras die to body-block plus blast on the highest DPS-per-HP first."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "bait_two_into_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Sacrifice two closest banes into the hydra line so remaining six detonate after guns are clustered on the bait."
+     },
+     "wins": 4,
+     "margin": 6.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "funnel_then_swallow",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ],
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Force hydras through the gap so they stack, then dump every baneling into the neck for overlapping 80-dmg detonations."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "spread_charge_heaviest",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Unstack so hydra volleys cannot pre-kill a clump, then run onto the highest-hp hydra so leftover blast still finishes the pack."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "lead_snipe_rest_hold",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "One baneling walks into the front hydra to soak and detonate; the rest wait outside splash of our own bomb then charge the remainder."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "bait_two_then_hold_blast",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Two closest banes dive the gun line so hydras cluster on bait; remaining units hold until chain would fire then walk in."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_charge_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Never kite as a group, but peel units under 40% so they detonate later; always focus highest DPS-per-HP hydra."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "gap_wait_until_we_can_shoot",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "rally_is_behind_us": false
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stay at the rally until hydras are almost in range so banelings do not eat five tiles of free shots, then all-in clump."
+     },
+     "wins": 4,
+     "margin": 6.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "neck_funnel_then_dump",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ],
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stay glued to the gap so hydras must stack in the neck; only charge once they are in_pocket so every blast overlaps."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "open_then_snipe_front",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "formation": "keep",
+       "target": "threat"
+      },
+      "why": "Unstack so hydra volleys do not pre-kill a ball, then send the closest baneling into the front hydra while the rest wait outside our own splash."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "single_bait_rest_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "bait": "bait_one",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "One closest body walks into the densest hydra pack; everyone else holds until the chain window then all remaining bombs walk in."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "late_commit_on_almost_range",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Do not eat free hydra shots while far; only leave the choke once they are almost in range, then all-in on clump."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "heaviest_always_charge",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Ignore kiting and bait: every baneling attack-moves onto the highest-HP hydra so leftover splash still finishes the other two."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_threat_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Peel units under 40% so they detonate later instead of dying to hydra shots; focus highest DPS-per-HP then switch to clump once they bleed."
+     },
+     "wins": 4,
+     "margin": 6.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_gap_until_neck_then_clump",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ],
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stay glued at the choke so hydras must funnel; only dump bombs once they are stacked in the neck so every blast overlaps."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "open_spread_then_two_baits",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "formation": "open",
+       "target": "clump"
+      },
+      "why": "Unclump so hydra volleys cannot pre-kill the ball, then send two closest banelings into the densest hydras while the rest wait outside splash."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "snipe_front_hydra_rest_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "One closest body walks onto the nearest hydra; remaining bombs hold outside their own splash until a chain window then commit."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "instant_allin_clump_heaviest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Ignore kiting: every baneling attack-moves onto the highest-HP hydra so leftover splash still finishes the other two before they can pick us apart."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "wait_almost_range_then_dump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Do not eat free hydra shots while far; leave the choke only once they are almost in range, then all-in clump with a single bait."
+     },
+     "wins": 4,
+     "margin": 6.0
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_hold_then_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Peel units under 40% so they detonate later instead of dying to hydra shots; hold the gap until contact then charge highest DPS-per-HP."
+     },
+     "wins": 4,
+     "margin": 6.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "choke_rush_clump",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump",
+      "formation": "keep"
+     }
+    },
+    {
+     "when": {
+      "contact": [
+       "almost_in_range",
+       "melee_on_us"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump",
+      "bait": "bait_two"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "target": "clump"
+   },
+   "why": "Sprint the gap and detonate on the densest hydra pack; splash plus suicide wins the 8v3."
+  },
+  "wins": 4,
+  "margin": 6.0,
+  "score": 40006.0
+ }
+}

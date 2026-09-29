@@ -1,0 +1,948 @@
+{
+ "id": "g0032",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_tank_hold",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true,
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Zealots sit in the gap so the colossus cannot freely walk through; hydra never steps into range until the tank is already in contact."
+     },
+     "wins": 0,
+     "margin": -84.0
+    },
+    {
+     "program": {
+      "name": "melee_rush_stack",
+      "rules": [
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Ignore the wall and just close; zealots soak the first volleys while hydra attack-moves so total DPS starts as soon as anyone is in range."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "hydra_stutter_tank",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all"
+      },
+      "why": "Zealots run in as meat; hydra uses the stutter rule so it only fires when the 0.5 s stand is still safe from the colossus splash."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "fan_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "formation": "keep"
+      },
+      "why": "Before anyone shoots, hydra fans sideways for a wider firing arc around the choke mouth, then both sides hold so the colossus walks into the concave."
+     },
+     "wins": 0,
+     "margin": -109.0
+    },
+    {
+     "program": {
+      "name": "bleed_then_withdraw",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ],
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "fall_back",
+       "melee": "hold_choke",
+       "target": "heaviest"
+      },
+      "why": "Trade only while we still outnumber and are not bleeding; once the colossus starts winning the hp race, everyone falls back through the gap and holds the far side."
+     },
+     "wins": 0,
+     "margin": -152.8
+    },
+    {
+     "program": {
+      "name": "guns_only_focus",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "bar": "pack",
+         "ranged": "hold",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "target": "heaviest",
+       "ranged": "hold",
+       "melee": "hold"
+      },
+      "why": "Treat the colossus as the sole gun; hydra never chases, zealots only occupy the neck, and every shot is forced onto the highest remaining hp so splash waste is minimised."
+     },
+     "wins": 0,
+     "margin": -84.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_meat_hydra_stack",
+      "rules": [
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Colossus outranges the hydra, so zealots must close first as shields soak splash while hydra attack-moves for constant DPS once anyone is in range."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "stutter_behind_chargers",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all"
+      },
+      "why": "Zealots run in; hydra only takes the 0.5s shot when the stand is safe so it never walks into colossus splash while still contributing damage."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "spread_then_crash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "ranged": "stack"
+      },
+      "why": "Open the clump first so colossus splash hits fewer bodies, then both lines attack-move through the gap."
+     },
+     "wins": 0,
+     "margin": -66.2
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_keep_dps",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "wounded": "stay"
+      },
+      "why": "Charge with stacking fire, but any unit dropping under 40% steps out of the colossus splash cone so remaining HP keeps shooting."
+     },
+     "wins": 3,
+     "margin": 16.4
+    },
+    {
+     "program": {
+      "name": "hydra_hold_after_zealots_in",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Zealots charge to occupy the colossus; once someone can shoot the hydra plants and never walks forward into extra splash."
+     },
+     "wins": 0,
+     "margin": -121.0
+    },
+    {
+     "program": {
+      "name": "concave_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "formation": "keep"
+      },
+      "why": "Fan hydra onto a ring around the choke mouth before contact, then everyone commits so the colossus eats overlapping fire from a wider angle."
+     },
+     "wins": 0,
+     "margin": -66.2
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_tanks_hydra_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold",
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Zealots occupy the gap as a shield wall so the colossus cannot freely walk; hydra never steps into range until the meat is already in blades, then holds and dumps every shot on the single target."
+     },
+     "wins": 0,
+     "margin": -84.0
+    },
+    {
+     "program": {
+      "name": "open_line_then_crash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "stack",
+       "melee": "charge"
+      },
+      "why": "Break the clump first so splash cannot hit three bodies, fan hydra sideways at the mouth, then both lines attack-move through the gap together."
+     },
+     "wins": 0,
+     "margin": -334.0
+    },
+    {
+     "program": {
+      "name": "stutter_hydra_behind_rush",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all"
+      },
+      "why": "Zealots always charge as meat; hydra only fires when a 0.5s stand is still safe and otherwise kites so it never walks into the colossus splash cone."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "rotate_bleeders_keep_dps",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "wounded": "stay"
+      },
+      "why": "Everyone charges and stacks fire, but any unit under 40% that the colossus can still reach steps out so remaining HP keeps dealing damage instead of dying in splash."
+     },
+     "wins": 3,
+     "margin": 16.4
+    },
+    {
+     "program": {
+      "name": "hydra_stack_once_melee_locks",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack"
+      },
+      "why": "Until zealots are in contact hydra falls back so it is not the first splash victim; the instant melee_on_us the hydra attack-moves and everyone piles onto the colossus."
+     },
+     "wins": 3,
+     "margin": 16.2
+    },
+    {
+     "program": {
+      "name": "bait_spacing_concave",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Force a wide concave so the hydra fires from a different angle than the zealots, use kite-all so the gun never sits in the laser, and always pick the highest remaining HP so wasted splash is minimised."
+     },
+     "wins": 0,
+     "margin": -66.2
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_melee_guns_hold",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Use the gap as a splash filter: zealots sit in the neck so the colossus must fire through one tile while hydra never walks into range until the laser is committed."
+     },
+     "wins": 0,
+     "margin": -159.4
+    },
+    {
+     "program": {
+      "name": "spread_then_charge",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "ranged": "hold"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "ranged": "stack"
+      },
+      "why": "Open spacing first so colossus splash cannot clip hydra and both zealots; then charge through the gap as two separate tanks."
+     },
+     "wins": 0,
+     "margin": -334.0
+    },
+    {
+     "program": {
+      "name": "hydra_concave_behind_gap",
+      "rules": [
+       {
+        "when": {
+         "our_ranged": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "hold_choke",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "ranged": "concave"
+      },
+      "why": "Fan the single hydra onto a side ring so its shots come from an angle the colossus laser is not already sweeping, while zealots still body-block the choke."
+     },
+     "wins": 3,
+     "margin": -2.2
+    },
+    {
+     "program": {
+      "name": "late_stack_after_shields",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack"
+      },
+      "why": "Keep hydra out of the 7-range cone until zealots have already eaten the first splash volleys, then everyone attack-moves so remaining DPS is continuous."
+     },
+     "wins": 5,
+     "margin": 95.6
+    },
+    {
+     "program": {
+      "name": "stand_at_mouth_no_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold",
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Nobody walks into the colossus; hold the mouth of the choke so it must come into hydra range while zealots only swing at what enters melee."
+     },
+     "wins": 0,
+     "margin": -84.0
+    },
+    {
+     "program": {
+      "name": "kite_hydra_bait_zealot",
+      "rules": [
+       {
+        "when": {
+         "our_melee": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "our_melee": 1
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all"
+      },
+      "why": "One zealot always walks into the laser as a dedicated splash sponge; the other holds the gap and the hydra only takes safe 0.5s shots."
+     },
+     "wins": 3,
+     "margin": 4.2
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "late_stack_after_shields",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "fall_back",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading",
+       "we_are_bleeding"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stack",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack"
+   },
+   "why": "Keep hydra out of the 7-range cone until zealots have already eaten the first splash volleys, then everyone attack-moves so remaining DPS is continuous."
+  },
+  "wins": 5,
+  "margin": 95.6,
+  "score": 50095.6
+ }
+}

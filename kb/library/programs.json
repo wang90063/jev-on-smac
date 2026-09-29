@@ -1,0 +1,12929 @@
+[
+ {
+  "id": "L000",
+  "program": {
+   "name": "late_stack_after_shields",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "fall_back",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading",
+       "we_are_bleeding"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stack",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack"
+   },
+   "why": "Keep hydra out of the 7-range cone until zealots have already eaten the first splash volleys, then everyone attack-moves so remaining DPS is continuous."
+  },
+  "origin": "g0032",
+  "wins": 5,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 1,
+   "alive_ratio": 3.0,
+   "our_ranged": 1,
+   "our_melee": 2,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 1,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.5,
+   0.75,
+   0.5,
+   0.6666666666666666,
+   0.0,
+   0.0,
+   0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L001",
+  "program": {
+   "name": "funnel_then_stack",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "bar": "bar",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "in_neck",
+       "in_pocket",
+       "past_pocket"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "bar": "pack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "bar": "pack",
+    "target": "clump"
+   },
+   "why": "Stay back and spread until they are packed in the neck; then attack-move so splash never stops and remaining DPS is continuous while rotating wounded bodies out of blade range."
+  },
+  "origin": "g1061",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 30,
+   "alive_ratio": 0.1,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 8,
+   "enemy_melee_n": 22,
+   "enemy_heal": 0,
+   "enemy_suicide": 17,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.967741935483871,
+   0.09090909090909091,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.8888888888888888,
+   0.9565217391304348,
+   0.0,
+   0.9444444444444444,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L002",
+  "program": {
+   "name": "threat_focus_then_stack",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "stutter",
+      "target": "threat",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "threat"
+   },
+   "why": "Pick off the highest DPS-per-HP (hydras) first with stutter fire, then stack and clump-detonate once they start bleeding."
+  },
+  "origin": "g0778",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 11,
+   "their_alive": 7,
+   "alive_ratio": 1.571,
+   "our_ranged": 5,
+   "our_melee": 6,
+   "our_heal": 0,
+   "our_suicide": 6,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9166666666666666,
+   0.875,
+   0.6110462854920264,
+   0.8333333333333334,
+   0.8571428571428571,
+   0.0,
+   0.8571428571428571,
+   0.875,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L003",
+  "program": {
+   "name": "hydra_dps_kite_then_commit",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "guns",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "threat"
+   },
+   "why": "Hydras are the highest DPS-per-HP and we outrange them; stutter-kite threat until they bleed, then attack-move so cooldowns never idle."
+  },
+  "origin": "g0804",
+  "wins": 5,
+  "dummy": 2,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 6,
+   "their_alive": 7,
+   "alive_ratio": 0.857,
+   "our_ranged": 6,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.8571428571428571,
+   0.875,
+   0.4614970382337103,
+   0.8571428571428571,
+   0.0,
+   0.0,
+   0.0,
+   0.875,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L004",
+  "program": {
+   "name": "concave_then_hold_gap",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline"
+   },
+   "why": "Fan a ring so all six guns fire at once while still far, then freeze at the mouth so melee cannot surround; always pick the densest body for any splash from overlapping shots."
+  },
+  "origin": "g0491",
+  "wins": 3,
+  "dummy": 1,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 6,
+   "their_alive": 18,
+   "alive_ratio": 0.333,
+   "our_ranged": 6,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 3,
+   "enemy_melee_n": 15,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.8571428571428571,
+   0.9473684210526315,
+   0.24981245311327835,
+   0.8571428571428571,
+   0.0,
+   0.0,
+   0.0,
+   0.75,
+   0.9375,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L005",
+  "program": {
+   "name": "funnel_stack_clump_splash",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "bar": "bar",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "in_neck",
+       "in_pocket",
+       "past_pocket"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "bar": "pack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "bar": "pack",
+    "target": "clump"
+   },
+   "why": "Retreat until they squeeze into the neck then attack-move so colossus splash never idles on the densest pack while hydras keep firing."
+  },
+  "origin": "g0874",
+  "wins": 5,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 7,
+   "their_alive": 13,
+   "alive_ratio": 0.538,
+   "our_ranged": 7,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 2,
+   "enemy_melee_n": 11,
+   "enemy_heal": 0,
+   "enemy_suicide": 11,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.875,
+   0.9285714285714286,
+   0.34980494148244473,
+   0.875,
+   0.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.9166666666666666,
+   0.0,
+   0.9166666666666666,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L006",
+  "program": {
+   "name": "rally_wall_anchor",
+   "rules": [
+    {
+     "when": {
+      "rally_is_behind_us": true,
+      "tick_frac": {
+       "<=": 0.2
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "keep",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "contact": [
+       "we_can_shoot",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "hold",
+      "bar": "bar",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "their_alive": {
+       "<=": 5
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "bar": "bar",
+    "target": "clump"
+   },
+   "why": "Walk back to the wall/rally immediately, hold ground, and only shoot what enters 7-range so hydras must funnel into the bar."
+  },
+  "origin": "g0573",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_outnumber_badly",
+   "contact": "we_can_shoot",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": true,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 11,
+   "alive_ratio": 0.273,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 11,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.75,
+   0.9166666666666666,
+   0.21445404556166536,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.9166666666666666,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L007",
+  "program": {
+   "name": "bane_clump_charge_marines_guns",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "formation": "open",
+      "melee": "charge",
+      "ranged": "stutter",
+      "target": "clump",
+      "kite": "all"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_one",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "target": "clump",
+    "formation": "keep"
+   },
+   "why": "Walk banelings and zealots into the densest hydra/stalker pack for splash detonations while marines stutter-kite guns so melee never eats the backline."
+  },
+  "origin": "g0364",
+  "wins": 4,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 23,
+   "their_alive": 10,
+   "alive_ratio": 2.3,
+   "our_ranged": 9,
+   "our_melee": 14,
+   "our_heal": 0,
+   "our_suicide": 12,
+   "enemy_guns": 6,
+   "enemy_melee_n": 4,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.9583333333333334,
+   0.9090909090909091,
+   0.6969696969696969,
+   0.9,
+   0.9333333333333333,
+   0.0,
+   0.9230769230769231,
+   0.8571428571428571,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L008",
+  "program": {
+   "name": "fall_then_hold_mouth",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "formation": "keep",
+    "target": "clump",
+    "bar": "pack"
+   },
+   "why": "Walk away first so packed bodies unclump and enemy suicide is strung out, then freeze and shoot into range; never chase so melee never closes on even speed."
+  },
+  "origin": "g0298",
+  "wins": 5,
+  "dummy": 2,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 11,
+   "alive_ratio": 0.273,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 2,
+   "enemy_melee_n": 9,
+   "enemy_heal": 0,
+   "enemy_suicide": 9,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.9166666666666666,
+   0.21445404556166536,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.9,
+   0.0,
+   0.9,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L009",
+  "program": {
+   "name": "fan_then_freeze_gap",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "ranged": "concave",
+      "target": "guns",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "heaviest",
+    "formation": "keep"
+   },
+   "why": "Open a concave while still far so all marauders fire together, then freeze because standing keeps melee out; dump bonus damage into armored stalkers first."
+  },
+  "origin": "g0033",
+  "wins": 5,
+  "dummy": 2,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 10,
+   "their_alive": 15,
+   "alive_ratio": 0.667,
+   "our_ranged": 10,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 2,
+   "enemy_melee_n": 13,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9090909090909091,
+   0.9375,
+   0.40011997600479904,
+   0.9090909090909091,
+   0.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.9285714285714286,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L010",
+  "program": {
+   "name": "bait_two_concave",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 3
+      }
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "target": "frontline",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "clump"
+   },
+   "why": "Two closest melee walk into their baneling clump; remaining zealots hold outside blast while hydra fans a concave and kites, focusing clump then frontline."
+  },
+  "origin": "g0278",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 10,
+   "their_alive": 8,
+   "alive_ratio": 1.25,
+   "our_ranged": 1,
+   "our_melee": 9,
+   "our_heal": 0,
+   "our_suicide": 4,
+   "enemy_guns": 3,
+   "enemy_melee_n": 5,
+   "enemy_heal": 0,
+   "enemy_suicide": 5,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9090909090909091,
+   0.8888888888888888,
+   0.5555555555555556,
+   0.5,
+   0.9,
+   0.0,
+   0.8,
+   0.75,
+   0.8333333333333334,
+   0.0,
+   0.8333333333333334,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L011",
+  "program": {
+   "name": "hold_delete_weakest",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot",
+      "wounded": "stay"
+     }
+    },
+    {
+     "when": {
+      "our_alive": {
+       "<=": 4
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "weakest_in_range"
+   },
+   "why": "Same funnel, but always snipe lowest-HP armored in range so medivac overheal snowballs a count flip before their extra guns matter."
+  },
+  "origin": "g0427",
+  "wins": 4,
+  "dummy": 2,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 7,
+   "their_alive": 9,
+   "alive_ratio": 0.778,
+   "our_ranged": 5,
+   "our_melee": 0,
+   "our_heal": 2,
+   "our_suicide": 0,
+   "enemy_guns": 9,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.875,
+   0.9,
+   0.437570303712036,
+   0.8333333333333334,
+   0.0,
+   0.6666666666666666,
+   0.0,
+   0.9,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L012",
+  "program": {
+   "name": "frontline_then_weakest_hold",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "frontline",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": [
+       "melee_arrives_within_two_shots",
+       "melee_arrives_before_next_shot"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "weakest_in_range",
+    "bar": "pack"
+   },
+   "why": "Chunk the nearest hydra while far, then freeze and pick lowest-hp already in range so leftover banelings arrive after guns are gone."
+  },
+  "origin": "g0005",
+  "wins": 5,
+  "dummy": 1,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 8,
+   "their_alive": 13,
+   "alive_ratio": 0.615,
+   "our_ranged": 7,
+   "our_melee": 0,
+   "our_heal": 1,
+   "our_suicide": 0,
+   "enemy_guns": 5,
+   "enemy_melee_n": 8,
+   "enemy_heal": 0,
+   "enemy_suicide": 8,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.8888888888888888,
+   0.9285714285714286,
+   0.38080495356037153,
+   0.875,
+   0.0,
+   0.5,
+   0.0,
+   0.8333333333333334,
+   0.8888888888888888,
+   0.0,
+   0.8888888888888888,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L013",
+  "program": {
+   "name": "concave_ring_at_mouth",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "at_mouth",
+       "in_neck"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "frontline"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Fan into a ring at the mouth of the choke so all four hydras shoot together, then stutter if melee pressure never arrives."
+  },
+  "origin": "g0277",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 4,
+   "their_alive": 5,
+   "alive_ratio": 0.8,
+   "our_ranged": 4,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 5,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.8,
+   0.8333333333333334,
+   0.4444444444444445,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.8333333333333334,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L014",
+  "program": {
+   "name": "late_rotate_after_first_volleys",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "wing": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "wounded": "rotate",
+      "target": "heaviest"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "heaviest"
+   },
+   "why": "Close with stack while shields are still up; once trading starts, peel only the sub-40% hydra so remaining guns stay on cooldown."
+  },
+  "origin": "g0595",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 4,
+   "their_alive": 1,
+   "alive_ratio": 4.0,
+   "our_ranged": 4,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 1,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.8,
+   0.5,
+   0.8,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L015",
+  "program": {
+   "name": "mouth_concave_clump",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "at_mouth",
+       "in_neck"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "bar": "pack",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "kite": "all",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Park a wide ring at the mouth so all three lasers see the same blob, then concave-stutter if they try to wrap; splash on clump still wins the count even while they outnumber."
+  },
+  "origin": "g0682",
+  "wins": 5,
+  "dummy": 2,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 15,
+   "alive_ratio": 0.2,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 15,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.9375,
+   0.16666666666666669,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.9375,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L016",
+  "program": {
+   "name": "stutter_bait_gun_kite",
+   "rules": [
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds",
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "stand": "shoot",
+      "melee": "charge",
+      "target": "guns",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "melee_arrives_before_next_shot"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "kite": "all"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "target": "threat",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "melee": "charge",
+    "target": "weakest_in_range"
+   },
+   "why": "Only the nearest gun walks as bait while others take safe 0.5s shots; zealots charge to occupy melee so the colossus keeps range; switch to threat once blades arrive."
+  },
+  "origin": "g0083",
+  "wins": 5,
+  "dummy": 3,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "we_can_shoot",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_before_next_shot",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": true,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 7,
+   "their_alive": 26,
+   "alive_ratio": 0.269,
+   "our_ranged": 1,
+   "our_melee": 6,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 8,
+   "enemy_melee_n": 18,
+   "enemy_heal": 0,
+   "enemy_suicide": 5,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.875,
+   0.9629629629629629,
+   0.2119779353821907,
+   0.5,
+   0.8571428571428571,
+   0.0,
+   0.0,
+   0.8888888888888888,
+   0.9473684210526315,
+   0.0,
+   0.8333333333333334,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L017",
+  "program": {
+   "name": "fall_then_stack_clump",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "melee": "hold",
+      "bar": "bar",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "bar": "pack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "bar": "pack",
+    "target": "clump",
+    "melee": "hold",
+    "wounded": "rotate"
+   },
+   "why": "Retreat until they string, then attack-move so colossus splash never idles on the densest pack while hydras keep firing and wounded peel."
+  },
+  "origin": "g0467",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 19,
+   "their_alive": 17,
+   "alive_ratio": 1.118,
+   "our_ranged": 7,
+   "our_melee": 12,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 3,
+   "enemy_melee_n": 14,
+   "enemy_heal": 0,
+   "enemy_suicide": 9,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.95,
+   0.9444444444444444,
+   0.5278564683663833,
+   0.875,
+   0.9230769230769231,
+   0.0,
+   0.0,
+   0.75,
+   0.9333333333333333,
+   0.0,
+   0.9,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L018",
+  "program": {
+   "name": "threat_focus_and_rotate",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "keep",
+      "target": "threat"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "threat",
+      "wounded": "rotate",
+      "tie": "first"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "threat",
+    "wounded": "stay"
+   },
+   "why": "Always shoot the highest dps-per-hp unit; peel sub-40% marines so the remaining guns keep uptime."
+  },
+  "origin": "g0289",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 12,
+   "their_alive": 4,
+   "alive_ratio": 3.0,
+   "our_ranged": 12,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 4,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9230769230769231,
+   0.8,
+   0.75,
+   0.9230769230769231,
+   0.0,
+   0.0,
+   0.0,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 2,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L019",
+  "program": {
+   "name": "bait_one_stutter_frontline",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "kite": "bait_one",
+      "ranged": "stutter",
+      "melee": "charge",
+      "wing": "step",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "target": "frontline",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter",
+      "melee": "charge"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "melee": "charge",
+    "target": "frontline"
+   },
+   "why": "The nearest marine always walks as bait so marauders waste shots; remaining guns stutter-fire the front marauder while zealots crash in."
+  },
+  "origin": "g0746",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 16,
+   "their_alive": 13,
+   "alive_ratio": 1.231,
+   "our_ranged": 10,
+   "our_melee": 6,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 13,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9411764705882353,
+   0.9285714285714286,
+   0.5517705064993277,
+   0.9090909090909091,
+   0.8571428571428571,
+   0.0,
+   0.0,
+   0.9285714285714286,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 4,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L020",
+  "program": {
+   "name": "bait_one_gun_hold_rest",
+   "rules": [
+    {
+     "when": {
+      "enemy_melee": true,
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "kite": "bait_one",
+      "formation": "open",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "kite": "bait_one",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "target": "frontline"
+   },
+   "why": "Sacrifice the closest stalker as a walking bait so zealots chase a single body while the other eight hold a safe ring and delete guns."
+  },
+  "origin": "g0354",
+  "wins": 2,
+  "dummy": 0,
+  "feats": {
+   "speed": "we_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "we_open_a_gap",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 9,
+   "their_alive": 19,
+   "alive_ratio": 0.474,
+   "our_ranged": 9,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 13,
+   "enemy_melee_n": 4,
+   "enemy_heal": 2,
+   "enemy_suicide": 0,
+   "enemy_air": 2,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.9,
+   0.95,
+   0.32157394843962006,
+   0.9,
+   0.0,
+   0.0,
+   0.0,
+   0.9285714285714286,
+   0.8,
+   0.6666666666666666,
+   0.0,
+   0.6666666666666666,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L021",
+  "program": {
+   "name": "bane_crash_bar_clump",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "melee": "charge",
+      "ranged": "hold",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "melee": "charge",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack",
+    "target": "clump",
+    "bar": "bar"
+   },
+   "why": "Send all banelings into the marine ball for chain splash while the colossus bars the densest pack and our marines hold the line; no kiting because they have no melee."
+  },
+  "origin": "g0453",
+  "wins": 5,
+  "dummy": 0,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 18,
+   "their_alive": 22,
+   "alive_ratio": 0.818,
+   "our_ranged": 9,
+   "our_melee": 9,
+   "our_heal": 0,
+   "our_suicide": 9,
+   "enemy_guns": 22,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9473684210526315,
+   0.9565217391304348,
+   0.4499449944994499,
+   0.9,
+   0.9,
+   0.0,
+   0.9,
+   0.9565217391304348,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L022",
+  "program": {
+   "name": "lings_crash_stutter_marauders",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stutter",
+      "kite": "all",
+      "wing": "step",
+      "target": "frontline",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "heaviest"
+   },
+   "why": "Zerglings close the far gap immediately while the two guns stutter-kite so they never tank marauder concussive; we snipe the nearest marauder first because it is the tankiest DPS."
+  },
+  "origin": "g1085",
+  "wins": 5,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 7,
+   "their_alive": 4,
+   "alive_ratio": 1.75,
+   "our_ranged": 2,
+   "our_melee": 5,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 4,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.875,
+   0.8,
+   0.6363636363636364,
+   0.6666666666666666,
+   0.8333333333333334,
+   0.0,
+   0.0,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 5,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L023",
+  "program": {
+   "name": "hold_mouth_weakest_bar",
+   "rules": [
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold_choke",
+      "stand": "shoot",
+      "target": "weakest_in_range",
+      "bar": "bar",
+      "tie": "first"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "melee": "hold",
+      "ranged": "hold",
+      "target": "threat"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "melee": "hold_choke",
+    "target": "clump",
+    "bar": "pack"
+   },
+   "why": "Stand ground at the gap, never step forward; always paint the lowest-HP body already in range so overlapping colossus bars finish wounded lings before they touch zealots."
+  },
+  "origin": "g0832",
+  "wins": 5,
+  "dummy": 2,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 8,
+   "their_alive": 21,
+   "alive_ratio": 0.381,
+   "our_ranged": 1,
+   "our_melee": 7,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 3,
+   "enemy_melee_n": 18,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.8888888888888888,
+   0.9545454545454546,
+   0.27588703837798695,
+   0.5,
+   0.875,
+   0.0,
+   0.0,
+   0.75,
+   0.9473684210526315,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L024",
+  "program": {
+   "name": "concave_clump_commit",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "wing": "step",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "target": "clump"
+   },
+   "why": "Fan a ring immediately so all 11 hydras fire together into the densest pack; no retreat because falling back lets stalker range farm us."
+  },
+  "origin": "g1132",
+  "wins": 4,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 11,
+   "their_alive": 14,
+   "alive_ratio": 0.786,
+   "our_ranged": 11,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 14,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9166666666666666,
+   0.9333333333333333,
+   0.4400895856662934,
+   0.9166666666666666,
+   0.0,
+   0.0,
+   0.0,
+   0.9333333333333333,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L025",
+  "program": {
+   "name": "concave_bar_lings_first",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "ranged": "concave",
+      "wing": "step",
+      "target": "clump",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "clump",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "enemy_melee_n": {
+       "<=": 4
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "guns",
+      "stand": "shoot"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "threat",
+    "bar": "pack"
+   },
+   "why": "Colossus light bonus and splash want the densest ling pack immediately; fan then freeze and paint the bar across the blob so hydras walk into a thinned melee wave."
+  },
+  "origin": "g0486",
+  "wins": 2,
+  "dummy": 1,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 4,
+   "their_alive": 15,
+   "alive_ratio": 0.267,
+   "our_ranged": 4,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 3,
+   "enemy_melee_n": 12,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.8,
+   0.9375,
+   0.21073401736385164,
+   0.8,
+   0.0,
+   0.0,
+   0.0,
+   0.75,
+   0.9230769230769231,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L026",
+  "program": {
+   "name": "stack_frontline_rotate",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "frontline",
+      "stand": "shoot",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "wounded": "rotate",
+      "kite": "bait_one",
+      "ranged": "stutter"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "target": "threat",
+      "ranged": "stutter"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "target": "frontline",
+    "wounded": "rotate"
+   },
+   "why": "Stack attack-move on the nearest damage-dealer whenever a gun is ready so cooldowns are used; banes always charge; peel sub-40% ranged off zealot reach."
+  },
+  "origin": "g0559",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "even",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 17,
+   "their_alive": 17,
+   "alive_ratio": 1.0,
+   "our_ranged": 6,
+   "our_melee": 11,
+   "our_heal": 0,
+   "our_suicide": 11,
+   "enemy_guns": 12,
+   "enemy_melee_n": 5,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9444444444444444,
+   0.9444444444444444,
+   0.5,
+   0.8571428571428571,
+   0.9166666666666666,
+   0.0,
+   0.9166666666666666,
+   0.9230769230769231,
+   0.8333333333333334,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 4,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L027",
+  "program": {
+   "name": "heaviest_then_weakest_stack",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "target": "heaviest",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": [
+       "melee_arrives_before_next_shot",
+       "already_in_blades"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "weakest_in_range",
+    "formation": "keep"
+   },
+   "why": "While out of range stack-attack-move onto the tankiest stalker to start the trade; once anyone can shoot, freeze on lowest-hp already in range so splash waste is avoided and banes are last."
+  },
+  "origin": "g0922",
+  "wins": 4,
+  "dummy": 1,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 5,
+   "alive_ratio": 0.6,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 2,
+   "enemy_melee_n": 3,
+   "enemy_heal": 0,
+   "enemy_suicide": 3,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.8333333333333334,
+   0.37499999999999994,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.75,
+   0.0,
+   0.75,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L028",
+  "program": {
+   "name": "full_charge_stutter_kiting",
+   "rules": [
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "melee": "charge",
+      "stand": "shoot",
+      "target": "weakest_in_range"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "target": "threat"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "kite": "all",
+    "target": "frontline"
+   },
+   "why": "Dump all allied banelings into theirs immediately while stalkers purely stutter-kite and pick weakest already in range, using speed to reopen the gap after each volley."
+  },
+  "origin": "g1092",
+  "wins": 4,
+  "dummy": 1,
+  "feats": {
+   "speed": "we_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "we_open_a_gap",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 16,
+   "their_alive": 28,
+   "alive_ratio": 0.571,
+   "our_ranged": 3,
+   "our_melee": 13,
+   "our_heal": 0,
+   "our_suicide": 13,
+   "enemy_guns": 0,
+   "enemy_melee_n": 28,
+   "enemy_heal": 0,
+   "enemy_suicide": 28,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9411764705882353,
+   0.9655172413793104,
+   0.3634627625716104,
+   0.75,
+   0.9285714285714286,
+   0.0,
+   0.9285714285714286,
+   0.0,
+   0.9655172413793104,
+   0.0,
+   0.9655172413793104,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 3,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 3,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L029",
+  "program": {
+   "name": "weakest_first_concave",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "wing": "step",
+      "target": "weakest_in_range"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "concave",
+      "target": "weakest_in_range",
+      "stand": "shoot",
+      "tie": "first"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "target": "weakest_in_range",
+    "kite": "all"
+   },
+   "why": "Fan then always delete the lowest-HP hydra already in range so count flips before their extra two bodies fire a full volley."
+  },
+  "origin": "g0859",
+  "wins": 5,
+  "dummy": 4,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 5,
+   "their_alive": 7,
+   "alive_ratio": 0.714,
+   "our_ranged": 5,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.8333333333333334,
+   0.875,
+   0.41656942823803966,
+   0.8333333333333334,
+   0.0,
+   0.0,
+   0.0,
+   0.875,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 5,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 1,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 2,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L030",
+  "program": {
+   "name": "heaviest_bait_then_wipe",
+   "rules": [
+    {
+     "when": {},
+     "set": {
+      "formation": "open",
+      "melee": "snipe",
+      "bait": "bait_two",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "weakest_in_range"
+     }
+    },
+    {
+     "when": {
+      "alive_ratio": {
+       ">=": 3
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "formation": "keep"
+     }
+    }
+   ],
+   "else": {
+    "formation": "open",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "heaviest"
+   },
+   "why": "Focus the tankiest remaining bane so the first explosion is the most valuable; two lings bait, the rest wait then charge the survivors."
+  },
+  "origin": "g0209",
+  "wins": 5,
+  "dummy": 0,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 17,
+   "their_alive": 7,
+   "alive_ratio": 2.429,
+   "our_ranged": 0,
+   "our_melee": 17,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 0,
+   "enemy_melee_n": 7,
+   "enemy_heal": 0,
+   "enemy_suicide": 7,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9444444444444444,
+   0.875,
+   0.7083697871099446,
+   0.0,
+   0.9444444444444444,
+   0.0,
+   0.0,
+   0.0,
+   0.875,
+   0.0,
+   0.875,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 4,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L031",
+  "program": {
+   "name": "bait_two_then_stutter_threat",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "threat",
+    "melee": "hold",
+    "formation": "open"
+   },
+   "why": "Two closest zealots walk into the densest baneling group so detonations happen on cheap shields; remaining melee freeze; guns stutter and always pick highest DPS-per-HP stalker."
+  },
+  "origin": "g0073",
+  "wins": 1,
+  "dummy": 0,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 9,
+   "their_alive": 13,
+   "alive_ratio": 0.692,
+   "our_ranged": 1,
+   "our_melee": 8,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 4,
+   "enemy_melee_n": 9,
+   "enemy_heal": 0,
+   "enemy_suicide": 9,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9,
+   0.9285714285714286,
+   0.408983451536643,
+   0.5,
+   0.8888888888888888,
+   0.0,
+   0.0,
+   0.8,
+   0.9,
+   0.0,
+   0.9,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ },
+ {
+  "id": "L032",
+  "program": {
+   "name": "frontline_hold_splash",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "target": "frontline",
+      "bar": "bar",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "frontline",
+      "bar": "pack",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "already_in_blades"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline",
+    "bar": "pack",
+    "formation": "keep"
+   },
+   "why": "Chunk the nearest hydra at range, then stand-ground with pack lasers so colossus splash and stalker bonus vs armored finish the remaining stalker while banes are still walking."
+  },
+  "origin": "g0242",
+  "wins": 5,
+  "dummy": 3,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 7,
+   "alive_ratio": 0.429,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 2,
+   "enemy_melee_n": 5,
+   "enemy_heal": 0,
+   "enemy_suicide": 5,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.75,
+   0.875,
+   0.3002099370188943,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.8333333333333334,
+   0.0,
+   0.8333333333333334,
+   0.0,
+   0.0
+  ],
+  "transfer": {
+   "g0032": {
+    "wins": 4,
+    "dummy": 3
+   },
+   "g1061": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0778": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0350": {
+    "wins": 3,
+    "dummy": 3
+   },
+   "g0804": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0583": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0271": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0068": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0831": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0747": {
+    "wins": 1,
+    "dummy": 0
+   },
+   "g0491": {
+    "wins": 3,
+    "dummy": 1
+   },
+   "g0874": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0081": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0134": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0573": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0364": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0224": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0070": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0119": {
+    "wins": 0,
+    "dummy": 2
+   },
+   "g0517": {
+    "wins": 1,
+    "dummy": 4
+   },
+   "g1139": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0298": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g0207": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0033": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g1129": {
+    "wins": 2,
+    "dummy": 4
+   },
+   "g0278": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0427": {
+    "wins": 2,
+    "dummy": 2
+   },
+   "g0726": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0767": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0005": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g0277": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0595": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0682": {
+    "wins": 3,
+    "dummy": 2
+   },
+   "g0083": {
+    "wins": 2,
+    "dummy": 3
+   },
+   "g0467": {
+    "wins": 3,
+    "dummy": 4
+   },
+   "g0805": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0457": {
+    "wins": 1,
+    "dummy": 3
+   },
+   "g0088": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0289": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0746": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0354": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0453": {
+    "wins": 2,
+    "dummy": 0
+   },
+   "g1085": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0832": {
+    "wins": 5,
+    "dummy": 2
+   },
+   "g1132": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0486": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0641": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0559": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g1014": {
+    "wins": 0,
+    "dummy": 3
+   },
+   "g0544": {
+    "wins": 0,
+    "dummy": 4
+   },
+   "g0369": {
+    "wins": 0,
+    "dummy": 1
+   },
+   "g0922": {
+    "wins": 4,
+    "dummy": 1
+   },
+   "g1092": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0361": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0859": {
+    "wins": 5,
+    "dummy": 4
+   },
+   "g0209": {
+    "wins": 5,
+    "dummy": 0
+   },
+   "g0102": {
+    "wins": 4,
+    "dummy": 4
+   },
+   "g0073": {
+    "wins": 0,
+    "dummy": 0
+   },
+   "g0233": {
+    "wins": 1,
+    "dummy": 1
+   },
+   "g0242": {
+    "wins": 5,
+    "dummy": 3
+   }
+  }
+ }
+]

@@ -1,0 +1,341 @@
+{
+ "id": "g0298",
+ "dummy": 2,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stutter_bar",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "bar": "bar",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Open the clump so baneling chain cannot wipe two colossi, then stutter-kite on even speed while lasers bar across the densest baneling pack; gap holds on a 0.5s stand so we trade splash for free."
+     },
+     "wins": 1,
+     "margin": -156.5
+    },
+    {
+     "program": {
+      "name": "fall_then_hold_mouth",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Walk away first so packed bodies unclump and enemy suicide is strung out, then freeze and shoot into range; never chase so melee never closes on even speed."
+     },
+     "wins": 5,
+     "margin": 366.2
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_freeze",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "open"
+      },
+      "why": "Fan a wide ring while still far so all three lasers fire at once without overlapping friendly splash, then hold the ring so even-speed melee cannot surround."
+     },
+     "wins": 3,
+     "margin": 178.4
+    },
+    {
+     "program": {
+      "name": "snipe_guns_then_pack",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "formation": "open",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.4
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "clump",
+       "wounded": "rotate",
+       "kite": "all"
+      },
+      "why": "Delete the two enemy guns first so remaining banelings have no covering fire, then bar-pack the suicide blob; open spacing and rotate any colossus that drops below 40%."
+     },
+     "wins": 1,
+     "margin": -179.6
+    },
+    {
+     "program": {
+      "name": "bait_gap_stutter",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "stand": "shoot",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "formation": "open",
+       "target": "clump"
+      },
+      "why": "One outer colossus always walks so the pack never detonates together; remaining two shoot only when the 0.5s stand is safe, focusing the densest light bodies."
+     },
+     "wins": 3,
+     "margin": -94.5
+    },
+    {
+     "program": {
+      "name": "wing_widen_stack_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "wing": "step",
+         "formation": "open",
+         "ranged": "concave",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wing": "stay",
+       "bar": "pack"
+      },
+      "why": "Step outer colossi sideways before contact to stretch the line, then attack-move so splash never idles; pick the heaviest remaining dealer once the baneling clump is gone."
+     },
+     "wins": 4,
+     "margin": 224.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "fall_then_hold_mouth",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "formation": "keep",
+    "target": "clump",
+    "bar": "pack"
+   },
+   "why": "Walk away first so packed bodies unclump and enemy suicide is strung out, then freeze and shoot into range; never chase so melee never closes on even speed."
+  },
+  "wins": 5,
+  "margin": 366.2,
+  "score": 50366.2
+ }
+}

@@ -1,0 +1,1218 @@
+{
+ "id": "g0207",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "pure_stutter_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "keep",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Equal speed but we outrange: spread then stutter so every 0.5s stand is still safe and zealots never close."
+     },
+     "wins": 0,
+     "margin": -450.0
+    },
+    {
+     "program": {
+      "name": "hold_the_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Gap holds if we never step forward; freeze in place, shoot whoever walks in, never chase even-speed melee."
+     },
+     "wins": 0,
+     "margin": -188.1
+    },
+    {
+     "program": {
+      "name": "bait_one_kiter",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat"
+      },
+      "why": "Closest hydra always walks so the pack stays a half-step safer; remaining guns take every safe shot on the lead zealot."
+     },
+     "wins": 0,
+     "margin": -450.0
+    },
+    {
+     "program": {
+      "name": "concave_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Fan into a ring first so three hydras wrap the three zealots, then stutter on the wrapped front."
+     },
+     "wins": 0,
+     "margin": -366.9
+    },
+    {
+     "program": {
+      "name": "fall_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range"
+      },
+      "why": "Even speed so walking back does not open a gap, but unclumps us; then switch to stutter once guns can fire."
+     },
+     "wins": 0,
+     "margin": -360.3
+    },
+    {
+     "program": {
+      "name": "stack_until_blades",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Attack-move to dump DPS immediately while gap still holds; only kite the instant blades would arrive."
+     },
+     "wins": 0,
+     "margin": -386.7
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "retreat_unclump_then_freeze",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "weakest_in_range"
+      },
+      "why": "Even speed means chasing closes the gap; walk back first to unclump hydras, then stand still and dump shots as zealots walk into range 5."
+     },
+     "wins": 0,
+     "margin": -194.8
+    },
+    {
+     "program": {
+      "name": "never_step_forward_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Gap holds if we never advance; freeze immediately, shoot whoever enters range, rotate only when blades actually arrive."
+     },
+     "wins": 0,
+     "margin": -98.0
+    },
+    {
+     "program": {
+      "name": "open_ring_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Fan a concave while they are still far so three hydras wrap three zealots, then hold the ring and never chase."
+     },
+     "wins": 0,
+     "margin": -188.5
+    },
+    {
+     "program": {
+      "name": "safe_stutter_after_spread",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range"
+      },
+      "why": "Spread first; then stutter-kite only when a 0.5s stand is proven safe so equal-speed zealots never gain ground."
+     },
+     "wins": 0,
+     "margin": -450.0
+    },
+    {
+     "program": {
+      "name": "focus_lead_zealot_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Pick off the nearest/heaviest zealot one at a time while holding so remaining melee still have a walk to our guns."
+     },
+     "wins": 0,
+     "margin": -114.0
+    },
+    {
+     "program": {
+      "name": "stack_only_while_gap_then_kite",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline"
+      },
+      "why": "Attack-move for max DPS only while standing still still keeps melee out; the instant two-shot window appears, switch to full stutter and rotate wounded."
+     },
+     "wins": 0,
+     "margin": -383.9
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "unclump_then_never_chase",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "threat"
+      },
+      "why": "Even speed means walking back never opens a gap, but it unclumps hydras; then freeze and dump every shot as zealots walk into range 5 so we never gift them a closing chase."
+     },
+     "wins": 0,
+     "margin": -105.6
+    },
+    {
+     "program": {
+      "name": "freeze_on_spawn_focus_one",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Gap holds if we never step; stand immediately, pick the lead zealot so two bodies die before blades, and rotate only the 40% body so two guns keep firing."
+     },
+     "wins": 0,
+     "margin": -105.0
+    },
+    {
+     "program": {
+      "name": "fan_ring_then_hold_ring",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "While they are still far, step the wings into a concave so three hydras wrap three zealots; then hold that ring and never attack-move so even-speed melee never gets a free close."
+     },
+     "wins": 0,
+     "margin": -105.6
+    },
+    {
+     "program": {
+      "name": "hold_until_blades_then_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Take every free shot while the 0.5s window is still safe; the instant blades are on us, only the closest hydra walks as bait so the other two keep standing and shooting."
+     },
+     "wins": 0,
+     "margin": -320.1
+    },
+    {
+     "program": {
+      "name": "stack_only_while_gap_then_hold",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds",
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Attack-move for continuous DPS only while standing still still keeps melee out; the moment that window would close, freeze instead of stutter so even-speed zealots do not ride our walk forever."
+     },
+     "wins": 0,
+     "margin": -126.8
+    },
+    {
+     "program": {
+      "name": "threat_focus_hold_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 1.0
+         },
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Kill the highest DPS-per-HP zealot first to shrink incoming blades fastest; never chase, take the last 0.5s shot, and peel only the wounded hydra."
+     },
+     "wins": 0,
+     "margin": -98.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "always_stutter_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Equal speed but we outrange; stutter shoots only on a safe 0.5s window then walks so zealots never get a free close while DPS stays on."
+     },
+     "wins": 0,
+     "margin": -408.1
+    },
+    {
+     "program": {
+      "name": "concave_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Fan a ring while they are still far so three hydras wrap three zealots, then stutter-kite on that ring instead of stacking into a single melee clump."
+     },
+     "wins": 0,
+     "margin": -384.7
+    },
+    {
+     "program": {
+      "name": "bait_one_walks",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "threat",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Sacrifice the closest hydra as a walking bait so the other two always take safe shots; peel only the wounded bait so two guns keep firing."
+     },
+     "wins": 0,
+     "margin": -450.0
+    },
+    {
+     "program": {
+      "name": "unclump_walk_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "A short fall_back unclumps hydras even if the gap does not grow; then every gun uses stutter so we never attack-move into even-speed blades."
+     },
+     "wins": 0,
+     "margin": -358.5
+    },
+    {
+     "program": {
+      "name": "hold_until_first_volley_then_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ],
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "their_alive": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range"
+      },
+      "why": "Stand still for the first volley while the gap still holds, then switch to full stutter so remaining zealots eat kites instead of a frozen firing line."
+     },
+     "wins": 0,
+     "margin": -376.3
+    },
+    {
+     "program": {
+      "name": "threat_stutter_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "threat",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Always stutter-kite onto the highest DPS-per-HP zealot so incoming melee shrinks fastest, and rotate any hydra under 40% out of blade range."
+     },
+     "wins": 0,
+     "margin": -395.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "never_step_forward_hold",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "hold",
+      "formation": "open",
+      "wing": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "threat"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "stand": "step"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline"
+   },
+   "why": "Gap holds if we never advance; freeze immediately, shoot whoever enters range, rotate only when blades actually arrive."
+  },
+  "wins": 0,
+  "margin": -98.0,
+  "score": -98.0
+ }
+}

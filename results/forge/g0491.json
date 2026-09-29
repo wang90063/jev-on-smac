@@ -1,0 +1,1016 @@
+{
+ "id": "g0491",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Walk to the gap, stand still and snipe the three marauders first so our armor bonus DPS is not wasted on 35-hp lings; never chase because they are faster."
+     },
+     "wins": 0,
+     "margin": -198.6
+    },
+    {
+     "program": {
+      "name": "spread_stutter_then_funnel",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Open the clump and stutter-kite while the gap still holds a 0.5s shot, then park at the neck so 15 melee cannot wrap."
+     },
+     "wins": 0,
+     "margin": -470.3
+    },
+    {
+     "program": {
+      "name": "concave_threat_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all"
+      },
+      "why": "Fan a ring so more guns fire at once, keep stuttering threat until they bleed, then attack-move so hydra cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -433.2
+    },
+    {
+     "program": {
+      "name": "bait_one_kiter_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "One closest gun always walks to pull the zergling pack off-line; the rest hold the gap and dump into the densest body."
+     },
+     "wins": 0,
+     "margin": -433.0
+    },
+    {
+     "program": {
+      "name": "heaviest_first_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Fall back once then immediately attack-move the highest-hp marauders so splash and armored bonus delete tanks before lings arrive in two shots."
+     },
+     "wins": 0,
+     "margin": -410.1
+    },
+    {
+     "program": {
+      "name": "rotate_weak_at_mouth",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "wounded": "rotate",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Hold the mouth of the choke focusing lowest-hp in range; any unit under 40% steps out so stalker shields and hydra bodies last the ling flood."
+     },
+     "wins": 0,
+     "margin": -284.7
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_funnel_then_dps",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Walk to the gap while they are far, then hold so 15 lings cannot wrap; dump armored bonus into enemy marauders first so remaining guns out-trade the swarm."
+     },
+     "wins": 0,
+     "margin": -214.6
+    },
+    {
+     "program": {
+      "name": "stutter_until_bleed_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Use outrange: every gun kites while the 0.5s stand is still safe, focusing threat; once they start bleeding, attack-move so hydra/marauder cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -537.8
+    },
+    {
+     "program": {
+      "name": "concave_then_hold_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Fan a ring so all six guns fire at once while still far, then freeze at the mouth so melee cannot surround; always pick the densest body for any splash from overlapping shots."
+     },
+     "wins": 3,
+     "margin": 30.5
+    },
+    {
+     "program": {
+      "name": "bait_kiter_rest_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "One closest gun always walks to drag the ling pack off-axis; the other five stand the choke and delete marauders, stepping only when blades are already on the guns."
+     },
+     "wins": 0,
+     "margin": -425.7
+    },
+    {
+     "program": {
+      "name": "rotate_weak_focus_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "rotate",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Never chase faster units; hold whatever we can shoot, peel any body under 40% out of reach, and always hit the highest DPS-per-HP so marauders die before the ling flood finishes us."
+     },
+     "wins": 0,
+     "margin": -775.4
+    },
+    {
+     "program": {
+      "name": "two_shot_window_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Fall back once while still far; the instant melee is two shots away, attack-move heaviest so armored bonus and hydra volley land before lings wrap, then rotate wounded out."
+     },
+     "wins": 0,
+     "margin": -410.1
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fan_then_freeze_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "stand": "step"
+      },
+      "why": "Fan a concave while far so all six guns fire together at the packed neck, then freeze on the mouth so lings cannot wrap; clump targeting plus shoot-on-window keeps DPS on the densest bodies."
+     },
+     "wins": 3,
+     "margin": 24.3
+    },
+    {
+     "program": {
+      "name": "retreat_hold_snipe_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "wounded": "rotate",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Walk to the choke first because they are faster and we cannot kite forever; then stand ground and delete enemy marauders so armored bonus is not wasted on 35-hp lings."
+     },
+     "wins": 0,
+     "margin": -212.8
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Hydras and stalkers outrange; stutter-kite the highest DPS/HP threat while the gap still holds, then attack-move once trading starts so cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -537.8
+    },
+    {
+     "program": {
+      "name": "open_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Spread at the mouth and never chase; dump hydra/marauder/stalker armored shots into the highest-hp marauders so remaining guns can out-trade the ling flood after tanks die."
+     },
+     "wins": 0,
+     "margin": -883.6
+    },
+    {
+     "program": {
+      "name": "one_bait_rest_gap",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "The closest gun always walks to drag the 15-ling pack off-axis of the choke; the other five hold the gap and focus clumped bodies, stepping only when blades are already on them."
+     },
+     "wins": 0,
+     "margin": -433.0
+    },
+    {
+     "program": {
+      "name": "two_shot_window_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Fall back while still far; the instant melee is two shots away, attack-move heaviest so armored bonus and hydra volley land before wrap, then rotate wounded out of blades."
+     },
+     "wins": 0,
+     "margin": -410.1
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fan_ring_freeze_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Best prior was concave then freeze at the gap; add wounded rotate and shoot-on-window so six guns fire together at the packed neck without wrapping or bleeding bodies sitting in blades."
+     },
+     "wins": 0,
+     "margin": -761.3
+    },
+    {
+     "program": {
+      "name": "kite_window_then_lock",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "They are faster so infinite kite fails, but we outrange: stutter while the 0.5s stand is still safe, then lock hold on the mouth so two volleys land before wrap."
+     },
+     "wins": 0,
+     "margin": -828.9
+    },
+    {
+     "program": {
+      "name": "funnel_neck_then_dps",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "rotate",
+         "bar": "pack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Walk the rally/choke while far so 15 lings must funnel; once they pack the neck, attack-move clump so overlapping shots never idle and wounded step out."
+     },
+     "wins": 1,
+     "margin": -89.2
+    },
+    {
+     "program": {
+      "name": "delete_guns_at_mouth",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         },
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Enemy marauders are the only real HP sponge and they armor-bonus each other; hold the gap and snipe guns first so remaining hydra/stalker DPS melts the 35-hp swarm."
+     },
+     "wins": 0,
+     "margin": -223.5
+    },
+    {
+     "program": {
+      "name": "bait_one_kite_concave",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Closest gun always walks as bait so the other five take safe 0.5s shots from a fanned ring; after they bleed, freeze and finish densest bodies."
+     },
+     "wins": 0,
+     "margin": -291.0
+    },
+    {
+     "program": {
+      "name": "heaviest_commit_on_two_shots",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Do not idle cooldowns: once melee is two shots away, stack-attack the highest-HP dealer so marauder/stalker armored bonus plus hydra volley dump before wrap, then rotate the wounded."
+     },
+     "wins": 1,
+     "margin": -188.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "concave_then_hold_gap",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "formation": "open",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "clump",
+      "stand": "shoot"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline"
+   },
+   "why": "Fan a ring so all six guns fire at once while still far, then freeze at the mouth so melee cannot surround; always pick the densest body for any splash from overlapping shots."
+  },
+  "wins": 3,
+  "margin": 30.5,
+  "score": 30030.5
+ }
+}

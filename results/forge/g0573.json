@@ -1,0 +1,362 @@
+{
+ "id": "g0573",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_bar_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "we_can_shoot",
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "fall_back",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Use the ravine wall as a choke: fall back to rally, stand and laser-bar the densest hydra line so splash deletes clumps without chasing into 5-range."
+     },
+     "wins": 3,
+     "margin": 95.6
+    },
+    {
+     "program": {
+      "name": "open_concave_splash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "bar": "bar",
+       "target": "clump"
+      },
+      "why": "Unclump the three colossi, fan a ring, and bar-splash so each hydra volley hits fewer bodies while we keep the 2-range advantage."
+     },
+     "wins": 3,
+     "margin": -121.0
+    },
+    {
+     "program": {
+      "name": "threat_stutter_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "rotate",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "bar": "pack"
+      },
+      "why": "Kite the highest DPS-per-HP hydras until they bleed, then attack-move so 1.07s cooldowns never idle; splash still prefers clumps."
+     },
+     "wins": 4,
+     "margin": 325.6
+    },
+    {
+     "program": {
+      "name": "rally_wall_anchor",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "clump"
+      },
+      "why": "Walk back to the wall/rally immediately, hold ground, and only shoot what enters 7-range so hydras must funnel into the bar."
+     },
+     "wins": 5,
+     "margin": 691.4
+    },
+    {
+     "program": {
+      "name": "rotate_wounded_pack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "kite": "all",
+         "bar": "pack",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "wounded": "stay"
+      },
+      "why": "Keep full splash uptime on the densest pack while peeling any colossus under 40% so hydra focus-fire cannot drop a walker."
+     },
+     "wins": 4,
+     "margin": 335.6
+    },
+    {
+     "program": {
+      "name": "pocket_or_kite",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "bar": "pack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "bar": "pack",
+       "formation": "open"
+      },
+      "why": "If we get the neck/mouth of the ravine, stand and bar; otherwise stutter-kite and never step into hydra range."
+     },
+     "wins": 2,
+     "margin": -275.9
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "rally_wall_anchor",
+   "rules": [
+    {
+     "when": {
+      "rally_is_behind_us": true,
+      "tick_frac": {
+       "<=": 0.2
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "keep",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "contact": [
+       "we_can_shoot",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "hold",
+      "bar": "bar",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "their_alive": {
+       "<=": 5
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "bar": "bar",
+    "target": "clump"
+   },
+   "why": "Walk back to the wall/rally immediately, hold ground, and only shoot what enters 7-range so hydras must funnel into the bar."
+  },
+  "wins": 5,
+  "margin": 691.4,
+  "score": 50691.4
+ }
+}

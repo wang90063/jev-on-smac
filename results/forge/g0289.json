@@ -1,0 +1,281 @@
+{
+ "id": "g0289",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "close_and_splash_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Walk in while far, then attack-move and laser-pack the densest pack so both colossi splash stalkers and enemy colossi together."
+     },
+     "wins": 3,
+     "margin": 49.4
+    },
+    {
+     "program": {
+      "name": "snipe_their_colossus_first",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Enemy colossi shred our light marines; focus heaviest (colossi) so splash and marines delete them before we bleed."
+     },
+     "wins": 2,
+     "margin": -53.6
+    },
+    {
+     "program": {
+      "name": "marine_kite_colossus_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns"
+      },
+      "why": "Colossi stand and shoot range-7; marines stutter-kite so they never eat free colossus shots while still contributing."
+     },
+     "wins": 0,
+     "margin": -138.2
+    },
+    {
+     "program": {
+      "name": "threat_focus_and_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Always shoot the highest dps-per-hp unit; peel sub-40% marines so the remaining guns keep uptime."
+     },
+     "wins": 5,
+     "margin": 141.8
+    },
+    {
+     "program": {
+      "name": "wide_concave_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "weakest_in_range"
+      },
+      "why": "Fan a ring so all 12 guns fire together, then pick lowest-hp already in range to snowball kills."
+     },
+     "wins": 4,
+     "margin": 45.4
+    },
+    {
+     "program": {
+      "name": "fall_back_then_hold_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Reset spacing by falling back, then stand-ground on the nearest dealer so we never chase into extra colossus range."
+     },
+     "wins": 0,
+     "margin": -224.2
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "threat_focus_and_rotate",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "keep",
+      "target": "threat"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "threat",
+      "wounded": "rotate",
+      "tie": "first"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "threat",
+    "wounded": "stay"
+   },
+   "why": "Always shoot the highest dps-per-hp unit; peel sub-40% marines so the remaining guns keep uptime."
+  },
+  "wins": 5,
+  "margin": 141.8,
+  "score": 50141.8
+ }
+}

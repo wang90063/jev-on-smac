@@ -1,0 +1,548 @@
+{
+ "id": "g1061",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_spread",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "guns"
+      },
+      "why": "Walk to the gap, open spacing so one baneling cannot chain our three colossi, then hold the 7-range cone and splash the densest bodies as they funnel."
+     },
+     "wins": 3,
+     "margin": -35.4
+    },
+    {
+     "program": {
+      "name": "safe_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Never let melee or banelings close: stutter-kite at full range, pick hydras first, and step away in the 0.5s window so the gap stays."
+     },
+     "wins": 0,
+     "margin": -857.0
+    },
+    {
+     "program": {
+      "name": "concave_then_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "bar",
+       "target": "clump"
+      },
+      "why": "Fan into a ring before they reach the neck so every laser covers the choke, then pack-bar splash the clump while rotating wounded colossi out."
+     },
+     "wins": 3,
+     "margin": -379.4
+    },
+    {
+     "program": {
+      "name": "invite_into_gap",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline",
+       "bar": "bar"
+      },
+      "why": "Stack attack-move once the funnel starts so splash never stops; until then hold the mouth and bar the densest slice rather than chasing."
+     },
+     "wins": 3,
+     "margin": 114.0
+    },
+    {
+     "program": {
+      "name": "hydra_snipe_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat"
+      },
+      "why": "Kill the 5-range guns before they can trade, using weakest-in-range and a bait-one kite so one colossus soaks while the others fire."
+     },
+     "wins": 0,
+     "margin": -1087.0
+    },
+    {
+     "program": {
+      "name": "late_commit_after_funnel",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "bar": "pack",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "bar"
+      },
+      "why": "Stay back and open until they are committed in the gap; then stack and bar so remaining DPS is continuous and splash hits the whole pack."
+     },
+     "wins": 3,
+     "margin": 115.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "mouth_bar_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "clump"
+      },
+      "why": "Open spacing so one baneling cannot chain three colossi, sit on the gap, and fire the perpendicular bar through the densest slice as they funnel; never chase so the 7-range cone stays."
+     },
+     "wins": 3,
+     "margin": -32.2
+    },
+    {
+     "program": {
+      "name": "funnel_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Stay back and spread until they are packed in the neck; then attack-move so splash never stops and remaining DPS is continuous while rotating wounded bodies out of blade range."
+     },
+     "wins": 5,
+     "margin": 627.2
+    },
+    {
+     "program": {
+      "name": "fan_then_lock",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "bar",
+       "target": "clump"
+      },
+      "why": "Step outer guns sideways into a ring before contact so every laser covers the choke, then lock hold-ground so they cannot walk past the 7-range cone."
+     },
+     "wins": 3,
+     "margin": 44.3
+    },
+    {
+     "program": {
+      "name": "guns_then_splash",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "guns",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "While hydras still exist, hold the gap and pick guns so 5-range DPS dies first; after guns are gone, switch to bar-splash on the melee clump instead of kiting into banelings."
+     },
+     "wins": 1,
+     "margin": -323.6
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_pack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "bar": "pack",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "bar": "pack",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "pack",
+       "wounded": "rotate"
+      },
+      "why": "Keep a tight pack-bar on the densest bodies for max splash, but peel any colossus under 40% out of melee so remaining lasers keep firing from the gap."
+     },
+     "wins": 3,
+     "margin": 182.2
+    },
+    {
+     "program": {
+      "name": "threat_choke_lock",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "bar": "bar",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "bar": "bar"
+      },
+      "why": "Walk to the gap, open, and always shoot the highest DPS-per-HP body in the funnel; take the 0.5s shot whenever the gap still holds so hydras and zealots melt before banelings connect."
+     },
+     "wins": 3,
+     "margin": -29.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "funnel_then_stack",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "bar": "bar",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "pocket": [
+       "in_neck",
+       "in_pocket",
+       "past_pocket"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "bar": "pack",
+      "target": "clump",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "bar": "pack",
+    "target": "clump"
+   },
+   "why": "Stay back and spread until they are packed in the neck; then attack-move so splash never stops and remaining DPS is continuous while rotating wounded bodies out of blade range."
+  },
+  "wins": 5,
+  "margin": 627.2,
+  "score": 50627.2
+ }
+}

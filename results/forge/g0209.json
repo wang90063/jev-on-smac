@@ -1,0 +1,351 @@
+{
+ "id": "g0209",
+ "dummy": 0,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "heaviest_bait_then_wipe: rule 0: unknown feature 'no_trade_yet'"
+   ],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_two_open_hold",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Spread first so one baneling cannot wipe the pack, send two closest zerglings into the bane ball to detonate it, everyone else holds outside the blast radius then finishes leftovers."
+     },
+     "wins": 5,
+     "margin": 189.0
+    },
+    {
+     "program": {
+      "name": "choke_funnel_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "bait": "bait_one",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold_choke",
+       "target": "frontline"
+      },
+      "why": "Refuse to leave the gap: zerglings form an open line at the choke so banelings must enter one or two at a time and explode on the first body only."
+     },
+     "wins": 5,
+     "margin": 224.0
+    },
+    {
+     "program": {
+      "name": "single_snipe_then_charge",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "bait": "bait_one",
+       "formation": "open",
+       "target": "clump"
+      },
+      "why": "One sacrificial ling walks into the densest bane clump; remaining lings stay spread and only charge after the chain is gone."
+     },
+     "wins": 5,
+     "margin": 224.0
+    },
+    {
+     "program": {
+      "name": "spread_and_stand",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold",
+       "target": "frontline"
+      },
+      "why": "Never walk into them: open spacing immediately and stand still so faster lings still meet banes on our terms with no clump detonation."
+     },
+     "wins": 5,
+     "margin": 189.0
+    },
+    {
+     "program": {
+      "name": "heaviest_bait_then_wipe",
+      "rules": [
+       {
+        "when": {},
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "heaviest"
+      },
+      "why": "Focus the tankiest remaining bane so the first explosion is the most valuable; two lings bait, the rest wait then charge the survivors."
+     },
+     "wins": 5,
+     "margin": 231.0
+    },
+    {
+     "program": {
+      "name": "rotate_wounded_choke",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "hold_choke",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "hold_choke",
+       "wounded": "rotate",
+       "target": "clump"
+      },
+      "why": "Hold the gap but peel any ling under 40% so a second explosion cannot finish it; remaining healthy lings keep the choke sealed."
+     },
+     "wins": 5,
+     "margin": 217.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "heaviest_bait_then_wipe",
+   "rules": [
+    {
+     "when": {},
+     "set": {
+      "formation": "open",
+      "melee": "snipe",
+      "bait": "bait_two",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "weakest_in_range"
+     }
+    },
+    {
+     "when": {
+      "alive_ratio": {
+       ">=": 3
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "formation": "keep"
+     }
+    }
+   ],
+   "else": {
+    "formation": "open",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "heaviest"
+   },
+   "why": "Focus the tankiest remaining bane so the first explosion is the most valuable; two lings bait, the rest wait then charge the survivors."
+  },
+  "wins": 5,
+  "margin": 231.0,
+  "score": 50231.0
+ }
+}

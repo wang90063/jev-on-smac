@@ -105,3 +105,25 @@ Closed (no Force win on 23 maps × 5 seeds): `formation`, `kite` (tested under
 `ranged=stutter`), `bait` (under `melee=snipe`), `stand` (under
 `ranged=stutter`; `shoot` lost 3s_vs_5z 5/5), `mark`. `line`, `span`,
 `bomb`, `blade` were never built by the catalog and are removed.
+
+## Tactic programs (round 2)
+
+A program is an ordered list of `{"when": {physical feature: value}, "set": {exam: pick}}`
+plus an `else`. Each tick the first matching rule is merged over `else`; exams it
+does not set take the code default. Vocabulary: `tactic_dsl.FEATURES` (conditions)
+and `tactic_dsl.SETTABLE` (picks). No map names anywhere.
+
+Programs run on the open menu (`_open_menu`): every job the motor can execute is
+legal, and the simulator, not a hand gate, decides if it is good. Primitives added
+for programs only:
+
+| Pick | What code does |
+|---|---|
+| `ranged=hold` | guns stand ground and shoot what walks into range; never chase |
+| `ranged=fall_back` | guns walk back to the rally point or choke, then hold |
+| `melee=hold` | melee stands and hits only what comes into reach |
+| `target=threat` | focus the enemy with the most damage per second per remaining health |
+| `wounded=rotate` | a unit under 40% health that an enemy can reach steps out of reach |
+
+Library entries (`kb/library/programs.json`): program, start features, wins on the
+fight it was written for, and a `transfer` table of wins vs Dummy on every train fight.

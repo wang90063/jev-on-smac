@@ -1,0 +1,1251 @@
+{
+ "id": "g0922",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Unclump immediately so a baneling cannot chain, then stutter-kite at even speed while never chasing; always shoot enemy guns first so leftover banes arrive after their DPS is gone."
+     },
+     "wins": 0,
+     "margin": -206.0
+    },
+    {
+     "program": {
+      "name": "hold_gap_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Stand still while the gap still holds so hydras and the stalker dump damage into the nearest stalker; only step when melee is about to arrive, rotating wounded units out."
+     },
+     "wins": 2,
+     "margin": 0.8
+    },
+    {
+     "program": {
+      "name": "concave_wing_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Fan guns into a concave before contact so banelings cannot splash multiple bodies, then stutter and always pick the highest dps-per-hp threat."
+     },
+     "wins": 0,
+     "margin": -241.6
+    },
+    {
+     "program": {
+      "name": "bait_one_gun_kites",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Sacrifice the closest hydra as a walking bait so banelings detonate on one body while the remaining two guns stutter-fire stalkers from a safe stand."
+     },
+     "wins": 0,
+     "margin": -235.0
+    },
+    {
+     "program": {
+      "name": "fall_back_never_chase",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "guns"
+      },
+      "why": "Walk toward the rally while still far so bodies unstring; freeze and shoot only what walks into range, never stepping forward so even-speed banes never close."
+     },
+     "wins": 2,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "heaviest_then_weakest_stack",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "While out of range stack-attack-move onto the tankiest stalker to start the trade; once anyone can shoot, freeze on lowest-hp already in range so splash waste is avoided and banes are last."
+     },
+     "wins": 4,
+     "margin": 22.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_hold_guns_while_gap",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "keep",
+       "wounded": "rotate"
+      },
+      "why": "Unclump so banes cannot chain, then freeze and dump every shot into enemy guns while the 0.5s stand still keeps melee off us; never chase on even speed."
+     },
+     "wins": 0,
+     "margin": -92.1
+    },
+    {
+     "program": {
+      "name": "fall_then_freeze_heaviest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Walk back first to string the suicide pack, then stand ground on the tankiest stalker so leftover banes arrive after the main DPS is chunked."
+     },
+     "wins": 2,
+     "margin": 29.5
+    },
+    {
+     "program": {
+      "name": "stack_heaviest_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Attack-move the highest-hp stalker while still out of range, then lock in place on the lowest-hp already shootable so we never step into baneling range."
+     },
+     "wins": 4,
+     "margin": 22.0
+    },
+    {
+     "program": {
+      "name": "stutter_threat_always_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Keep spacing open and kite every gun: shoot only when the 0.5s stand is safe, always pick highest dps-per-hp so stalkers die before banes connect."
+     },
+     "wins": 0,
+     "margin": -239.6
+    },
+    {
+     "program": {
+      "name": "frontline_hold_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Chunk the nearest damage-dealer while far, freeze as soon as anyone can shoot, and peel wounded units the instant blades get close."
+     },
+     "wins": 3,
+     "margin": 16.8
+    },
+    {
+     "program": {
+      "name": "concave_then_hold_clump_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "open"
+      },
+      "why": "Fan into a wide ring so one blast cannot hit two, then hold and focus enemy guns; only stutter-step when melee is about to land."
+     },
+     "wins": 1,
+     "margin": -71.4
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "always_stutter_open_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Never stand long enough for even-speed banes; stutter-kite every tick, unclump so a blast cannot chain, and always shoot the highest dps-per-hp so enemy guns die before the pack arrives."
+     },
+     "wins": 0,
+     "margin": -239.6
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "open"
+      },
+      "why": "Fan into a wide ring while still far so one baneling cannot hit two hydras, then freeze and pick the lowest-hp already in range; only peel when blades actually arrive."
+     },
+     "wins": 1,
+     "margin": -98.6
+    },
+    {
+     "program": {
+      "name": "bait_one_gun_kites_rest_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns",
+       "formation": "open"
+      },
+      "why": "Sacrifice the closest gun as a moving bait so banelings chase it while the other two hydras freeze and dump into enemy stalkers; rotate anyone under 40%."
+     },
+     "wins": 0,
+     "margin": -228.8
+    },
+    {
+     "program": {
+      "name": "stack_frontline_then_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Attack-move onto the nearest damage dealer to start the trade while still out of range, then once shots land use the laser bar to slice the densest remaining bodies so leftover banes detonate on each other."
+     },
+     "wins": 4,
+     "margin": 22.0
+    },
+    {
+     "program": {
+      "name": "fall_back_then_stutter_heaviest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest",
+       "formation": "open"
+      },
+      "why": "Walk to rally first so the suicide pack strings out, then stutter-kite forever on the tankiest stalker so even-speed melee never closes and leftover banes arrive after main DPS is gone."
+     },
+     "wins": 0,
+     "margin": -266.2
+    },
+    {
+     "program": {
+      "name": "hold_gap_guns_tie_first",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "tie": "first",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate",
+       "formation": "open"
+      },
+      "why": "Stand still while the 0.5s window still keeps melee off us, focus enemy guns, and when two targets are one shot apart always finish the lower-hp one so a stalker dies before banes land."
+     },
+     "wins": 0,
+     "margin": -87.9
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "always_stutter_open_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Never attack-move; every tick stutter so hydras and the stalker only plant a 0.5s shot when melee still cannot close, while opening space so one baneling cannot chain the clump, always focusing enemy guns first."
+     },
+     "wins": 0,
+     "margin": -239.6
+    },
+    {
+     "program": {
+      "name": "freeze_threat_never_step",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Hold ground immediately so even-speed banes never close from a chase, dump into the highest dps-per-hp unit, and only peel a unit that drops under 40% when blades actually arrive."
+     },
+     "wins": 3,
+     "margin": 17.5
+    },
+    {
+     "program": {
+      "name": "concave_bait_one_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "kite": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan a ring and step the wings so splash and detonations hit one body; the closest gun always walks as bait while the others stutter-shoot the densest pack."
+     },
+     "wins": 0,
+     "margin": -216.6
+    },
+    {
+     "program": {
+      "name": "fall_then_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "formation": "open"
+      },
+      "why": "Walk to rally first to unstring the suicide clump, then kite forever on the nearest damage-dealer so leftover banes arrive after the front stalker is already chunked."
+     },
+     "wins": 0,
+     "margin": -218.0
+    },
+    {
+     "program": {
+      "name": "stack_bar_then_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "bar": "pack"
+      },
+      "why": "Attack-move while out of range using the laser bar on the densest bodies, then freeze on the lowest-hp already in range so we never walk into baneling blast radius."
+     },
+     "wins": 4,
+     "margin": 22.0
+    },
+    {
+     "program": {
+      "name": "rotate_heaviest_then_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "stand": "step",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "guns",
+       "wounded": "rotate",
+       "formation": "open"
+      },
+      "why": "Keep fighting the tankiest enemy stalker until anyone is wounded, then rotate that unit out and switch remaining guns onto enemy ranged so leftover melee detonates on empty space."
+     },
+     "wins": 0,
+     "margin": -239.6
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "heaviest_then_weakest_stack",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "target": "heaviest",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": [
+       "melee_arrives_before_next_shot",
+       "already_in_blades"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "weakest_in_range",
+    "formation": "keep"
+   },
+   "why": "While out of range stack-attack-move onto the tankiest stalker to start the trade; once anyone can shoot, freeze on lowest-hp already in range so splash waste is avoided and banes are last."
+  },
+  "wins": 4,
+  "margin": 22.0,
+  "score": 40022.0
+ }
+}

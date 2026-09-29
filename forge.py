@@ -1,4 +1,4 @@
-"""Offline tactic forge: DeepSeek writes programs, the simulator judges them.
+"""Offline tactic forge: the Codex model writes programs, the simulator judges them.
 
 Per train scenario: R rounds of (propose K programs -> validate -> 5 jittered
 seeds each -> feedback). The best program that beats Dummy goes into the
@@ -7,7 +7,7 @@ train scenario so each entry knows where it transfers.
 
 The simulator is used only here, offline. Nothing in play clones state.
 
-    python forge.py forge      # needs DeepSeek (run outside sandbox, no proxy)
+    python forge.py forge      # needs the LLM gateway API (run outside sandbox, no proxy)
     python forge.py transfer   # local only
 """
 
@@ -167,7 +167,7 @@ def writer_prompt(desc: Dict[str, Any], neighbors: List[Dict[str, Any]], history
 
 def propose(client, desc, neighbors, history, k: int) -> Tuple[List[Dict[str, Any]], List[str]]:
     reply = client.fill_json(
-        INSTRUCTIONS, writer_prompt(desc, neighbors, history, k), timeout=90, max_tokens=4000, temperature=0.8
+        INSTRUCTIONS, writer_prompt(desc, neighbors, history, k), timeout=120, max_tokens=6000, temperature=0.8
     )
     progs, errs = [], []
     for raw in (reply or {}).get("programs") or []:
@@ -192,10 +192,22 @@ def save_lib(lib: List[Dict[str, Any]]) -> None:
     LIB_PATH.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
 
 
+def writer_model() -> str:
+    """The model Codex is configured to use (~/.codex/config.toml), unless FORGE_MODEL is set."""
+    if os.environ.get("FORGE_MODEL"):
+        return os.environ["FORGE_MODEL"]
+    import re
+
+    cfg = Path.home() / ".codex" / "config.toml"
+    m = re.search(r'^model\s*=\s*"([^"]+)"', cfg.read_text(), re.M) if cfg.is_file() else None
+    return m.group(1) if m else "Grok-4.6"
+
+
 def cmd_forge(limit: Optional[int] = None) -> None:
     from system2_api import System2Client
 
-    client = System2Client(timeout=90)
+    client = System2Client(model=writer_model(), timeout=120)
+    print(f"writer model: {client.model}", flush=True)
     FORGE_DIR.mkdir(parents=True, exist_ok=True)
     train = SC.load("train")[:limit] if limit else SC.load("train")
     lib = load_lib()

@@ -1,0 +1,987 @@
+{
+ "id": "g0350",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_snipe_then_bomb_pack",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Send the lone zealot into enemy banelings so their blasts do not chain onto our four bombs; then our banelings clump-detonate the marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "spread_and_charge_marauder",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Open spacing so enemy bombs cannot wipe the pack, then everyone attack-moves the highest-HP gun (marauder) while bombs still live."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "hold_until_they_walk_in",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stand still far out of marauder kiting; let them close, then detonate on whoever is nearest so we spend bombs together."
+     },
+     "wins": 3,
+     "margin": 37.6
+    },
+    {
+     "program": {
+      "name": "double_bait_enemy_bombs",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         },
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "snipe",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Two bodies (zealot plus nearest baneling) walk the enemy suicide cluster so remaining three bombs stay outside blast radius then hit the marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "threat_charge_ignore_kiting",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Equal speed so we never open a gap; just charge the highest DPS-per-HP (marauder) and accept trades before enemy bombs connect."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "clump_then_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Keep bombs packed for splash on marauder plus enemy banelings; once trading starts, rotate wounded out so leftover bombs still detonate."
+     },
+     "wins": 3,
+     "margin": 34.8
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_eats_enemy_banes_then_bomb_marauder",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "The zealot is the only body that can absorb both enemy baneling detonations without wiping our four bombs; after their suicide count drops, remaining bombs charge the marauder as a packed splash group."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "open_then_all_in_on_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Spread first so enemy bombs cannot chain the pack, then ignore remaining enemy melee and force every body onto the marauder whose 125 hp is the only thing that survives our 3/5 losses."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "hold_open_until_they_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Standing still far away denies marauder kiting and lets enemy banelings walk into our spacing; once they are almost in range everyone charges the densest clump so our bombs pop together."
+     },
+     "wins": 3,
+     "margin": 37.6
+    },
+    {
+     "program": {
+      "name": "double_bait_then_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         },
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_one",
+       "target": "threat"
+      },
+      "why": "Two closest melee walk into the two enemy bombs so three of our banelings stay outside blast radius; leftover suicide then focuses the marauder as highest DPS-per-HP."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "keep_clumped_splash_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Refuse to open so our four bombs always overlap on marauder plus their banelings; once trading starts rotate wounded so leftover bombs still detonate instead of dying first."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "charge_frontline_no_retreat",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "keep",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Equal speed means withdrawing never opens a gap; walk straight into the nearest damage dealer immediately so our bombs connect before marauder kites or their bombs land first."
+     },
+     "wins": 3,
+     "margin": 34.8
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_snipe_then_pack_marauder",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Send only the zealot into their two bombs so our four banelings stay outside the blast; once enemy_suicide is gone pack and detonate on the marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "all_charge_threat_stay_hurt",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Equal speed so never kite; everyone attack-moves the highest DPS-per-HP (marauder) and wounded stay in so leftover bombs still connect."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "spread_then_guns_only",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Open spacing so their bombs cannot chain our pack, then ignore remaining enemy melee and put every body on the marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "hold_open_until_almost_then_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Refuse to walk into marauder range; once they are almost in range charge as a packed clump so four bombs overlap on marauder plus leftover banes."
+     },
+     "wins": 3,
+     "margin": 37.6
+    },
+    {
+     "program": {
+      "name": "double_bait_then_heaviest",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Two closest bodies walk into their suicide pair so three of our bombs stay outside; leftovers then charge the 125-hp marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "frontline_charge_rotate_late",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "frontline",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Walk straight at the nearest damage dealer immediately; after trading starts rotate wounded so remaining bombs still detonate instead of dying first."
+     },
+     "wins": 3,
+     "margin": 34.8
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_eats_their_bombs_then_pack_guns",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Only the zealot walks into their two banelings so our four bombs stay alive; once enemy_suicide is gone everyone packs onto the marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "spread_first_then_all_charge_clump",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "formation": "keep",
+       "target": "clump"
+      },
+      "why": "Open spacing so their bombs cannot chain our pack, then ignore leftover enemy melee and detonate the four bombs together on the densest remaining bodies."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "double_body_bait_then_heaviest",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Two closest bodies walk into their suicide pair so three of our bombs stay outside the blast; leftovers then charge the 125-hp marauder."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "hold_open_until_they_commit_then_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stand still far out of marauder kiting and keep spacing open; once they are almost in range everyone charges the densest clump so four bombs overlap."
+     },
+     "wins": 3,
+     "margin": 37.6
+    },
+    {
+     "program": {
+      "name": "threat_charge_wounded_stay",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Equal speed so never kite; everyone attack-moves the highest DPS-per-HP (marauder) and wounded stay in so leftover bombs still connect."
+     },
+     "wins": 3,
+     "margin": 34.8
+    },
+    {
+     "program": {
+      "name": "frontline_then_rotate_after_trade",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "frontline",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Walk straight at the nearest damage dealer immediately; after trading starts rotate wounded so remaining bombs still detonate instead of dying first."
+     },
+     "wins": 3,
+     "margin": 34.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "hold_until_they_walk_in",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "melee": "hold",
+      "formation": "open",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "contact": [
+       "almost_in_range",
+       "we_can_shoot",
+       "melee_on_us"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "target": "clump"
+   },
+   "why": "Stand still far out of marauder kiting; let them close, then detonate on whoever is nearest so we spend bombs together."
+  },
+  "wins": 3,
+  "margin": 37.6,
+  "score": 30037.6
+ }
+}

@@ -1,0 +1,1271 @@
+{
+ "id": "g0641",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "snipe_two_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "guns",
+       "kite": "all"
+      },
+      "why": "Send two closest melee into their four-bane pack to detonate first; remaining melee pins the gap while stalker and marauder stutter-kite the hydra from the choke."
+     },
+     "wins": 3,
+     "margin": 78.6
+    },
+    {
+     "program": {
+      "name": "open_concave_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "target": "threat",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Spread before they arrive, fan a concave on the choke, and always pick the highest dps-per-hp so the hydra dies before their banes close."
+     },
+     "wins": 2,
+     "margin": 40.6
+    },
+    {
+     "program": {
+      "name": "charge_bane_into_hydra",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Our bombs walk the hydra and their bane clump immediately; ranged stack-fire the hydra and never kite away from the gap."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "bait_one_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "One melee soaks the densest suicide pack; the rest hold the neck while guns kite and wounded units peel out of blast range."
+     },
+     "wins": 3,
+     "margin": 47.9
+    },
+    {
+     "program": {
+      "name": "fall_back_then_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Walk the rally until they string through the gap, then attack-move with bar aiming so splash and shots hit the densest bodies."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "hydra_first_stutter_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "guns",
+       "tie": "first"
+      },
+      "why": "Never chase; hold the gap, stutter only if the 0.5s stand is safe, and always focus the hydra so their only gun dies before banes explode."
+     },
+     "wins": 3,
+     "margin": 72.1
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "two_bane_bait_hydra_focus",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "guns",
+       "kite": "all"
+      },
+      "why": "Send two melee into their four-bane pack to detonate it off the choke; remaining melee pins the gap while stalker and marauder never chase and always shoot the hydra."
+     },
+     "wins": 3,
+     "margin": 92.8
+    },
+    {
+     "program": {
+      "name": "our_bombs_walk_hydra",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Our own banelings charge the hydra and their clump for splash while ranged stack-fire the only enemy gun and only stutter if blades arrive."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "string_through_gap_then_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Fall to the rally so they string through the choke, then attack-move with bar aiming so every shot and our remaining blast hits the densest bodies."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "concave_on_neck_one_bait",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "threat"
+      },
+      "why": "Spread and fan a concave on the choke; one melee soaks the densest suicide group while guns stutter-kite the hydra and wounded peel."
+     },
+     "wins": 3,
+     "margin": 65.2
+    },
+    {
+     "program": {
+      "name": "never_leave_choke_guns_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "guns",
+       "tie": "first"
+      },
+      "why": "Hold every unit at the gap, never chase; stutter only if the 0.5s stand is safe and always focus the hydra so their only gun dies before banes explode."
+     },
+     "wins": 3,
+     "margin": 72.1
+    },
+    {
+     "program": {
+      "name": "clump_charge_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Walk all melee into the densest enemy pack for detonations while guns kite; once trading starts, wounded rotate out so hydra cannot finish the last unit."
+     },
+     "wins": 3,
+     "margin": 62.7
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_gap_guns_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "kite": "all",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "threat"
+      },
+      "why": "Pin the choke with melee while ranged never chase and always delete the hydra; only after guns die do our two bombs walk their remaining bane pack."
+     },
+     "wins": 2,
+     "margin": 103.5
+    },
+    {
+     "program": {
+      "name": "bombs_on_hydra_concave",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Walk both suicide units straight into the hydra plus bane clump for splash; guns fan a concave and stutter-kite so they never eat blades."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "string_choke_then_pack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "bar": "pack",
+       "target": "clump"
+      },
+      "why": "Fall to rally so they string through the gap, then attack-move with pack/bar on the densest bodies while wounded peel."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "bait_one_outer_fan",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "guns",
+       "kite": "all"
+      },
+      "why": "Only the closest melee walks into their four-bane pack; outer guns step wide, remaining melee holds the mouth, hydra is always first target."
+     },
+     "wins": 3,
+     "margin": 69.6
+    },
+    {
+     "program": {
+      "name": "threat_hydra_no_chase",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "melee": "hold_choke"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Never leave the gap; always fire the hydra by dps-per-hp, take the 0.5s shot if the gap holds, rotate wounded instead of trading."
+     },
+     "wins": 1,
+     "margin": 106.8
+    },
+    {
+     "program": {
+      "name": "open_then_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "melee": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Spread first so their banes cannot chain us, then stutter-kite frontline while our melee charges only after their suicide is spent."
+     },
+     "wins": 3,
+     "margin": 69.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "one_snipe_choke_hydra",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "shoot",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "guns",
+       "kite": "all"
+      },
+      "why": "Send only the closest suicide into their four-bane clump; remaining melee pins the gap while stalker and marauder hold and never chase, always focusing the hydra."
+     },
+     "wins": 3,
+     "margin": 92.8
+    },
+    {
+     "program": {
+      "name": "both_bombs_hydra_hold",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Walk both our banelings straight onto the hydra and their pack for splash; ranged stand ground at the choke and only shoot the hydra, never stepping into blades."
+     },
+     "wins": 2,
+     "margin": 103.5
+    },
+    {
+     "program": {
+      "name": "rally_string_then_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold_choke",
+       "target": "guns"
+      },
+      "why": "Fall to rally so their four banelings string through the gap; then stack-fire the hydra while melee holds the mouth and wounded peel."
+     },
+     "wins": 4,
+     "margin": 76.4
+    },
+    {
+     "program": {
+      "name": "concave_kite_snipe_one",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "kite": "all",
+       "target": "guns"
+      },
+      "why": "Fan a concave and stutter-kite every gun; only one melee walks the suicide pack so the rest stay outside blast while we focus the densest then the hydra."
+     },
+     "wins": 2,
+     "margin": 60.4
+    },
+    {
+     "program": {
+      "name": "threat_focus_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "hold",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold_choke",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "Never send melee forward: both lines hold the choke; guns stutter only if the gap holds and always pick the highest-DPS-per-HP unit (hydra then leftover banes)."
+     },
+     "wins": 2,
+     "margin": 64.0
+    },
+    {
+     "program": {
+      "name": "bait_two_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "concave",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Two closest melee detonate their bane clump immediately; remaining melee holds; guns concave then rotate wounded out of reach so the hydra cannot finish the backline."
+     },
+     "wins": 0,
+     "margin": 13.5
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "charge_bane_into_hydra",
+   "rules": [
+    {
+     "when": {
+      "suicide_blast": "our_bombs"
+     },
+     "set": {
+      "melee": "charge",
+      "bait": "bait_two",
+      "target": "clump",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "guns",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "heaviest"
+   },
+   "why": "Our bombs walk the hydra and their bane clump immediately; ranged stack-fire the hydra and never kite away from the gap."
+  },
+  "wins": 4,
+  "margin": 76.4,
+  "score": 40076.4
+ }
+}

@@ -1,0 +1,697 @@
+{
+ "id": "g0364",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bane_clump_charge_marines_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Walk banelings and zealots into the densest hydra/stalker pack for splash detonations while marines stutter-kite guns so melee never eats the backline."
+     },
+     "wins": 4,
+     "margin": 254.6
+    },
+    {
+     "program": {
+      "name": "marines_hold_gap_banes_front",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "clump",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Freeze marines on the safe gap and hammer hydras while zealots and banelings soak and detonate; never chase into stalker range."
+     },
+     "wins": 1,
+     "margin": 66.2
+    },
+    {
+     "program": {
+      "name": "kite_then_detonate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Equal speed so we stutter back until hydras overextend, then dump the whole baneling wad on the clump and keep marines shooting."
+     },
+     "wins": 3,
+     "margin": 190.3
+    },
+    {
+     "program": {
+      "name": "concave_splash_ring",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "melee": "charge",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Fan marines into a ring so every shot lands together, pick the densest body for overlapping damage, then send banelings into that same pack."
+     },
+     "wins": 3,
+     "margin": 190.3
+    },
+    {
+     "program": {
+      "name": "snipe_stalkers_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stack",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "target": "clump",
+         "melee": "charge",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "target": "guns"
+      },
+      "why": "Stalkers are armored high-HP guns; marines focus them while zealots hold the zealot line and banelings wait for a hydra clump."
+     },
+     "wins": 2,
+     "margin": 122.5
+    },
+    {
+     "program": {
+      "name": "bait_zealots_banes_explode",
+      "rules": [
+       {
+        "when": {
+         "allied_melee": true
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "snipe",
+         "ranged": "stutter",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Two zealots bait enemy melee while banelings walk the suicide path into hydras; marines never step into blades and rotate wounded out."
+     },
+     "wins": 3,
+     "margin": 173.2
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "banes_snipe_hydra_pack",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "target": "clump",
+         "melee": "snipe"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "guns",
+       "kite": "all"
+      },
+      "why": "Zealots bait enemy melee while all banelings walk the suicide path into the hydra clump; marines stutter and never enter blades, focusing remaining guns after the blast."
+     },
+     "wins": 3,
+     "margin": 226.4
+    },
+    {
+     "program": {
+      "name": "marines_hold_then_dump_banes",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "melee": "hold",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "ranged": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Hold the marine line on the safe 0.5s gap and hammer hydras/stalkers; only send banelings once someone can already shoot so the wad detonates on a formed pack."
+     },
+     "wins": 1,
+     "margin": 85.5
+    },
+    {
+     "program": {
+      "name": "equal_speed_kite_then_wad",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Equal speed so stutter-kite opens no extra gap but keeps marines out of blades; when they chase, dump every baneling on the densest body and switch marines to stack."
+     },
+     "wins": 3,
+     "margin": 190.3
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_charge_banes",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "clump",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bar": "pack",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "already_in_blades",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Fan marines into a ring so overlapping shots hit the same clump, then send zealots and banelings into that same densest pack while outer guns keep the ring."
+     },
+     "wins": 3,
+     "margin": 190.3
+    },
+    {
+     "program": {
+      "name": "focus_heaviest_guns_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         },
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stack",
+         "tie": "first",
+         "melee": "hold",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "target": "clump",
+         "melee": "charge",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Stalkers are armored high-HP guns; marines stack-fire the heaviest gun while zealots hold the zealot line and banelings wait until remaining enemies clump, then detonate."
+     },
+     "wins": 3,
+     "margin": 226.4
+    },
+    {
+     "program": {
+      "name": "rotate_wounded_threat_focus",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold",
+         "target": "threat",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Always shoot the highest DPS-per-HP threat; rotate any marine under 40% out of reach; charge banelings only after contact is almost in range so they do not explode on empty air."
+     },
+     "wins": 3,
+     "margin": 197.6
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  },
+  {
+   "round": 3,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bane_clump_charge_marines_guns",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "formation": "open",
+      "melee": "charge",
+      "ranged": "stutter",
+      "target": "clump",
+      "kite": "all"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_one",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "target": "clump",
+    "formation": "keep"
+   },
+   "why": "Walk banelings and zealots into the densest hydra/stalker pack for splash detonations while marines stutter-kite guns so melee never eats the backline."
+  },
+  "wins": 4,
+  "margin": 254.6,
+  "score": 40254.6
+ }
+}

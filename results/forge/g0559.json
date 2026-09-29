@@ -1,0 +1,1310 @@
+{
+ "id": "g0559",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bane_charge_clump_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Banelings attack-move the densest marine pack for splash while marauders and stalkers stutter-kite so zealots never eat the guns; clump target maximizes detonations."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "guns_first_then_clump",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "melee": "charge",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "target": "threat",
+         "stand": "shoot",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "target": "clump",
+         "melee": "snipe"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Delete hydralisks and marines with bonus-armed marauders/stalkers while banes still walk in; switch to clump once guns are melting so remaining banes splash zealots."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "concave_wing_step",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "kite": "all",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump",
+       "wing": "step"
+      },
+      "why": "Fan ranged into a ring and step outer guns sideways so hydras/marines cannot all fire the same marauder; banes still charge the pack from the center."
+     },
+     "wins": 1,
+     "margin": 73.7
+    },
+    {
+     "program": {
+      "name": "hold_gap_then_detonate",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "almost_in_range"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Hold the 0.5s window while gap holds, shoot weakest already in range, then send banes in only after marines have walked onto our splash."
+     },
+     "wins": 2,
+     "margin": 266.8
+    },
+    {
+     "program": {
+      "name": "heaviest_hydra_snipe",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "target": "clump",
+         "melee": "snipe",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "target": "frontline",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "target": "heaviest",
+       "bait": "bait_one"
+      },
+      "why": "Focus highest-HP hydras first with stalker/marauder armored bonus, bait one bane into remaining marine clump, rest of banes hold outside blast until chain is worth it."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_stack_ready",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "stand": "shoot",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Stack attack-move whenever someone can shoot now so we do not waste cooldown; peel sub-40% marauders/stalkers; banes always charge clump."
+     },
+     "wins": 3,
+     "margin": 213.8
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_then_snipe_clump",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Spread first so banes do not chain on ourselves, then send closest bane into the marine ball while guns stutter-focus clump and never eat zealots."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "threat_focus_charge",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "target": "threat",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "Ignore splash until guns melt high dps-per-hp hydras and marines; banes simply charge so they arrive as enemy frontline is already wounded."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "concave_hold_then_plunge",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "melee": "hold",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Fan guns into a ring and hold the gap while it lasts; only plunge banes once melee contact is imminent so splash hits a packed chase."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "guns_then_frontline",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "target": "frontline",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Delete enemy ranged with armored marauder/stalker shots first; once their guns drop, switch to frontline so remaining banes and tanks finish zealots."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "fall_back_choke_detonate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "fall_back",
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Walk guns toward rally so zealots stretch; banes hold then snipe the chasing marine pack once the line thins into a neck."
+     },
+     "wins": 0,
+     "margin": -141.6
+    },
+    {
+     "program": {
+      "name": "stack_splash_bait_two",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": [
+          "none",
+          "our_bombs"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "bar": "pack",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "kite": "all",
+         "ranged": "stutter",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Attack-move guns so cooldowns are never wasted; two closest banes walk into the densest marine group while the rest stay outside blast radius."
+     },
+     "wins": 4,
+     "margin": 233.7
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stack_clump_snipe_two",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": [
+          "none",
+          "our_bombs"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Attack-move every gun so cooldowns never idle; two closest banelings walk into the densest marine/hydra pack while the rest hold outside blast; splash is the win condition."
+     },
+     "wins": 4,
+     "margin": 233.7
+    },
+    {
+     "program": {
+      "name": "stutter_guns_charge_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Marauders and stalkers stutter-kite so zealots never eat the backline; banelings charge the densest pack; once gap holds they dump shots on enemy guns."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "hold_window_then_plunge",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stand still while the 0.5s gap holds and pick weakest already in range; only send banelings once marines have walked onto our splash, then rotate wounded."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "concave_wing_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "kite": "all",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump",
+       "wing": "step"
+      },
+      "why": "Fan guns into a ring and step outer units sideways so hydras cannot focus one marauder; banes snipe the clump only when blast physics exist."
+     },
+     "wins": 1,
+     "margin": 73.7
+    },
+    {
+     "program": {
+      "name": "heaviest_stack_charge",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest",
+       "formation": "open"
+      },
+      "why": "Focus highest-hp damage dealers so hydras and remaining marines die first; stack fire whenever a gun is ready; banelings always charge rather than bait."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "frontline_fall_back_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "kite": "all",
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "target": "frontline",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Walk guns toward rally if they chase, then hold; closest bane baits the pack while remaining melee hold outside blast; switch to frontline once their guns thin."
+     },
+     "wins": 4,
+     "margin": 233.7
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stack_snipe_two_clump",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": [
+          "none",
+          "our_bombs"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Attack-move so guns never idle cooldown; two closest banelings walk into the densest marine/hydra pack while remaining banes hold outside blast radius."
+     },
+     "wins": 4,
+     "margin": 233.7
+    },
+    {
+     "program": {
+      "name": "concave_wing_charge_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Fan a ring and step outer guns sideways before contact, then send every baneling into the densest pack while stutter-kiting remaining shots."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "fall_back_bait_one_guns",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "kite": "all",
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stutter",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "target": "frontline",
+         "melee": "charge",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Walk guns toward rally while they chase, closest bane baits the pack, remaining melee hold outside blast, focus enemy guns until they thin."
+     },
+     "wins": 4,
+     "margin": 233.7
+    },
+    {
+     "program": {
+      "name": "hold_gap_then_plunge_threat",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stand still while the 0.5s gap holds and pick weakest already in range; plunge banes only once marines walk onto splash, then peel wounded and focus threat."
+     },
+     "wins": 2,
+     "margin": 128.3
+    },
+    {
+     "program": {
+      "name": "bait_one_heaviest_stutter",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "none",
+          "our_bombs"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "heaviest"
+      },
+      "why": "One closest bane suicides the densest pack; marauders and stalkers always stutter and dump onto the highest-hp damage dealer so hydras die first."
+     },
+     "wins": 0,
+     "margin": 103.8
+    },
+    {
+     "program": {
+      "name": "stack_frontline_rotate",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline",
+         "stand": "shoot",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "kite": "bait_one",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "target": "threat",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Stack attack-move on the nearest damage-dealer whenever a gun is ready so cooldowns are used; banes always charge; peel sub-40% ranged off zealot reach."
+     },
+     "wins": 5,
+     "margin": 354.2
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "stack_frontline_rotate",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "frontline",
+      "stand": "shoot",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "wounded": "rotate",
+      "kite": "bait_one",
+      "ranged": "stutter"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "target": "threat",
+      "ranged": "stutter"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "melee": "charge",
+    "target": "frontline",
+    "wounded": "rotate"
+   },
+   "why": "Stack attack-move on the nearest damage-dealer whenever a gun is ready so cooldowns are used; banes always charge; peel sub-40% ranged off zealot reach."
+  },
+  "wins": 5,
+  "margin": 354.2,
+  "score": 50354.2
+ }
+}

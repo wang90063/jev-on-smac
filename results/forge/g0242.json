@@ -1,0 +1,369 @@
+{
+ "id": "g0242",
+ "dummy": 3,
+ "hand_rules": 2,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Unclump immediately so a chain detonation cannot wipe the army, then stutter-kite while focusing enemy guns so remaining banelings arrive after hydra and stalker are dead."
+     },
+     "wins": 5,
+     "margin": 113.4
+    },
+    {
+     "program": {
+      "name": "concave_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "bar": "pack",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan a ring and use the colossus bar laser on the densest pack so splash tags clustered banelings while stalkers pick leftover threats."
+     },
+     "wins": 5,
+     "margin": 212.4
+    },
+    {
+     "program": {
+      "name": "retreat_then_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Walk back while they chase at even speed, then freeze and snipe lowest-hp already in range so splash is not wasted and melee never closes the last 0.5s."
+     },
+     "wins": 5,
+     "margin": 249.4
+    },
+    {
+     "program": {
+      "name": "heaviest_stack_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.5
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "formation": "open"
+      },
+      "why": "Attack-move onto the tankiest enemy stalker first while still far, then rotate wounded units once the 5 banelings threaten a chain."
+     },
+     "wins": 4,
+     "margin": 115.9
+    },
+    {
+     "program": {
+      "name": "bait_one_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Closest gun walks as bait while the other two shoot only on safe 0.5s stands, always focusing the highest dps-per-hp so hydra dies before banes connect."
+     },
+     "wins": 3,
+     "margin": 38.7
+    },
+    {
+     "program": {
+      "name": "frontline_hold_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "frontline",
+         "bar": "bar",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "bar": "pack",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "bar": "pack",
+       "formation": "keep"
+      },
+      "why": "Chunk the nearest hydra at range, then stand-ground with pack lasers so colossus splash and stalker bonus vs armored finish the remaining stalker while banes are still walking."
+     },
+     "wins": 5,
+     "margin": 255.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "frontline_hold_splash",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "target": "frontline",
+      "bar": "bar",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "frontline",
+      "bar": "pack",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "already_in_blades"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "frontline",
+    "bar": "pack",
+    "formation": "keep"
+   },
+   "why": "Chunk the nearest hydra at range, then stand-ground with pack lasers so colossus splash and stalker bonus vs armored finish the remaining stalker while banes are still walking."
+  },
+  "wins": 5,
+  "margin": 255.8,
+  "score": 50255.8
+ }
+}

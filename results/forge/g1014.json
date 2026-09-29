@@ -1,0 +1,1316 @@
+{
+ "id": "g1014",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "healer_then_colossus",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "healer",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest",
+         "wounded": "rotate",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Medivacs keep hydras and marauders alive; delete them first then dump onto armored colossi while spreading so lasers do not farm the marine blob."
+     },
+     "wins": 0,
+     "margin": -1775.8
+    },
+    {
+     "program": {
+      "name": "spread_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Open spacing and stutter-kite so colossus splash wastes shots; always snipe the highest dps-per-hp gun (hydras then marauders)."
+     },
+     "wins": 0,
+     "margin": -1818.8
+    },
+    {
+     "program": {
+      "name": "hold_line_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "frontline"
+      },
+      "why": "Do not chase medivacs off the map; stand and shoot the nearest damage dealer so stalker/marauder range actually connects."
+     },
+     "wins": 0,
+     "margin": -1190.9
+    },
+    {
+     "program": {
+      "name": "guns_first_stack",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Ignore medivacs until hydra/marauder dps is gone; attack-move so marines never idle while stalkers chip armored bodies."
+     },
+     "wins": 0,
+     "margin": -1818.8
+    },
+    {
+     "program": {
+      "name": "fall_back_then_concave",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Give marines a beat to unclump, then fan a ring and fire; rotate wounded so splash does not cascade."
+     },
+     "wins": 0,
+     "margin": -1818.8
+    },
+    {
+     "program": {
+      "name": "weakest_uptime",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "stay"
+      },
+      "why": "Finish whatever is already in range so overkill is low, peel sub-40% marines, and only stutter when we start bleeding."
+     },
+     "wins": 3,
+     "margin": -11.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stack_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Open the marine blob so colossus lasers waste splash, then attack-move onto the two high-HP colossi so stalker/marauder armored bonuses dump into the real threat."
+     },
+     "wins": 0,
+     "margin": -1818.8
+    },
+    {
+     "program": {
+      "name": "stutter_threat_peel",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.5
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Stutter so hydras never get free melee-range shots; always pick the highest dps-per-hp body (hydras then marauders) and peel sub-40% marines."
+     },
+     "wins": 1,
+     "margin": -600.1
+    },
+    {
+     "program": {
+      "name": "delete_healers_then_guns",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "target": "healer",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Medivacs keep hydras and marauders topped; stack-focus them the instant anyone can shoot, then swap to remaining guns."
+     },
+     "wins": 0,
+     "margin": -1774.7
+    },
+    {
+     "program": {
+      "name": "hold_frontline_no_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "frontline"
+      },
+      "why": "Do not chase medivacs; stand a wide line and shoot the nearest damage dealer so stalker and marauder range actually connects."
+     },
+     "wins": 0,
+     "margin": -1190.9
+    },
+    {
+     "program": {
+      "name": "concave_pack_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "clump",
+         "bar": "pack",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Fan a ring so all 23 guns fire together into the densest enemy pack (hydra+marauder blob) instead of chasing outliers."
+     },
+     "wins": 3,
+     "margin": -11.4
+    },
+    {
+     "program": {
+      "name": "weakest_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "wounded": "stay"
+      },
+      "why": "Finish whatever is already in range for low overkill; only stutter when we start bleeding so marine uptime stays high."
+     },
+     "wins": 3,
+     "margin": -11.4
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_heaviest_colossus",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Colossi farm the marine blob with splash; open a wide line, stack onto the highest-hp damage dealer so marauder/stalker armored bonuses actually land, peel only when we start bleeding."
+     },
+     "wins": 0,
+     "margin": -1818.8
+    },
+    {
+     "program": {
+      "name": "hydra_threat_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Hydras are the dps-per-hp spike; ignore flying medivacs, always pick threat, stack so 23 guns delete them before colossus splash matters."
+     },
+     "wins": 2,
+     "margin": -336.7
+    },
+    {
+     "program": {
+      "name": "open_field_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.2
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "No enemy melee, so stutter is cheap kiting that keeps marines out of colossus sweet-spot while focusing remaining enemy guns rather than tanks."
+     },
+     "wins": 1,
+     "margin": -563.0
+    },
+    {
+     "program": {
+      "name": "clump_splash_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Fan a ring into the densest hydra/marauder pack so every volley hits neighbors, then finish wounded in-range bodies once the blob breaks."
+     },
+     "wins": 3,
+     "margin": -11.4
+    },
+    {
+     "program": {
+      "name": "frontline_stack_no_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "stack",
+         "wing": "stay",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline",
+         "stand": "shoot",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline",
+       "wounded": "stay"
+      },
+      "why": "Walk up as a pack and always shoot the nearest damage-dealer; never hold or fall back so medivacs cannot kiting-heal while we idle."
+     },
+     "wins": 0,
+     "margin": -571.2
+    },
+    {
+     "program": {
+      "name": "ratio_flip_to_hold",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.5
+         },
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 12
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "wounded": "stay"
+      },
+      "why": "While we still outnumber, attack-move weakest for uptime; if the ratio collapses, freeze a hold line so remaining stalkers keep shooting instead of chasing healers."
+     },
+     "wins": 1,
+     "margin": -561.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "delete_healers_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "healer",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Medivacs keep hydras and marauders alive; burn the two air healers with all 23 guns before they can cycle, then switch to threat so hydras die next."
+     },
+     "wins": 1,
+     "margin": -452.7
+    },
+    {
+     "program": {
+      "name": "colossus_first_then_hydra",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Colossus splash deletes light marines; stalkers and marauders should dump armored bonus into the two 350-hp walkers first, then finish hydras."
+     },
+     "wins": 3,
+     "margin": 27.1
+    },
+    {
+     "program": {
+      "name": "hold_line_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "stay"
+      },
+      "why": "Open field but no enemy melee: stand ground so marines never walk into colossus sweet-spot and always shoot whoever is closest."
+     },
+     "wins": 0,
+     "margin": -1190.9
+    },
+    {
+     "program": {
+      "name": "fall_back_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Step the clump back once, then freeze a firing line so colossus and hydras have to walk into 23 simultaneous shots."
+     },
+     "wins": 0,
+     "margin": -1190.9
+    },
+    {
+     "program": {
+      "name": "guns_then_clump",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "enemy_guns": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "tie": "first",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Kill hydras and marauders (the only damage dealers besides colossus) by focusing guns first, then splash the remaining blob once their count drops."
+     },
+     "wins": 0,
+     "margin": -1749.3
+    },
+    {
+     "program": {
+      "name": "concave_threat_peel",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Fan a ring so every marine and stalker fires together into the highest dps-per-hp body, peel wounded marines so splash does not snowball."
+     },
+     "wins": 3,
+     "margin": -11.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "colossus_first_then_hydra",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "ranged": "stack",
+      "wing": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "heaviest",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "their_alive": {
+       "<=": 8
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "threat",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "heaviest",
+    "wounded": "stay"
+   },
+   "why": "Colossus splash deletes light marines; stalkers and marauders should dump armored bonus into the two 350-hp walkers first, then finish hydras."
+  },
+  "wins": 3,
+  "margin": 27.1,
+  "score": 30027.1
+ }
+}

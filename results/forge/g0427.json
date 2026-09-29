@@ -1,0 +1,1221 @@
+{
+ "id": "g0427",
+ "dummy": 2,
+ "hand_rules": 2,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_heal",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Use the single gap as a funnel: fall back to the choke, hold ground, and let medivacs keep the five marauders alive while we trade 5v9 through a bottleneck."
+     },
+     "wins": 3,
+     "margin": 507.6
+    },
+    {
+     "program": {
+      "name": "open_stutter_even_range",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Even range and speed, but medivacs let us absorb a few hits: spread, stutter-fire, and pick threat so we never eat a full 9-man volley at once."
+     },
+     "wins": 0,
+     "margin": -740.8
+    },
+    {
+     "program": {
+      "name": "commit_stack_focus_weak",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.9
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Ignore kiting: walk in, attack-move, focus lowest-HP armored so medivac overheal snowballs a numbers flip."
+     },
+     "wins": 2,
+     "margin": 132.0
+    },
+    {
+     "program": {
+      "name": "concave_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "frontline"
+      },
+      "why": "Fan a ring at the mouth of the choke so more of our 6-range guns fire at once, then hold and never chase into their blob."
+     },
+     "wins": 2,
+     "margin": 458.1
+    },
+    {
+     "program": {
+      "name": "bait_into_pocket_then_stack",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "guns",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 6
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "guns"
+      },
+      "why": "Stay just outside until they commit through the gap, then stack and dump on the packed armored clump while medivacs sit behind."
+     },
+     "wins": 0,
+     "margin": -825.0
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_focus_dps",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "wounded": "rotate",
+       "target": "threat"
+      },
+      "why": "Always peel units under 40% so medivacs can catch them, while remaining guns keep threat-focus so we delete high DPS-per-HP marauders first."
+     },
+     "wins": 1,
+     "margin": 49.9
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_funnel_hold_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Use the single gap as a 5v9 bottleneck: sit on our side of the neck, never chase, focus highest DPS-per-HP so medivacs overheal the front while their extra guns cannot all fire."
+     },
+     "wins": 3,
+     "margin": 507.6
+    },
+    {
+     "program": {
+      "name": "mouth_concave_never_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.8
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wing": "stay"
+      },
+      "why": "Fan a ring at the mouth so more 6-range guns fire through the gap at once, then hold so we do not walk into their 9-man blob."
+     },
+     "wins": 2,
+     "margin": 458.1
+    },
+    {
+     "program": {
+      "name": "stutter_open_then_commit_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Even range: spread and stutter so the first volley is not 9-on-5, then once they bleed attack-move so cooldowns never idle and medivacs stay in range."
+     },
+     "wins": 2,
+     "margin": 113.7
+    },
+    {
+     "program": {
+      "name": "heal_snowball_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stack",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Ignore kiting: walk in, attack-move, delete lowest-HP armored so medivac overheal flips the count before their extra guns matter."
+     },
+     "wins": 2,
+     "margin": 132.0
+    },
+    {
+     "program": {
+      "name": "rotate_peel_keep_dps",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "pocket": "in_pocket"
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "wounded": "rotate",
+       "target": "threat"
+      },
+      "why": "Always peel units under 40% for the medivacs while remaining marauders keep threat-focus so we trade 5 healthy vs 9 thinning."
+     },
+     "wins": 1,
+     "margin": -28.1
+    },
+    {
+     "program": {
+      "name": "bait_gap_then_dump_clump",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "guns",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "Stay just outside until they pour through the gap, then stack fire on the packed armored clump while medivacs sit behind the wall."
+     },
+     "wins": 0,
+     "margin": -825.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_sit_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Best prior idea: sit our side of the single gap so 9 guns cannot all fire, never chase, threat-focus so medivacs overheal the front."
+     },
+     "wins": 3,
+     "margin": 507.6
+    },
+    {
+     "program": {
+      "name": "mouth_fan_then_freeze",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wing": "stay"
+      },
+      "why": "Fan a concave at the mouth so more of our 6-range guns see through the gap at once, then freeze so we never walk into the 9-blob."
+     },
+     "wins": 2,
+     "margin": 458.1
+    },
+    {
+     "program": {
+      "name": "stutter_at_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Fall to the choke then stutter-kite so a ready gun only fires if the 0.5s stand is still on our side of the neck; peel wounded for medivacs."
+     },
+     "wins": 2,
+     "margin": 177.6
+    },
+    {
+     "program": {
+      "name": "hold_delete_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Same funnel, but always snipe lowest-HP armored in range so medivac overheal snowballs a count flip before their extra guns matter."
+     },
+     "wins": 4,
+     "margin": 534.4
+    },
+    {
+     "program": {
+      "name": "open_line_never_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wing": "step",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.9
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "wing": "stay"
+      },
+      "why": "Widen the firing line before contact, then hold ground and focus heaviest so splash of bodies at the gap is not needed and we do not chase."
+     },
+     "wins": 2,
+     "margin": 433.9
+    },
+    {
+     "program": {
+      "name": "kite_until_they_bleed_then_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "rotate",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Even range: stutter and open until they start bleeding so the first 9-on-5 volley is avoided, then lock hold at the choke and keep threat."
+     },
+     "wins": 3,
+     "margin": 508.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_snipe_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Best prior: sit the gap so 9 cannot all fire, never chase, snipe lowest-HP armored so medivac overheal flips the count."
+     },
+     "wins": 4,
+     "margin": 534.4
+    },
+    {
+     "program": {
+      "name": "stutter_until_bleed_then_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Even range: open stutter so the first 9-on-5 volley never lands together, then freeze at the neck on threat once they start bleeding."
+     },
+     "wins": 3,
+     "margin": 508.0
+    },
+    {
+     "program": {
+      "name": "heaviest_focus_funnel",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest"
+      },
+      "why": "Delete one fat marauder at a time through the gap so medivacs overheal a single tank while their extras cannot fire."
+     },
+     "wins": 3,
+     "margin": 507.6
+    },
+    {
+     "program": {
+      "name": "mouth_fan_then_freeze_weak",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "wing": "stay"
+      },
+      "why": "Fan a ring at the mouth so more 6-range guns see the gap, then freeze and pick weakest_in_range instead of chasing the blob."
+     },
+     "wins": 2,
+     "margin": 458.1
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.6
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Always hold the choke on guns, peel anyone under 40% so medivacs keep five bodies firing while their ninth sits idle."
+     },
+     "wins": 0,
+     "margin": 338.8
+    },
+    {
+     "program": {
+      "name": "stack_commit_on_trade",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Kite threat until first blood, then attack-move stack so cooldowns never idle while still focusing threat through the bottleneck."
+     },
+     "wins": 2,
+     "margin": 128.7
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "hold_delete_weakest",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wing": "step",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "weakest_in_range",
+      "stand": "shoot",
+      "wounded": "stay"
+     }
+    },
+    {
+     "when": {
+      "our_alive": {
+       "<=": 4
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "weakest_in_range"
+   },
+   "why": "Same funnel, but always snipe lowest-HP armored in range so medivac overheal snowballs a count flip before their extra guns matter."
+  },
+  "wins": 4,
+  "margin": 534.4,
+  "score": 40534.4
+ }
+}

@@ -1,0 +1,366 @@
+{
+ "id": "g1085",
+ "dummy": 3,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "lings_crash_stutter_marauders",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step",
+         "target": "frontline",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest"
+      },
+      "why": "Zerglings close the far gap immediately while the two guns stutter-kite so they never tank marauder concussive; we snipe the nearest marauder first because it is the tankiest DPS."
+     },
+     "wins": 5,
+     "margin": 103.4
+    },
+    {
+     "program": {
+      "name": "guns_hold_until_melee_pins",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "hold",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.5
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Ranged units never walk into marauder range; they hold and only shoot once zerglings have pinned. After first blood we stack for continuous fire."
+     },
+     "wins": 0,
+     "margin": -105.4
+    },
+    {
+     "program": {
+      "name": "pick_hydra_then_clump_marauders",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Enemy hydra is the highest DPS-per-HP; stutter-focus it first so our armored stalker lives, then stack onto the marauder clump."
+     },
+     "wins": 2,
+     "margin": -23.1
+    },
+    {
+     "program": {
+      "name": "concave_kiting_line",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Open spacing and a concave so five lings plus two guns wrap the four enemies; outer guns step wide, then stutter while lings charge."
+     },
+     "wins": 0,
+     "margin": -453.2
+    },
+    {
+     "program": {
+      "name": "fallback_then_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "they_catch_us"
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Walk guns back until melee contact so marauders waste movement; after trades begin, rotate wounded stalker/hydra out of concussive range while lings stay in."
+     },
+     "wins": 0,
+     "margin": -231.4
+    },
+    {
+     "program": {
+      "name": "bait_gun_plus_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "kite": "bait_one",
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Closest gun always walks as bait so marauders chase one unit; remaining gun and hydra shoot the lowest-HP target already in range while lings charge."
+     },
+     "wins": 3,
+     "margin": 23.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "lings_crash_stutter_marauders",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stutter",
+      "kite": "all",
+      "wing": "step",
+      "target": "frontline",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "heaviest"
+   },
+   "why": "Zerglings close the far gap immediately while the two guns stutter-kite so they never tank marauder concussive; we snipe the nearest marauder first because it is the tankiest DPS."
+  },
+  "wins": 5,
+  "margin": 103.4,
+  "score": 50103.4
+ }
+}

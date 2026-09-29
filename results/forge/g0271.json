@@ -1,0 +1,1158 @@
+{
+ "id": "g0271",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_gap_then_bang",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Use the wall: zealots pin the choke so stalkers cannot kite, then banelings roll through the packed guns and clump-detonate."
+     },
+     "wins": 1,
+     "margin": -836.9
+    },
+    {
+     "program": {
+      "name": "all_in_through_neck",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Ignore kiting: both zealots and banelings attack-move the gap immediately so the first baneling volley hits before stalkers can spread."
+     },
+     "wins": 1,
+     "margin": -677.2
+    },
+    {
+     "program": {
+      "name": "open_then_flood",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Spread first so one volley cannot wipe the clump, then flood the choke with a wide wave of zealots and banelings onto the densest pack."
+     },
+     "wins": 1,
+     "margin": -597.4
+    },
+    {
+     "program": {
+      "name": "zealot_screen_bane_detonate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_one",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Zealots charge as meat shields; once stalkers bunch on them, two bait banelings walk in while the rest hold just outside blast and then follow onto the clump."
+     },
+     "wins": 1,
+     "margin": -677.2
+    },
+    {
+     "program": {
+      "name": "pinch_at_mouth",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Hold just behind the mouth of the choke until stalkers commit into the neck, then charge so they cannot stutter back through the gap."
+     },
+     "wins": 1,
+     "margin": -814.4
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_focus_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Charge the highest DPS-per-HP stalker first; peel units under 40% so leftover zealots stay alive to body-block while remaining banelings finish the pack."
+     },
+     "wins": 1,
+     "margin": -637.2
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealots_pin_gap_banes_wait",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Zealots hold the single gap so stalkers cannot kite through; banelings stay out of 6-range until the pocket is at the mouth then roll onto the clump."
+     },
+     "wins": 1,
+     "margin": -836.9
+    },
+    {
+     "program": {
+      "name": "spread_then_flood_choke",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Open spacing so one stalker volley cannot wipe the ball, then everyone attack-moves the densest pack once almost in range."
+     },
+     "wins": 1,
+     "margin": -597.4
+    },
+    {
+     "program": {
+      "name": "meat_then_two_baits",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Charge zealots as a shield first; once trading starts send two bait banelings into the densest guns while the rest sit just outside blast."
+     },
+     "wins": 1,
+     "margin": -677.2
+    },
+    {
+     "program": {
+      "name": "snipe_bombs_on_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "target": "clump"
+      },
+      "why": "Closest melee walks the suicide units into packed stalkers; everyone else holds outside the blast until detonation then charges leftovers."
+     },
+     "wins": 1,
+     "margin": -602.5
+    },
+    {
+     "program": {
+      "name": "threat_then_clump_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Focus highest DPS-per-HP stalker while charging; after they bleed, switch to clump so remaining banelings splash the pack."
+     },
+     "wins": 1,
+     "margin": -698.8
+    },
+    {
+     "program": {
+      "name": "hold_until_they_enter_neck",
+      "rules": [
+       {
+        "when": {
+         "pocket": "open"
+        },
+        "set": {
+         "melee": "hold",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": "in_neck"
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Refuse to walk into 6-range; only charge when pocket says they already committed into the neck so they cannot stutter back out the gap."
+     },
+     "wins": 1,
+     "margin": -784.1
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_wall_then_bane_flood",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "in_neck"
+         ],
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_two"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Zealots pin the gap so stalkers cannot kite; only once they are stuffed in the neck do banelings charge the densest pack."
+     },
+     "wins": 1,
+     "margin": -814.4
+    },
+    {
+     "program": {
+      "name": "spread_hold_until_guns_commit",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "hold_choke",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Open the clump so the first stalker volley cannot wipe everything, sit still until they actually step in, then flood."
+     },
+     "wins": 1,
+     "margin": -729.2
+    },
+    {
+     "program": {
+      "name": "meat_screen_hold_bombs",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_one",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump",
+       "bait": "bait_one"
+      },
+      "why": "Only zealots walk forward as a shield; banelings stay outside blast until trading starts, then two baits walk the pack."
+     },
+     "wins": 1,
+     "margin": -628.8
+    },
+    {
+     "program": {
+      "name": "rotate_and_hold_gap",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Hold the choke, peel units under 40% so the wall stays thick, then charge leftovers once stalker count collapses."
+     },
+     "wins": 1,
+     "margin": -836.1
+    },
+    {
+     "program": {
+      "name": "wait_for_our_bombs_window",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Do not walk bombs into kiting stalkers; the instant a blast is live, send a bait into the densest guns then charge the remainder."
+     },
+     "wins": 1,
+     "margin": -507.1
+    },
+    {
+     "program": {
+      "name": "heaviest_first_then_splash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bait": "bait_one",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 2.5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Focus the tankiest stalker so splash overkill is not wasted on nearly-dead units, then switch to clump once they start bleeding."
+     },
+     "wins": 1,
+     "margin": -698.8
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_choke_then_snipe_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Force stalkers through the gap onto a static zealot wall so they clump; only then walk the nearest melee into bombs and keep the rest outside blast."
+     },
+     "wins": 1,
+     "margin": -836.9
+    },
+    {
+     "program": {
+      "name": "flood_gap_on_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Ignore bait micro and simply attack-move the whole blob through the choke onto the highest DPS-per-HP stalker so volume of bodies overwhelms kiting."
+     },
+     "wins": 1,
+     "margin": -632.0
+    },
+    {
+     "program": {
+      "name": "open_line_then_bait_two",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Spread first so a volley cannot wipe the pack, then send two closest melee into the densest guns while the rest hold just outside detonation."
+     },
+     "wins": 1,
+     "margin": -597.4
+    },
+    {
+     "program": {
+      "name": "zealots_charge_banes_hold_until_chain",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "frontline",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Only zealots walk forward as a meat wall; banelings stay put until a chain window exists, then bait_two into the clump."
+     },
+     "wins": 1,
+     "margin": -337.6
+    },
+    {
+     "program": {
+      "name": "rotate_and_focus_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Peel units under 40% so leftover zealots keep body-blocking; always dump damage on the tankiest remaining stalker so splash/bombs finish the rest."
+     },
+     "wins": 1,
+     "margin": -637.2
+    },
+    {
+     "program": {
+      "name": "late_commit_after_they_enter_neck",
+      "rules": [
+       {
+        "when": {
+         "pocket": [
+          "open",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "melee": "hold_choke",
+         "target": "clump",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "past_pocket"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Do not leave the choke until stalkers are physically in the neck so they cannot kite; then charge and clump-detonate."
+     },
+     "wins": 1,
+     "margin": -814.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "zealots_charge_banes_hold_until_chain",
+   "rules": [
+    {
+     "when": {
+      "suicide_blast": "none"
+     },
+     "set": {
+      "melee": "hold",
+      "target": "frontline",
+      "wounded": "stay"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "target": "clump"
+   },
+   "why": "Only zealots walk forward as a meat wall; banelings stay put until a chain window exists, then bait_two into the clump."
+  },
+  "wins": 1,
+  "margin": -337.6,
+  "score": 9662.4
+ }
+}

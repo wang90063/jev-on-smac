@@ -1,0 +1,1251 @@
+{
+ "id": "g0102",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "clump_snipe_then_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Open spacing so bombs do not chain ourselves, snipe/bait two into the densest ling-hydra pack, then full charge once trading starts so leftover banes wipe survivors."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "guns_first_then_pack",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Delete the two hydras first so remaining lings cannot be supported at range; one bait into hydra clump then the rest charge the melee blob."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "threat_focus_full_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.8
+         }
+        },
+        "set": {
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Ignore fancy bait: open then all 14 attack-move onto highest DPS-per-HP so hydras and stacked lings die in the first detonations."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "frontline_hold_then_explode",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading",
+          "we_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Hold briefly so lings bunch on the first banes, then snipe the frontline clump; after first blasts everyone charges weakest remaining."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "heaviest_two_bait_wipe",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "heaviest"
+      },
+      "why": "Two closest banes walk the tankiest body so the first 80 dmg splash is maximally efficient; rest wait outside blast then charge leftovers."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "ratio_switch_clump_charge",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "While outnumbered, open and snipe the densest pack; once alive_ratio recovers, lock formation and charge everything remaining."
+     },
+     "wins": 4,
+     "margin": 70.0
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_two_bait_clump_then_charge_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Spread so we do not chain ourselves; two banes walk the densest pack (hydras sit in ling clumps) then the rest charge remaining guns once explosions have started."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "no_bait_all_in_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Skip bait entirely so all 14 detonations arrive together on highest DPS-per-HP (hydras then stacked lings) before lings can peel individuals."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "snipe_guns_only_then_wipe_lings",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "guns"
+      },
+      "why": "One bait into the hydras so 80 splash deletes both guns; leftover banes then charge the unsupported ling blob on weakest."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "hold_bunch_then_snipe_front",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Stand still far so faster lings clump on the first bodies; when almost in range two banes snipe that frontline clump then everyone charges."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "heaviest_hydra_bait_then_threat",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "heaviest"
+      },
+      "why": "Walk two banes onto the tankiest hydra so the first splash is maximally efficient; after first blast charge remaining highest-threat units."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "ratio_open_snipe_then_lock_charge",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "While outnumbered open and snipe densest pack; once ratio recovers lock spacing and charge everything leftover so the last ling cannot kite a single bane."
+     },
+     "wins": 4,
+     "margin": 70.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "all_in_clump_open",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Never bait; spread then every baneling attack-moves the densest pack so 14 detonations land together on hydras sitting in lings."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "hold_until_melee_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Stand still so faster lings bunch on the first bodies; when they arrive two banes snipe that clump then the rest charge leftovers."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "guns_first_one_bait",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.8
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "guns"
+      },
+      "why": "A single bait walks hydras so splash deletes both guns; remaining banes then charge unsupported lings on weakest."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "threat_mass_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "target": "heaviest",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "formation": "keep",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Skip snipe so all 14 bodies arrive together on highest DPS-per-HP (hydras then stacked lings) before peel can isolate anyone."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "heaviest_then_wipe_weak",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "heaviest"
+      },
+      "why": "Two closest walk the tankiest hydra for max first splash; after blast everyone charges lowest-hp leftovers so the last body cannot live."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "frontline_snipe_then_lock",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Open and snipe the nearest damage-dealer clump; once explosions start lock spacing and charge so no survivor kites a lone bane."
+     },
+     "wins": 4,
+     "margin": 70.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_two_bait_clump_then_charge",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump"
+      },
+      "why": "Spread so 14 bombs do not chain ourselves; two closest walk the densest hydra-ling pack for first splash, rest sit outside radius then everyone attack-moves leftovers once detonations have started."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "mass_charge_hydras_always",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Skip any bait isolation so all fourteen bodies arrive together on the tankiest hydra; after first trade lock spacing and keep charging highest remaining threat so a lone ling cannot peel one bane."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "stand_let_lings_clump_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Hold still while faster lings bunch on the front; at almost-in-range two banes walk that pile, rest detonate on it, then charge any hydra still standing."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "one_bait_guns_rest_wait",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "melee": "charge",
+         "formation": "keep",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "guns"
+      },
+      "why": "Single closest baneling walks the two hydras so splash deletes both guns; remaining banes stay outside the blast then charge unsupported zerglings on weakest."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "late_tick_lock_charge_clump",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          ">=": 0.25
+         }
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.9
+         }
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Early ticks spread and charge the densest pack; once the clock has advanced or ratio recovers, lock formation so leftover hydra cannot kite a single detonator."
+     },
+     "wins": 4,
+     "margin": 70.0
+    },
+    {
+     "program": {
+      "name": "frontline_snipe_then_threat_wipe",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "none"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 3
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "frontline"
+      },
+      "why": "Open and send two baits into the nearest damage-dealer so first explosion hits hydras at the front; after trading, everyone charges highest dps-per-hp leftovers so the last body dies."
+     },
+     "wins": 4,
+     "margin": 70.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "clump_snipe_then_charge",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "formation": "open",
+      "melee": "snipe",
+      "bait": "bait_two",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_one",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "formation": "keep",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "formation": "open",
+    "melee": "snipe",
+    "bait": "bait_two",
+    "target": "clump"
+   },
+   "why": "Open spacing so bombs do not chain ourselves, snipe/bait two into the densest ling-hydra pack, then full charge once trading starts so leftover banes wipe survivors."
+  },
+  "wins": 4,
+  "margin": 70.0,
+  "score": 40070.0
+ }
+}

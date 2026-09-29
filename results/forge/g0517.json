@@ -1,0 +1,1175 @@
+{
+ "id": "g0517",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stutter_guns_then_lings",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "formation": "open"
+      },
+      "why": "Zerglings close faster than we can walk away, but a 0.5s stand still keeps the gap; stutter so every ready marine fires then steps. Kill the six marauders first because they outrange our kiting circle and chunk marines, then mop lings."
+     },
+     "wins": 0,
+     "margin": -1280.6
+    },
+    {
+     "program": {
+      "name": "wall_rally_hold",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Long wall plus rally behind us is a choke; fall back immediately while still clumped, then hold so melee must funnel. Never chase; shoot whatever enters marine range."
+     },
+     "wins": 0,
+     "margin": -217.0
+    },
+    {
+     "program": {
+      "name": "fan_concave_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ],
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "clump",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Start clumped so first fan into a ring while out of melee, then stutter-kite on the ring so overlapping marine shots hit densest bodies without letting zerglings surround."
+     },
+     "wins": 0,
+     "margin": -1314.0
+    },
+    {
+     "program": {
+      "name": "bait_one_anchor",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns"
+      },
+      "why": "Sacrifice the closest marine as a walk-bait so the rest always get a clean 0.5s shot; hold ground once melee is on the bait instead of scattering into the ravine."
+     },
+     "wins": 4,
+     "margin": 73.0
+    },
+    {
+     "program": {
+      "name": "stack_threat_until_blades",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ],
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Attack-move as a blob to delete marauders and low-hp threats with focused fire before zerglings arrive; only switch to stepping away once standing would let blades land before the next volley."
+     },
+     "wins": 0,
+     "margin": -234.0
+    },
+    {
+     "program": {
+      "name": "open_line_heaviest",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "formation": "open",
+       "target": "heaviest"
+      },
+      "why": "Spread first so marauder concussive and ling surround hit fewer bodies, then stutter focusing the highest-hp damage dealer (marauders) while outer guns step wider."
+     },
+     "wins": 0,
+     "margin": -1280.6
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_then_wall_hold",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true,
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "kite": "bait_one",
+       "target": "guns",
+       "stand": "shoot"
+      },
+      "why": "Keep the proven closest-marine walk-bait so the rest always get a clean 0.5s volley, then freeze at the long-wall rally so remaining lings funnel instead of surrounding."
+     },
+     "wins": 0,
+     "margin": -1278.0
+    },
+    {
+     "program": {
+      "name": "choke_funnel_guns",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Use the ravine wall as a choke: immediately walk to rally, hold ground, and delete marauders first so concussive never slows the blob while lings squeeze through."
+     },
+     "wins": 0,
+     "margin": -217.0
+    },
+    {
+     "program": {
+      "name": "open_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat"
+      },
+      "why": "Spread clumped marines first so splash and surround hurt fewer bodies, then stutter-kite focusing highest dps-per-hp while stepping in the dangerous 0.5s window."
+     },
+     "wins": 0,
+     "margin": -1306.0
+    },
+    {
+     "program": {
+      "name": "hold_line_marauders",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         },
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Never chase: stand ground at current range, take every safe shot, and always pick a marauder so armored bonus and concussive die before the faster lings close the gap."
+     },
+     "wins": 0,
+     "margin": -1308.3
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ],
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Fan a firing ring while still out of melee, then switch every gun to stutter so overlapping marine shots land on the densest pack without letting zerglings wrap the blob."
+     },
+     "wins": 0,
+     "margin": -1314.0
+    },
+    {
+     "program": {
+      "name": "stack_delete_then_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ],
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Attack-move as a focused blob to delete marauders while the first gap still holds, then sacrifice the closest marine as bait once blades are one shot away so the rest keep firing."
+     },
+     "wins": 4,
+     "margin": 50.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stack_guns_then_bait_step",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ],
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Delete marauders with attack-move while the first gap still holds, then sacrifice the nearest marine as walk-bait and step so remaining guns keep firing instead of being surrounded."
+     },
+     "wins": 4,
+     "margin": 50.0
+    },
+    {
+     "program": {
+      "name": "wall_funnel_then_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Use the ravine wall as a choke: walk to rally immediately, then stand and shoot marauders so concussive never slows the blob while lings must funnel."
+     },
+     "wins": 0,
+     "margin": -217.0
+    },
+    {
+     "program": {
+      "name": "concave_open_bait",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "formation": "open",
+       "target": "guns"
+      },
+      "why": "Spread into a ring so overlapping marine fire hits marauders first, then keep one bait walking so the rest always get a safe 0.5s volley."
+     },
+     "wins": 0,
+     "margin": -1314.0
+    },
+    {
+     "program": {
+      "name": "threat_stack_until_blades",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ],
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range"
+      },
+      "why": "Focus the highest dps-per-hp (marauders) as a blob until blades are one shot away, then kite-step instead of eating surround."
+     },
+     "wins": 3,
+     "margin": 17.0
+    },
+    {
+     "program": {
+      "name": "early_rally_then_bait_hold",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "kite": "bait_one",
+       "target": "guns"
+      },
+      "why": "Anchor at the long-wall rally first, then use bait_one so the rest of the marines hold a clean firing line while lings crash the decoy."
+     },
+     "wins": 0,
+     "margin": -262.5
+    },
+    {
+     "program": {
+      "name": "weakest_stutter_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "hold",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "weakest_in_range"
+      },
+      "why": "Open spacing so surround and concussive hit fewer bodies, stutter every ready gun, and always finish the lowest-hp target already in range."
+     },
+     "wins": 0,
+     "margin": -1314.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stack_guns_then_bait",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "gap_holds",
+          "melee_arrives_within_two_shots"
+         ],
+         "guns_in_blades": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Blob-focus marauders while the first 0.5s stand is still safe, then sacrifice the nearest marine as walk-bait so remaining guns keep volleying instead of eating surround."
+     },
+     "wins": 4,
+     "margin": 50.0
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ],
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Fan a wide ring so all 21 guns fire at once while the gap still holds, then stutter-kite the pack rather than collapsing into a surroundable clump."
+     },
+     "wins": 0,
+     "margin": -1202.0
+    },
+    {
+     "program": {
+      "name": "rally_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "tick_frac": {
+          "<=": 0.25
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Walk the blob to the wall rally immediately and freeze; marauders must funnel into marine range while we never chase, deleting the tankiest gun first."
+     },
+     "wins": 0,
+     "margin": -217.0
+    },
+    {
+     "program": {
+      "name": "threat_stack_wing_open",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "guns_in_blades": false
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Spread the line then attack-move onto the highest dps-per-hp target so concussive marauders die before lings wrap the flanks."
+     },
+     "wins": 0,
+     "margin": -1302.3
+    },
+    {
+     "program": {
+      "name": "weakest_stutter_all",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Never stand into blades: every ready gun uses the safe-shot stutter and always picks the lowest-hp body already in range so zerglings evaporate first after marauders are nicked."
+     },
+     "wins": 1,
+     "margin": -235.0
+    },
+    {
+     "program": {
+      "name": "heaviest_bait_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Keep fire on the fattest marauder while one marine always walks as bait; hurt guns peel so the remaining volley never dies to wrap."
+     },
+     "wins": 1,
+     "margin": -214.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_one_anchor",
+   "rules": [
+    {
+     "when": {
+      "enemy_melee": true,
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "target": "heaviest",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "contact": "melee_on_us"
+     },
+     "set": {
+      "ranged": "hold",
+      "kite": "bait_one",
+      "target": "frontline",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "target": "guns"
+   },
+   "why": "Sacrifice the closest marine as a walk-bait so the rest always get a clean 0.5s shot; hold ground once melee is on the bait instead of scattering into the ravine."
+  },
+  "wins": 4,
+  "margin": 73.0,
+  "score": 40073.0
+ }
+}

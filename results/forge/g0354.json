@@ -1,0 +1,948 @@
+{
+ "id": "g0354",
+ "dummy": 0,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "kite_healers_forever",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "healer"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "We are faster and outrange; stutter-kite forever so zealots never touch us while every gun that can reach dumps into medivacs so marine sustain dies first."
+     },
+     "wins": 0,
+     "margin": -715.9
+    },
+    {
+     "program": {
+      "name": "fan_then_freeze_armored",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Spread a concave while still far so all nine stalkers volley together, then freeze because standing keeps melee out; bonus damage goes into armored zealots/medivacs (heaviest)."
+     },
+     "wins": 0,
+     "margin": -713.3
+    },
+    {
+     "program": {
+      "name": "retreat_unclump_then_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "guns"
+      },
+      "why": "First walk to rally to unclump and string zealots, then stand at the new gap and shoot; never chase so even-speed melee cannot close."
+     },
+     "wins": 0,
+     "margin": -524.1
+    },
+    {
+     "program": {
+      "name": "stutter_threat_priority",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.4
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range"
+      },
+      "why": "Pure kiting with threat targeting: pick the highest dps-per-hp body (marines then zealots) while always walking if a 0.5s stand would let blades in."
+     },
+     "wins": 1,
+     "margin": -714.9
+    },
+    {
+     "program": {
+      "name": "bait_one_gun_hold_rest",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Sacrifice the closest stalker as a walking bait so zealots chase a single body while the other eight hold a safe ring and delete guns."
+     },
+     "wins": 2,
+     "margin": -2.5
+    },
+    {
+     "program": {
+      "name": "hold_mouth_focus_weak",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Do not walk forward at all: open spacing, stand ground at current range, pick the lowest-hp unit already in range so overlapping 13-damage shots finish bodies before medivacs can tick."
+     },
+     "wins": 0,
+     "margin": -1133.2
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_gunline_delete_marines",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "bait_one",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Closest stalker always walks so zealots chase one body; the other eight hold or stutter-safe-shot and dump every volley into enemy guns so marines die before medivacs can keep them up."
+     },
+     "wins": 0,
+     "margin": -497.0
+    },
+    {
+     "program": {
+      "name": "open_gap_then_freeze_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "We are faster so first walk opens a gap and unclumps; then freeze at the new mouth and always pick highest dps-per-hp so marines melt while melee never arrives."
+     },
+     "wins": 0,
+     "margin": -774.0
+    },
+    {
+     "program": {
+      "name": "safe_stutter_then_healer_snipe",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Pure range-kite using our speed advantage; once a 0.5s stand is safe, every gun that can reach a medivac dumps into it so marine sustain collapses, otherwise pick threat."
+     },
+     "wins": 0,
+     "margin": -1290.9
+    },
+    {
+     "program": {
+      "name": "fan_ring_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "weakest_in_range",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Spread a concave while still far so all nine fire together, then stand ground because the gap holds; finish the lowest-hp body already in range so overlapping 13+5 shots delete marines before heals tick."
+     },
+     "wins": 0,
+     "margin": -595.0
+    },
+    {
+     "program": {
+      "name": "rotate_hurt_kite_frontline",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.3
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Always kite with stutter; wounded stalkers peel out of reach so nine stay alive longer; focus the nearest damage-dealer so zealots and marines in contact die first."
+     },
+     "wins": 0,
+     "margin": -682.9
+    },
+    {
+     "program": {
+      "name": "clump_splash_hold_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "formation": "open",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "While the gap still holds, freeze and aim at the densest pack so overlapping stalker shots act like splash on marines; if blades arrive, switch to full stutter kite and rotate the wounded."
+     },
+     "wins": 0,
+     "margin": -995.4
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bait_walk_delete_healers",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "bait_one",
+         "target": "healer",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Closest stalker always walks so zealots chase one body; the rest hold a safe gap and dump bonus shots into armored medivacs until heals vanish, then clean guns."
+     },
+     "wins": 0,
+     "margin": -318.8
+    },
+    {
+     "program": {
+      "name": "open_gap_then_freeze_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Walk back first to string melee and unclump, then freeze because standing still keeps the gap; always shoot the highest dps-per-hp body so marines melt before they mass fire."
+     },
+     "wins": 0,
+     "margin": -1027.5
+    },
+    {
+     "program": {
+      "name": "fan_ring_armored_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Fan a concave while far so nine volleys land together, then never chase; bonus damage into heaviest armored (medivacs then zealots) so heals and blades die first."
+     },
+     "wins": 0,
+     "margin": -556.6
+    },
+    {
+     "program": {
+      "name": "pure_stutter_weakest_peel",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "weakest_in_range",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.3
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "wounded": "rotate"
+      },
+      "why": "Never stand into blades; every ready gun stutters and picks the lowest-hp body already in range so overlapping shots delete marines faster than medivacs can tick, hurt stalkers peel."
+     },
+     "wins": 0,
+     "margin": -692.2
+    },
+    {
+     "program": {
+      "name": "bar_pack_clump_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "bar",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Open spacing then freeze at the mouth; lasers pick the densest pack so overlapping stalker shots (and any splash) hit clustered marines plus the medivac parked on them."
+     },
+     "wins": 0,
+     "margin": -239.9
+    },
+    {
+     "program": {
+      "name": "guns_first_then_healer_switch",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "healer",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Kite with all guns, first delete enemy ranged so marine DPS collapses, then swap to remaining healers; step away in the 0.5s melee window so zealots never connect."
+     },
+     "wins": 0,
+     "margin": -1461.4
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_one_gun_hold_rest",
+   "rules": [
+    {
+     "when": {
+      "enemy_melee": true,
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "kite": "bait_one",
+      "formation": "open",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "kite": "bait_one",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "target": "frontline"
+   },
+   "why": "Sacrifice the closest stalker as a walking bait so zealots chase a single body while the other eight hold a safe ring and delete guns."
+  },
+  "wins": 2,
+  "margin": -2.5,
+  "score": 19997.5
+ }
+}

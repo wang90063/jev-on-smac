@@ -1,0 +1,984 @@
+{
+ "id": "g0595",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_and_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Colossus splash rewards spacing; attack-move into the 5-range ring so four hydras DPS the only target without idle cooldowns."
+     },
+     "wins": 0,
+     "margin": -272.6
+    },
+    {
+     "program": {
+      "name": "fan_concave_then_focus",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "guns"
+      },
+      "why": "Fan a ring so every hydra gets a firing lane around the colossus, then lock the same body."
+     },
+     "wins": 0,
+     "margin": -47.6
+    },
+    {
+     "program": {
+      "name": "close_hard_ignore_kiting",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "We are outranged; stuttering never walks into 7>5. Pure stack/chase until the colossus dies."
+     },
+     "wins": 4,
+     "margin": 55.3
+    },
+    {
+     "program": {
+      "name": "open_first_then_hold_ring",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Unclump before entering the splash cone, then stand and shoot once in range so hydras do not walk into each other."
+     },
+     "wins": 0,
+     "margin": -272.6
+    },
+    {
+     "program": {
+      "name": "rally_bait_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Pull toward rally while still far so the colossus walks a longer path, then all four hydras attack-move as soon as they can shoot."
+     },
+     "wins": 3,
+     "margin": 41.4
+    },
+    {
+     "program": {
+      "name": "bleed_rotate_outer_guns",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "rotate",
+       "formation": "open"
+      },
+      "why": "Spread the line, stack-chase the colossus, peel any hydra under 40% so splash does not finish it while the rest keep firing."
+     },
+     "wins": 0,
+     "margin": -272.6
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "charge_line_spread",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay",
+       "formation": "keep"
+      },
+      "why": "Colossus outranges hydras so stutter never helps; open the clump for splash then attack-move so all four guns close the 2-range gap and never idle."
+     },
+     "wins": 0,
+     "margin": -350.0
+    },
+    {
+     "program": {
+      "name": "pull_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "Walk toward rally while still far so the colossus wastes pathing, then the moment guns can fire everyone attack-moves the only body."
+     },
+     "wins": 0,
+     "margin": -100.3
+    },
+    {
+     "program": {
+      "name": "fan_then_hold_fire",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Widen the line off-axis so splash cannot hit two hydras, then stand ground once in 5-range so we do not walk into the laser bar."
+     },
+     "wins": 0,
+     "margin": -232.2
+    },
+    {
+     "program": {
+      "name": "concave_after_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Close first with stack, then wrap a ring so four hydras fire from different angles around the colossus hitbox."
+     },
+     "wins": 0,
+     "margin": -47.6
+    },
+    {
+     "program": {
+      "name": "peel_hurt_keep_dps",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate",
+       "formation": "open"
+      },
+      "why": "Always stack-chase the colossus; only a hydra under 40% steps out so splash does not finish it while the rest keep firing."
+     },
+     "wins": 0,
+     "margin": -272.6
+    },
+    {
+     "program": {
+      "name": "late_game_stack_only",
+      "rules": [
+       {
+        "when": {
+         "tick_frac": {
+          ">=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "formation": "open",
+       "wing": "step",
+       "target": "heaviest"
+      },
+      "why": "Ignore kiting entirely after first contact; once anyone can shoot, lock attack-move and focus remaining HP so cooldowns stay busy until the colossus drops."
+     },
+     "wins": 0,
+     "margin": -350.0
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "pure_stack_chase_colossus",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "stay",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Hydras are outranged so stutter walks them out of 5-range; only attack-move keeps guns firing while they close the 7-range laser."
+     },
+     "wins": 4,
+     "margin": 55.3
+    },
+    {
+     "program": {
+      "name": "open_line_then_never_idle",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "formation": "open",
+       "wing": "step"
+      },
+      "why": "Spread first so the colossus bar cannot clip two hydras, then every ready gun attack-moves the only body so cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -350.0
+    },
+    {
+     "program": {
+      "name": "rally_pull_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Walk to rally while still far so the colossus wastes pathing, then the instant hydras can fire they stack-chase and never peel."
+     },
+     "wins": 3,
+     "margin": 41.4
+    },
+    {
+     "program": {
+      "name": "close_then_hold_ground",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "stay"
+      },
+      "why": "Stack in until hydras actually have a shot, then stand ground so they do not walk deeper into the 7-range cone and splash."
+     },
+     "wins": 0,
+     "margin": -52.0
+    },
+    {
+     "program": {
+      "name": "threat_dps_until_dead",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Always chase the colossus as the only DPS threat; wounded stay in because peeling drops total hydra DPS below the laser."
+     },
+     "wins": 4,
+     "margin": 55.3
+    },
+    {
+     "program": {
+      "name": "bar_aware_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "bar": "pack"
+      },
+      "why": "Spread the line then keep stacking; firing hydras aim the laser-style bar pick so splash math is ignored and every shot still hits the single colossus."
+     },
+     "wins": 3,
+     "margin": 41.4
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_then_never_idle",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "stay",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "formation": "open",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Colossus line splash punishes the start clump; open and wing-step first, then attack-move so hydras keep walking into 5-range instead of stuttering out of it."
+     },
+     "wins": 0,
+     "margin": -350.0
+    },
+    {
+     "program": {
+      "name": "rally_then_commit_spread",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest",
+       "wounded": "stay"
+      },
+      "why": "Walk to rally while still far so the colossus spends pathing time, then four hydras stack-chase from a widened line once they can fire."
+     },
+     "wins": 0,
+     "margin": -350.0
+    },
+    {
+     "program": {
+      "name": "threat_stack_open_line",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "stay"
+      },
+      "why": "Treat the colossus as the only threat, keep attack-moving, and force spacing so the 7-range bar cannot clip the whole pack."
+     },
+     "wins": 0,
+     "margin": -350.0
+    },
+    {
+     "program": {
+      "name": "late_rotate_after_first_volleys",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Close with stack while shields are still up; once trading starts, peel only the sub-40% hydra so remaining guns stay on cooldown."
+     },
+     "wins": 5,
+     "margin": 95.1
+    },
+    {
+     "program": {
+      "name": "guns_ready_hard_chase",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "wounded": "stay",
+         "formation": "keep"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Whenever any hydra is off cooldown, force stack/chase so shots are not skipped while closing the 2-range gap; keep formation tight only after they can already shoot."
+     },
+     "wins": 0,
+     "margin": -47.6
+    },
+    {
+     "program": {
+      "name": "hold_once_inside",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Chase until we_can_shoot so we actually enter hydra range, then hold ground so units stop walking into the laser while still dumping DPS."
+     },
+     "wins": 0,
+     "margin": -52.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "late_rotate_after_first_volleys",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "stack",
+      "formation": "open",
+      "wing": "step",
+      "target": "heaviest"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "we_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "wounded": "rotate",
+      "target": "heaviest"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "heaviest"
+   },
+   "why": "Close with stack while shields are still up; once trading starts, peel only the sub-40% hydra so remaining guns stay on cooldown."
+  },
+  "wins": 5,
+  "margin": 95.1,
+  "score": 50095.1
+ }
+}

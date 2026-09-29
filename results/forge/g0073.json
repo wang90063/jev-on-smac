@@ -1,0 +1,1297 @@
+{
+ "id": "g0073",
+ "dummy": 0,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_bait_splash",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Spread so a chain detonation cannot wipe the pack, send one zealot into the baneling clump, and keep the colossus kiting on the densest remaining bodies."
+     },
+     "wins": 0,
+     "margin": -583.6
+    },
+    {
+     "program": {
+      "name": "fall_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Walk the whole army back until the gap is comfortable, then freeze guns on stalkers so splash is not wasted on already-dead banes while zealots hold the line."
+     },
+     "wins": 0,
+     "margin": -596.1
+    },
+    {
+     "program": {
+      "name": "zealot_suicide_absorb",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "heaviest",
+       "formation": "open"
+      },
+      "why": "Charge all melee into the baneling pack so detonations happen on cheap shields far from the colossus; guns kite and pick heaviest remaining stalkers."
+     },
+     "wins": 0,
+     "margin": -541.7
+    },
+    {
+     "program": {
+      "name": "concave_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_withdraw": "gap_stays_they_chase"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "hold"
+      },
+      "why": "Fan guns into a ring before contact, always stutter-kite, and always shoot the highest DPS-per-HP unit so stalkers die before banes close."
+     },
+     "wins": 0,
+     "margin": -632.9
+    },
+    {
+     "program": {
+      "name": "stack_clump_then_peel",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "clump",
+         "bar": "pack",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "clump",
+       "melee": "charge",
+       "wounded": "rotate"
+      },
+      "why": "Attack-move the colossus onto the densest pack for splash while out of range, then peel wounded and stutter once melee is about to arrive."
+     },
+     "wins": 0,
+     "margin": -446.3
+    },
+    {
+     "program": {
+      "name": "bait_one_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "kite": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Pretend we have a rally: one zealot baits the bane clump, remaining melee freeze, guns fall back then hold and bar-splash whatever follows."
+     },
+     "wins": 0,
+     "margin": -554.9
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fall_open_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Copy the winning similar-fight idea: walk back while packed, spread, freeze melee so banes string, then attack-move the colossus bar onto the densest bodies once anyone can fire."
+     },
+     "wins": 0,
+     "margin": -446.0
+    },
+    {
+     "program": {
+      "name": "hold_guns_then_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "already_in_blades",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "melee": "hold",
+       "formation": "keep"
+      },
+      "why": "Never chase: stand-ground the colossus on stalkers first so splash is not wasted on already-dead banes; zealots hold the line and wounded peel."
+     },
+     "wins": 0,
+     "margin": -595.0
+    },
+    {
+     "program": {
+      "name": "heaviest_stack_open_charge",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "formation": "keep",
+       "melee": "charge"
+      },
+      "why": "Attack-move onto the tankiest stalker while still out of range, fan the line, then freeze on weakest already in range; zealots charge to eat detonations far from the colossus."
+     },
+     "wins": 0,
+     "margin": -388.1
+    },
+    {
+     "program": {
+      "name": "snipe_bane_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "hold"
+      },
+      "why": "One zealot walks into the baneling clump so the chain happens off the army; remaining melee hold; guns stutter-kite and always pick the highest DPS-per-HP stalker."
+     },
+     "wins": 0,
+     "margin": -543.0
+    },
+    {
+     "program": {
+      "name": "concave_bar_hold_melee",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "melee": "hold",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "bar",
+       "formation": "keep"
+      },
+      "why": "Fan guns into a ring before contact so the colossus bar clips more bodies, then hold-fire; melee never walks into the chain, only hits what arrives."
+     },
+     "wins": 0,
+     "margin": -566.6
+    },
+    {
+     "program": {
+      "name": "bait_two_fall_then_pack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "bait": "bait_two"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wounded": "rotate",
+         "melee": "snipe"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Two zealots absorb the suicide pack while the rest freeze; guns fall back until they can shoot then attack-move pack-splash, rotating wounded off the blades."
+     },
+     "wins": 0,
+     "margin": -493.1
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fall_spread_stack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Copy the similar-fight winner: walk back so banelings string, open spacing so one blast cannot chain the army, freeze melee, then attack-move the colossus pack/bar onto the densest bodies once anyone can fire."
+     },
+     "wins": 0,
+     "margin": -446.0
+    },
+    {
+     "program": {
+      "name": "guns_first_stutter_snipe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "snipe",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "guns",
+       "melee": "hold",
+       "bar": "bar"
+      },
+      "why": "Colossus kites with stutter and always picks enemy guns so stalkers die before they can support; one zealot walks into the baneling pack to detonate off-army, rest hold outside the blast."
+     },
+     "wins": 0,
+     "margin": -544.0
+    },
+    {
+     "program": {
+      "name": "charge_absorb_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "threat",
+       "formation": "open",
+       "kite": "all"
+      },
+      "why": "All melee charge so cheap shields eat detonations far from the colossus; guns stutter-kite and pick highest DPS-per-HP so remaining stalkers melt without trading into banes."
+     },
+     "wins": 0,
+     "margin": -513.9
+    },
+    {
+     "program": {
+      "name": "hold_ground_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "melee": "hold",
+         "wing": "step",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "bar": "bar",
+       "formation": "keep"
+      },
+      "why": "Never chase: stand-ground so the colossus only fires into what walks in, bar-aim for maximum bodies, melee holds so banes must come to us; peel wounded once blades arrive."
+     },
+     "wins": 0,
+     "margin": -573.5
+    },
+    {
+     "program": {
+      "name": "concave_then_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "melee": "hold",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "hold",
+       "target": "frontline",
+       "bar": "bar",
+       "formation": "keep"
+      },
+      "why": "Fan guns into a wide ring before contact so the colossus bar clips more, then stutter-kite focusing the nearest damage dealer; melee stays put until contact so they do not walk into a chain."
+     },
+     "wins": 0,
+     "margin": -562.1
+    },
+    {
+     "program": {
+      "name": "heaviest_stack_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "formation": "keep",
+       "melee": "hold"
+      },
+      "why": "While out of range attack-move onto the tankiest stalker to start the splash trade; once anyone can shoot, freeze on lowest-hp already in range so splash is not wasted and banelings are last."
+     },
+     "wins": 0,
+     "margin": -591.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fall_string_pack_clump",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "pack",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold",
+       "wounded": "rotate"
+      },
+      "why": "Walk back and freeze melee so banelings string instead of chaining; open spacing; once anyone can fire, attack-move colossus pack onto the densest bodies and rotate wounded."
+     },
+     "wins": 0,
+     "margin": -446.0
+    },
+    {
+     "program": {
+      "name": "concave_stutter_snipe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_before_next_shot",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "snipe",
+       "formation": "open"
+      },
+      "why": "Fan guns onto a ring, stutter-kite safely, and send only the closest zealot into the suicide pack so the chain detonates off the colossus."
+     },
+     "wins": 0,
+     "margin": -609.9
+    },
+    {
+     "program": {
+      "name": "hold_ground_guns_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "open",
+         "melee": "hold",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "melee": "hold",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "guns",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Never chase: colossus stands and deletes stalkers first while zealots hold outside blast radius; only peel when blades actually arrive."
+     },
+     "wins": 0,
+     "margin": -384.1
+    },
+    {
+     "program": {
+      "name": "bait_two_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "hold",
+       "formation": "open"
+      },
+      "why": "Two closest zealots walk into the densest baneling group so detonations happen on cheap shields; remaining melee freeze; guns stutter and always pick highest DPS-per-HP stalker."
+     },
+     "wins": 1,
+     "margin": -453.2
+    },
+    {
+     "program": {
+      "name": "stack_heaviest_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": false
+        },
+        "set": {
+         "ranged": "stack",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range",
+       "melee": "hold",
+       "formation": "keep"
+      },
+      "why": "While out of range attack-move onto the tankiest stalker and fan the wing; once a shot is available freeze on lowest-hp already in range so splash is not wasted on full-hp banes."
+     },
+     "wins": 0,
+     "margin": -591.0
+    },
+    {
+     "program": {
+      "name": "fall_choke_melee_clump_bar",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "melee": "hold_choke",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "bar": "bar",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "bar": "pack",
+       "target": "clump",
+       "melee": "hold_choke",
+       "wounded": "rotate"
+      },
+      "why": "Melee holds as a wall instead of walking forward; guns fall back then stack with bar splash onto the densest pack so colossus never idles while zealots soak what leaks."
+     },
+     "wins": 0,
+     "margin": -481.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_two_then_stutter_threat",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_two",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "threat",
+    "melee": "hold",
+    "formation": "open"
+   },
+   "why": "Two closest zealots walk into the densest baneling group so detonations happen on cheap shields; remaining melee freeze; guns stutter and always pick highest DPS-per-HP stalker."
+  },
+  "wins": 1,
+  "margin": -453.2,
+  "score": 9546.8
+ }
+}

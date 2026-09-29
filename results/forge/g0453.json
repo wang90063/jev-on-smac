@@ -1,0 +1,382 @@
+{
+ "id": "g0453",
+ "dummy": 0,
+ "hand_rules": 2,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "bane_crash_bar_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "bar": "bar",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": [
+          "our_bombs",
+          "would_chain"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Send all banelings into the marine ball for chain splash while the colossus bars the densest pack and our marines hold the line; no kiting because they have no melee."
+     },
+     "wins": 5,
+     "margin": 96.6
+    },
+    {
+     "program": {
+      "name": "marines_kite_colossus_first",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "guns",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Use range-7 colossus as the only early gun: marines fall back until colossus is trading, then stack and pick guns while banelings close."
+     },
+     "wins": 2,
+     "margin": -160.2
+    },
+    {
+     "program": {
+      "name": "snipe_pack_then_stack",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "ranged": "concave",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "snipe",
+       "ranged": "stutter",
+       "target": "clump"
+      },
+      "why": "Closest baneling walks the densest marine cluster; rest of melee holds blast radius; guns concave then stack once bombs land."
+     },
+     "wins": 0,
+     "margin": -158.4
+    },
+    {
+     "program": {
+      "name": "threat_dps_then_splash",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "bar",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Colossus and marines focus highest DPS-per-HP marines first with stutter until they bleed, then switch to clump/bar so leftover splash and banes finish the ball."
+     },
+     "wins": 3,
+     "margin": -55.2
+    },
+    {
+     "program": {
+      "name": "wide_wing_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "hold",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "formation": "keep",
+       "ranged": "hold",
+       "melee": "charge",
+       "bar": "bar"
+      },
+      "why": "Widen the marine line and hold ground so colossus bars a wide front while banelings charge from the center; wounded rotate off the line."
+     },
+     "wins": 2,
+     "margin": -158.6
+    },
+    {
+     "program": {
+      "name": "two_bait_then_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ],
+         "our_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "bait": "bait_two",
+         "melee": "snipe",
+         "ranged": "concave",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "bar": "pack",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "hold",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Two closest banelings suicide into the pack for maximum marine splash deaths; remaining banes hold; guns then focus leftover guns with stack."
+     },
+     "wins": 2,
+     "margin": -67.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bane_crash_bar_clump",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "melee": "charge",
+      "ranged": "hold",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "melee": "charge",
+      "bar": "bar",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "target": "clump",
+      "bar": "bar"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack",
+    "target": "clump",
+    "bar": "bar"
+   },
+   "why": "Send all banelings into the marine ball for chain splash while the colossus bars the densest pack and our marines hold the line; no kiting because they have no melee."
+  },
+  "wins": 5,
+  "margin": 96.6,
+  "score": 50096.6
+ }
+}

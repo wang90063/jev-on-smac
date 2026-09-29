@@ -1,0 +1,1174 @@
+{
+ "id": "g0726",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "spread_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "stand": "step",
+       "wounded": "rotate"
+      },
+      "why": "Open the clump so baneling chain cannot wipe several hydras, then stutter-kite at even speed so melee never arrives while every shot goes on the highest DPS-per-HP threat."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    },
+    {
+     "program": {
+      "name": "fall_open_hold_healer",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "healer"
+      },
+      "why": "Walk to rally first so the packed line unclumps and suicide strings out, then freeze and snipe medivacs so remaining bio cannot be topped off while hydras never step into baneling range."
+     },
+     "wins": 0,
+     "margin": -887.0
+    },
+    {
+     "program": {
+      "name": "concave_kite_suicide",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan a concave so more hydras fire at once, then stutter with bait_one so the closest body kites the baneling pack while the rest delete the densest clump."
+     },
+     "wins": 0,
+     "margin": -1719.9
+    },
+    {
+     "program": {
+      "name": "guns_first_stutter",
+      "rules": [
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "guns",
+       "kite": "all",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Ignore melee until it actually arrives; peel marine and marauder DPS first so remaining banelings have no supporting fire, while hydras keep walking instead of standing into blasts."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    },
+    {
+     "program": {
+      "name": "stack_once_spread_front",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "open",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "formation": "open",
+       "target": "frontline",
+       "kite": "all"
+      },
+      "why": "If already unclumped and the 0.5s window is safe, attack-move the nearest dealer so volume of fire is continuous; otherwise keep spreading and kiting so even-speed banelings never connect."
+     },
+     "wins": 0,
+     "margin": -1712.3
+    },
+    {
+     "program": {
+      "name": "weakest_hold_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ],
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Stand and pick off the lowest-HP unit already in range so marines evaporate quickly, then rotate wounded hydras the instant blades arrive instead of trading into 80-damage detonations."
+     },
+     "wins": 0,
+     "margin": -1681.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "rally_spread_then_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "formation": "open",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "wounded": "rotate",
+       "target": "threat",
+       "stand": "step"
+      },
+      "why": "Walk to the rally first so the clump unstrings and banelings stretch, then kite every hydra with the stutter rule so even-speed melee never arrives while shots land on highest DPS-per-HP."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    },
+    {
+     "program": {
+      "name": "open_concave_bait_banes",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "formation": "open",
+       "target": "clump"
+      },
+      "why": "Fan a wide concave so more hydras fire at once; the closest body always walks as bait while the rest stutter-delete the densest suicide clump."
+     },
+     "wins": 0,
+     "margin": -1714.4
+    },
+    {
+     "program": {
+      "name": "hold_mouth_guns_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Once the 0.5s window is safe, freeze and pick off marines/marauders so remaining banelings have no supporting fire; never chase so melee never closes."
+     },
+     "wins": 0,
+     "margin": -984.5
+    },
+    {
+     "program": {
+      "name": "healer_snipe_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "healer",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Kill medivacs first so bio cannot be topped off, spreading while kiting; rotate any hydra under 40% the instant a blade can reach it."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    },
+    {
+     "program": {
+      "name": "stack_only_when_unclumped_safe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "open",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Attack-move only after the line is already open and standing 0.5s is still safe, maximizing volume; otherwise keep spreading and walking so chain detonations cannot land."
+     },
+     "wins": 0,
+     "margin": -1704.3
+    },
+    {
+     "program": {
+      "name": "heaviest_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds",
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Focus the tankiest dealer first to collapse marauder HP, then freeze on weakest-in-range so marines evaporate; step away the instant blades enter the 0.5s window."
+     },
+     "wins": 0,
+     "margin": -1708.1
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_concave_healer",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "target": "healer",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "formation": "open",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Spread and fan a ring so chain baneling detonations cannot land, then stutter-kite while sniping medivacs so bio cannot be topped; never stand into blades."
+     },
+     "wins": 0,
+     "margin": -1729.2
+    },
+    {
+     "program": {
+      "name": "rally_hold_guns_wing",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "keep",
+       "stand": "shoot"
+      },
+      "why": "Walk to rally so the pack unstrings, then freeze and never chase; fan outer guns and pick off ranged dealers so remaining banelings have no supporting fire."
+     },
+     "wins": 0,
+     "margin": -984.5
+    },
+    {
+     "program": {
+      "name": "bait_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "threat",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Closest hydra always walks as bait so the rest can fire safely; focus highest DPS-per-HP while rotating wounded bodies out of blast range."
+     },
+     "wins": 0,
+     "margin": -1696.1
+    },
+    {
+     "program": {
+      "name": "fall_then_stack_no_chain",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "none",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Retreat and open until detonations cannot chain, then attack-move for volume on the frontline; revert to stutter the instant a 0.5s stand would let melee in."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    },
+    {
+     "program": {
+      "name": "heaviest_hold_tie_first",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "tie": "first",
+       "formation": "open"
+      },
+      "why": "Collapse marauder bulk first, then freeze on weakest-in-range with tie-first so marines evaporate together; step away only in the 0.5s blade window."
+     },
+     "wins": 0,
+     "margin": -1704.0
+    },
+    {
+     "program": {
+      "name": "air_then_clump_rotate",
+      "rules": [
+       {
+        "when": {
+         "enemy_air": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open",
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Delete the two medivacs first, then dump shots into the densest neighbor pack so remaining splash/detonations waste on corpses; rotate any hydra under 40%."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "concave_stutter_healer",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "stand": "step",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "healer",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "formation": "open",
+       "target": "guns",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Fan into a ring so chain detonations cannot land on the pack, stutter-kite because even speed never opens a gap, and snipe medivacs first so remaining bio cannot be topped off."
+     },
+     "wins": 0,
+     "margin": -1690.6
+    },
+    {
+     "program": {
+      "name": "hold_never_chase_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "stand": "shoot",
+       "wounded": "rotate"
+      },
+      "why": "Freeze the instant the 0.5s window is safe and never step forward so even-speed melee cannot close; pick highest DPS-per-HP so marines die before they trade."
+     },
+     "wins": 0,
+     "margin": -1321.8
+    },
+    {
+     "program": {
+      "name": "stack_volume_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "would_chain"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "open",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "formation": "open",
+       "target": "guns",
+       "kite": "all",
+       "wounded": "rotate"
+      },
+      "why": "Once unclumped and standing is still safe, attack-move for continuous hydra DPS into guns; the instant blades enter the 0.5s window, walk and rotate wounded bodies out of 80-damage blasts."
+     },
+     "wins": 0,
+     "margin": -1704.3
+    },
+    {
+     "program": {
+      "name": "bait_one_frontline",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "stand": "step",
+         "kite": "bait_one"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline",
+       "formation": "open",
+       "wounded": "rotate"
+      },
+      "why": "Closest hydra always walks so the rest can fire safely into the nearest dealer; spread first so a chain detonation cannot wipe the line."
+     },
+     "wins": 0,
+     "margin": -1696.1
+    },
+    {
+     "program": {
+      "name": "fall_then_concave_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "concave",
+         "stand": "shoot",
+         "target": "guns",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "guns",
+       "formation": "open",
+       "kite": "all"
+      },
+      "why": "Walk to rally first so packed hydras unstring and banelings string out, then fan a ring and pick off ranged dealers so leftover banes have no supporting fire."
+     },
+     "wins": 0,
+     "margin": -1699.9
+    },
+    {
+     "program": {
+      "name": "healer_then_weakest_stutter",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "formation": "open",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "weakest_in_range",
+         "tie": "first",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range",
+       "formation": "open",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Delete medivacs while still far, then stutter-kite onto lowest-HP in range so marines evaporate together; always step rather than take the 0.5s shot if blades would arrive."
+     },
+     "wins": 0,
+     "margin": -1709.7
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "fall_open_hold_healer",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "formation": "open",
+      "target": "healer"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "healer"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "formation": "keep",
+    "target": "healer"
+   },
+   "why": "Walk to rally first so the packed line unclumps and suicide strings out, then freeze and snipe medivacs so remaining bio cannot be topped off while hydras never step into baneling range."
+  },
+  "wins": 0,
+  "margin": -887.0,
+  "score": -887.0
+ }
+}

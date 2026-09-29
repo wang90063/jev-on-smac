@@ -1,0 +1,1110 @@
+{
+ "id": "g0486",
+ "dummy": 1,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "open_concave_freeze_ling_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Spread while still far so all four guns fire together, then freeze because standing keeps zerglings out; colossus bars and light bonus dump into the densest ling pack first."
+     },
+     "wins": 0,
+     "margin": -144.7
+    },
+    {
+     "program": {
+      "name": "hold_gap_hydras_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Never step forward; the three hydras are the only real guns, so delete them while zerglings are still outside, then the leftover lings walk into frozen marauder and colossus fire."
+     },
+     "wins": 0,
+     "margin": -163.0
+    },
+    {
+     "program": {
+      "name": "stutter_safe_shots_only",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "bar": "bar",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "weakest_in_range"
+      },
+      "why": "Kite every ready gun: take the 0.5s shot only while the gap holds, otherwise walk; they catch us if we flee blindly, so we only stutter when physics still says melee cannot close."
+     },
+     "wins": 0,
+     "margin": -274.2
+    },
+    {
+     "program": {
+      "name": "bait_front_gun_then_stack",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "kite": "bait_one",
+         "target": "clump",
+         "bar": "bar",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "melee_reaches_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "The closest marauder always walks so hydras and lings commit on a decoy; the other three stack-fire into the clump with colossus bars while the decoy buys extra ticks of range."
+     },
+     "wins": 0,
+     "margin": -319.4
+    },
+    {
+     "program": {
+      "name": "weakest_bar_then_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "tie": "first",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack",
+       "wounded": "stay"
+      },
+      "why": "Stand still and always paint the lowest-HP body already in range so overlapping colossus bars finish wounded lings; rotate any unit under 40% out of blades so we do not feed hydras free kills."
+     },
+     "wins": 0,
+     "margin": -257.5
+    },
+    {
+     "program": {
+      "name": "fall_back_then_hold_line",
+      "rules": [
+       {
+        "when": {
+         "contact": "far",
+         "tick_frac": {
+          "<=": 0.15
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "They are faster so a full flee fails, but a short fall-back to a wider line then freeze can still buy one extra volley before lings arrive; afterwards hold and focus hydras."
+     },
+     "wins": 0,
+     "margin": -165.5
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fan_open_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Spread a concave while still far so every gun fires the first volley together; freeze because the 0.5s stand still keeps lings out; dump marauder armored bonus into hydras before they can trade."
+     },
+     "wins": 2,
+     "margin": -53.9
+    },
+    {
+     "program": {
+      "name": "freeze_bar_weakest_lings",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Never chase; stand and let overlapping colossus bars plus light bonus delete the lowest-HP ling already in range so the pack never arrives as a blob."
+     },
+     "wins": 0,
+     "margin": -136.8
+    },
+    {
+     "program": {
+      "name": "concave_clump_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "clump",
+         "bar": "bar",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Fan a ring onto the densest body for splash, then lock feet once the gap still holds so hydras walk into a wall of simultaneous shots."
+     },
+     "wins": 0,
+     "margin": -183.9
+    },
+    {
+     "program": {
+      "name": "stutter_only_while_safe",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump"
+      },
+      "why": "Every ready gun takes the 0.5s shot iff physics says melee still cannot close; otherwise it walks a step, using our extra range without a doomed full retreat."
+     },
+     "wins": 1,
+     "margin": -154.4
+    },
+    {
+     "program": {
+      "name": "open_line_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "hold",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "wounded": "rotate"
+      },
+      "why": "Widen spacing so hydras cannot focus one marauder; stand still and always paint the highest-HP damage dealer so hydras die before the ling wave arrives."
+     },
+     "wins": 0,
+     "margin": -240.9
+    },
+    {
+     "program": {
+      "name": "hold_mouth_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "wounded": "rotate",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wounded": "stay"
+      },
+      "why": "Plant feet at the current gap, shoot the highest dps-per-hp body, and peel any unit under 40% so hydras never get a free kill while lings are still running in."
+     },
+     "wins": 1,
+     "margin": -95.3
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stutter_hydras_then_bar",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Use extra range: shoot only when 0.5s is safe, else step; delete hydras first so leftover lings eat colossus bars instead of a doomed freeze-in-place."
+     },
+     "wins": 1,
+     "margin": -76.2
+    },
+    {
+     "program": {
+      "name": "bait_one_wall",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "bait_one",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "kite": "bait_one",
+       "target": "threat"
+      },
+      "why": "Closest gun walks as bait so hydras waste shots; the other three hold a concave and dump armored bonus into hydras while lings chase the decoy."
+     },
+     "wins": 0,
+     "margin": -245.0
+    },
+    {
+     "program": {
+      "name": "splash_lings_first",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 6
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "bar": "pack"
+      },
+      "why": "Colossus light-bonus plus bar is the only way to prune 12 lings before they arrive; ignore hydras until the pack is thinned, then freeze on remaining guns."
+     },
+     "wins": 0,
+     "margin": -680.3
+    },
+    {
+     "program": {
+      "name": "concave_stutter_not_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Past holds died in place; fan then keep stuttering so every volley is taken only if the gap still holds, focusing heaviest hydra then clump."
+     },
+     "wins": 0,
+     "margin": -469.2
+    },
+    {
+     "program": {
+      "name": "ready_hold_cooling_step",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "When any gun is ready and the gap holds, plant and fire; if all cooling, walk so lings do not close during downtime; peel wounded so hydras never get a free kill."
+     },
+     "wins": 0,
+     "margin": -499.8
+    },
+    {
+     "program": {
+      "name": "weakest_bar_rotate_line",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "rotate",
+       "stand": "step"
+      },
+      "why": "Open the line, never chase, paint the lowest-HP body already in a colossus bar so overlapping splash finishes lings, rotate anything under 40% so the hydras cannot focus-fire a marauder."
+     },
+     "wins": 0,
+     "margin": -262.5
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fan_stutter_hydras_then_bar",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "bar": "bar",
+       "formation": "keep"
+      },
+      "why": "Spread a concave first so all four guns volley together, then kite only while the 0.5s stand is still safe so hydras die before lings close; leftover lings eat colossus bars."
+     },
+     "wins": 0,
+     "margin": -228.2
+    },
+    {
+     "program": {
+      "name": "bait_one_kites_hydras",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "target": "frontline"
+      },
+      "why": "Sacrifice the closest gun as a walking bait so the other three always take safe shots; delete hydras first then splash the ling blob."
+     },
+     "wins": 0,
+     "margin": -306.4
+    },
+    {
+     "program": {
+      "name": "concave_bar_lings_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "bar": "pack"
+      },
+      "why": "Colossus light bonus and splash want the densest ling pack immediately; fan then freeze and paint the bar across the blob so hydras walk into a thinned melee wave."
+     },
+     "wins": 2,
+     "margin": -21.4
+    },
+    {
+     "program": {
+      "name": "safe_stutter_rotate_hurt",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "shoot",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "bar",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "clump",
+       "wounded": "rotate"
+      },
+      "why": "Never freeze forever; every ready gun shoots only if melee still cannot close, peel anyone under 40% so hydras do not snipe, then dump into remaining guns."
+     },
+     "wins": 1,
+     "margin": -172.5
+    },
+    {
+     "program": {
+      "name": "hold_gap_bar_weak_then_guns",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "their_alive": {
+          ">=": 10
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "bar": "bar",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "bar": "pack"
+      },
+      "why": "Plant feet while the gap still holds; overlapping bars finish the lowest-HP body already in range so the ling pack never arrives whole, then switch to hydras."
+     },
+     "wins": 0,
+     "margin": -163.7
+    },
+    {
+     "program": {
+      "name": "wing_step_threat_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Widen the line before contact so hydras cannot focus one body, shoot highest dps-per-hp, then freeze the moment standing still keeps melee out."
+     },
+     "wins": 0,
+     "margin": -243.8
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "concave_bar_lings_first",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "ranged": "concave",
+      "wing": "step",
+      "target": "clump",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "clump",
+      "bar": "bar"
+     }
+    },
+    {
+     "when": {
+      "enemy_melee_n": {
+       "<=": 4
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "target": "guns",
+      "stand": "shoot"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "threat",
+    "bar": "pack"
+   },
+   "why": "Colossus light bonus and splash want the densest ling pack immediately; fan then freeze and paint the bar across the blob so hydras walk into a thinned melee wave."
+  },
+  "wins": 2,
+  "margin": -21.4,
+  "score": 19978.6
+ }
+}

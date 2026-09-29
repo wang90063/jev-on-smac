@@ -1,0 +1,1294 @@
+{
+ "id": "g0805",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Fall back into the gap so zealots string out, then freeze and never chase; dump every volley into the colossus first so splash dies before melee arrives."
+     },
+     "wins": 0,
+     "margin": -1126.0
+    },
+    {
+     "program": {
+      "name": "always_stutter_colossus",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Never attack-move: every gun kites with the 0.5s safety test so zealots never tag us at even speed, while all fire lands on the only ranged threat."
+     },
+     "wins": 0,
+     "margin": -1510.1
+    },
+    {
+     "program": {
+      "name": "concave_then_kite",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 4
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "heaviest",
+       "kite": "all"
+      },
+      "why": "Fan a ring at the mouth of the choke so more marines fire at once, then stutter-kite the packed zealots while still focusing the colossus."
+     },
+     "wins": 0,
+     "margin": -1545.7
+    },
+    {
+     "program": {
+      "name": "bait_one_and_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Closest gun walks as bait so the rest can stand and shoot safely through the gap; after first blood swap to weakest-in-range to finish stragglers."
+     },
+     "wins": 0,
+     "margin": -17.0
+    },
+    {
+     "program": {
+      "name": "stack_after_funnel",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "in_pocket",
+          "at_mouth"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "formation": "keep"
+      },
+      "why": "Open and retreat until zealots bottleneck, then attack-move stacked so stalkers and marines keep firing into the densest body (colossus plus packed zealots)."
+     },
+     "wins": 1,
+     "margin": -608.7
+    },
+    {
+     "program": {
+      "name": "threat_and_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Prioritize highest DPS-per-HP (colossus then remaining zealots), hold the choke while healthy, and peel wounded marines so the stalkers keep trading."
+     },
+     "wins": 0,
+     "margin": -1206.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "retreat_hold_colossus",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep",
+       "wounded": "rotate"
+      },
+      "why": "Walk to the gap first so zealots string, then freeze and never chase; every volley dumps into the only gun so splash dies before melee piles on."
+     },
+     "wins": 0,
+     "margin": -1222.8
+    },
+    {
+     "program": {
+      "name": "funnel_then_stack_pack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Open and fall until they squeeze the neck, then attack-move so stalkers keep firing while lasers hit the densest body of colossus plus packed zealots."
+     },
+     "wins": 0,
+     "margin": -617.8
+    },
+    {
+     "program": {
+      "name": "safe_stutter_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "stand": "step"
+      },
+      "why": "Never stand long enough for zealots at even speed; closest gun baits while the rest only shoot on a 0.5s-safe window, all focused on the colossus."
+     },
+     "wins": 0,
+     "margin": -1021.8
+    },
+    {
+     "program": {
+      "name": "mouth_concave_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "wing": "stay"
+      },
+      "why": "Fan a ring at the mouth so more marines fire at once, then hold the line and pick weakest already in range so leftover zealots arrive after the colossus is gone."
+     },
+     "wins": 0,
+     "margin": -1126.0
+    },
+    {
+     "program": {
+      "name": "threat_peel_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Prioritize highest DPS-per-HP, hold only while the gap still holds a shot, and rotate wounded marines so stalkers keep trading after splash starts landing."
+     },
+     "wins": 0,
+     "margin": -604.5
+    },
+    {
+     "program": {
+      "name": "front_then_weakest_stutter",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "frontline",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "weakest_in_range",
+       "kite": "all"
+      },
+      "why": "Chunk the nearest damage dealer while far, then freeze on lowest-hp already in range; switch to full kite the moment two shots would let zealots close."
+     },
+     "wins": 0,
+     "margin": -373.4
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "retreat_then_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Walk to the gap while they are far so zealots string; freeze on the colossus until two-shot window, then stutter-rotate so splash does not wipe the clump."
+     },
+     "wins": 0,
+     "margin": -1076.6
+    },
+    {
+     "program": {
+      "name": "concave_mouth_clump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "at_mouth",
+          "in_neck"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Fan a ring at the mouth so more guns fire at once, pack splash on the densest bodies, hold only while the gap is a full shot, then kite."
+     },
+     "wins": 0,
+     "margin": -1126.0
+    },
+    {
+     "program": {
+      "name": "bait_one_stutter_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "stand": "step"
+      },
+      "why": "Closest gun always walks so the rest get a safe 0.5s shot; never stack-chase on even speed; peel highest DPS-per-HP (colossus then zealots)."
+     },
+     "wins": 0,
+     "margin": -1101.0
+    },
+    {
+     "program": {
+      "name": "funnel_stack_then_peel",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Fall until they bottleneck, attack-move so stalkers keep firing into the packed neck, then peel wounded the instant melee is two shots away."
+     },
+     "wins": 0,
+     "margin": -683.0
+    },
+    {
+     "program": {
+      "name": "guns_first_then_weakest_hold",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "formation": "keep"
+      },
+      "why": "Dump volleys into the only enemy gun while far, freeze at the mouth on lowest-hp already in range so leftover zealots arrive after splash is gone."
+     },
+     "wins": 0,
+     "margin": -386.9
+    },
+    {
+     "program": {
+      "name": "open_wing_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "stutter",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline",
+       "wounded": "rotate"
+      },
+      "why": "Step the wings wide before contact so splash does not hit the whole ball, stutter-kite the nearest damage-dealer, rotate any marine under 40%."
+     },
+     "wins": 0,
+     "margin": -1850.0
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_colossus",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot",
+       "formation": "keep"
+      },
+      "why": "Fall to the gap then freeze and never chase so zealots stay strung; every volley goes on the only gun until it dies then weakest leftover."
+     },
+     "wins": 0,
+     "margin": -1121.0
+    },
+    {
+     "program": {
+      "name": "always_stutter_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "enemy_melee_n": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest",
+       "stand": "step"
+      },
+      "why": "Never attack-move; every gun only fires on a 0.5s-safe window and always walks otherwise, focusing the colossus so splash never trades while we peel."
+     },
+     "wins": 0,
+     "margin": -1542.0
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_peel",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "clump",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "threat",
+       "formation": "open"
+      },
+      "why": "Fan into a ring around the choke so more guns fire at once, stutter on the ring, and rotate anyone the zealots can actually reach."
+     },
+     "wins": 0,
+     "margin": -1840.0
+    },
+    {
+     "program": {
+      "name": "bait_gun_hold_mouth",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "kite": "bait_one",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "melee_arrives_before_next_shot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "kite": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Closest marine walks as bait so the stalkers and remaining marines can stand at the mouth and dump into the colossus without the 0.5s stand letting zealots in."
+     },
+     "wins": 1,
+     "margin": -426.7
+    },
+    {
+     "program": {
+      "name": "fall_stack_threat",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "formation": "keep"
+      },
+      "why": "Open and retreat until the neck packs them, then attack-move so stalkers never idle while focusing highest DPS-per-HP (colossus first)."
+     },
+     "wins": 1,
+     "margin": -608.7
+    },
+    {
+     "program": {
+      "name": "wing_open_hold_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "weakest_in_range",
+         "wing": "stay"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": [
+          "melee_arrives_within_two_shots",
+          "already_in_blades"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range",
+       "stand": "shoot"
+      },
+      "why": "Step outer guns sideways before contact to widen the line across the gap, then freeze and pick lowest-hp already in range so leftover zealots trickle in after the colossus is gone."
+     },
+     "wins": 0,
+     "margin": -17.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_gun_hold_mouth",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "fall_back",
+      "kite": "bait_one",
+      "formation": "open",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "hold",
+      "kite": "bait_one",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": [
+       "melee_arrives_within_two_shots",
+       "melee_arrives_before_next_shot"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "kite": "bait_one",
+    "target": "weakest_in_range"
+   },
+   "why": "Closest marine walks as bait so the stalkers and remaining marines can stand at the mouth and dump into the colossus without the 0.5s stand letting zealots in."
+  },
+  "wins": 1,
+  "margin": -426.7,
+  "score": 9573.3
+ }
+}

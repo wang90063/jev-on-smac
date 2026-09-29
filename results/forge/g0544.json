@@ -1,0 +1,1233 @@
+{
+ "id": "g0544",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_crash_stutter_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "melee": "charge",
+         "ranged": "stutter",
+         "kite": "all",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "heaviest",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest"
+      },
+      "why": "Zealots charge to soak concussive while marauders stutter-kite the tankiest armored marauder; medivac keeps the tanks up on open ground."
+     },
+     "wins": 0,
+     "margin": -116.9
+    },
+    {
+     "program": {
+      "name": "hold_line_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "charge",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Refuse to chase; guns hold a concave and shoot whoever walks in while zealots tank the front marauder."
+     },
+     "wins": 0,
+     "margin": -373.6
+    },
+    {
+     "program": {
+      "name": "fall_back_kite_threat",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.7
+         }
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Walk the guns back to stretch the gap, pick off highest-DPS-per-HP marauders, zealots still crash to buy time."
+     },
+     "wins": 0,
+     "margin": -49.0
+    },
+    {
+     "program": {
+      "name": "concave_stack_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Fan guns into a ring then attack-move so every marauder volley lands together on the lowest-hp target; zealots pin."
+     },
+     "wins": 4,
+     "margin": 203.8
+    },
+    {
+     "program": {
+      "name": "bait_one_guns_focus",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "melee": "charge",
+         "target": "guns",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "melee": "charge",
+       "target": "guns"
+      },
+      "why": "Closest zealot soaks while remaining guns stutter-fire enemy guns (never melee); rotate hurt marauders behind the medivac."
+     },
+     "wins": 0,
+     "margin": -49.0
+    },
+    {
+     "program": {
+      "name": "pack_clump_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "formation": "keep",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Treat the marauder blob as a pack: charge melee into it, guns stack and dump on the densest neighbor so concussive focus melts one then the next."
+     },
+     "wins": 4,
+     "margin": 239.1
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stack_weakest_charge",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "melee": "charge",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "stay"
+      },
+      "why": "No enemy melee so kiting wastes DPS; attack-move every gun together onto the lowest-hp marauder while zealots pin the blob so the medivac can keep the front alive."
+     },
+     "wins": 4,
+     "margin": 203.8
+    },
+    {
+     "program": {
+      "name": "clump_pack_dump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Enemy marauders clump on open ground; dump all concussive volleys into the densest neighbor so splash-adjacent focus melts sequential bodies while zealots stay glued in the pack."
+     },
+     "wins": 4,
+     "margin": 239.1
+    },
+    {
+     "program": {
+      "name": "heaviest_first_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "melee": "charge",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "heaviest",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Each enemy marauder is a 125hp armored gun; delete the tankiest one first with stacked volleys so remaining DPS drops in chunks, zealots soak the return fire."
+     },
+     "wins": 4,
+     "margin": 203.8
+    },
+    {
+     "program": {
+      "name": "threat_stack_open",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stack",
+         "melee": "charge",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stack",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Pick the marauder with the worst remaining-hp-to-DPS ratio so each focus kill removes the most immediate damage; stay in attack-move, never stutter away from free shots."
+     },
+     "wins": 1,
+     "margin": 13.1
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Fan into a ring before contact so more marauders shoot at once, then lock attack-move on weakest_in_range; zealots charge through the middle."
+     },
+     "wins": 4,
+     "margin": 203.8
+    },
+    {
+     "program": {
+      "name": "frontline_hold_after_contact",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Open a concave while closing, then stand-ground once anyone can shoot so we never walk deeper into seven concussive guns; zealots still charge to occupy the front rank."
+     },
+     "wins": 0,
+     "margin": -239.2
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_line_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "charge",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "weakest_in_range",
+       "wounded": "stay"
+      },
+      "why": "No enemy melee so never step forward: guns hold and dump on the lowest-hp marauder already in range while zealots charge to pin; medivac stays behind the static line."
+     },
+     "wins": 0,
+     "margin": -210.4
+    },
+    {
+     "program": {
+      "name": "fall_back_then_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "formation": "open",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Give the medivac a rear rally: walk guns back first, then hold the choke of empty space so 7 marauders walk into a prepared volley while zealots still crash the blob."
+     },
+     "wins": 0,
+     "margin": -239.2
+    },
+    {
+     "program": {
+      "name": "threat_hold_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "charge",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "hold",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Delete the marauder with the worst remaining-hp-to-DPS first from a standing line so each kill removes the most incoming concussive; peel units under 40% for the medivac."
+     },
+     "wins": 0,
+     "margin": -320.8
+    },
+    {
+     "program": {
+      "name": "concave_then_hold_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Fan a ring so more of our 6-range guns see the blob at once, then lock hold-ground on the tankiest marauder; zealots pin the middle so concussive chunks disappear one body at a time."
+     },
+     "wins": 0,
+     "margin": -210.4
+    },
+    {
+     "program": {
+      "name": "stack_frontline_tie_first",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "frontline",
+         "tie": "first",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "frontline",
+       "tie": "first",
+       "wounded": "stay"
+      },
+      "why": "Attack-move every gun onto the nearest damage-dealer; when two marauders are equally in shot, always finish the lower-HP one so overkill is never wasted and zealots keep the front glued."
+     },
+     "wins": 3,
+     "margin": 177.2
+    },
+    {
+     "program": {
+      "name": "clump_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "guns",
+         "bar": "pack",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Enemy marauders stay packed on open ground: stand still, aim at the densest neighbor so sequential bodies melt, and prefer a gun over any stray melee that is not present."
+     },
+     "wins": 0,
+     "margin": -389.6
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hold_until_volleys",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "melee": "charge",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "charge",
+         "target": "frontline",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "No enemy melee so never chase; hold ground so every marauder fires together on the nearest gun while zealots charge to soak. Prevents the staggered walk-ins that wasted DPS in stack attempts."
+     },
+     "wins": 0,
+     "margin": -239.2
+    },
+    {
+     "program": {
+      "name": "stutter_desync_heaviest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Even without melee, stutter-walk desynchronizes enemy concussive so our three guns plus medivac out-heal staggered return fire; always delete the heaviest marauder first."
+     },
+     "wins": 0,
+     "margin": -116.4
+    },
+    {
+     "program": {
+      "name": "fall_back_choke_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "Walk the guns back as if to a rally then stand; zealots hold_choke so the 7 marauders funnel into a small front that our medivac can keep alive."
+     },
+     "wins": 0,
+     "margin": -447.4
+    },
+    {
+     "program": {
+      "name": "concave_then_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "melee": "charge",
+         "wing": "step",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.7
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Fan a ring so more of our guns land the first volley, then attack-move the highest DPS-per-hp marauder and rotate wounded behind the zealot wall."
+     },
+     "wins": 0,
+     "margin": 5.4
+    },
+    {
+     "program": {
+      "name": "bait_gun_walk_stack_rest",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "melee": "charge",
+         "wing": "step",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "kite": "bait_one",
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Closest marauder always walks as bait so enemy shots miss; remaining guns stack-fire the weakest in range while zealots glue the blob."
+     },
+     "wins": 4,
+     "margin": 228.7
+    },
+    {
+     "program": {
+      "name": "keep_clump_tie_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "keep",
+         "ranged": "stack",
+         "melee": "charge",
+         "target": "guns",
+         "tie": "first",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "tie": "first",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "clump",
+       "tie": "first"
+      },
+      "why": "Stay clumped so the medivac hits everyone, dump on the densest enemy gun and always finish the lower-HP of two similar targets so overkill never splits."
+     },
+     "wins": 4,
+     "margin": 239.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "pack_clump_charge",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "melee": "charge",
+      "ranged": "stack",
+      "formation": "keep",
+      "target": "clump",
+      "bar": "pack"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "clump",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "our_melee": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "wounded": "stay"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "stack",
+    "target": "clump"
+   },
+   "why": "Treat the marauder blob as a pack: charge melee into it, guns stack and dump on the densest neighbor so concussive focus melts one then the next."
+  },
+  "wins": 4,
+  "margin": 239.1,
+  "score": 40239.1
+ }
+}

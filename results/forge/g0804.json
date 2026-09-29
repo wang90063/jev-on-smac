@@ -1,0 +1,559 @@
+{
+ "id": "g0804",
+ "dummy": 2,
+ "hand_rules": 3,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stutter_hydra_first",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "guns",
+         "formation": "open",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "We outspeed them and outrange hydras; stutter-kite while picking hydras (highest DPS per HP) so marauder bonus never stacks on dying stalkers."
+     },
+     "wins": 3,
+     "margin": 9.4
+    },
+    {
+     "program": {
+      "name": "rally_hold_corridor",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Long diagonal plus rally behind us: walk back, hold the choke, and let them walk into 6-range while we never chase into hydra volleys."
+     },
+     "wins": 0,
+     "margin": -413.4
+    },
+    {
+     "program": {
+      "name": "fan_concave_then_stack",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "target": "threat",
+       "wing": "step"
+      },
+      "why": "Spread into a ring so all six stalkers fire at once on the first hydra, then attack-move once they bleed so cooldown never idles."
+     },
+     "wins": 0,
+     "margin": -749.9
+    },
+    {
+     "program": {
+      "name": "marauder_armor_trade",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.0
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Stalker bonus vs armored means marauders die first if we stand and focus heaviest; hydras then lose their tank line."
+     },
+     "wins": 2,
+     "margin": -9.6
+    },
+    {
+     "program": {
+      "name": "rotate_kiting_line",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "wounded": "rotate",
+       "target": "frontline"
+      },
+      "why": "Keep a moving firing line: kite everyone, pull sub-40% stalkers out so marauder concussive never snowballs."
+     },
+     "wins": 1,
+     "margin": -192.8
+    },
+    {
+     "program": {
+      "name": "wait_then_alpha_weakest",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Do not waste the first volley walking; hold until almost in range, then dump on the lowest-HP gun in range and keep stacking."
+     },
+     "wins": 3,
+     "margin": 69.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hydra_dps_kite_then_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Hydras are the highest DPS-per-HP and we outrange them; stutter-kite threat until they bleed, then attack-move so cooldowns never idle."
+     },
+     "wins": 5,
+     "margin": 115.6
+    },
+    {
+     "program": {
+      "name": "armored_bonus_dump",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "heaviest",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          "<=": 4
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Stalker +5 vs armored: delete marauders first so hydras lose their tank line, then finish remaining guns."
+     },
+     "wins": 2,
+     "margin": -9.6
+    },
+    {
+     "program": {
+      "name": "speed_line_rotate",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "wounded": "rotate",
+       "target": "frontline"
+      },
+      "why": "We are faster; keep a moving firing line, pull sub-40% bodies so concussive never snowballs on a clump."
+     },
+     "wins": 1,
+     "margin": -192.8
+    },
+    {
+     "program": {
+      "name": "wait_alpha_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "hold",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Do not waste the first volley walking; hold until they enter 6-range, dump on weakest in range, then keep stacking."
+     },
+     "wins": 3,
+     "margin": 69.4
+    },
+    {
+     "program": {
+      "name": "ratio_switch_guns",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.9
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          "<=": 0.7
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "target": "threat",
+       "kite": "all"
+      },
+      "why": "If we still have numbers, stack-focus guns; if we drop below even, kite and pick the lowest-HP body still in range."
+     },
+     "wins": 2,
+     "margin": -13.0
+    },
+    {
+     "program": {
+      "name": "wing_step_threat_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "hold",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "threat",
+         "wounded": "rotate",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "wing": "stay"
+      },
+      "why": "Widen the line before contact so all six fire, hold ground at range 6, and always tag the highest DPS-per-HP unit."
+     },
+     "wins": 0,
+     "margin": -413.4
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "hydra_dps_kite_then_commit",
+   "rules": [
+    {
+     "when": {
+      "hp_trend": "no_trade_yet"
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": [
+       "they_are_bleeding",
+       "trading"
+      ]
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "guns",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "all",
+    "target": "threat"
+   },
+   "why": "Hydras are the highest DPS-per-HP and we outrange them; stutter-kite threat until they bleed, then attack-move so cooldowns never idle."
+  },
+  "wins": 5,
+  "margin": 115.6,
+  "score": 50115.6
+ }
+}

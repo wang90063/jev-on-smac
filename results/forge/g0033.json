@@ -1,0 +1,277 @@
+{
+ "id": "g0033",
+ "dummy": 2,
+ "hand_rules": 2,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "fan_then_freeze_gap",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "heaviest",
+       "formation": "keep"
+      },
+      "why": "Open a concave while still far so all marauders fire together, then freeze because standing keeps melee out; dump bonus damage into armored stalkers first."
+     },
+     "wins": 5,
+     "margin": 244.4
+    },
+    {
+     "program": {
+      "name": "never_step_kill_armor",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "heaviest",
+         "stand": "shoot",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "stand": "shoot"
+      },
+      "why": "They catch a retreat so never walk back; stand ground from the first tick, overlapping shots on the highest-hp armored dealer while melee walks into the 6-range."
+     },
+     "wins": 0,
+     "margin": -1227.2
+    },
+    {
+     "program": {
+      "name": "stutter_bait_one_guns",
+      "rules": [
+       {
+        "when": {
+         "enemy_melee": true,
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "concave",
+         "formation": "open",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Sacrifice the closest marauder as a walking bait so the other nine take safe 0.5s shots; always prefer the two stalkers so our armored bonus is not wasted on lings."
+     },
+     "wins": 1,
+     "margin": -106.1
+    },
+    {
+     "program": {
+      "name": "stack_threat_until_blades",
+      "rules": [
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "tie": "first"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "formation": "keep",
+       "target": "heaviest"
+      },
+      "why": "Attack-move as a clump so every cooldown is used; pick the highest dps-per-hp body (stalker then zealot) and only kite once blades are already on the guns."
+     },
+     "wins": 3,
+     "margin": 12.4
+    },
+    {
+     "program": {
+      "name": "open_hold_weakest_ready",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline",
+       "formation": "keep"
+      },
+      "why": "Spread first so zealots cannot surround, then hold and snipe whatever is already in range (often a wounded ling or stalker) rather than chasing."
+     },
+     "wins": 0,
+     "margin": -1227.2
+    },
+    {
+     "program": {
+      "name": "fall_unclump_then_stutter",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "wounded": "rotate",
+       "target": "threat"
+      },
+      "why": "Even though they catch us, a short fall-back unclumps our blob on open ground; after first shots land, stutter-kite the remaining melee while focusing the last gun."
+     },
+     "wins": 2,
+     "margin": -2.5
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "fan_then_freeze_gap",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "formation": "open",
+      "ranged": "concave",
+      "target": "guns",
+      "wing": "step"
+     }
+    },
+    {
+     "when": {
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "ranged": "hold",
+      "stand": "shoot",
+      "target": "guns"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "hold",
+    "target": "heaviest",
+    "formation": "keep"
+   },
+   "why": "Open a concave while still far so all marauders fire together, then freeze because standing keeps melee out; dump bonus damage into armored stalkers first."
+  },
+  "wins": 5,
+  "margin": 244.4,
+  "score": 50244.4
+ }
+}

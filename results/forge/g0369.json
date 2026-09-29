@@ -1,0 +1,1414 @@
+{
+ "id": "g0369",
+ "dummy": 1,
+ "hand_rules": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "snipe_their_bombs_stalker_kite",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Closest banelings walk onto enemy baneling packs so our bombs trade 1-for-many; remaining melee hold outside blast while stalkers stutter-kite the lone enemy gun and never let zealots close."
+     },
+     "wins": 0,
+     "margin": -421.2
+    },
+    {
+     "program": {
+      "name": "mass_bane_charge_clump",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "formation": "keep",
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Dump all eleven banelings attack-move into the densest enemy blob so splash and detonations erase zealots and their bombs together; stalkers only take safe shots on guns and step away if blades arrive."
+     },
+     "wins": 0,
+     "margin": -408.6
+    },
+    {
+     "program": {
+      "name": "bait_two_then_hold_choke",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold_choke",
+       "ranged": "hold",
+       "target": "guns",
+       "formation": "keep"
+      },
+      "why": "Two closest banelings eat the enemy suicide clump; everyone else holds the ravine wall as a choke so zealots funnel while stalkers hold-ground and pick guns."
+     },
+     "wins": 0,
+     "margin": -443.8
+    },
+    {
+     "program": {
+      "name": "stalker_concave_bane_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "kite": "all",
+         "wing": "step",
+         "formation": "open",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "weakest_in_range"
+      },
+      "why": "Stalkers fan a concave around the wall mouth then stutter; melee only snipes enemy bombs with one bait while the rest stay out of blast so we keep our numbers advantage."
+     },
+     "wins": 0,
+     "margin": -302.8
+    },
+    {
+     "program": {
+      "name": "withdraw_gap_then_threat",
+      "rules": [
+       {
+        "when": {
+         "if_we_withdraw": "we_open_a_gap",
+         "speed": "we_are_faster"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "formation": "open",
+         "stand": "step",
+         "melee": "charge",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "stand": "shoot",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "We are faster so first pick opens a gap; stalkers kite all with bait_one, focus highest dps-per-hp, and wounded rotate so zealots never pin the guns while banelings charge remaining melee."
+     },
+     "wins": 0,
+     "margin": -489.4
+    },
+    {
+     "program": {
+      "name": "focus_guns_hold_melee",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "target": "guns",
+         "ranged": "stack",
+         "melee": "hold",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped",
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "frontline",
+       "formation": "open"
+      },
+      "why": "Melee stands and only hits what walks in so we do not detonate early; stalkers stack-shoot the enemy stalker first then frontline, opening spacing so enemy banelings cannot chain us."
+     },
+     "wins": 0,
+     "margin": -302.4
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "stalker_first_then_bane_dump",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "melee": "hold",
+         "formation": "open",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "charge",
+       "target": "clump",
+       "kite": "all"
+      },
+      "why": "Kill the lone enemy gun with stacked stalker fire while banelings hold so we do not detonate on their bombs; once enemy_suicide is gone dump the pack into zealots."
+     },
+     "wins": 0,
+     "margin": -304.6
+    },
+    {
+     "program": {
+      "name": "wall_mouth_concave_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "formation": "open",
+         "target": "guns",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "melee": "hold_choke"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "hold_choke",
+       "target": "frontline"
+      },
+      "why": "Fan stalkers at the ravine mouth with a stepped wing, one bait baneling eats their bombs, remaining melee hold the choke so zealots funnel into splash."
+     },
+     "wins": 0,
+     "margin": -302.8
+    },
+    {
+     "program": {
+      "name": "kite_all_threat_charge",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "threat",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Every stalker uses safe stutter on highest dps-per-hp while eleven banelings charge the frontline; stand-and-shoot only while the gap holds."
+     },
+     "wins": 0,
+     "margin": -407.6
+    },
+    {
+     "program": {
+      "name": "bait_two_bar_splash",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 3
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "bar": "bar",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "fall_back"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "melee": "snipe",
+       "bait": "bait_two",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Two closest banelings walk into their suicide clump; firing lasers aim the perpendicular bar through the densest bodies so splash plus remaining bombs erase the pack."
+     },
+     "wins": 0,
+     "margin": -409.0
+    },
+    {
+     "program": {
+      "name": "heaviest_hold_then_rotate",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "heaviest",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "heaviest",
+       "wounded": "rotate"
+      },
+      "why": "Stalkers hold ground on the heaviest remaining dealer so they never chase into blades; melee holds until contact then charges; hurt units rotate out."
+     },
+     "wins": 0,
+     "margin": -479.7
+    },
+    {
+     "program": {
+      "name": "fall_back_choke_focus_weak",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "speed": "we_are_faster"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "weakest_in_range"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "weakest_in_range"
+      },
+      "why": "Walk guns to the rally behind the wall then hold-ground on weakest in range; melee snipes bombs with one bait then hold_choke so zealots must walk the funnel."
+     },
+     "wins": 0,
+     "margin": -473.8
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_then_dump",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true,
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "guns",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 1
+         },
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "hold",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "frontline",
+       "formation": "open"
+      },
+      "why": "Stalkers fall back and hold the ravine mouth so zealots funnel; banelings hold until enemy bombs are spent or gap is gone, then dump into the packed melee."
+     },
+     "wins": 0,
+     "margin": -437.2
+    },
+    {
+     "program": {
+      "name": "zealot_dump_ignore_bane",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "target": "guns",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest"
+      },
+      "why": "Ignore their bombs and charge every baneling into the four zealots as the highest-hp line; stalkers only take safe shots on the lone gun and always step if blades close."
+     },
+     "wins": 0,
+     "margin": -407.6
+    },
+    {
+     "program": {
+      "name": "bait_two_then_charge_front",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "Two bait banelings eat their suicide clump; the other nine immediately charge the remaining zealots while stalkers kite with bait_one so only the closest gun walks."
+     },
+     "wins": 0,
+     "margin": -397.5
+    },
+    {
+     "program": {
+      "name": "stack_gun_kill_open_pack",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "melee": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0,
+         "our_suicide": {
+          ">=": 5
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "target": "guns",
+       "formation": "open"
+      },
+      "why": "Open spacing so their bombs cannot chain us; stacked stalkers burn the enemy stalker first while melee holds; once that gun is gone we charge clump."
+     },
+     "wins": 0,
+     "margin": -340.0
+    },
+    {
+     "program": {
+      "name": "concave_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "kite": "all",
+         "formation": "open",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "stand": "shoot",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "melee": "charge",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Stalkers fan a concave with stepped wings and always kite the highest dps-per-hp; melee charges but wounded units rotate out so we keep the numbers edge on the wall."
+     },
+     "wins": 0,
+     "margin": -316.5
+    },
+    {
+     "program": {
+      "name": "hold_ground_splash_bar",
+      "rules": [
+       {
+        "when": {
+         "suicide_blast": "our_bombs",
+         "contact": [
+          "far",
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "hold",
+         "bar": "bar",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "charge",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "already_in_blades"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "bar": "bar",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Nobody walks into their bombs: melee holds, stalkers hold and shoot; firing bar aims through densest bodies so baneling splash still hits if they walk in, then we charge only after they close."
+     },
+     "wins": 0,
+     "margin": -443.2
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_hold_snipe_guns",
+      "rules": [
+       {
+        "when": {
+         "rally_is_behind_us": true
+        },
+        "set": {
+         "melee": "hold_choke",
+         "ranged": "fall_back",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "hold_choke",
+       "target": "guns",
+       "formation": "open"
+      },
+      "why": "Pull melee to the wall choke so zealots funnel; one bait baneling eats their bombs while stalkers stutter-kill the lone gun from the gap that walking away opens."
+     },
+     "wins": 0,
+     "margin": -421.2
+    },
+    {
+     "program": {
+      "name": "two_bait_then_dump_zealots",
+      "rules": [
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          "<=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "stand": "shoot",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "charge",
+       "target": "heaviest"
+      },
+      "why": "Two closest banelings walk into their suicide pack; remaining nine charge the high-hp zealots as splash bodies while stalkers only take shots that keep the gap."
+     },
+     "wins": 0,
+     "margin": -397.5
+    },
+    {
+     "program": {
+      "name": "fan_concave_clump_splash",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "concave",
+         "wing": "step",
+         "kite": "all",
+         "formation": "open",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "guns_in_blades": true
+        },
+        "set": {
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "kite": "all",
+       "melee": "snipe",
+       "bait": "bait_one",
+       "target": "clump"
+      },
+      "why": "Stalkers fan a stepped concave on the ravine mouth and stutter; our bombs snipe their densest pack so splash and detonations hit zealots plus remaining banes together."
+     },
+     "wins": 0,
+     "margin": -293.6
+    },
+    {
+     "program": {
+      "name": "stack_delete_gun_then_charge",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "melee": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "enemy_guns": 0
+        },
+        "set": {
+         "melee": "charge",
+         "target": "clump",
+         "ranged": "stutter"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "hold",
+       "target": "guns",
+       "formation": "open"
+      },
+      "why": "Open spacing so enemy bombs cannot chain us; stacked stalkers burn the enemy stalker first while melee holds; once that gun is dead we dump banelings into the remaining melee clump."
+     },
+     "wins": 0,
+     "margin": -357.4
+    },
+    {
+     "program": {
+      "name": "threat_kite_rotate_snipe",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "shoot",
+         "target": "threat",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "suicide_blast": "our_bombs"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "wounded": "rotate",
+         "melee": "charge",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Always kite the highest dps-per-hp unit; wounded stalkers rotate out of blades; a single bait baneling pops their suicide while the rest stay outside blast so we keep the numbers edge."
+     },
+     "wins": 0,
+     "margin": -369.1
+    },
+    {
+     "program": {
+      "name": "hold_ground_bar_pack",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "bar": "pack",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_before_next_shot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "hold",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold",
+       "target": "clump",
+       "formation": "open",
+       "bar": "pack"
+      },
+      "why": "Neither side charges into bombs: melee stands and hits only what arrives; stalkers hold the line, pack-bar splash onto the densest neighbor cluster, and step only when the next shot would be in blades."
+     },
+     "wins": 0,
+     "margin": -443.2
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "fan_concave_clump_splash",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "we_can_shoot",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "concave",
+      "wing": "step",
+      "kite": "all",
+      "formation": "open",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": "our_bombs"
+     },
+     "set": {
+      "melee": "snipe",
+      "bait": "bait_one",
+      "target": "clump"
+     }
+    },
+    {
+     "when": {
+      "if_we_keep_standing": "melee_arrives_before_next_shot"
+     },
+     "set": {
+      "ranged": "stutter",
+      "stand": "step"
+     }
+    },
+    {
+     "when": {
+      "guns_in_blades": true
+     },
+     "set": {
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "concave",
+    "kite": "all",
+    "melee": "snipe",
+    "bait": "bait_one",
+    "target": "clump"
+   },
+   "why": "Stalkers fan a stepped concave on the ravine mouth and stutter; our bombs snipe their densest pack so splash and detonations hit zealots plus remaining banes together."
+  },
+  "wins": 0,
+  "margin": -293.6,
+  "score": -293.6
+ }
+}

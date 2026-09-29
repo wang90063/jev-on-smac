@@ -1,0 +1,1215 @@
+{
+ "id": "g0119",
+ "dummy": 2,
+ "hand_rules": 2,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "medivac_first_then_hydra_dps",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Kill the two healers before they undo trades, then stutter-kite the hydras which have the worst DPS-per-HP; commit stack once they bleed so cooldowns never idle."
+     },
+     "wins": 0,
+     "margin": -1652.4
+    },
+    {
+     "program": {
+      "name": "open_concave_hold_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "formation": "keep",
+       "target": "guns"
+      },
+      "why": "Spread into a ring while they are still far, then stand-ground so marines never walk into marauder bonus range; pick nearest guns so hydras die before they focus."
+     },
+     "wins": 0,
+     "margin": -1073.1
+    },
+    {
+     "program": {
+      "name": "stalker_armored_snipe_marauders",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 16
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Stalkers bonus vs armored, so heaviest-first deletes marauders while marines stutter hydras; after the armored line dies, stack onto remaining guns."
+     },
+     "wins": 0,
+     "margin": -604.2
+    },
+    {
+     "program": {
+      "name": "fall_back_choke_then_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "formation": "open",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "fall_back"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "kite": "all"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 0.8
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "wounded": "stay"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "frontline"
+      },
+      "why": "Walk back on the open field until guns are ready and contact is almost, then attack-move so the whole army fires together instead of trickling into hydra volleys."
+     },
+     "wins": 0,
+     "margin": -676.7
+    },
+    {
+     "program": {
+      "name": "weakest_in_range_alpha",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Once anyone can shoot, dump every ready gun into the lowest-HP body in range to snowball kills before medivacs land heals; kite only while still far."
+     },
+     "wins": 2,
+     "margin": -160.5
+    },
+    {
+     "program": {
+      "name": "wing_widen_threat_rotate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "wing": "step"
+      },
+      "why": "Step the outer guns sideways into a wider line, always pick highest DPS-per-HP, and peel wounded so clumped hydra/marine fire cannot collapse the pack."
+     },
+     "wins": 0,
+     "margin": -1653.3
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "threat_stutter_then_guns_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Hydras and marauders are the worst DPS-per-HP; stutter-kite threat while still far so stalkers never idle-walk into bonus range, then attack-move onto remaining guns once a trade starts so cooldowns stay hot."
+     },
+     "wins": 0,
+     "margin": -612.2
+    },
+    {
+     "program": {
+      "name": "always_delete_medivacs",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "threat",
+         "stand": "step"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat",
+       "wounded": "rotate"
+      },
+      "why": "Two medivacs undo every marine trade; keep healer as primary until they are gone, stutter so we do not walk into marauder+hydra volleys, then flip to threat."
+     },
+     "wins": 0,
+     "margin": -1652.4
+    },
+    {
+     "program": {
+      "name": "stalker_bonus_marauders",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 18
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "heaviest"
+      },
+      "why": "Stalkers deal bonus vs armored; heaviest-first deletes marauders before they melt marines, while we stay stutter-kiting on the open field."
+     },
+     "wins": 0,
+     "margin": -1653.3
+    },
+    {
+     "program": {
+      "name": "alpha_weakest_once_in_range",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "formation": "open",
+         "target": "healer"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Dump every ready gun into the lowest-HP body already in range so kills snowball before medivacs land; only kite while still far."
+     },
+     "wins": 2,
+     "margin": -160.5
+    },
+    {
+     "program": {
+      "name": "frontline_hold_no_chase",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Stand ground so marines never step into marauder bonus; pick nearest damage-dealer so hydras and marauders die first while medivacs heal last."
+     },
+     "wins": 0,
+     "margin": -1073.1
+    },
+    {
+     "program": {
+      "name": "clump_then_commit_stack",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "guns_ready": "all_cooling"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Spread first, stutter threat until anyone can shoot, then full attack-move so 21 guns fire together instead of trickling into hydra volleys."
+     },
+     "wins": 0,
+     "margin": -1653.3
+    }
+   ]
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hydra_threat_stutter_commit",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Stalkers outrange hydras; stutter-kite highest DPS-per-HP until they bleed, then attack-move so cooldowns never idle and marines dump into remaining guns."
+     },
+     "wins": 0,
+     "margin": -612.2
+    },
+    {
+     "program": {
+      "name": "alpha_weakest_after_contact",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Snowball kills: kite while far, then every ready gun dumps into the lowest-HP body already in range so medivacs cannot catch up."
+     },
+     "wins": 2,
+     "margin": -160.5
+    },
+    {
+     "program": {
+      "name": "armored_snipe_then_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "their_alive": {
+          ">=": 18
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "threat"
+      },
+      "why": "Stalker bonus vs armored deletes marauders first; after the tanky line dies, stack onto remaining DPS so hydras do not out-trade marines."
+     },
+     "wins": 0,
+     "margin": -628.8
+    },
+    {
+     "program": {
+      "name": "stand_ground_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Never chase into marauder bonus range; hold and shoot whoever walks in, focusing nearest damage-dealer so hydras and marauders melt while medivacs wait."
+     },
+     "wins": 0,
+     "margin": -1073.1
+    },
+    {
+     "program": {
+      "name": "ratio_commit_stack",
+      "rules": [
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.05
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "stay"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "frontline"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat"
+      },
+      "why": "Stay kiting while we are even or behind; once alive_ratio shows we are winning the trade, attack-move and stay so remaining DPS is continuous."
+     },
+     "wins": 0,
+     "margin": -555.7
+    },
+    {
+     "program": {
+      "name": "guns_then_healer_last",
+      "rules": [
+       {
+        "when": {
+         "enemy_guns": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "guns"
+        }
+       },
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "healer",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Kill hydras and marines first so the medivacs have nothing to save; only after enemy_guns drop, peel remaining healers."
+     },
+     "wins": 0,
+     "margin": -1653.3
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "kill_medivacs_then_alpha",
+      "rules": [
+       {
+        "when": {
+         "enemy_heal": {
+          ">=": 1
+         },
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "healer",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Medivacs keep their bio alive; delete healers first while approaching, then dump every ready shot into the lowest-HP body already in range so remaining kills snowball."
+     },
+     "wins": 1,
+     "margin": -517.9
+    },
+    {
+     "program": {
+      "name": "hold_ground_alpha",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "healer",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "weakest_in_range"
+      },
+      "why": "No enemy melee, so standing still never loses range. Hold and fire into weakest-in-range so stalkers and marines never idle-walk and medivacs cannot outheal a stationary volley."
+     },
+     "wins": 0,
+     "margin": -1073.1
+    },
+    {
+     "program": {
+      "name": "concave_frontline_commit",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "kite": "all",
+         "target": "frontline",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "frontline",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Fan a concave before contact so more guns fire at once, pick the nearest damage-dealer, then attack-move once anyone can shoot so cooldowns stay hot."
+     },
+     "wins": 2,
+     "margin": -230.4
+    },
+    {
+     "program": {
+      "name": "fall_back_then_stack_guns",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "fall_back",
+         "target": "guns",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "guns",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "guns"
+      },
+      "why": "Walk back first to stretch their approach and unclump, then attack-move onto enemy guns so hydras and marauders die before their marines."
+     },
+     "wins": 0,
+     "margin": -634.3
+    },
+    {
+     "program": {
+      "name": "marauder_heaviest_hold",
+      "rules": [
+       {
+        "when": {
+         "their_alive": {
+          ">=": 16
+         }
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "heaviest",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "target": "weakest_in_range"
+      },
+      "why": "Stalker armored bonus deletes marauders if we never chase; hold fire on heaviest until armored line is gone, then stack weakest so leftover hydras and marines melt."
+     },
+     "wins": 0,
+     "margin": -1653.3
+    },
+    {
+     "program": {
+      "name": "threat_hold_then_weakest",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "hold",
+         "target": "threat",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true,
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "weakest_in_range",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "target": "threat"
+      },
+      "why": "Stand and snipe highest DPS-per-HP (hydras then marauders) with no idle chase, then once they bleed switch to weakest-in-range so medivacs cannot keep low-HP bodies up."
+     },
+     "wins": 0,
+     "margin": -607.3
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "weakest_in_range_alpha",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "formation": "open",
+      "target": "healer"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "weakest_in_range",
+      "tie": "first"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "weakest_in_range"
+   },
+   "why": "Once anyone can shoot, dump every ready gun into the lowest-HP body in range to snowball kills before medivacs land heals; kite only while still far."
+  },
+  "wins": 2,
+  "margin": -160.5,
+  "score": 19839.5
+ }
+}

@@ -1,0 +1,376 @@
+{
+ "id": "g0746",
+ "dummy": 4,
+ "hand_rules": 4,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "zealot_tank_then_stack",
+      "rules": [
+       {
+        "when": {
+         "contact": "far"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "fall_back",
+         "formation": "keep",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "contact": "almost_in_range"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "hold",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "trading",
+          "we_are_bleeding",
+          "they_are_bleeding"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "wounded": "rotate",
+         "target": "weakest_in_range"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "frontline"
+      },
+      "why": "Send zealots in first while guns stay back; once trade starts, stack fire on the nearest marauder so hydras and marines dump DPS behind the melee wall."
+     },
+     "wins": 2,
+     "margin": 53.0
+    },
+    {
+     "program": {
+      "name": "open_concave_kite",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "wing": "step",
+         "ranged": "concave",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "stand": "step",
+         "target": "weakest_in_range",
+         "melee": "charge"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "formation": "open",
+       "ranged": "concave",
+       "melee": "charge",
+       "target": "weakest_in_range"
+      },
+      "why": "Spread into a wide ring so marauder concaves cannot focus one clump, stutter-kite on the 0.5s window, and always pick the lowest HP marauder already in range."
+     },
+     "wins": 0,
+     "margin": -1625.0
+    },
+    {
+     "program": {
+      "name": "threat_stutter_until_bleed",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "charge",
+         "target": "threat",
+         "stand": "step"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "threat",
+         "wounded": "rotate",
+         "tie": "first"
+        }
+       },
+       {
+        "when": {
+         "alive_ratio": {
+          ">=": 1.1
+         }
+        },
+        "set": {
+         "ranged": "stack",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stack",
+       "melee": "charge",
+       "target": "threat"
+      },
+      "why": "Kite every gun on the highest DPS-per-HP marauder until they start losing HP, then lock attack-move so remaining shots are never wasted walking."
+     },
+     "wins": 4,
+     "margin": 170.6
+    },
+    {
+     "program": {
+      "name": "hold_choke_guns_hold",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "hold",
+         "formation": "keep",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "contact": "we_can_shoot"
+        },
+        "set": {
+         "melee": "hold",
+         "ranged": "hold",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "our_melee": {
+          "<=": 2
+         }
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "melee": "hold",
+       "ranged": "hold",
+       "target": "frontline"
+      },
+      "why": "Melee plants a wall; guns never chase into 6-range marauder fire, they hold and shoot whoever walks in, rotating the wounded out."
+     },
+     "wins": 0,
+     "margin": -1133.1
+    },
+    {
+     "program": {
+      "name": "bait_one_stutter_frontline",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "far",
+          "almost_in_range"
+         ]
+        },
+        "set": {
+         "kite": "bait_one",
+         "ranged": "stutter",
+         "melee": "charge",
+         "wing": "step",
+         "target": "frontline"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "bait_one",
+         "target": "frontline",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": "we_are_bleeding"
+        },
+        "set": {
+         "wounded": "rotate",
+         "ranged": "stutter",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "bait_one",
+       "melee": "charge",
+       "target": "frontline"
+      },
+      "why": "The nearest marine always walks as bait so marauders waste shots; remaining guns stutter-fire the front marauder while zealots crash in."
+     },
+     "wins": 5,
+     "margin": 395.5
+    },
+    {
+     "program": {
+      "name": "heaviest_then_clump_stack",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "melee": "charge",
+         "ranged": "stack",
+         "target": "heaviest",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "they_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stack",
+         "target": "clump",
+         "wounded": "stay",
+         "tie": "second"
+        }
+       },
+       {
+        "when": {
+         "our_alive": {
+          "<=": 10
+         }
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "threat"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "heaviest"
+      },
+      "why": "Burn the tankiest marauder first so their remaining HP pool collapses together, then switch to clump targeting and full stack once any bleeding starts."
+     },
+     "wins": 4,
+     "margin": 208.1
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "bait_one_stutter_frontline",
+   "rules": [
+    {
+     "when": {
+      "contact": [
+       "far",
+       "almost_in_range"
+      ]
+     },
+     "set": {
+      "kite": "bait_one",
+      "ranged": "stutter",
+      "melee": "charge",
+      "wing": "step",
+      "target": "frontline"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "bait_one",
+      "target": "frontline",
+      "stand": "shoot"
+     }
+    },
+    {
+     "when": {
+      "hp_trend": "we_are_bleeding"
+     },
+     "set": {
+      "wounded": "rotate",
+      "ranged": "stutter",
+      "melee": "charge"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stutter",
+    "kite": "bait_one",
+    "melee": "charge",
+    "target": "frontline"
+   },
+   "why": "The nearest marine always walks as bait so marauders waste shots; remaining guns stutter-fire the front marauder while zealots crash in."
+  },
+  "wins": 5,
+  "margin": 395.5,
+  "score": 50395.5
+ }
+}

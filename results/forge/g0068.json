@@ -1,0 +1,931 @@
+{
+ "id": "g0068",
+ "dummy": 1,
+ "hand_rules": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hydra_stutter_bane_snipe",
+      "rules": [
+       {
+        "when": {
+         "contact": [
+          "almost_in_range",
+          "we_can_shoot"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "melee": "snipe",
+       "target": "clump"
+      },
+      "why": "Hydras outrange; take the safe 0.5s shots while a single baneling walks into their pack so our splash detonates theirs, rest of melee stay outside blast."
+     },
+     "wins": 0,
+     "margin": 22.5
+    },
+    {
+     "program": {
+      "name": "choke_hold_and_pick",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "clump",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "target": "clump",
+         "bar": "bar"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Walk guns to the wall choke and hold; our melee tanks the mouth so hydras fire into a packed suicide line without ever stepping into blast."
+     },
+     "wins": 0,
+     "margin": -6.0
+    },
+    {
+     "program": {
+      "name": "open_concave_then_detonate",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_two",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan hydras onto a ring so all three shoot the same clump, then send two banelings in to chain their bombs while hydras keep stuttering."
+     },
+     "wins": 1,
+     "margin": 36.0
+    },
+    {
+     "program": {
+      "name": "commit_banes_hydra_hold",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "hold",
+       "target": "clump"
+      },
+      "why": "Our suicide units are the real damage; charge them immediately into the densest pack while hydras stand ground and pick leftover banes."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "safe_two_shots_then_withdraw",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "snipe",
+         "formation": "open",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "fall_back",
+       "melee": "hold",
+       "target": "clump"
+      },
+      "why": "Gap holds for one shot and melee arrives within two; take the first hydra volley, then fall back along the ravine so they chase into our remaining bombs."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "threat_hydra_plus_rotate",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "melee": "snipe",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "stutter",
+         "wounded": "rotate",
+         "target": "weakest_in_range",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "snipe"
+      },
+      "why": "Focus the closest incoming baneling as highest DPS-per-HP, hydras stutter-kite, wounded hydras rotate out, melee only bait one body into the pack."
+     },
+     "wins": 1,
+     "margin": 82.7
+    }
+   ]
+  },
+  {
+   "round": 1,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "programs": []
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "hydra_volley_then_chain",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "melee": "hold",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Take the guaranteed first hydra volley while the gap still holds, then immediately send two banelings into their densest pack so our splash chains theirs; leftover hydras hold and finish stragglers."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "wall_funnel_pack_detonate",
+      "rules": [
+       {
+        "when": {
+         "pocket": "open"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "wing": "step",
+         "target": "heaviest"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Open spacing and walk the line to the ravine wall so their 18 bombs stack in the neck; hydras then bar-splash the packed column while one bait baneling detonates the mouth."
+     },
+     "wins": 0,
+     "margin": -6.0
+    },
+    {
+     "program": {
+      "name": "all_in_bane_wave",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         },
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "keep",
+         "melee": "charge",
+         "bait": "bait_two",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Our 9 bombs are the only way to trade 18; charge every melee body into their clump immediately while hydras stack-fire the same packed target so splash never idles."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "concave_ring_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "charge",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "snipe",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan the three hydras onto a ring so every gun covers the same suicide pack, then send the closest baneling in to detonate while the rest of melee stay outside blast radius."
+     },
+     "wins": 1,
+     "margin": 36.0
+    },
+    {
+     "program": {
+      "name": "threat_pick_rotate_kites",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "melee": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "weakest_in_range",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "snipe"
+      },
+      "why": "Hydras outrange and have highest DPS-per-HP remaining; stutter-kite the closest incoming bomb as threat, rotate wounded hydras out of blade range, and only bait a single melee body when they close."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "two_shot_then_choke_hold",
+      "rules": [
+       {
+        "when": {
+         "if_we_stand_to_shoot": "gap_holds",
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "target": "heaviest",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "target": "clump",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "bar": "bar",
+         "target": "clump"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "fall_back",
+       "melee": "hold_choke",
+       "target": "clump"
+      },
+      "why": "Gap holds for one shot and melee arrives within two; take the first hydra volley, then fall back to the rally choke, hold melee there, and let remaining bombs meet theirs at the mouth while hydras shoot the packed line."
+     },
+     "wins": 1,
+     "margin": 82.7
+    }
+   ]
+  },
+  {
+   "round": 3,
+   "errors": [],
+   "programs": [
+    {
+     "program": {
+      "name": "choke_funnel_splash",
+      "rules": [
+       {
+        "when": {
+         "pocket": "open"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "melee": "hold_choke",
+         "formation": "open",
+         "wing": "step",
+         "target": "clump"
+        }
+       },
+       {
+        "when": {
+         "pocket": [
+          "in_neck",
+          "at_mouth",
+          "in_pocket"
+         ]
+        },
+        "set": {
+         "ranged": "hold",
+         "melee": "hold_choke",
+         "bar": "bar",
+         "target": "clump",
+         "stand": "shoot"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "hold_choke",
+       "target": "clump",
+       "bar": "pack"
+      },
+      "why": "Rally is behind us on a ravine wall; walk guns to the choke first so 18 enemy bombs must stack in the neck, then hold melee there and laser the packed line so our remaining bombs and hydra splash trade 2-for-1."
+     },
+     "wins": 0,
+     "margin": -6.0
+    },
+    {
+     "program": {
+      "name": "first_volley_then_two_baits",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet",
+         "if_we_stand_to_shoot": "gap_holds"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "shoot",
+         "kite": "all",
+         "melee": "hold",
+         "target": "clump",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 2
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_two",
+         "ranged": "hold",
+         "target": "clump",
+         "bar": "pack"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "weakest_in_range",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "charge",
+       "target": "clump"
+      },
+      "why": "Gap holds for one hydra volley; take it on the densest pack, then send two banelings into their suicide group so our blast chains theirs while leftover hydras stand and finish."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "hydra_ring_hold_melee",
+      "rules": [
+       {
+        "when": {
+         "ally_spacing": "clumped"
+        },
+        "set": {
+         "formation": "open",
+         "ranged": "concave",
+         "wing": "step",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "someone_can_shoot_now": true
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "clump",
+         "stand": "shoot",
+         "bar": "bar"
+        }
+       },
+       {
+        "when": {
+         "contact": [
+          "we_can_shoot",
+          "melee_on_us"
+         ]
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "wounded": "rotate"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "concave",
+       "melee": "hold",
+       "target": "clump",
+       "formation": "open"
+      },
+      "why": "Fan three hydras into a concave so every gun covers the same clump; keep allied banelings holding outside blast until an enemy pack is already overlapping, then send the closest body in."
+     },
+     "wins": 1,
+     "margin": 36.0
+    },
+    {
+     "program": {
+      "name": "meatshield_charge_stack",
+      "rules": [
+       {
+        "when": {
+         "our_suicide": {
+          ">=": 1
+         }
+        },
+        "set": {
+         "melee": "charge",
+         "bait": "bait_two",
+         "ranged": "stack",
+         "target": "clump",
+         "bar": "pack",
+         "formation": "keep"
+        }
+       },
+       {
+        "when": {
+         "our_suicide": 0
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "wounded": "rotate",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "melee": "charge",
+       "ranged": "stack",
+       "target": "clump"
+      },
+      "why": "Nine allied bombs exist to tank and detonate; attack-move every melee body into their mass while hydras stack-fire the same packed target so neither splash nor cooldown idles."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "stutter_threat_then_snipe",
+      "rules": [
+       {
+        "when": {
+         "hp_trend": "no_trade_yet"
+        },
+        "set": {
+         "ranged": "stutter",
+         "kite": "all",
+         "target": "threat",
+         "melee": "hold",
+         "formation": "open",
+         "wing": "step"
+        }
+       },
+       {
+        "when": {
+         "if_we_keep_standing": "melee_arrives_within_two_shots"
+        },
+        "set": {
+         "ranged": "stutter",
+         "stand": "step",
+         "melee": "snipe",
+         "bait": "bait_one",
+         "wounded": "rotate"
+        }
+       },
+       {
+        "when": {
+         "hp_trend": [
+          "we_are_bleeding",
+          "trading"
+         ]
+        },
+        "set": {
+         "ranged": "fall_back",
+         "target": "weakest_in_range",
+         "melee": "hold"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "stutter",
+       "kite": "all",
+       "target": "threat",
+       "melee": "snipe"
+      },
+      "why": "Hydras outrange and have the only sustained DPS; stutter-kite the highest DPS-per-HP incoming baneling, step rather than eat blades, and only bait a single melee body once the 0.5s window closes."
+     },
+     "wins": 1,
+     "margin": 82.7
+    },
+    {
+     "program": {
+      "name": "hydra_hold_laser_bar",
+      "rules": [
+       {
+        "when": {
+         "guns_ready": "some_ready"
+        },
+        "set": {
+         "ranged": "hold",
+         "stand": "shoot",
+         "target": "clump",
+         "bar": "bar",
+         "melee": "hold"
+        }
+       },
+       {
+        "when": {
+         "enemy_suicide": {
+          ">=": 8
+         }
+        },
+        "set": {
+         "melee": "snipe",
+         "bait": "bait_one",
+         "formation": "open"
+        }
+       },
+       {
+        "when": {
+         "contact": "melee_on_us"
+        },
+        "set": {
+         "ranged": "fall_back",
+         "wounded": "rotate",
+         "melee": "charge"
+        }
+       }
+      ],
+      "else": {
+       "ranged": "hold",
+       "melee": "snipe",
+       "target": "clump",
+       "bar": "bar"
+      },
+      "why": "Never chase at equal speed; hydras plant, shoot whatever enters 5 range, and aim the perpendicular bar at the densest bodies while one bait baneling walks in and the rest stay outside blast."
+     },
+     "wins": 0,
+     "margin": -6.0
+    }
+   ]
+  }
+ ],
+ "best": {
+  "program": {
+   "name": "commit_banes_hydra_hold",
+   "rules": [
+    {
+     "when": {
+      "our_suicide": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "melee": "charge",
+      "bait": "bait_two",
+      "ranged": "hold",
+      "target": "clump",
+      "bar": "pack"
+     }
+    },
+    {
+     "when": {
+      "our_suicide": 0
+     },
+     "set": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "wounded": "rotate"
+     }
+    }
+   ],
+   "else": {
+    "melee": "charge",
+    "ranged": "hold",
+    "target": "clump"
+   },
+   "why": "Our suicide units are the real damage; charge them immediately into the densest pack while hydras stand ground and pick leftover banes."
+  },
+  "wins": 1,
+  "margin": 82.7,
+  "score": 10082.7
+ }
+}
