@@ -2638,7 +2638,7 @@ JOB_TO_INTENT = {
     "snipe": "snipe",
 }
 
-KIND_ORDER = ("formation", "ranged", "kite", "melee", "bait", "target", "bar", "wing", "tie", "span", "line", "stand", "bomb", "blade", "mark", "heal")
+KIND_ORDER = ("formation", "ranged", "kite", "melee", "bait", "target", "bar", "wing", "tie", "stand", "mark", "heal")
 
 
 
@@ -4027,6 +4027,23 @@ def _option_yes_no(crit: Any) -> Tuple[str, str]:
 
 
 
+# An exam reaches Jev only if pinning one of its options beat Dummy on a
+# seed Dummy lost (python results/_regress.py force; rows in results/force/).
+# Kinds not listed still compile, answered with the code default.
+# Closed on 2026-09-29, no Force win on 23 maps x 5 seeds:
+#   formation, kite (under ranged=stutter), bait (under melee=snipe),
+#   stand (under ranged=stutter; shoot lost 3s_vs_5z 5/5), mark.
+EXAM_EVIDENCE = {
+    "ranged": "results/force/ranged.jsonl",  # stutter: 3s_vs_3z, 3s5z_vs_3s6z
+    "melee": "results/force/melee.jsonl",  # hold_choke: corridor 5/5
+    "target": "results/force/target__guns.jsonl",  # guns: 1c3s5z 4/5
+    "bar": "results/force/bar.jsonl",  # bar: 1c3s5z 5/5
+    "wing": "results/force/wing.jsonl",  # step: 10m_vs_11m 5/5, 27m_vs_30m 4/5
+    "tie": "results/force/tie.jsonl",  # other body: 10m_vs_11m, 27m_vs_30m, MMM (also loses some)
+    "heal": "results/force/heal.jsonl",  # MMM s2 (also loses s4)
+}
+
+
 def build_job_catalog(
     snap: Dict[str, Any],
     form_opts: List[str],
@@ -4698,18 +4715,15 @@ def _exam_needed(
 # Main loop
 # ----------------------------------------------------------------------
 
-LINE_MODES = ("local", "shared")
 WING_CALLS = ("stay", "step")
 # Two-word exams that hold their pick until it goes illegal:
 # kind -> (legal picks, snap key the motor reads, physics gate).
 STICKY_EXAMS = {
     "stand": (("shoot", "step"), "_stand_call", lambda snap: True),
-    "span": (("lower", "next"), "_tie_span", lambda snap: _tie_pair_count(snap) >= 2),
-    "bomb": (("step", "hold"), "_bomb_call", lambda snap: True),
     "bar": (("pack", "bar"), "_bar_aim", lambda snap: bool(_laser_allies(snap))),
 }
 # Exams whose answer is applied after the menu write-back.
-PENDING_EXAMS = ("tie", "stand", "blade", "mark", "line", "span", "bomb", "bar", "wing")
+PENDING_EXAMS = ("tie", "stand", "mark", "bar", "wing")
 
 
 class JevActionPolicy:
@@ -4882,25 +4896,30 @@ class JevActionPolicy:
             for kind, spec in catalog.items()
             if _exam_needed(kind, spec, step, self._sticky, sig, prev_sig)
         }
-        snap["_catalog_options"] = {kind: spec["options"] for kind, spec in catalog.items()}
-        snap["_catalog_defaults"] = {kind: spec["default"] for kind, spec in catalog.items()}
-        questions = catalog_questions(catalog) if catalog else {}
+        # Only exams with Force evidence reach Jev. Closed ones still run the
+        # same path, answered with the code default, exactly like Dummy.
+        exams = {kind: spec for kind, spec in catalog.items() if kind in EXAM_EVIDENCE}
+        snap["_catalog_options"] = {kind: spec["options"] for kind, spec in exams.items()}
+        snap["_catalog_defaults"] = {kind: spec["default"] for kind, spec in exams.items()}
+        questions = catalog_questions(exams) if exams else {}
         asked: List[str] = []
         self._force_sig = sig
 
-        if questions:
+        if catalog:
             # Dummy is a client that takes every default; it runs the same
             # path as Jev so "Jev picked the default" == Dummy.
             local = isinstance(self.client, DummyClient)
-            state = None if local else commander_state(step, snap, self._recent, self._hp_trend)
-            if isinstance(self.client, ForceClient):
-                self.client.defaults = dict(snap["_catalog_defaults"])
-            result = self.client.system_one(state, questions)
-            if not local:
-                self.n_calls += 1
-                self.n_questions += len(questions)
-            self.infer_s = self.client.infer_s
-            self._input_tokens += int((self.client.last_usage or {}).get("input_tokens") or 0)
+            result: Any = {"answers": {}}
+            if questions:
+                state = None if local else commander_state(step, snap, self._recent, self._hp_trend)
+                if isinstance(self.client, ForceClient):
+                    self.client.defaults = dict(snap["_catalog_defaults"])
+                result = self.client.system_one(state, questions)
+                if not local:
+                    self.n_calls += 1
+                    self.n_questions += len(questions)
+                self.infer_s = self.client.infer_s
+                self._input_tokens += int((self.client.last_usage or {}).get("input_tokens") or 0)
             answers = (result or {}).get("answers") if isinstance(result, dict) else None
             if not isinstance(answers, dict):
                 self.n_fallback += 1
@@ -4913,9 +4932,10 @@ class JevActionPolicy:
                 b_job = picks.get("bait", b_job)
                 rule = picks.get("target", rule)
                 form, r_job, m_job = apply_physics_veto(snap, form, r_job, m_job)
-                if asked:
+                sent = [kind for kind in asked if kind in questions]
+                if sent:
                     self.n_asked += 1
-                for kind in asked:
+                for kind in sent:
                     self.asked_counts[kind] = self.asked_counts.get(kind, 0) + 1
                     live = live_used.get(kind) or []
                     if 0 < len(live) < len(catalog[kind]["options"]):
@@ -4956,12 +4976,6 @@ class JevActionPolicy:
         else:
             self._sticky.pop("tie", None)
         self._apply_sticky_exam("stand", snap)
-        blade_pick = self._pending.pop("blade", None)
-        if blade_pick:
-            try:
-                snap["_blade_prefer"] = int(str(blade_pick)[1:])
-            except (TypeError, ValueError):
-                pass
         mark_id = None
         mark_pick = self._pending.pop("mark", None)
         if mark_pick:
@@ -4970,12 +4984,6 @@ class JevActionPolicy:
             except (TypeError, ValueError):
                 mark_id = None
         snap["_mark_id"] = mark_id
-        line_mode = self._held_pick("line", LINE_MODES) or "local"
-        if _pure_gunline(snap):
-            self._sticky["line"] = (line_mode, LINE_MODES)
-            snap["_line_mode"] = line_mode
-        self._apply_sticky_exam("span", snap)
-        self._apply_sticky_exam("bomb", snap)
         self._apply_sticky_exam("bar", snap)
         wing_call = self._held_pick("wing", WING_CALLS)
         if wing_call == "step" and _wing_frame(snap) is not None:

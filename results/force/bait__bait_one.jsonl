@@ -1,0 +1,10 @@
+{"policy": "force:bait=bait_one", "map": "so_many_baneling", "seed": 1, "win": 0, "ret": 1.622, "steps": 4, "open": {"formation": 1, "melee": 2, "bait": 1}, "ov": [], "dummy_win": 0, "dummy_ret": 1.622}
+{"policy": "force:bait=bait_one", "map": "so_many_baneling", "seed": 2, "win": 0, "ret": 1.622, "steps": 4, "open": {"formation": 1, "melee": 2, "bait": 1}, "ov": [], "dummy_win": 0, "dummy_ret": 1.622}
+{"policy": "force:bait=bait_one", "map": "so_many_baneling", "seed": 3, "win": 0, "ret": 1.622, "steps": 4, "open": {"formation": 1, "melee": 2, "bait": 1}, "ov": [], "dummy_win": 0, "dummy_ret": 1.622}
+{"policy": "force:bait=bait_one", "map": "so_many_baneling", "seed": 4, "win": 0, "ret": 1.622, "steps": 4, "open": {"formation": 1, "melee": 2, "bait": 1}, "ov": [], "dummy_win": 0, "dummy_ret": 1.622}
+{"policy": "force:bait=bait_one", "map": "so_many_baneling", "seed": 5, "win": 0, "ret": 1.622, "steps": 4, "open": {"formation": 1, "melee": 2, "bait": 1}, "ov": [], "dummy_win": 0, "dummy_ret": 1.622}
+{"policy": "force:bait=bait_one", "map": "bane_vs_bane", "seed": 1, "win": 1, "ret": 19.365, "steps": 10, "open": {"formation": 5, "target": 2, "melee": 3, "bait": 2}, "ov": [], "dummy_win": 1, "dummy_ret": 19.365}
+{"policy": "force:bait=bait_one", "map": "bane_vs_bane", "seed": 2, "win": 1, "ret": 19.365, "steps": 10, "open": {"formation": 5, "target": 2, "melee": 3, "bait": 2}, "ov": [], "dummy_win": 1, "dummy_ret": 19.365}
+{"policy": "force:bait=bait_one", "map": "bane_vs_bane", "seed": 3, "win": 1, "ret": 19.365, "steps": 10, "open": {"formation": 5, "target": 2, "melee": 3, "bait": 2}, "ov": [], "dummy_win": 1, "dummy_ret": 19.365}
+{"policy": "force:bait=bait_one", "map": "bane_vs_bane", "seed": 4, "win": 1, "ret": 19.365, "steps": 10, "open": {"formation": 5, "target": 2, "melee": 3, "bait": 2}, "ov": [], "dummy_win": 1, "dummy_ret": 19.365}
+{"policy": "force:bait=bait_one", "map": "bane_vs_bane", "seed": 5, "win": 1, "ret": 19.365, "steps": 10, "open": {"formation": 5, "target": 2, "melee": 3, "bait": 2}, "ov": [], "dummy_win": 1, "dummy_ret": 19.365}

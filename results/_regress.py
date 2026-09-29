@@ -84,6 +84,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
     env.reset()
     ret, steps, done, info = 0.0, 0, False, {}
     h = hashlib.sha1()
+    ha = hashlib.sha1()
     first: List[str] = []
     asked: Dict[str, int] = {}
     try:
@@ -96,6 +97,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
                     sort_keys=True,
                 )
                 h.update(rec.encode())
+                ha.update(json.dumps([steps, actions]).encode())
                 first.append(hashlib.sha1(rec.encode()).hexdigest()[:10])
             for k in snap.get("_catalog_options") or {}:
                 asked[k] = asked.get(k, 0) + 1
@@ -118,6 +120,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
     }
     if trace:
         row["hash"] = h.hexdigest()
+        row["act_hash"] = ha.hexdigest()
         row["steps_h"] = first
     return row
 
@@ -135,12 +138,13 @@ def cmd_trace(args):
         return 0
     old = json.loads(Path(args.compare).read_text())
     bad = 0
+    field = "act_hash" if args.actions_only else "hash"
     for key, r in rows.items():
         o = old.get(key)
         if o is None:
             print(f"NEW   {key}")
             continue
-        if o["hash"] == r["hash"]:
+        if o[field] == r[field]:
             continue
         bad += 1
         a, b = o["steps_h"], r["steps_h"]
@@ -183,14 +187,15 @@ def cmd_gate(args):
 
 
 def cmd_force(args):
-    """For each exam kind: on every (map, seed) where it opened under dummy,
-    run Force(kind=!default) and compare with dummy."""
+    """For each exam kind (or kind=option): on every (map, seed) where it
+    opened under dummy, run Force and compare with dummy."""
     dummy = {(m, s): run("dummy", m, s) for m in args.maps for s in args.seeds}
     out_dir = ROOT / "results" / "force"
     out_dir.mkdir(exist_ok=True)
     summary = {}
-    for kind in args.kinds:
-        spec = f"force:{kind}=!default"
+    for item in args.kinds:
+        kind, opt = item.split("=", 1) if "=" in item else (item, "!default")
+        spec = f"force:{kind}={opt}"
         rows = []
         for (m, s), d in dummy.items():
             if kind not in d["open"]:
@@ -198,14 +203,18 @@ def cmd_force(args):
             f = run(spec, m, s)
             f["dummy_win"], f["dummy_ret"] = d["win"], d["ret"]
             rows.append(f)
-        with open(out_dir / f"{kind}.jsonl", "w") as fh:
+        name = kind if opt == "!default" else f"{kind}__{opt}"
+        with open(out_dir / f"{name}.jsonl", "w") as fh:
             for r in rows:
                 fh.write(json.dumps(r) + "\n")
         flips = [f"{r['map']}:s{r['seed']}" for r in rows if r["win"] and not r["dummy_win"]]
         losses = [f"{r['map']}:s{r['seed']}" for r in rows if r["dummy_win"] and not r["win"]]
-        summary[kind] = {"episodes": len(rows), "beats_dummy": flips, "loses_to_dummy": losses}
-        print(f"{kind:10s} n={len(rows):3d} beats={flips} loses={losses}")
-    (out_dir / "summary.json").write_text(json.dumps(summary, indent=1))
+        summary[name] = {"episodes": len(rows), "beats_dummy": flips, "loses_to_dummy": losses}
+        print(f"{name:24s} n={len(rows):3d} beats={flips} loses={losses}")
+    path = out_dir / "summary.json"
+    old = json.loads(path.read_text()) if path.is_file() else {}
+    old.update(summary)
+    path.write_text(json.dumps(old, indent=1, sort_keys=True))
     return 0
 
 
@@ -220,6 +229,7 @@ def main():
     t.add_argument("--policies", nargs="+", default=["dummy", "force:ranged=stutter", "default", "random"])
     t.add_argument("--out", required=True)
     t.add_argument("--compare")
+    t.add_argument("--actions-only", action="store_true", help="ignore exam bookkeeping, compare actions")
     g = sub.choices["gate"]
     g.add_argument("--policies", nargs="+", default=["dummy"])
     g.add_argument("--baseline", default=str(ROOT / "results" / "gate_baseline.jsonl"))

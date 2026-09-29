@@ -1,0 +1,186 @@
+{
+ "bait": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "bait__bait_one": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "bait__bait_two": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "bar": {
+  "beats_dummy": [
+   "1c3s5z:s1",
+   "1c3s5z:s2",
+   "1c3s5z:s3",
+   "1c3s5z:s4",
+   "1c3s5z:s5"
+  ],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "formation": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "formation__keep": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "formation__open": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "heal": {
+  "beats_dummy": [
+   "MMM:s2"
+  ],
+  "episodes": 10,
+  "loses_to_dummy": [
+   "MMM:s4"
+  ]
+ },
+ "kite": {
+  "beats_dummy": [],
+  "episodes": 15,
+  "loses_to_dummy": []
+ },
+ "kite__all": {
+  "beats_dummy": [],
+  "episodes": 15,
+  "loses_to_dummy": []
+ },
+ "kite__bait_one": {
+  "beats_dummy": [],
+  "episodes": 15,
+  "loses_to_dummy": []
+ },
+ "mark": {
+  "beats_dummy": [],
+  "episodes": 5,
+  "loses_to_dummy": []
+ },
+ "melee": {
+  "beats_dummy": [
+   "corridor:s1",
+   "corridor:s2",
+   "corridor:s3",
+   "corridor:s4",
+   "corridor:s5"
+  ],
+  "episodes": 15,
+  "loses_to_dummy": []
+ },
+ "ranged": {
+  "beats_dummy": [
+   "3s5z_vs_3s6z:s1",
+   "3s5z_vs_3s6z:s4",
+   "3s5z_vs_3s6z:s5",
+   "3s_vs_3z:s1",
+   "3s_vs_3z:s2",
+   "3s_vs_3z:s3",
+   "3s_vs_3z:s4",
+   "3s_vs_3z:s5"
+  ],
+  "episodes": 20,
+  "loses_to_dummy": []
+ },
+ "stand": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "stand__shoot": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "stand__step": {
+  "beats_dummy": [],
+  "episodes": 10,
+  "loses_to_dummy": []
+ },
+ "target": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": []
+ },
+ "target__clump": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": []
+ },
+ "target__frontline": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": []
+ },
+ "target__guns": {
+  "beats_dummy": [
+   "1c3s5z:s1",
+   "1c3s5z:s3",
+   "1c3s5z:s4",
+   "1c3s5z:s5"
+  ],
+  "episodes": 60,
+  "loses_to_dummy": []
+ },
+ "target__healer": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": [
+   "MMM:s1",
+   "MMM:s4"
+  ]
+ },
+ "target__heaviest": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": [
+   "MMM:s1",
+   "MMM:s4"
+  ]
+ },
+ "target__weakest_in_range": {
+  "beats_dummy": [],
+  "episodes": 60,
+  "loses_to_dummy": []
+ },
+ "tie": {
+  "beats_dummy": [
+   "10m_vs_11m:s3",
+   "27m_vs_30m:s3",
+   "MMM:s2"
+  ],
+  "episodes": 47,
+  "loses_to_dummy": [
+   "27m_vs_30m:s1",
+   "MMM:s1",
+   "MMM:s4"
+  ]
+ },
+ "wing": {
+  "beats_dummy": [
+   "10m_vs_11m:s1",
+   "10m_vs_11m:s2",
+   "10m_vs_11m:s3",
+   "10m_vs_11m:s4",
+   "10m_vs_11m:s5",
+   "27m_vs_30m:s2",
+   "27m_vs_30m:s3",
+   "27m_vs_30m:s4",
+   "27m_vs_30m:s5"
+  ],
+  "episodes": 15,
+  "loses_to_dummy": []
+ }
+}

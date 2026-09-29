@@ -1,0 +1,15 @@
+{"policy": "force:wing=!default", "map": "8m_vs_9m", "seed": 1, "win": 1, "ret": 20.0, "steps": 20, "open": {"wing": 2, "tie": 4}, "ov": ["t=0 wing stay->step", "t=2 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "8m_vs_9m", "seed": 2, "win": 1, "ret": 20.0, "steps": 20, "open": {"wing": 2, "tie": 4}, "ov": ["t=0 wing stay->step", "t=2 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "8m_vs_9m", "seed": 3, "win": 1, "ret": 20.0, "steps": 20, "open": {"wing": 2, "tie": 4}, "ov": ["t=0 wing stay->step", "t=2 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "8m_vs_9m", "seed": 4, "win": 1, "ret": 20.0, "steps": 20, "open": {"wing": 2, "tie": 4}, "ov": ["t=0 wing stay->step", "t=2 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "8m_vs_9m", "seed": 5, "win": 1, "ret": 20.0, "steps": 20, "open": {"wing": 2, "tie": 4}, "ov": ["t=0 wing stay->step", "t=2 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "10m_vs_11m", "seed": 1, "win": 1, "ret": 20.0, "steps": 24, "open": {"wing": 1, "tie": 2}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 12.894}
+{"policy": "force:wing=!default", "map": "10m_vs_11m", "seed": 2, "win": 1, "ret": 20.0, "steps": 21, "open": {"wing": 1, "tie": 2}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 14.708}
+{"policy": "force:wing=!default", "map": "10m_vs_11m", "seed": 3, "win": 1, "ret": 20.0, "steps": 24, "open": {"wing": 1, "tie": 2}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 13.938}
+{"policy": "force:wing=!default", "map": "10m_vs_11m", "seed": 4, "win": 1, "ret": 20.0, "steps": 24, "open": {"wing": 1, "tie": 2}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 12.894}
+{"policy": "force:wing=!default", "map": "10m_vs_11m", "seed": 5, "win": 1, "ret": 20.0, "steps": 24, "open": {"wing": 1, "tie": 2}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 13.938}
+{"policy": "force:wing=!default", "map": "27m_vs_30m", "seed": 1, "win": 1, "ret": 20.0, "steps": 39, "open": {"wing": 1, "tie": 23}, "ov": ["t=0 wing stay->step"], "dummy_win": 1, "dummy_ret": 20.0}
+{"policy": "force:wing=!default", "map": "27m_vs_30m", "seed": 2, "win": 1, "ret": 20.0, "steps": 37, "open": {"wing": 1, "tie": 17}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 17.632}
+{"policy": "force:wing=!default", "map": "27m_vs_30m", "seed": 3, "win": 1, "ret": 20.0, "steps": 36, "open": {"wing": 1, "tie": 22}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 17.438}
+{"policy": "force:wing=!default", "map": "27m_vs_30m", "seed": 4, "win": 1, "ret": 20.0, "steps": 37, "open": {"wing": 1, "tie": 16}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 15.124}
+{"policy": "force:wing=!default", "map": "27m_vs_30m", "seed": 5, "win": 1, "ret": 20.0, "steps": 39, "open": {"wing": 1, "tie": 23}, "ov": ["t=0 wing stay->step"], "dummy_win": 0, "dummy_ret": 16.843}

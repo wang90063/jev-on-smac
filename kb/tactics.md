@@ -84,3 +84,24 @@ undoes tank-focus, so the ball walks in together.
    using physics predicates (speed, roles, choke, blast).
 4. Name it in `_live_tactic`.
 5. Only then may Jev sit the exam.
+
+## Exam evidence (enforced in code: `EXAM_EVIDENCE`)
+
+Only these kinds reach Jev. Run `python results/_regress.py force --kinds <kind>[=<option>]`;
+rows land in `results/force/`. A kind not in `EXAM_EVIDENCE` still compiles,
+answered with the code default, the same way Dummy answers it.
+
+| Exam | What the option makes code do | Physics that opens it | Force beat Dummy |
+|---|---|---|---|
+| `ranged` | `stutter`: guns stand to shoot, walk away while reloading | faster guns vs melee, no allied tanks, no buildings | yes |
+| `melee` | `hold_choke`: blades sit the neck and let the enemy come through | outnumbered melee in a choke or pocket | yes |
+| `target` | `guns`: focus enemy guns before enemy melee | enemy has both guns and melee | yes |
+| `bar` | `bar`: laser aims where its perpendicular bar touches the most bodies | a laser is firing and bar pick ≠ neighbor pick | yes |
+| `wing` | `step`: outer guns take one sideways step before contact | gun vs gun, they have more bodies, our line narrower than our reach | yes |
+| `tie` | cover the other of two bodies within one shot of each other | two enemies in range, HP gap ≤ one shot | mixed: wins some seeds, loses others |
+| `heal` | healer works on the chosen wounded ally | healer alive, 2+ wounded | mixed |
+
+Closed (no Force win on 23 maps × 5 seeds): `formation`, `kite` (tested under
+`ranged=stutter`), `bait` (under `melee=snipe`), `stand` (under
+`ranged=stutter`; `shoot` lost 3s_vs_5z 5/5), `mark`. `line`, `span`,
+`bomb`, `blade` were never built by the catalog and are removed.
