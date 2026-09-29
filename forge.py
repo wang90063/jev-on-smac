@@ -59,13 +59,13 @@ def _episode(job: Tuple[str, Dict[str, Any], int]) -> Dict[str, Any]:
     return R.run_scenario(spec, scen, seed)
 
 
-def evaluate(pool: Pool, specs: List[str], scen: Dict[str, Any]) -> List[Dict[str, Any]]:
+def evaluate(pool: Pool, specs: List[str], scen: Dict[str, Any], seeds: List[int] = SEEDS) -> List[Dict[str, Any]]:
     """Run each policy spec on the scenario's seeds. Returns one summary per spec."""
-    jobs = [(sp, scen, s) for sp in specs for s in SEEDS]
+    jobs = [(sp, scen, s) for sp in specs for s in seeds]
     rows = pool.map(_episode, jobs, chunksize=1)
     out = []
     for i, sp in enumerate(specs):
-        rs = rows[i * len(SEEDS):(i + 1) * len(SEEDS)]
+        rs = rows[i * len(seeds):(i + 1) * len(seeds)]
         wins = sum(r["win"] for r in rs)
         margin = sum(r["A"][1] - r["E"][1] for r in rs) / len(rs)
         out.append({"spec": sp, "wins": wins, "margin": round(margin, 1), "rows": rs})
@@ -277,9 +277,189 @@ def cmd_transfer() -> None:
     save_lib(lib)
 
 
+# --- round 3: forge per cluster, select on seeds 1-5, confirm on 6-10 ---------
+
+CONFIRM_SEEDS = [6, 7, 8, 9, 10]
+N_CLUSTERS = 12
+LIB3_PATH = ROOT / "kb" / "library" / "cluster_programs.json"
+CLUSTERS_PATH = ROOT / "kb" / "library" / "clusters.json"
+FORGE3_DIR = ROOT / "results" / "forge3"
+MENUS = ("gated", "open")
+
+
+def kmeans(vecs: List[List[float]], k: int, seed: int = 20260929, iters: int = 50):
+    import numpy as np
+
+    X = np.array(vecs, dtype=float)
+    rng = np.random.default_rng(seed)
+    # k-means++ init
+    cent = [X[rng.integers(len(X))]]
+    for _ in range(1, k):
+        d = np.min([((X - c) ** 2).sum(1) for c in cent], axis=0)
+        cent.append(X[rng.choice(len(X), p=d / d.sum())])
+    C = np.array(cent)
+    lab = np.zeros(len(X), dtype=int)
+    for _ in range(iters):
+        lab = np.argmin(((X[:, None, :] - C[None]) ** 2).sum(2), axis=1)
+        newC = np.array([X[lab == j].mean(0) if (lab == j).any() else C[j] for j in range(k)])
+        if np.allclose(newC, C):
+            break
+        C = newC
+    return C.tolist(), lab.tolist()
+
+
+def with_menu(prog: Dict[str, Any], menu: str) -> Dict[str, Any]:
+    out = dict(prog)
+    out["menu"] = menu
+    return out
+
+
+def cluster_eval(pool: Pool, prog: Dict[str, Any], members: List[Dict[str, Any]], dummy: Dict[str, int], seeds: List[int]) -> Dict[str, Any]:
+    """Net wins vs Dummy summed over the cluster's scenarios."""
+    spec = "prog:" + _prog_path(prog)
+    per, net, margin = {}, 0, 0.0
+    for scen in members:
+        r = evaluate(pool, [spec], scen, seeds)[0]
+        per[scen["id"]] = {"wins": r["wins"], "dummy": dummy[scen["id"]], "note": failure_note(r)}
+        net += r["wins"] - dummy[scen["id"]]
+        margin += r["margin"]
+    return {"net": net, "margin": round(margin, 1), "per": per}
+
+
+def cluster_prompt(members_desc: List[Dict[str, Any]], history: List[Dict[str, Any]], k: int) -> str:
+    parts = {
+        "task": (
+            f"Write {k} programs. ONE program must win as many of these similar fights as possible; "
+            "it is scored by wins minus attack-move wins, summed over all of them, then checked on "
+            "fresh spawns. A program that wins one fight and loses the others scores badly."
+        ),
+        "fights": members_desc,
+        "dsl": {"features": T.FEATURES, "picks": T.pick_meanings(), "notes": T.NOTES},
+        "your_earlier_attempts": [
+            {"program": h["program"], "net_vs_attack_move": h["net"], "per_fight": h["per_brief"], "worst": h["worst"]}
+            for h in history[-8:]
+        ],
+    }
+    return json.dumps(parts, ensure_ascii=False)
+
+
+def propose_cluster(client, desc, history, k: int):
+    reply = client.fill_json(INSTRUCTIONS, cluster_prompt(desc, history, k), timeout=120, max_tokens=6000, temperature=0.8)
+    progs, errs = [], []
+    for raw in (reply or {}).get("programs") or []:
+        clean, e = T.validate(raw)
+        if e:
+            errs.append(f"{(raw or {}).get('name')}: {e[0]}")
+        if clean and (clean["rules"] or clean["else"]):
+            progs.append(clean)
+    if reply is None:
+        errs.append("writer returned nothing")
+    return progs, errs
+
+
+def cmd_cluster() -> None:
+    from system2_api import System2Client
+
+    client = System2Client(model=writer_model(), timeout=120)
+    print(f"writer model: {client.model}", flush=True)
+    FORGE3_DIR.mkdir(parents=True, exist_ok=True)
+    train = SC.load("train")
+    states = {s["id"]: start_state(s) for s in train}
+    vecs = [T.feature_vector(T.features(states[s["id"]])) for s in train]
+    if CLUSTERS_PATH.is_file():
+        cl = json.loads(CLUSTERS_PATH.read_text())
+    else:
+        cent, lab = kmeans(vecs, N_CLUSTERS)
+        cl = {"centroids": cent, "members": {str(j): [s["id"] for s, l in zip(train, lab) if l == j] for j in range(N_CLUSTERS)}}
+        CLUSTERS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        CLUSTERS_PATH.write_text(json.dumps(cl))
+    by_id = {s["id"]: s for s in train}
+    lib = json.loads(LIB3_PATH.read_text()) if LIB3_PATH.is_file() else []
+    with Pool(8) as pool:
+        for j, ids in cl["members"].items():
+            out_path = FORGE3_DIR / f"cluster{j}.json"
+            if out_path.is_file() or not ids:
+                continue
+            members = [by_id[i] for i in ids]
+            dsel = {m["id"]: evaluate(pool, ["dummy"], m, SEEDS)[0]["wins"] for m in members}
+            dcon = {m["id"]: evaluate(pool, ["dummy"], m, CONFIRM_SEEDS)[0]["wins"] for m in members}
+            desc = [describe_scenario(m, states[m["id"]]) for m in members]
+            log: Dict[str, Any] = {"cluster": j, "members": ids, "dummy_sel": dsel, "dummy_confirm": dcon, "rounds": []}
+            history: List[Dict[str, Any]] = []
+            cands: List[Dict[str, Any]] = []
+
+            def consider(prog: Dict[str, Any], source: str) -> Dict[str, Any]:
+                """Score a program on the cluster in each menu mode; keep the better mode."""
+                best = None
+                for menu in (MENUS if source == "forge" else ("gated",)):
+                    p = with_menu(prog, menu)
+                    r = cluster_eval(pool, p, members, dsel, SEEDS)
+                    if best is None or (r["net"], r["margin"]) > (best["sel"]["net"], best["sel"]["margin"]):
+                        best = {"program": p, "sel": r, "source": source}
+                return best
+
+            hand = consider(T.HAND_RULES, "hand")
+            hand["confirm"] = cluster_eval(pool, hand["program"], members, dcon, CONFIRM_SEEDS)
+            log["hand"] = {"sel": hand["sel"]["net"], "confirm": hand["confirm"]["net"]}
+            stale = 0
+            top = None
+            for rnd in range(ROUNDS):
+                progs, errs = propose_cluster(client, desc, history, K)
+                rb = None
+                tried = []
+                for prog in progs:
+                    c = consider(prog, "forge")
+                    brief = {i: f"{v['wins']}/5 vs {v['dummy']}/5" for i, v in c["sel"]["per"].items()}
+                    worst = min(c["sel"]["per"].items(), key=lambda kv: kv[1]["wins"] - kv[1]["dummy"])
+                    history.append({"program": c["program"], "net": c["sel"]["net"], "per_brief": brief,
+                                    "worst": f"{worst[0]}: {worst[1]['note']}"})
+                    tried.append(c["sel"]["net"])
+                    if rb is None or (c["sel"]["net"], c["sel"]["margin"]) > (rb["sel"]["net"], rb["sel"]["margin"]):
+                        rb = c
+                history.sort(key=lambda h: h["net"])
+                if rb is not None:
+                    rb["confirm"] = cluster_eval(pool, rb["program"], members, dcon, CONFIRM_SEEDS)
+                    cands.append(rb)
+                improved = rb is not None and (top is None or rb["sel"]["net"] > top["sel"]["net"])
+                top = rb if improved else top
+                stale = 0 if improved else stale + 1
+                log["rounds"].append({"round": rnd, "errors": errs, "nets": tried,
+                                      "round_best": rb and {"sel": rb["sel"]["net"], "confirm": rb["confirm"]["net"], "program": rb["program"]}})
+                print(f"cluster{j} n={len(ids)} r{rnd} nets={tried} best_sel={rb and rb['sel']['net']} "
+                      f"confirm={rb and rb['confirm']['net']} hand={log['hand']} err={len(errs)}", flush=True)
+                if stale >= 2:
+                    break
+            # Admit the highest-selection forged program whose fresh-seed net is positive.
+            admitted = None
+            for c in sorted(cands, key=lambda c: (c["sel"]["net"], c["sel"]["margin"]), reverse=True):
+                if c["confirm"]["net"] > 0:
+                    admitted = c
+                    break
+            feats = T.features(states[ids[0]])
+            for c in [x for x in (admitted, hand) if x is not None and x["confirm"]["net"] > 0]:
+                assert c["confirm"]["net"] > 0
+                lib.append({
+                    "id": f"C{j}-{c['source']}",
+                    "cluster": int(j),
+                    "source": c["source"],
+                    "program": c["program"],
+                    "sel_net": c["sel"]["net"],
+                    "confirm_net": c["confirm"]["net"],
+                    "fights": len(ids) * len(CONFIRM_SEEDS),
+                    "feats": feats,
+                    "vec": cl["centroids"][int(j)],
+                })
+            LIB3_PATH.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
+            log["admitted"] = admitted and {"sel": admitted["sel"]["net"], "confirm": admitted["confirm"]["net"]}
+            out_path.write_text(json.dumps(log, indent=1, ensure_ascii=False))
+    print(f"library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    if cmd == "forge":
+    if cmd == "cluster":
+        cmd_cluster()
+    elif cmd == "forge":
         cmd_forge(int(sys.argv[2]) if len(sys.argv) > 2 else None)
     elif cmd == "transfer":
         cmd_transfer()

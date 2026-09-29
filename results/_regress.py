@@ -77,6 +77,16 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith(("lib3:", "lib3h:")):
+        # Round 3: cluster library with the Dummy fallback. lib3 = forged only,
+        # lib3h = forged + hand rules that passed the same gate.
+        kind, chooser = spec.split(":", 1)
+        lib = json.loads((ROOT / "kb" / "library" / "cluster_programs.json").read_text())
+        if kind == "lib3":
+            lib = [e for e in lib if e.get("source") != "hand"]
+        clusters = json.loads((ROOT / "kb" / "library" / "clusters.json").read_text())
+        h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
+        return J.LibraryPolicy(lib, chooser=chooser, seed=h, clusters=clusters, fallback=True, tag=spec)
     if spec.startswith("lib:"):
         lib = json.loads((ROOT / "kb" / "library" / "programs.json").read_text())
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)

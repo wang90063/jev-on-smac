@@ -5272,26 +5272,72 @@ class LibraryPolicy(JevActionPolicy):
     No simulator in the loop.
     """
 
-    def __init__(self, lib: List[Dict[str, Any]], chooser: str = "jev", k: int = 4, selector=None, seed: int = 0, tag: str = ""):
+    NONE_ID = "none"
+
+    def __init__(
+        self,
+        lib: List[Dict[str, Any]],
+        chooser: str = "jev",
+        k: int = 4,
+        selector=None,
+        seed: int = 0,
+        tag: str = "",
+        clusters: Optional[Dict[str, Any]] = None,
+        fallback: bool = False,
+    ):
         import random as _random
 
-        from tactic_dsl import HAND_RULES, ProgramClient
+        from tactic_dsl import ProgramClient
 
-        super().__init__(client=ProgramClient(HAND_RULES), tag=tag or f"lib_{chooser}", full_menu=True, open_menu=True)
+        # Starts as Dummy until a program is picked. fallback adds a "none"
+        # candidate that runs the exact Dummy path.
+        super().__init__(client=DummyClient(), tag=tag or f"lib_{chooser}")
+        self._dummy_client = self.client
+        self._prog_client = ProgramClient({"name": "none", "rules": [], "else": {}})
         self.lib = lib
         self.chooser = chooser
         self.k = k
+        self.clusters = clusters
+        self.fallback = fallback
         self.selector = selector if selector is not None or chooser != "jev" else JevClient()
         self._rng = _random.Random(seed)
         self._pick_sig: Optional[Tuple[int, ...]] = None
         self.picks_made: List[str] = []
         self.n_select_calls = 0
 
+    def _run(self, entry: Optional[Dict[str, Any]]) -> None:
+        if entry is None:
+            self.client, self.full_menu, self.open_menu = self._dummy_client, False, False
+            return
+        prog = entry["program"]
+        self._prog_client.prog = prog
+        self.client, self.full_menu = self._prog_client, True
+        self.open_menu = prog.get("menu") != "gated"
+
+    def _candidates(self, vec: List[float]) -> List[Dict[str, Any]]:
+        import tactic_dsl as T
+
+        if not self.clusters:
+            return T.nearest(self.lib, vec, self.k)
+        order = sorted(
+            range(len(self.clusters["centroids"])),
+            key=lambda j: sum((a - b) ** 2 for a, b in zip(self.clusters["centroids"][j], vec)),
+        )
+        out: List[Dict[str, Any]] = []
+        for j in order:
+            out.extend(e for e in self.lib if e.get("cluster") == j)
+            if len(out) >= self.k:
+                break
+        return out[: self.k]
+
     def _choose(self, step: int, snap: Dict[str, Any]) -> None:
         import tactic_dsl as T
 
-        state = commander_state(step, snap, self._recent, self._hp_trend)
-        cands = T.nearest(self.lib, T.feature_vector(T.features(state)), self.k)
+        # Copy so the Dummy path sees exactly the snapshot it would have seen.
+        state = commander_state(step, dict(snap), list(self._recent), self._hp_trend)
+        cands: List[Optional[Dict[str, Any]]] = list(self._candidates(T.feature_vector(T.features(state))))
+        if self.fallback:
+            cands.append(None)
         if not cands:
             return
         pick = cands[0]
@@ -5300,8 +5346,21 @@ class LibraryPolicy(JevActionPolicy):
         elif self.chooser == "jev" and len(cands) > 1:
             criteria = {}
             for e in cands:
-                tr = e.get("transfer") or {}
-                beat = sum(1 for r in tr.values() if r["wins"] > r["dummy"])
+                if e is None:
+                    criteria[self.NONE_ID] = {
+                        "does": "No program: attack-move with the code-default target rule. This is the baseline.",
+                        "record": "baseline",
+                    }
+                    continue
+                if "confirm_net" in e:
+                    record = (
+                        f"on {e['fights']} fresh fights like this, {e['confirm_net']:+d} wins "
+                        f"compared with the baseline"
+                    )
+                else:
+                    tr = e.get("transfer") or {}
+                    beat = sum(1 for r in tr.values() if r["wins"] > r["dummy"])
+                    record = f"won {e['wins']}/5 where it was written; beat attack-move on {beat} of {len(tr)} training fights"
                 criteria[e["id"]] = {
                     "does": T.summarize(e["program"]),
                     "idea": e["program"].get("why", ""),
@@ -5309,7 +5368,7 @@ class LibraryPolicy(JevActionPolicy):
                         k: e["feats"].get(k)
                         for k in ("speed", "reach", "numbers", "our_ranged", "our_melee", "enemy_guns", "enemy_melee_n", "enemy_suicide", "pocket")
                     },
-                    "record": f"won {e['wins']}/5 where it was written; beat attack-move on {beat} of {len(tr)} training fights",
+                    "record": record,
                 }
             questions = {
                 "program": {
@@ -5324,10 +5383,11 @@ class LibraryPolicy(JevActionPolicy):
             result = self.selector.system_one(state, questions)
             self.n_select_calls += 1
             answers = (result or {}).get("answers") if isinstance(result, dict) else None
-            chosen = _pick_choice((answers or {}).get("program"), list(criteria), cands[0]["id"])
-            pick = next(e for e in cands if e["id"] == chosen)
-        self.client.prog = pick["program"]
-        self.picks_made.append(f"t={step} {pick['id']}")
+            first = self.NONE_ID if cands[0] is None else cands[0]["id"]
+            chosen = _pick_choice((answers or {}).get("program"), list(criteria), first)
+            pick = next((e for e in cands if (e is None and chosen == self.NONE_ID) or (e is not None and e["id"] == chosen)), None)
+        self._run(pick)
+        self.picks_made.append(f"t={step} {self.NONE_ID if pick is None else pick['id']}")
 
     def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
         if step == 0:
