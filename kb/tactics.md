@@ -40,9 +40,9 @@ Dummy loses. Force `ranged=stutter` beats dummy. So the exam is legal.
 | Class | Maps | Dummy | Jev override | Compiler |
 |---|---|---|---|---|
 | `outrun_kite` | `3s_vs_3z` `3s_vs_4z` `3s_vs_5z` | `stack` dies | `stack -> stutter`, kite `all` | faster guns, no allied tanks |
-| `leftover_kite` | `3s5z_vs_3s6z` | `stack` dies after tanks trade | leftover `stutter` + `bait_one` | stutter is closed while tanks tank. It opens at leftover (force t=28 `stack->stutter` wins 20.35). After tanks die the live name is `outrun_kite`. `kite=all` throws this map; default `bait_one` while enemy guns live. |
+| `leftover_kite` | `3s5z_vs_3s6z` | `stack` dies after tanks trade | leftover `stutter` + `bait_one` | stutter is closed while tanks tank. It opens at leftover (force t=28 `stack->stutter` wins 20.35). After tanks die the live name is `outrun_kite`. Kite default is `all`; `bait_one` is legal only after every enemy gun is dead (a bait with a live enemy gun lost). |
 
-`who_kites` stays on the kite exam: `all` / `bait_one` / `peel_tagged`.
+`who_kites` stays on the kite exam: `all` / `bait_one` (no enemy guns left, 2+ guns).
 Code still compiles walk/fire. Equal-speed is not in this set.
 
 ## Classes with no winning compiler (4 maps)

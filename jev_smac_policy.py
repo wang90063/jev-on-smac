@@ -4859,23 +4859,24 @@ class JevActionPolicy:
                 k: v for k, v in self._sticky.items()
                 if v[0] in (menus.get(k) or [v[0]])
             }
-        if not isinstance(self.client, DummyClient):
-            held_jobs = {}
-            for kind, opts in menus.items():
-                held = self._sticky.get(kind)
-                if held and held[0] in (opts or [held[0]]):
-                    held_jobs[kind] = held[0]
-            form = held_jobs.get("formation", form)
-            r_job = held_jobs.get("ranged", r_job)
-            m_job = held_jobs.get("melee", m_job)
-            k_job = held_jobs.get("kite", k_job)
-            b_job = held_jobs.get("bait", b_job)
+        held_jobs = {}
+        for kind, opts in menus.items():
+            held = self._sticky.get(kind)
+            if held and held[0] in (opts or [held[0]]):
+                held_jobs[kind] = held[0]
+        form = held_jobs.get("formation", form)
+        r_job = held_jobs.get("ranged", r_job)
+        m_job = held_jobs.get("melee", m_job)
+        k_job = held_jobs.get("kite", k_job)
+        b_job = held_jobs.get("bait", b_job)
         form, r_job, m_job = apply_physics_veto(snap, form, r_job, m_job)
         snap["_live_tactic"] = _live_tactic(snap)
 
         catalog = build_job_catalog(
             snap, form_opts, r_jobs, m_jobs, rules, wounded, healers, form, r_job, m_job, rule
         )
+        # Tell Jev the exams that are really open, not the class's wish list.
+        snap["_live_tactic"]["jev"] = ",".join(catalog) or "none"
         catalog = {
             kind: spec
             for kind, spec in catalog.items()
@@ -4887,20 +4888,23 @@ class JevActionPolicy:
         asked: List[str] = []
         self._force_sig = sig
 
-        if questions and not isinstance(self.client, DummyClient):
-            state = commander_state(step, snap, self._recent, self._hp_trend)
+        if questions:
+            # Dummy is a client that takes every default; it runs the same
+            # path as Jev so "Jev picked the default" == Dummy.
+            local = isinstance(self.client, DummyClient)
+            state = None if local else commander_state(step, snap, self._recent, self._hp_trend)
             if isinstance(self.client, ForceClient):
                 self.client.defaults = dict(snap["_catalog_defaults"])
             result = self.client.system_one(state, questions)
-            self.n_calls += 1
-            self.n_questions += len(questions)
+            if not local:
+                self.n_calls += 1
+                self.n_questions += len(questions)
             self.infer_s = self.client.infer_s
             self._input_tokens += int((self.client.last_usage or {}).get("input_tokens") or 0)
             answers = (result or {}).get("answers") if isinstance(result, dict) else None
             if not isinstance(answers, dict):
                 self.n_fallback += 1
             else:
-                def_form, def_r, def_m, def_k, def_b, def_rule = form, r_job, m_job, k_job, b_job, rule
                 picks, asked, live_used = apply_job_catalog(catalog, answers)
                 form = picks.get("formation", form)
                 r_job = picks.get("ranged", r_job)
@@ -4925,16 +4929,11 @@ class JevActionPolicy:
                 for kind in PENDING_EXAMS:
                     if kind in asked:
                         self._pending[kind] = picks.get(kind)
-                for kind, before, after in (
-                    ("formation", def_form, form),
-                    ("ranged", def_r, r_job),
-                    ("kite", def_k, k_job),
-                    ("melee", def_m, m_job),
-                    ("bait", def_b, b_job),
-                    ("target", def_rule, rule),
-                    ("bar", "pack", picks.get("bar") if "bar" in asked else "pack"),
-                    ("wing", "stay", picks.get("wing") if "wing" in asked else "stay"),
-                ):
+                # Count every exam where Jev left the code default, not only the menus.
+                final = {"formation": form, "ranged": r_job, "melee": m_job, "kite": k_job, "bait": b_job, "target": rule}
+                for kind in asked:
+                    before = catalog[kind]["default"]
+                    after = final.get(kind, picks.get(kind))
                     if before != after:
                         self.n_override += 1
                         if len(self.overrides) < 48:
@@ -5154,7 +5153,7 @@ class ForceClient:
 
 
 class DummyClient:
-    """Return no answers so JevActionPolicy uses script defaults. For motor tests."""
+    """Answer every exam with its code default. Attack-move baseline for motor tests."""
 
     def __init__(self):
         self.n_calls = 0
@@ -5162,7 +5161,7 @@ class DummyClient:
         self.last_usage: Dict[str, int] = {}
 
     def system_one(self, state: Any, questions: Dict[str, Any]) -> Optional[dict]:
-        return None
+        return {"answers": {}}
 
 
 class DummyActionPolicy(JevActionPolicy):
