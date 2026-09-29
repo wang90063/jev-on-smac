@@ -23,8 +23,9 @@ from jev_smac_policy import DummyActionPolicy, JevActionPolicy
 SEEDS = [1, 2, 3, 4, 5]
 MAPS = list(MAP_PARAMS.keys())
 OUT_DIR = ROOT / "results"
-JSONL = OUT_DIR / "winrate_seeds.jsonl"
-SUMMARY = OUT_DIR / "winrate_seeds.md"
+RUN_NAME = os.environ.get("WINRATE_NAME", "winrate_seeds")
+JSONL = OUT_DIR / f"{RUN_NAME}.jsonl"
+SUMMARY = OUT_DIR / f"{RUN_NAME}.md"
 
 
 def reset_pol(pol):
