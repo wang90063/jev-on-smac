@@ -1,0 +1,13 @@
+.typesafe_key
+.DS_Store
+__pycache__/
+*.pyc
+*.pid
+laya-mlx/
+laya-typed-decisions-mlx/
+models/
+third_party/
+qwen-rlcd/
+*.download.log
+download_hf.stdout.log
+results/*.log

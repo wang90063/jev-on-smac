@@ -1,0 +1,24 @@
+{
+    "name": "5m_vs_6m",
+    "num_allied_units": 5,
+    "num_enemy_units": 6,
+    "groups": [
+        {
+            "x": 9,
+            "y": 16,
+            "faction": "ALLY",
+            "units": { "MARINE": 5 }
+        },
+        {
+            "x": 23,
+            "y": 16,
+            "faction": "ENEMY",
+            "units": { "MARINE": 6 }
+        }
+    ],
+    "attack_point": [9, 16],
+    "terrain_preset": "SIMPLE",
+    "num_unit_types": 0,
+    "ally_has_shields": false,
+    "enemy_has_shields": false
+}

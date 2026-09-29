@@ -1,0 +1,63 @@
+{
+  "env": "SMAClite (no StarCraft II)",
+  "note": "Laya-MLX is zero-shot typed decisions, not trained MARL. Paper numbers are official SMAC/SC2.",
+  "maps": {
+    "3m": {
+      "meta": {
+        "kind": "file",
+        "path": "/Users/wangzhi/Desktop/code/jev/maps/3m.json",
+        "limit": 60,
+        "difficulty": "Easy"
+      },
+      "paper": {
+        "MAPPO": 100.0,
+        "IPPO": 100.0,
+        "QMIX": 96.9,
+        "source": "Yu et al. MAPPO, median test win %"
+      },
+      "policies": {
+        "jev": {
+          "summary": {
+            "n": 2,
+            "win_rate": 1.0,
+            "wins": 2,
+            "return_mean": 20.0,
+            "return_std": 0.0,
+            "steps_mean": 19.0,
+            "sec_per_ep": 17.59529804149861,
+            "laya_calls": 38,
+            "laya_fallback": 0,
+            "laya_guard": 0,
+            "tactics": {
+              "walk_east": 16,
+              "walk_north": 2,
+              "fire_E0": 4,
+              "fire_E1": 6,
+              "stand_cooling_E0": 12,
+              "stand_cooling_E1": 18,
+              "stand_cooling_E2": 20
+            },
+            "laya_infer_s": 34.99523670299095,
+            "laya_ms_per_call": 920.9272816576566
+          },
+          "episodes": [
+            {
+              "win": 1,
+              "return": 20.0,
+              "steps": 19,
+              "seconds": 17.86186458299926,
+              "truncated": 0
+            },
+            {
+              "win": 1,
+              "return": 20.0,
+              "steps": 19,
+              "seconds": 17.328731499997957,
+              "truncated": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

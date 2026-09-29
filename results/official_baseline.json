@@ -1,0 +1,912 @@
+[
+  {
+    "map": "2s3z",
+    "pol": "closest",
+    "win": 0,
+    "ret": 11.51,
+    "steps": 43,
+    "deadA": 5,
+    "deadE": 3,
+    "limit": 120,
+    "sec": 0.08,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "melee_brawl",
+      "3": "melee_brawl",
+      "4": "melee_brawl"
+    },
+    "A": {
+      "stalker": 2,
+      "zealot": 3
+    },
+    "E": {
+      "stalker": 2,
+      "zealot": 3
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 5,
+    "nE": 5
+  },
+  {
+    "map": "2s3z",
+    "pol": "script",
+    "win": 1,
+    "ret": 20.0,
+    "steps": 44,
+    "deadA": 3,
+    "deadE": 5,
+    "limit": 120,
+    "sec": 0.07,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "melee_brawl",
+      "3": "melee_brawl",
+      "4": "melee_brawl"
+    },
+    "A": {
+      "stalker": 2,
+      "zealot": 3
+    },
+    "E": {
+      "stalker": 2,
+      "zealot": 3
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 5,
+    "nE": 5
+  },
+  {
+    "map": "3s_vs_5z",
+    "pol": "closest",
+    "win": 0,
+    "ret": 4.7,
+    "steps": 25,
+    "deadA": 3,
+    "deadE": 1,
+    "limit": 250,
+    "sec": 0.05,
+    "matchup": "kite",
+    "unit_mu": {
+      "0": "kite",
+      "1": "kite",
+      "2": "kite"
+    },
+    "A": {
+      "stalker": 3
+    },
+    "E": {
+      "zealot": 5
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 3,
+    "nE": 5
+  },
+  {
+    "map": "3s_vs_5z",
+    "pol": "script",
+    "win": 1,
+    "ret": 20.0,
+    "steps": 101,
+    "deadA": 1,
+    "deadE": 5,
+    "limit": 250,
+    "sec": 0.22,
+    "matchup": "kite",
+    "unit_mu": {
+      "0": "kite",
+      "1": "kite",
+      "2": "kite"
+    },
+    "A": {
+      "stalker": 3
+    },
+    "E": {
+      "zealot": 5
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 3,
+    "nE": 5
+  },
+  {
+    "map": "2s_vs_1sc",
+    "pol": "closest",
+    "win": 0,
+    "ret": 10.04,
+    "steps": 32,
+    "deadA": 2,
+    "deadE": 0,
+    "limit": 300,
+    "sec": 0.03,
+    "matchup": "cycle",
+    "unit_mu": {
+      "0": "immobile",
+      "1": "immobile"
+    },
+    "A": {
+      "stalker": 2
+    },
+    "E": {
+      "spine_crawler": 1
+    },
+    "spd": 0.0,
+    "ap": [
+      13.92,
+      20.04
+    ],
+    "nA": 2,
+    "nE": 1
+  },
+  {
+    "map": "2s_vs_1sc",
+    "pol": "script",
+    "win": 0,
+    "ret": 9.41,
+    "steps": 33,
+    "deadA": 2,
+    "deadE": 0,
+    "limit": 300,
+    "sec": 0.04,
+    "matchup": "cycle",
+    "unit_mu": {
+      "0": "immobile",
+      "1": "immobile"
+    },
+    "A": {
+      "stalker": 2
+    },
+    "E": {
+      "spine_crawler": 1
+    },
+    "spd": 0.0,
+    "ap": [
+      13.92,
+      20.04
+    ],
+    "nA": 2,
+    "nE": 1
+  },
+  {
+    "map": "3s5z",
+    "pol": "closest",
+    "win": 1,
+    "ret": 20.0,
+    "steps": 63,
+    "deadA": 6,
+    "deadE": 8,
+    "limit": 150,
+    "sec": 0.14,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "melee_brawl",
+      "4": "melee_brawl",
+      "5": "melee_brawl",
+      "6": "melee_brawl",
+      "7": "melee_brawl"
+    },
+    "A": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "E": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 8,
+    "nE": 8
+  },
+  {
+    "map": "3s5z",
+    "pol": "script",
+    "win": 1,
+    "ret": 20.0,
+    "steps": 39,
+    "deadA": 4,
+    "deadE": 8,
+    "limit": 150,
+    "sec": 0.1,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "melee_brawl",
+      "4": "melee_brawl",
+      "5": "melee_brawl",
+      "6": "melee_brawl",
+      "7": "melee_brawl"
+    },
+    "A": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "E": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 8,
+    "nE": 8
+  },
+  {
+    "map": "2c_vs_64zg",
+    "pol": "closest",
+    "win": 1,
+    "ret": 20.15,
+    "steps": 52,
+    "deadA": 0,
+    "deadE": 64,
+    "limit": 400,
+    "sec": 1.32,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade"
+    },
+    "A": {
+      "colossus": 2
+    },
+    "E": {
+      "zergling": 64
+    },
+    "spd": -0.98,
+    "ap": [
+      16,
+      16
+    ],
+    "nA": 2,
+    "nE": 64
+  },
+  {
+    "map": "2c_vs_64zg",
+    "pol": "script",
+    "win": 1,
+    "ret": 20.1,
+    "steps": 52,
+    "deadA": 0,
+    "deadE": 64,
+    "limit": 400,
+    "sec": 1.28,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade"
+    },
+    "A": {
+      "colossus": 2
+    },
+    "E": {
+      "zergling": 64
+    },
+    "spd": -0.98,
+    "ap": [
+      16,
+      16
+    ],
+    "nA": 2,
+    "nE": 64
+  },
+  {
+    "map": "corridor",
+    "pol": "closest",
+    "win": 0,
+    "ret": 0.0,
+    "steps": 27,
+    "deadA": 6,
+    "deadE": 0,
+    "limit": 400,
+    "sec": 0.3,
+    "matchup": "funnel",
+    "unit_mu": {
+      "0": "funnel",
+      "1": "funnel",
+      "2": "funnel",
+      "3": "funnel",
+      "4": "funnel",
+      "5": "funnel"
+    },
+    "A": {
+      "zealot": 6
+    },
+    "E": {
+      "zergling": 24
+    },
+    "spd": 0.0,
+    "ap": [
+      4.47,
+      4.33
+    ],
+    "nA": 6,
+    "nE": 24
+  },
+  {
+    "map": "corridor",
+    "pol": "script",
+    "win": 0,
+    "ret": 12.06,
+    "steps": 54,
+    "deadA": 6,
+    "deadE": 16,
+    "limit": 400,
+    "sec": 0.84,
+    "matchup": "funnel",
+    "unit_mu": {
+      "0": "funnel",
+      "1": "funnel",
+      "2": "funnel",
+      "3": "funnel",
+      "4": "funnel",
+      "5": "funnel"
+    },
+    "A": {
+      "zealot": 6
+    },
+    "E": {
+      "zergling": 24
+    },
+    "spd": 0.0,
+    "ap": [
+      4.47,
+      4.33
+    ],
+    "nA": 6,
+    "nE": 24
+  },
+  {
+    "map": "bane_vs_bane",
+    "pol": "closest",
+    "win": 0,
+    "ret": 1.43,
+    "steps": 12,
+    "deadA": 24,
+    "deadE": 3,
+    "limit": 200,
+    "sec": 0.14,
+    "matchup": "detonate",
+    "unit_mu": {
+      "0": "evade_kami",
+      "1": "evade_kami",
+      "2": "evade_kami",
+      "3": "evade_kami",
+      "4": "evade_kami",
+      "5": "evade_kami",
+      "6": "evade_kami",
+      "7": "evade_kami",
+      "8": "evade_kami",
+      "9": "evade_kami",
+      "10": "evade_kami",
+      "11": "evade_kami",
+      "12": "evade_kami",
+      "13": "evade_kami",
+      "14": "evade_kami",
+      "15": "evade_kami",
+      "16": "evade_kami",
+      "17": "evade_kami",
+      "18": "evade_kami",
+      "19": "evade_kami",
+      "20": "detonate",
+      "21": "detonate",
+      "22": "detonate",
+      "23": "detonate"
+    },
+    "A": {
+      "zergling": 20,
+      "baneling": 4
+    },
+    "E": {
+      "baneling": 4,
+      "zergling": 20
+    },
+    "spd": 0.0,
+    "ap": [
+      16,
+      8
+    ],
+    "nA": 24,
+    "nE": 24
+  },
+  {
+    "map": "bane_vs_bane",
+    "pol": "script",
+    "win": 1,
+    "ret": 19.37,
+    "steps": 12,
+    "deadA": 15,
+    "deadE": 24,
+    "limit": 200,
+    "sec": 0.19,
+    "matchup": "detonate",
+    "unit_mu": {
+      "0": "evade_kami",
+      "1": "evade_kami",
+      "2": "evade_kami",
+      "3": "evade_kami",
+      "4": "evade_kami",
+      "5": "evade_kami",
+      "6": "evade_kami",
+      "7": "evade_kami",
+      "8": "evade_kami",
+      "9": "evade_kami",
+      "10": "evade_kami",
+      "11": "evade_kami",
+      "12": "evade_kami",
+      "13": "evade_kami",
+      "14": "evade_kami",
+      "15": "evade_kami",
+      "16": "evade_kami",
+      "17": "evade_kami",
+      "18": "evade_kami",
+      "19": "evade_kami",
+      "20": "detonate",
+      "21": "detonate",
+      "22": "detonate",
+      "23": "detonate"
+    },
+    "A": {
+      "zergling": 20,
+      "baneling": 4
+    },
+    "E": {
+      "baneling": 4,
+      "zergling": 20
+    },
+    "spd": 0.0,
+    "ap": [
+      16,
+      8
+    ],
+    "nA": 24,
+    "nE": 24
+  },
+  {
+    "map": "MMM",
+    "pol": "closest",
+    "win": 0,
+    "ret": 3.98,
+    "steps": 29,
+    "deadA": 10,
+    "deadE": 1,
+    "limit": 150,
+    "sec": 0.13,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "heal",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "E": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 10
+  },
+  {
+    "map": "MMM",
+    "pol": "script",
+    "win": 1,
+    "ret": 24.13,
+    "steps": 56,
+    "deadA": 5,
+    "deadE": 10,
+    "limit": 150,
+    "sec": 0.2,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "heal",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "E": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 10
+  },
+  {
+    "map": "MMM2",
+    "pol": "closest",
+    "win": 0,
+    "ret": 2.76,
+    "steps": 25,
+    "deadA": 10,
+    "deadE": 1,
+    "limit": 180,
+    "sec": 0.12,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "heal",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "E": {
+      "medivac": 1,
+      "marine": 8,
+      "marauder": 3
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 12
+  },
+  {
+    "map": "MMM2",
+    "pol": "script",
+    "win": 0,
+    "ret": 9.14,
+    "steps": 50,
+    "deadA": 10,
+    "deadE": 6,
+    "limit": 180,
+    "sec": 0.22,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "heal",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "medivac": 1,
+      "marine": 7,
+      "marauder": 2
+    },
+    "E": {
+      "medivac": 1,
+      "marine": 8,
+      "marauder": 3
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 12
+  },
+  {
+    "map": "10m_vs_11m",
+    "pol": "closest",
+    "win": 0,
+    "ret": 6.51,
+    "steps": 17,
+    "deadA": 10,
+    "deadE": 4,
+    "limit": 150,
+    "sec": 0.05,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "marine": 10
+    },
+    "E": {
+      "marine": 11
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 11
+  },
+  {
+    "map": "10m_vs_11m",
+    "pol": "script",
+    "win": 1,
+    "ret": 20.0,
+    "steps": 25,
+    "deadA": 7,
+    "deadE": 11,
+    "limit": 150,
+    "sec": 0.08,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade"
+    },
+    "A": {
+      "marine": 10
+    },
+    "E": {
+      "marine": 11
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 10,
+    "nE": 11
+  },
+  {
+    "map": "3s5z_vs_3s6z",
+    "pol": "closest",
+    "win": 0,
+    "ret": 10.25,
+    "steps": 43,
+    "deadA": 8,
+    "deadE": 5,
+    "limit": 170,
+    "sec": 0.13,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "melee_brawl",
+      "4": "melee_brawl",
+      "5": "melee_brawl",
+      "6": "melee_brawl",
+      "7": "melee_brawl"
+    },
+    "A": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "E": {
+      "stalker": 3,
+      "zealot": 6
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 8,
+    "nE": 9
+  },
+  {
+    "map": "3s5z_vs_3s6z",
+    "pol": "script",
+    "win": 0,
+    "ret": 15.41,
+    "steps": 75,
+    "deadA": 8,
+    "deadE": 7,
+    "limit": 170,
+    "sec": 0.17,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "melee_brawl",
+      "4": "melee_brawl",
+      "5": "melee_brawl",
+      "6": "melee_brawl",
+      "7": "melee_brawl"
+    },
+    "A": {
+      "stalker": 3,
+      "zealot": 5
+    },
+    "E": {
+      "stalker": 3,
+      "zealot": 6
+    },
+    "spd": 0.98,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 8,
+    "nE": 9
+  },
+  {
+    "map": "27m_vs_30m",
+    "pol": "closest",
+    "win": 0,
+    "ret": 4.02,
+    "steps": 15,
+    "deadA": 27,
+    "deadE": 6,
+    "limit": 180,
+    "sec": 0.11,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade",
+      "10": "ranged_trade",
+      "11": "ranged_trade",
+      "12": "ranged_trade",
+      "13": "ranged_trade",
+      "14": "ranged_trade",
+      "15": "ranged_trade",
+      "16": "ranged_trade",
+      "17": "ranged_trade",
+      "18": "ranged_trade",
+      "19": "ranged_trade",
+      "20": "ranged_trade",
+      "21": "ranged_trade",
+      "22": "ranged_trade",
+      "23": "ranged_trade",
+      "24": "ranged_trade",
+      "25": "ranged_trade",
+      "26": "ranged_trade"
+    },
+    "A": {
+      "marine": 27
+    },
+    "E": {
+      "marine": 30
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 27,
+    "nE": 30
+  },
+  {
+    "map": "27m_vs_30m",
+    "pol": "script",
+    "win": 0,
+    "ret": 12.22,
+    "steps": 29,
+    "deadA": 27,
+    "deadE": 20,
+    "limit": 180,
+    "sec": 0.36,
+    "matchup": "commit",
+    "unit_mu": {
+      "0": "ranged_trade",
+      "1": "ranged_trade",
+      "2": "ranged_trade",
+      "3": "ranged_trade",
+      "4": "ranged_trade",
+      "5": "ranged_trade",
+      "6": "ranged_trade",
+      "7": "ranged_trade",
+      "8": "ranged_trade",
+      "9": "ranged_trade",
+      "10": "ranged_trade",
+      "11": "ranged_trade",
+      "12": "ranged_trade",
+      "13": "ranged_trade",
+      "14": "ranged_trade",
+      "15": "ranged_trade",
+      "16": "ranged_trade",
+      "17": "ranged_trade",
+      "18": "ranged_trade",
+      "19": "ranged_trade",
+      "20": "ranged_trade",
+      "21": "ranged_trade",
+      "22": "ranged_trade",
+      "23": "ranged_trade",
+      "24": "ranged_trade",
+      "25": "ranged_trade",
+      "26": "ranged_trade"
+    },
+    "A": {
+      "marine": 27
+    },
+    "E": {
+      "marine": 30
+    },
+    "spd": 0.0,
+    "ap": [
+      9,
+      16
+    ],
+    "nA": 27,
+    "nE": 30
+  }
+]

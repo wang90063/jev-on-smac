@@ -1,0 +1,27 @@
+{
+  "name": "smac-micro-icl",
+  "note": "Compact playbook for Laya ICL. State prefix is kept; tail is truncated at 512 tokens.",
+  "global": [
+    "Allies spawn west, enemies east. If no enemy in sight, walk E.",
+    "Living units never no-op. Dead units only no-op.",
+    "Attack is legal only inside shoot range 6. Sight is 9. Walk before shooting if d>6."
+  ],
+  "tactics": {
+    "focus": {
+      "when": "Same unit type, especially marines. Also 5v6.",
+      "do": "Every ally attacks the SAME enemy. Prefer lowest hp already in shot. Never split fire."
+    },
+    "closest": {
+      "when": "Mixed composition (stalkers + zealots vs the same).",
+      "do": "Shoot the nearest enemy, not the weakest. Melee tanks, ranged stay behind."
+    },
+    "alternate": {
+      "when": "Two ranged units vs one static or high-dps target (spine crawler).",
+      "do": "Only ONE unit fires (cooldown ready, higher hp). The partner must walk out of range. Swap after each volley."
+    },
+    "kite": {
+      "when": "Ranged vs melee (stalkers vs zealots).",
+      "do": "If cooldown ready and in range, shoot. Then walk AWAY. Never let melee close."
+    }
+  }
+}

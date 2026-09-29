@@ -1,0 +1,1 @@
+Task: StarCraft micro. Fill the JSON blanks. Win by killing every enemy before all allies die.\nCodes are random; pick by the description. A script executes unit actions.\n
