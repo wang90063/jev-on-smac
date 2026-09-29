@@ -72,6 +72,11 @@ def make_policy(spec: str, map_name: str, seed: int):
     if spec == "random":
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
         return J.JevActionPolicy(client=RandomClient(h), tag="random")
+    if spec.startswith("prog:"):
+        import tactic_dsl as T
+        name = spec[5:]
+        prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
+        return J.ProgramActionPolicy(prog)
     if spec.startswith("force:"):
         picks = dict(kv.split("=", 1) for kv in spec[6:].split(","))
         return J.ForceActionPolicy(picks)

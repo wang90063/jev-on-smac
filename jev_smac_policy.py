@@ -4727,9 +4727,12 @@ class JevActionPolicy:
 
     """Closed job bank; Jev's Choice is the job. Code is the motor."""
 
-    def __init__(self, client=None, tag: str = "jev"):
+    def __init__(self, client=None, tag: str = "jev", full_menu: bool = False):
         self.client = client if client is not None else JevClient()
         self.tag = tag
+        # full_menu: every legal exam, every tick, no evidence gate. For
+        # program clients whose picks change with the situation.
+        self.full_menu = full_menu
         self.n_calls = 0
         self.n_fallback = 0
         self.n_guard = 0
@@ -4892,14 +4895,15 @@ class JevActionPolicy:
             spec["code_default"] = code_defaults.get(kind, spec["default"])
         # Tell Jev the exams that are really open, not the class's wish list.
         snap["_live_tactic"]["jev"] = ",".join(catalog) or "none"
-        catalog = {
-            kind: spec
-            for kind, spec in catalog.items()
-            if _exam_needed(kind, spec, step, self._sticky, sig, prev_sig)
-        }
+        if not self.full_menu:
+            catalog = {
+                kind: spec
+                for kind, spec in catalog.items()
+                if _exam_needed(kind, spec, step, self._sticky, sig, prev_sig)
+            }
         # Only exams with Force evidence reach Jev. Closed ones still run the
         # same path, answered with the code default, exactly like Dummy.
-        exams = {kind: spec for kind, spec in catalog.items() if kind in EXAM_EVIDENCE}
+        exams = catalog if self.full_menu else {kind: spec for kind, spec in catalog.items() if kind in EXAM_EVIDENCE}
         snap["_catalog_options"] = {kind: spec["options"] for kind, spec in exams.items()}
         snap["_catalog_defaults"] = {kind: spec["default"] for kind, spec in exams.items()}
         questions = catalog_questions(exams) if exams else {}
@@ -5168,6 +5172,15 @@ class DummyActionPolicy(JevActionPolicy):
 class ForceActionPolicy(JevActionPolicy):
     def __init__(self, picks: Optional[Dict[str, str]] = None):
         super().__init__(client=ForceClient(picks or {"ranged": "stutter"}), tag="force")
+
+
+class ProgramActionPolicy(JevActionPolicy):
+    """Runs one tactic program (tactic_dsl) with no model in the loop."""
+
+    def __init__(self, prog: Dict[str, Any], tag: str = "prog"):
+        from tactic_dsl import ProgramClient
+
+        super().__init__(client=ProgramClient(prog), tag=tag, full_menu=True)
 
 
 class ApiActionPolicy(JevActionPolicy):
