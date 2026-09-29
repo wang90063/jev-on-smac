@@ -540,6 +540,8 @@ def target_rules(snap: Dict[str, Any]) -> List[str]:
         medic = heals[0]
         if any(_can_hit(a, medic) for a in living(snap["allies"]) if a.get("role") != "heal"):
             rules.append("healer")
+    if snap.get("_open_menu") and dmg:
+        rules.append("threat")
     return rules
 
 
@@ -837,7 +839,20 @@ def _bar_pair(snap: Dict[str, Any]):
     return pack, bar
 
 
+def _threat(e: Dict[str, Any]) -> float:
+    """Damage per second per remaining effective HP. Kill order for a trade."""
+    dps = float(e.get("dmg") or 0) * max(1, int(e.get("attacks") or 1)) / max(float(e.get("max_cd") or 0.86), 0.1)
+    if e.get("splash"):
+        dps *= 2.0
+    return dps / max(_ehp(e), 1.0)
+
+
 def resolve_focus(rule: str, snap: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    if rule == "threat":
+        pool = [e for e in _hittable_enemies(snap) if e.get("role") != "heal"] or [
+            e for e in living(snap["enemies"]) if e.get("role") != "heal"
+        ]
+        return max(pool, key=lambda e: (_threat(e), -e["id"])) if pool else None
     if rule == "weakest_in_range":
         return _weakest_in_shot(snap) or _front_enemy(snap)
     if rule == "clump":
@@ -2568,6 +2583,7 @@ TARGET_CRITERIA = {
     "healer": "Focus the enemy healer. Guns that cannot hit that healer keep their other target.",
     "clump": "Focus the enemy with the most neighbors, so splash or a detonation hits the pack.",
     "guns": "Focus an enemy ranged unit rather than an enemy melee unit.",
+    "threat": "Focus the enemy with the most damage per second per point of remaining health.",
 }
 
 FORMATION_CRITERIA = {
@@ -2593,6 +2609,12 @@ RANGED_JOB_CRITERIA = {
         "does": "Guns fan onto a ring around the enemy, then use the stutter rule.",
         "when": "At least three guns, and no enemy gun is still alive.",
     },
+    "hold": {
+        "does": "Stand ground. Shoot whatever walks into range; never step forward to chase.",
+    },
+    "fall_back": {
+        "does": "Walk back to the rally point or choke, then hold there and shoot what comes in.",
+    },
 }
 
 KITE_STYLE_CRITERIA = {
@@ -2615,6 +2637,9 @@ MELEE_JOB_CRITERIA = {
     "hold_choke": {
         "does": "Melee holds its position at the rally or choke instead of walking forward.",
     },
+    "hold": {
+        "does": "Melee stands where it is and hits only what comes into reach.",
+    },
     "snipe": {
         "does": "The closest melee walks into the enemy suicide units. The rest hold outside the blast.",
     },
@@ -2635,11 +2660,13 @@ JOB_TO_INTENT = {
     "concave": "concave",
     "charge": "close",
     "hold_choke": "funnel",
+    "hold": "aim",
+    "fall_back": "funnel",
     "open": "spread",
     "snipe": "snipe",
 }
 
-KIND_ORDER = ("formation", "ranged", "kite", "melee", "bait", "target", "bar", "wing", "tie", "stand", "mark", "heal")
+KIND_ORDER = ("formation", "ranged", "kite", "melee", "bait", "target", "bar", "wing", "tie", "stand", "mark", "heal", "wounded")
 
 
 
@@ -2989,7 +3016,14 @@ def _can_kite_line(snap: Dict[str, Any], line: List[Dict[str, Any]]) -> bool:
 # Menus: physics decides which jobs are legal
 # ----------------------------------------------------------------------
 
+# Program mode (snap["_open_menu"]): every job the motor can execute is legal;
+# the offline simulator, not these gates, decides whether it is any good.
+# Dummy and Jev never set the flag, so their menus are unchanged.
+
+
 def formation_jobs(snap: Dict[str, Any]) -> List[str]:
+    if snap.get("_open_menu"):
+        return ["open", "keep"]
     if _suicide_blast(snap) == "none":
         return []
     return ["open", "keep"]
@@ -2999,6 +3033,8 @@ def ranged_jobs(snap: Dict[str, Any]) -> List[str]:
     line = _fighters(snap, "ranged")
     if not line:
         return []
+    if snap.get("_open_menu"):
+        return ["stack", "stutter", "hold", "fall_back"] + (["concave"] if len(line) >= 3 else [])
     jobs: List[str] = ["stack"]
     melee_e = any(e.get("role") == "melee" for e in living(snap["enemies"]))
     static = any(e.get("role") == "static" for e in living(snap["enemies"]))
@@ -3023,6 +3059,8 @@ def kite_jobs(snap: Dict[str, Any]) -> List[str]:
     if "stutter" not in ranged_jobs(snap):
         return []
     line = _fighters(snap, "ranged")
+    if snap.get("_open_menu"):
+        return ["all", "bait_one"] if len(line) >= 2 else ["all"]
     jobs = ["all"]
     enemy_guns = any(e.get("role") == "ranged" for e in living(snap["enemies"]))
     if len(line) >= 2 and not enemy_guns:
@@ -3041,6 +3079,8 @@ def bait_jobs(snap: Dict[str, Any]) -> List[str]:
     if "snipe" not in melee_jobs(snap):
         return []
     line = _fighters(snap, "melee")
+    if snap.get("_open_menu"):
+        return ["bait_one", "bait_two"] if len(line) >= 2 else ["bait_one"]
     kami = [e for e in living(snap["enemies"]) if e.get("kamikaze")]
     if not line or not kami:
         return []
@@ -3062,6 +3102,8 @@ def melee_jobs(snap: Dict[str, Any]) -> List[str]:
         return []
     our_kami = any(a.get("kamikaze") for a in living(snap["allies"]))
     enemy_kami = [e for e in living(snap["enemies"]) if e.get("kamikaze")]
+    if snap.get("_open_menu"):
+        return ["charge", "hold_choke", "hold"] + (["snipe"] if enemy_kami and not our_kami else [])
     jobs = ["charge"]
     if enemy_kami and not our_kami:
         jobs.append("snipe")
@@ -4295,6 +4337,20 @@ def build_job_catalog(
                 "criteria": option_criteria,
             },
         }
+    if snap.get("_open_menu") and _rotatable(snap):
+        catalog["wounded"] = {
+            "options": ["stay", "rotate"],
+            "default": "stay",
+            "option_criteria": {
+                "stay": {"does": "Hurt units keep fighting in place."},
+                "rotate": {"does": "A unit under 40% health that an enemy can reach steps back out of reach until it is safe."},
+            },
+            "choice": {
+                "type": "choice",
+                "instructions": "Should badly hurt units step back out of enemy reach?",
+                "criteria": {"stay": {"does": "Keep fighting."}, "rotate": {"does": "Step back."}},
+            },
+        }
     if healers and len(wounded) > 1:
         heal_opts = [f"U{u['id']}" for u in wounded[:6]]
         preferred = _heal_target(snap, healers[0])
@@ -4322,6 +4378,20 @@ def build_job_catalog(
             },
         }
     return catalog
+
+
+def _hurt(u: Dict[str, Any]) -> bool:
+    full = float(u.get("max_hp") or 1) + float(u.get("max_shield") or 0)
+    return (float(u["hp"]) + float(u.get("shield") or 0)) < 0.4 * full
+
+
+def _threatened(u: Dict[str, Any], snap: Dict[str, Any]) -> bool:
+    return any(_can_hit(e, u) and hypot(e, u) <= _weapon_reach(e, u) + 1.0 for e in living(snap["enemies"]))
+
+
+def _rotatable(snap: Dict[str, Any]) -> bool:
+    allies = [a for a in living(snap["allies"]) if a.get("role") != "heal" and not a.get("kamikaze")]
+    return len(allies) >= 2 and any(_hurt(a) and _threatened(a, snap) for a in allies)
 
 
 def catalog_questions(catalog: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
@@ -4728,9 +4798,10 @@ class JevActionPolicy:
 
     """Closed job bank; Jev's Choice is the job. Code is the motor."""
 
-    def __init__(self, client=None, tag: str = "jev", full_menu: bool = False):
+    def __init__(self, client=None, tag: str = "jev", full_menu: bool = False, open_menu: bool = False):
         self.client = client if client is not None else JevClient()
         self.tag = tag
+        self.open_menu = open_menu
         # full_menu: every legal exam, every tick, no evidence gate. For
         # program clients whose picks change with the situation.
         self.full_menu = full_menu
@@ -4799,6 +4870,8 @@ class JevActionPolicy:
         if step == 0:
             self._reset_episode()
 
+        if self.open_menu:
+            snap["_open_menu"] = True
         stuck = set()
         for a in allies:
             prev = self._prev_xy.get(a["id"])
@@ -4943,6 +5016,8 @@ class JevActionPolicy:
                     self.n_asked += 1
                 for kind in sent:
                     self.asked_counts[kind] = self.asked_counts.get(kind, 0) + 1
+                if "wounded" in asked:
+                    snap["_wounded_call"] = picks.get("wounded")
                 if "heal" in asked:
                     pick = picks.get("heal")
                     try:
@@ -5050,6 +5125,8 @@ class JevActionPolicy:
                 options = legal_options(ally, snap, prune=False)
                 if ally.get("kamikaze"):
                     intent = "close"
+                elif snap.get("_wounded_call") == "rotate" and _hurt(ally) and _threatened(ally, snap):
+                    intent = "evade"
                 elif any(a.get("kamikaze") for a in living(snap["allies"])) and not ally.get("kamikaze"):
                     # Non-suicide units do not dive the blast their bombs are about to chain.
                     intent = "evade"
@@ -5181,7 +5258,9 @@ class ProgramActionPolicy(JevActionPolicy):
     def __init__(self, prog: Dict[str, Any], tag: str = "prog"):
         from tactic_dsl import ProgramClient
 
-        super().__init__(client=ProgramClient(prog), tag=tag, full_menu=True)
+        # Forged programs run on the open menu; a program marked "menu": "gated"
+        # (the hand baseline) keeps the physics gates it was written against.
+        super().__init__(client=ProgramClient(prog), tag=tag, full_menu=True, open_menu=prog.get("menu") != "gated")
 
 
 class LibraryPolicy(JevActionPolicy):
@@ -5198,7 +5277,7 @@ class LibraryPolicy(JevActionPolicy):
 
         from tactic_dsl import HAND_RULES, ProgramClient
 
-        super().__init__(client=ProgramClient(HAND_RULES), tag=tag or f"lib_{chooser}", full_menu=True)
+        super().__init__(client=ProgramClient(HAND_RULES), tag=tag or f"lib_{chooser}", full_menu=True, open_menu=True)
         self.lib = lib
         self.chooser = chooser
         self.k = k

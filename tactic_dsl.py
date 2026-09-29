@@ -62,15 +62,16 @@ FEATURES: Dict[str, Any] = {
 # Exam -> picks a program may set. tie takes "first"/"second" (by lower HP).
 SETTABLE: Dict[str, List[str]] = {
     "formation": ["keep", "open"],
-    "ranged": ["stack", "stutter", "concave"],
+    "ranged": ["stack", "stutter", "concave", "hold", "fall_back"],
     "kite": ["all", "bait_one"],
-    "melee": ["charge", "hold_choke", "snipe"],
+    "melee": ["charge", "hold_choke", "hold", "snipe"],
     "bait": ["bait_one", "bait_two"],
-    "target": ["frontline", "weakest_in_range", "clump", "heaviest", "guns", "healer"],
+    "target": ["frontline", "weakest_in_range", "clump", "heaviest", "guns", "healer", "threat"],
     "bar": ["pack", "bar"],
     "wing": ["stay", "step"],
     "stand": ["shoot", "step"],
     "tie": ["first", "second"],
+    "wounded": ["stay", "rotate"],
 }
 
 OPS = {">=": lambda a, b: a >= b, "<=": lambda a, b: a <= b, ">": lambda a, b: a > b,
@@ -250,6 +251,7 @@ def describe() -> str:
 # fifth rule, target=guns, loses 2s3z 5/5 once it holds every tick.
 HAND_RULES = {
     "name": "hand_rules",
+    "menu": "gated",
     "rules": [],
     "else": {"ranged": "stutter", "melee": "hold_choke", "bar": "bar", "wing": "step"},
 }
@@ -284,6 +286,10 @@ def pick_meanings() -> Dict[str, Dict[str, str]]:
         "tie": {
             "first": "Two enemies within one shot of each other: cover the lower-HP one first.",
             "second": "Cover the other one first.",
+        },
+        "wounded": {
+            "stay": "Hurt units keep fighting in place.",
+            "rotate": "A unit under 40% health that an enemy can reach steps back out of reach.",
         },
     }
 
