@@ -83,13 +83,72 @@
  "ranged": {
   "beats_dummy": [
    "3s5z_vs_3s6z:s1",
+   "3s5z_vs_3s6z:s2",
+   "3s5z_vs_3s6z:s3",
    "3s5z_vs_3s6z:s4",
    "3s5z_vs_3s6z:s5",
    "3s_vs_3z:s1",
    "3s_vs_3z:s2",
    "3s_vs_3z:s3",
    "3s_vs_3z:s4",
-   "3s_vs_3z:s5"
+   "3s_vs_3z:s5",
+   "3s_vs_4z:s1",
+   "3s_vs_4z:s2",
+   "3s_vs_4z:s3",
+   "3s_vs_4z:s4",
+   "3s_vs_4z:s5",
+   "3s_vs_5z:s1",
+   "3s_vs_5z:s2",
+   "3s_vs_5z:s3",
+   "3s_vs_5z:s4",
+   "3s_vs_5z:s5"
+  ],
+  "episodes": 20,
+  "loses_to_dummy": []
+ },
+ "ranged__concave": {
+  "beats_dummy": [
+   "3s_vs_3z:s1",
+   "3s_vs_3z:s2",
+   "3s_vs_3z:s3",
+   "3s_vs_3z:s4",
+   "3s_vs_3z:s5",
+   "3s_vs_4z:s1",
+   "3s_vs_4z:s2",
+   "3s_vs_4z:s3",
+   "3s_vs_4z:s4",
+   "3s_vs_4z:s5",
+   "3s_vs_5z:s1",
+   "3s_vs_5z:s2",
+   "3s_vs_5z:s3",
+   "3s_vs_5z:s4",
+   "3s_vs_5z:s5"
+  ],
+  "episodes": 20,
+  "loses_to_dummy": []
+ },
+ "ranged__stutter": {
+  "beats_dummy": [
+   "3s5z_vs_3s6z:s1",
+   "3s5z_vs_3s6z:s2",
+   "3s5z_vs_3s6z:s3",
+   "3s5z_vs_3s6z:s4",
+   "3s5z_vs_3s6z:s5",
+   "3s_vs_3z:s1",
+   "3s_vs_3z:s2",
+   "3s_vs_3z:s3",
+   "3s_vs_3z:s4",
+   "3s_vs_3z:s5",
+   "3s_vs_4z:s1",
+   "3s_vs_4z:s2",
+   "3s_vs_4z:s3",
+   "3s_vs_4z:s4",
+   "3s_vs_4z:s5",
+   "3s_vs_5z:s1",
+   "3s_vs_5z:s2",
+   "3s_vs_5z:s3",
+   "3s_vs_5z:s4",
+   "3s_vs_5z:s5"
   ],
   "episodes": 20,
   "loses_to_dummy": []

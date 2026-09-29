@@ -1,0 +1,20 @@
+{"policy": "force:ranged=concave", "map": "3s5z_vs_3s6z", "seed": 1, "win": 0, "ret": 14.156, "steps": 52, "open": {"target": 12, "ranged": 4}, "ov": [], "dummy_win": 0, "dummy_ret": 14.156}
+{"policy": "force:ranged=concave", "map": "3s5z_vs_3s6z", "seed": 2, "win": 0, "ret": 13.246, "steps": 48, "open": {"target": 13, "ranged": 4}, "ov": [], "dummy_win": 0, "dummy_ret": 13.246}
+{"policy": "force:ranged=concave", "map": "3s5z_vs_3s6z", "seed": 3, "win": 0, "ret": 13.246, "steps": 48, "open": {"target": 13, "ranged": 4}, "ov": [], "dummy_win": 0, "dummy_ret": 13.246}
+{"policy": "force:ranged=concave", "map": "3s5z_vs_3s6z", "seed": 4, "win": 0, "ret": 14.156, "steps": 52, "open": {"target": 12, "ranged": 4}, "ov": [], "dummy_win": 0, "dummy_ret": 14.156}
+{"policy": "force:ranged=concave", "map": "3s5z_vs_3s6z", "seed": 5, "win": 0, "ret": 14.156, "steps": 52, "open": {"target": 12, "ranged": 4}, "ov": [], "dummy_win": 0, "dummy_ret": 14.156}
+{"policy": "force:ranged=concave", "map": "3s_vs_3z", "seed": 1, "win": 1, "ret": 20.0, "steps": 55, "open": {"ranged": 3}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 9.029}
+{"policy": "force:ranged=concave", "map": "3s_vs_3z", "seed": 2, "win": 1, "ret": 20.0, "steps": 55, "open": {"ranged": 3}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 9.029}
+{"policy": "force:ranged=concave", "map": "3s_vs_3z", "seed": 3, "win": 1, "ret": 20.0, "steps": 55, "open": {"ranged": 3}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 9.029}
+{"policy": "force:ranged=concave", "map": "3s_vs_3z", "seed": 4, "win": 1, "ret": 20.0, "steps": 55, "open": {"ranged": 3}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 9.029}
+{"policy": "force:ranged=concave", "map": "3s_vs_3z", "seed": 5, "win": 1, "ret": 20.0, "steps": 55, "open": {"ranged": 3}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 9.029}
+{"policy": "force:ranged=concave", "map": "3s_vs_4z", "seed": 1, "win": 1, "ret": 20.027, "steps": 71, "open": {"ranged": 4, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 7.31}
+{"policy": "force:ranged=concave", "map": "3s_vs_4z", "seed": 2, "win": 1, "ret": 20.03, "steps": 71, "open": {"ranged": 4, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 7.31}
+{"policy": "force:ranged=concave", "map": "3s_vs_4z", "seed": 3, "win": 1, "ret": 20.027, "steps": 71, "open": {"ranged": 4, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 7.31}
+{"policy": "force:ranged=concave", "map": "3s_vs_4z", "seed": 4, "win": 1, "ret": 20.027, "steps": 71, "open": {"ranged": 4, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 7.31}
+{"policy": "force:ranged=concave", "map": "3s_vs_4z", "seed": 5, "win": 1, "ret": 20.027, "steps": 71, "open": {"ranged": 4, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 7.31}
+{"policy": "force:ranged=concave", "map": "3s_vs_5z", "seed": 1, "win": 1, "ret": 20.0, "steps": 93, "open": {"ranged": 5, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 5.18}
+{"policy": "force:ranged=concave", "map": "3s_vs_5z", "seed": 2, "win": 1, "ret": 20.0, "steps": 93, "open": {"ranged": 5, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 5.18}
+{"policy": "force:ranged=concave", "map": "3s_vs_5z", "seed": 3, "win": 1, "ret": 20.0, "steps": 93, "open": {"ranged": 5, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 5.18}
+{"policy": "force:ranged=concave", "map": "3s_vs_5z", "seed": 4, "win": 1, "ret": 20.0, "steps": 93, "open": {"ranged": 5, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 5.18}
+{"policy": "force:ranged=concave", "map": "3s_vs_5z", "seed": 5, "win": 1, "ret": 20.0, "steps": 93, "open": {"ranged": 5, "target": 1}, "ov": ["t=0 ranged stack->concave"], "dummy_win": 0, "dummy_ret": 5.18}

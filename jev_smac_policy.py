@@ -4331,22 +4331,19 @@ def catalog_questions(catalog: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
 def apply_job_catalog(
     catalog: Dict[str, Dict[str, Any]],
     answers: Any,
-) -> Tuple[Dict[str, str], List[str], Dict[str, List[str]]]:
+) -> Tuple[Dict[str, str], List[str]]:
     """Always apply Jev's Choice. Dummy defaults only if the answer is missing."""
     picks = {kind: spec["default"] for kind, spec in catalog.items()}
     if not isinstance(answers, dict) or not catalog:
-        return picks, [], {}
+        return picks, []
     asked: List[str] = []
-    live_used: Dict[str, List[str]] = {}
     for kind in KIND_ORDER:
         if kind not in catalog:
             continue
         spec = catalog[kind]
-        live = list(spec["options"])
-        live_used[kind] = live
-        picks[kind] = _pick_choice(answers.get(kind), live, spec["default"])
+        picks[kind] = _pick_choice(answers.get(kind), list(spec["options"]), spec["default"])
         asked.append(kind)
-    return picks, asked, live_used
+    return picks, asked
 
 
 def build_state(map_name: str, step: int, snap: Dict[str, Any], recent: List[str]) -> Dict[str, Any]:
@@ -4745,7 +4742,6 @@ class JevActionPolicy:
         self.overrides: List[str] = []
         self.n_asked = 0
         self.asked_counts: Dict[str, int] = {}
-        self.n_live_prune = 0
         self._reset_episode()
 
     def _reset_episode(self) -> None:
@@ -4865,6 +4861,7 @@ class JevActionPolicy:
         k_job = default_kite_style(k_jobs, snap)
         b_jobs = bait_jobs(snap)
         b_job = default_bait_style(b_jobs, snap)
+        code_defaults = {"formation": form, "ranged": r_job, "melee": m_job, "kite": k_job, "bait": b_job, "target": rule}
         sig = _force_signature(snap)
         prev_sig = self._force_sig
         menus = {"formation": form_opts, "ranged": r_jobs, "melee": m_jobs, "kite": k_jobs, "bait": b_jobs}
@@ -4889,6 +4886,10 @@ class JevActionPolicy:
         catalog = build_job_catalog(
             snap, form_opts, r_jobs, m_jobs, rules, wounded, healers, form, r_job, m_job, rule
         )
+        # "default" is the held pick for menus; "code_default" is what code
+        # alone would do this tick. Test clients pin against the latter.
+        for kind, spec in catalog.items():
+            spec["code_default"] = code_defaults.get(kind, spec["default"])
         # Tell Jev the exams that are really open, not the class's wish list.
         snap["_live_tactic"]["jev"] = ",".join(catalog) or "none"
         catalog = {
@@ -4912,8 +4913,8 @@ class JevActionPolicy:
             result: Any = {"answers": {}}
             if questions:
                 state = None if local else commander_state(step, snap, self._recent, self._hp_trend)
-                if isinstance(self.client, ForceClient):
-                    self.client.defaults = dict(snap["_catalog_defaults"])
+                if hasattr(self.client, "defaults"):
+                    self.client.defaults = {kind: spec["code_default"] for kind, spec in exams.items()}
                 result = self.client.system_one(state, questions)
                 if not local:
                     self.n_calls += 1
@@ -4924,7 +4925,7 @@ class JevActionPolicy:
             if not isinstance(answers, dict):
                 self.n_fallback += 1
             else:
-                picks, asked, live_used = apply_job_catalog(catalog, answers)
+                picks, asked = apply_job_catalog(catalog, answers)
                 form = picks.get("formation", form)
                 r_job = picks.get("ranged", r_job)
                 m_job = picks.get("melee", m_job)
@@ -4937,9 +4938,6 @@ class JevActionPolicy:
                     self.n_asked += 1
                 for kind in sent:
                     self.asked_counts[kind] = self.asked_counts.get(kind, 0) + 1
-                    live = live_used.get(kind) or []
-                    if 0 < len(live) < len(catalog[kind]["options"]):
-                        self.n_live_prune += 1
                 if "heal" in asked:
                     pick = picks.get("heal")
                     try:
@@ -5137,17 +5135,7 @@ class ForceClient:
         answers: Dict[str, Any] = {}
         for qid, q in questions.items():
             qtype = (q or {}).get("type")
-            if qid.startswith("ask_"):
-                kind = qid[4:]
-                yes = kind in self.picks
-                answers[qid] = {"noul": 0.99 if yes else 0.01, "probability": 0.99 if yes else 0.01}
-            elif qid.startswith("live_"):
-                rest = qid[5:]
-                kind, opt = rest.split("__", 1)
-                pick = self.picks.get(kind)
-                yes = pick is None or pick == opt
-                answers[qid] = {"noul": 0.99 if yes else 0.01, "probability": 0.99 if yes else 0.01}
-            elif qtype == "choice" and qid in self.picks:
+            if qtype == "choice" and qid in self.picks:
                 pick = self.picks[qid]
                 if pick == "!default":
                     # Pin the first option that is not the code default.
