@@ -7,12 +7,15 @@
 - Dummy 就是每道题都选默认答案的 Jev，不参加考试。
 - 菜单列表（`ranged_jobs`、`melee_jobs` 这类）里有两个选项，Jev 才考试；只剩一个时，代码直接执行。
 - 只有登记在 `EXAM_EVIDENCE` 里的考题才发给 Jev。一道题要登记，先用 Force 把某个选项钉住，和 Dummy 打同一个种子，并且打赢过。
-- `LibraryPolicy`：从战术库里按物理特征找最近的几个程序，让 Jev 挑一个，然后由这个程序回答所有考题。对局中不许复制模拟器状态。
+- `LibraryPolicy`：按物理特征找到最近的场景簇，取簇里入库的程序作为候选，另外永远加一个 `none`（不用任何程序，走的是和 Dummy 完全一样的代码路径），让 Jev 挑一个；挑中的程序负责回答所有考题。对局中不许复制模拟器状态。人工规则没有特殊待遇，和锻造出的程序一样要过入库门槛。
 
 ## 离线：锻造战术程序（`tactic_dsl.py`、`forge.py`、`scenarios.py`）
 
 1. 战术程序是一个"物理条件 → 考题选项"的规则列表，格式和可用词表都在 `tactic_dsl.py`。程序在开放菜单下运行，好不好由模拟器评判，不由菜单上的限制条件判断。
-2. `forge.py` 让 Codex 当前配置的模型（`~/.codex/config.toml` 里的 `model`，可用 `FORGE_MODEL` 覆盖）在 train 场景上写程序，模拟器跑 5 个抖动种子打分。赢过 Dummy 的程序存进 `kb/library/programs.json`，并测它在其他场景上能不能迁移。
+2. `forge.py cluster` 先把 train 场景按开局物理特征分簇，再让 Codex 当前配置的模型（`~/.codex/config.toml` 里的 `model`，可用 `FORGE_MODEL` 覆盖）为每一簇写程序。入库门槛：
+   - **选拔**：程序在簇内所有场景上跑种子 1–5，按相对 Dummy 的净胜局加总打分；原菜单限制和开放菜单两种模式都试，取分高的。
+   - **确认**：选出的程序再到簇内所有场景上跑种子 6–10，净胜局也必须为正，才写进 `kb/library/cluster_programs.json`。
+   - 人工规则也走这一套选拔和确认。第二轮按单个场景锻造的旧库（`programs.json`）只留作对照。
 3. 新的走位原语（新 job、新 target 规则、新考题）写进 `jev_smac_policy.py`，只在 `_open_menu` 下出现，不能改变 Dummy 的行为。
 4. 泛化只看 test 集（`results/scenarios/test.json`，已冻结）。23 张官方图只作参考，因为人工规则就是从这些图上挑出来的。
 

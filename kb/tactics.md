@@ -127,3 +127,11 @@ for programs only:
 
 Library entries (`kb/library/programs.json`): program, start features, wins on the
 fight it was written for, and a `transfer` table of wins vs Dummy on every train fight.
+
+## Library gate (round 3)
+
+A program enters `kb/library/cluster_programs.json` only if, over every train
+fight in its physics cluster, it beats Dummy in net wins on seeds 1-5 (selection)
+and again on fresh seeds 6-10 (confirmation). Hand rules take the same gate and
+get no reserved slot. Online, the candidate list always ends with `none`, which
+runs the exact Dummy path, so a pick can fall back to plain attack-move.
