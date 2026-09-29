@@ -67,15 +67,28 @@ class StarCraft2Env:
         heuristic_rest=False,
         debug=False,
         attack_move=True,
+        map_file=None,
+        limit=None,
         **_ignored,
     ):
-        if map_name not in MAP_PARAMS:
-            raise ValueError(f"Unknown map {map_name}. Known: {sorted(MAP_PARAMS)}")
-        path = SMACLITE / "smaclite" / "env" / "maps" / "smaclite_maps" / f"{map_name}.json"
-        if not path.exists():
-            raise FileNotFoundError(path)
+        if map_file is not None:
+            # Generated scenario: counts come from the JSON, limit from the caller.
+            import json
 
-        map_params = get_map_params(map_name)
+            path = Path(map_file)
+            info = json.loads(path.read_text())
+            map_params = {
+                "n_agents": info["num_allied_units"],
+                "n_enemies": info["num_enemy_units"],
+                "limit": int(limit or 150),
+            }
+        else:
+            if map_name not in MAP_PARAMS:
+                raise ValueError(f"Unknown map {map_name}. Known: {sorted(MAP_PARAMS)}")
+            path = SMACLITE / "smaclite" / "env" / "maps" / "smaclite_maps" / f"{map_name}.json"
+            if not path.exists():
+                raise FileNotFoundError(path)
+            map_params = get_map_params(map_name)
         self.map_name = map_name
         self.n_agents = int(map_params["n_agents"])
         self.n_enemies = int(map_params["n_enemies"])

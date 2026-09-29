@@ -11,3 +11,4 @@ qwen-rlcd/
 *.download.log
 download_hf.stdout.log
 results/*.log
+results/scenarios/maps/

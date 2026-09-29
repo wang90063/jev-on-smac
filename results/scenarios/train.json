@@ -1,0 +1,1146 @@
+[
+ {
+  "id": "g0032",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "ZEALOT": 2,
+   "HYDRALISK": 1
+  },
+  "enemy": {
+   "COLOSSUS": 1
+  },
+  "limit": 150,
+  "value_ratio": 0.88,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ },
+ {
+  "id": "g1061",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "COLOSSUS": 3
+  },
+  "enemy": {
+   "ZEALOT": 5,
+   "HYDRALISK": 8,
+   "BANELING": 17
+  },
+  "limit": 150,
+  "value_ratio": 0.47,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0778",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "STALKER": 5,
+   "BANELING": 6
+  },
+  "enemy": {
+   "STALKER": 4,
+   "HYDRALISK": 3
+  },
+  "limit": 150,
+  "value_ratio": 1.02,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0350",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "BANELING": 4,
+   "ZEALOT": 1
+  },
+  "enemy": {
+   "MARAUDER": 1,
+   "BANELING": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.33,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0804",
+  "layout": "corridor",
+  "terrain": "CORRIDOR",
+  "ally": {
+   "STALKER": 6
+  },
+  "enemy": {
+   "HYDRALISK": 3,
+   "MARAUDER": 4
+  },
+  "limit": 150,
+  "value_ratio": 1.11,
+  "probe": {
+   "dummy": 2,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0583",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "MARAUDER": 11
+  },
+  "enemy": {
+   "ZERGLING": 9,
+   "ZEALOT": 5,
+   "BANELING": 8
+  },
+  "limit": 150,
+  "value_ratio": 1.22,
+  "probe": {
+   "dummy": 1,
+   "random": 0
+  }
+ },
+ {
+  "id": "g0271",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "ZEALOT": 7,
+   "BANELING": 12
+  },
+  "enemy": {
+   "STALKER": 10
+  },
+  "limit": 150,
+  "value_ratio": 0.74,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0068",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "BANELING": 9,
+   "HYDRALISK": 3
+  },
+  "enemy": {
+   "BANELING": 18
+  },
+  "limit": 150,
+  "value_ratio": 1.0,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0831",
+  "layout": "corridor",
+  "terrain": "CORRIDOR",
+  "ally": {
+   "ZERGLING": 14,
+   "HYDRALISK": 4
+  },
+  "enemy": {
+   "MARAUDER": 2,
+   "MARINE": 4,
+   "COLOSSUS": 1,
+   "MEDIVAC": 2
+  },
+  "limit": 150,
+  "value_ratio": 0.76,
+  "probe": {
+   "dummy": 1,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0747",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "ZERGLING": 14,
+   "ZEALOT": 2
+  },
+  "enemy": {
+   "BANELING": 5,
+   "HYDRALISK": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.0,
+  "probe": {
+   "dummy": 0,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0491",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "HYDRALISK": 2,
+   "STALKER": 2,
+   "MARAUDER": 2
+  },
+  "enemy": {
+   "MARAUDER": 3,
+   "ZERGLING": 15
+  },
+  "limit": 150,
+  "value_ratio": 1.2,
+  "probe": {
+   "dummy": 1,
+   "random": 0
+  }
+ },
+ {
+  "id": "g0874",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "HYDRALISK": 5,
+   "COLOSSUS": 2
+  },
+  "enemy": {
+   "COLOSSUS": 2,
+   "BANELING": 11
+  },
+  "limit": 150,
+  "value_ratio": 1.15,
+  "probe": {
+   "dummy": 3,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0081",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "MARINE": 24
+  },
+  "enemy": {
+   "BANELING": 12,
+   "STALKER": 5
+  },
+  "limit": 220,
+  "value_ratio": 0.81,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0134",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "BANELING": 8
+  },
+  "enemy": {
+   "HYDRALISK": 3
+  },
+  "limit": 150,
+  "value_ratio": 0.89,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0573",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "COLOSSUS": 3
+  },
+  "enemy": {
+   "HYDRALISK": 11
+  },
+  "limit": 150,
+  "value_ratio": 0.73,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0364",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "BANELING": 12,
+   "MARINE": 9,
+   "ZEALOT": 2
+  },
+  "enemy": {
+   "HYDRALISK": 4,
+   "STALKER": 2,
+   "ZEALOT": 4
+  },
+  "limit": 150,
+  "value_ratio": 0.93,
+  "probe": {
+   "dummy": 3,
+   "random": 5
+  }
+ },
+ {
+  "id": "g0224",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "ZEALOT": 9,
+   "MARINE": 12,
+   "STALKER": 4
+  },
+  "enemy": {
+   "COLOSSUS": 2,
+   "MARAUDER": 6,
+   "MEDIVAC": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.13,
+  "probe": {
+   "dummy": 3,
+   "random": 5
+  }
+ },
+ {
+  "id": "g0070",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "BANELING": 7,
+   "ZEALOT": 5
+  },
+  "enemy": {
+   "MARINE": 6,
+   "STALKER": 3
+  },
+  "limit": 150,
+  "value_ratio": 1.03,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0119",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "MARINE": 14,
+   "STALKER": 7
+  },
+  "enemy": {
+   "MARAUDER": 4,
+   "HYDRALISK": 3,
+   "MARINE": 13,
+   "MEDIVAC": 2
+  },
+  "limit": 220,
+  "value_ratio": 0.96,
+  "probe": {
+   "dummy": 2,
+   "random": 2
+  }
+ },
+ {
+  "id": "g0517",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "MARINE": 21
+  },
+  "enemy": {
+   "ZERGLING": 23,
+   "MARAUDER": 6
+  },
+  "limit": 220,
+  "value_ratio": 0.79,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g1139",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "MARINE": 30
+  },
+  "enemy": {
+   "STALKER": 3,
+   "MARINE": 24
+  },
+  "limit": 220,
+  "value_ratio": 0.87,
+  "probe": {
+   "dummy": 4,
+   "random": 5
+  }
+ },
+ {
+  "id": "g0298",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "COLOSSUS": 3
+  },
+  "enemy": {
+   "STALKER": 1,
+   "BANELING": 9,
+   "COLOSSUS": 1
+  },
+  "limit": 150,
+  "value_ratio": 1.17,
+  "probe": {
+   "dummy": 2,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0207",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "HYDRALISK": 3
+  },
+  "enemy": {
+   "ZEALOT": 3
+  },
+  "limit": 150,
+  "value_ratio": 1.5,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0033",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "MARAUDER": 10
+  },
+  "enemy": {
+   "ZERGLING": 9,
+   "STALKER": 2,
+   "ZEALOT": 4
+  },
+  "limit": 150,
+  "value_ratio": 1.28,
+  "probe": {
+   "dummy": 2,
+   "random": 1
+  }
+ },
+ {
+  "id": "g1129",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "MARINE": 8,
+   "HYDRALISK": 2
+  },
+  "enemy": {
+   "MARINE": 4,
+   "ZEALOT": 3,
+   "HYDRALISK": 2
+  },
+  "limit": 150,
+  "value_ratio": 0.88,
+  "probe": {
+   "dummy": 4,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0278",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "ZEALOT": 5,
+   "HYDRALISK": 1,
+   "BANELING": 4
+  },
+  "enemy": {
+   "MARAUDER": 1,
+   "BANELING": 5,
+   "STALKER": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.17,
+  "probe": {
+   "dummy": 4,
+   "random": 5
+  }
+ },
+ {
+  "id": "g0427",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "MARAUDER": 5,
+   "MEDIVAC": 2
+  },
+  "enemy": {
+   "MARAUDER": 9
+  },
+  "limit": 150,
+  "value_ratio": 0.91,
+  "probe": {
+   "dummy": 2,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0726",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "HYDRALISK": 16
+  },
+  "enemy": {
+   "BANELING": 10,
+   "MARAUDER": 7,
+   "MARINE": 11,
+   "MEDIVAC": 2
+  },
+  "limit": 220,
+  "value_ratio": 1.03,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0767",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "MARAUDER": 5,
+   "COLOSSUS": 1,
+   "ZERGLING": 18
+  },
+  "enemy": {
+   "MARAUDER": 7,
+   "COLOSSUS": 2
+  },
+  "limit": 150,
+  "value_ratio": 0.88,
+  "probe": {
+   "dummy": 3,
+   "random": 0
+  }
+ },
+ {
+  "id": "g0005",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "STALKER": 1,
+   "COLOSSUS": 1,
+   "MARINE": 5,
+   "MEDIVAC": 1
+  },
+  "enemy": {
+   "HYDRALISK": 5,
+   "BANELING": 8
+  },
+  "limit": 150,
+  "value_ratio": 0.89,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0277",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "HYDRALISK": 4
+  },
+  "enemy": {
+   "MARAUDER": 5
+  },
+  "limit": 150,
+  "value_ratio": 0.96,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0595",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "HYDRALISK": 4
+  },
+  "enemy": {
+   "COLOSSUS": 1
+  },
+  "limit": 150,
+  "value_ratio": 1.5,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0682",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "COLOSSUS": 3
+  },
+  "enemy": {
+   "STALKER": 15
+  },
+  "limit": 150,
+  "value_ratio": 0.46,
+  "probe": {
+   "dummy": 2,
+   "random": 2
+  }
+ },
+ {
+  "id": "g0083",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "COLOSSUS": 1,
+   "ZEALOT": 6
+  },
+  "enemy": {
+   "ZERGLING": 13,
+   "MARINE": 8,
+   "BANELING": 5
+  },
+  "limit": 150,
+  "value_ratio": 1.03,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0467",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "COLOSSUS": 2,
+   "ZERGLING": 12,
+   "HYDRALISK": 5
+  },
+  "enemy": {
+   "BANELING": 9,
+   "STALKER": 3,
+   "ZEALOT": 5
+  },
+  "limit": 150,
+  "value_ratio": 1.25,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0805",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "MARINE": 12,
+   "STALKER": 3
+  },
+  "enemy": {
+   "COLOSSUS": 1,
+   "ZEALOT": 10
+  },
+  "limit": 150,
+  "value_ratio": 0.8,
+  "probe": {
+   "dummy": 1,
+   "random": 0
+  }
+ },
+ {
+  "id": "g0457",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "ZEALOT": 3,
+   "STALKER": 2,
+   "HYDRALISK": 2
+  },
+  "enemy": {
+   "STALKER": 4,
+   "BANELING": 6
+  },
+  "limit": 150,
+  "value_ratio": 0.95,
+  "probe": {
+   "dummy": 3,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0088",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 2,
+   "ZEALOT": 4
+  },
+  "enemy": {
+   "MARAUDER": 2,
+   "ZEALOT": 3,
+   "COLOSSUS": 1
+  },
+  "limit": 150,
+  "value_ratio": 0.79,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0289",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "MARINE": 10,
+   "COLOSSUS": 2
+  },
+  "enemy": {
+   "COLOSSUS": 2,
+   "STALKER": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.13,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0746",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "ZEALOT": 6,
+   "MARINE": 6,
+   "HYDRALISK": 4
+  },
+  "enemy": {
+   "MARAUDER": 13
+  },
+  "limit": 150,
+  "value_ratio": 0.92,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0354",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 9
+  },
+  "enemy": {
+   "MARINE": 13,
+   "ZEALOT": 4,
+   "MEDIVAC": 2
+  },
+  "limit": 150,
+  "value_ratio": 1.09,
+  "probe": {
+   "dummy": 0,
+   "random": 2
+  }
+ },
+ {
+  "id": "g0453",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "COLOSSUS": 1,
+   "BANELING": 9,
+   "MARINE": 8
+  },
+  "enemy": {
+   "MARINE": 22
+  },
+  "limit": 220,
+  "value_ratio": 1.14,
+  "probe": {
+   "dummy": 0,
+   "random": 2
+  }
+ },
+ {
+  "id": "g1085",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "ZERGLING": 5,
+   "STALKER": 1,
+   "HYDRALISK": 1
+  },
+  "enemy": {
+   "MARAUDER": 3,
+   "HYDRALISK": 1
+  },
+  "limit": 150,
+  "value_ratio": 0.86,
+  "probe": {
+   "dummy": 3,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0832",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "COLOSSUS": 1,
+   "ZEALOT": 7
+  },
+  "enemy": {
+   "HYDRALISK": 3,
+   "ZERGLING": 14,
+   "ZEALOT": 4
+  },
+  "limit": 150,
+  "value_ratio": 0.92,
+  "probe": {
+   "dummy": 2,
+   "random": 3
+  }
+ },
+ {
+  "id": "g1132",
+  "layout": "octagon",
+  "terrain": "OCTAGON",
+  "ally": {
+   "HYDRALISK": 11
+  },
+  "enemy": {
+   "HYDRALISK": 8,
+   "STALKER": 6
+  },
+  "limit": 150,
+  "value_ratio": 0.73,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0486",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "MARAUDER": 3,
+   "COLOSSUS": 1
+  },
+  "enemy": {
+   "ZERGLING": 12,
+   "HYDRALISK": 3
+  },
+  "limit": 150,
+  "value_ratio": 1.03,
+  "probe": {
+   "dummy": 1,
+   "random": 2
+  }
+ },
+ {
+  "id": "g0641",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "STALKER": 1,
+   "BANELING": 2,
+   "MARAUDER": 1
+  },
+  "enemy": {
+   "HYDRALISK": 1,
+   "BANELING": 4
+  },
+  "limit": 150,
+  "value_ratio": 1.14,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0559",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "BANELING": 11,
+   "MARAUDER": 4,
+   "STALKER": 2
+  },
+  "enemy": {
+   "HYDRALISK": 2,
+   "MARINE": 10,
+   "ZEALOT": 5
+  },
+  "limit": 150,
+  "value_ratio": 1.08,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g1014",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 4,
+   "MARAUDER": 4,
+   "MARINE": 15
+  },
+  "enemy": {
+   "COLOSSUS": 2,
+   "MARAUDER": 3,
+   "HYDRALISK": 5,
+   "MEDIVAC": 2
+  },
+  "limit": 150,
+  "value_ratio": 0.84,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0544",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "MARAUDER": 3,
+   "ZEALOT": 2,
+   "MEDIVAC": 1
+  },
+  "enemy": {
+   "MARAUDER": 7
+  },
+  "limit": 150,
+  "value_ratio": 0.89,
+  "probe": {
+   "dummy": 4,
+   "random": 3
+  }
+ },
+ {
+  "id": "g0369",
+  "layout": "ravine",
+  "terrain": "RAVINE",
+  "ally": {
+   "BANELING": 11,
+   "STALKER": 2
+  },
+  "enemy": {
+   "BANELING": 4,
+   "STALKER": 1,
+   "ZEALOT": 4
+  },
+  "limit": 150,
+  "value_ratio": 1.16,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0922",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 1,
+   "HYDRALISK": 2
+  },
+  "enemy": {
+   "STALKER": 2,
+   "BANELING": 3
+  },
+  "limit": 150,
+  "value_ratio": 0.95,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g1092",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "BANELING": 13,
+   "STALKER": 3
+  },
+  "enemy": {
+   "BANELING": 28
+  },
+  "limit": 220,
+  "value_ratio": 0.84,
+  "probe": {
+   "dummy": 1,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0361",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 1,
+   "BANELING": 6
+  },
+  "enemy": {
+   "ZERGLING": 10,
+   "BANELING": 7
+  },
+  "limit": 150,
+  "value_ratio": 0.79,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0859",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "HYDRALISK": 4,
+   "COLOSSUS": 1
+  },
+  "enemy": {
+   "HYDRALISK": 7
+  },
+  "limit": 150,
+  "value_ratio": 0.95,
+  "probe": {
+   "dummy": 4,
+   "random": 5
+  }
+ },
+ {
+  "id": "g0209",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "ZERGLING": 17
+  },
+  "enemy": {
+   "BANELING": 7
+  },
+  "limit": 150,
+  "value_ratio": 1.21,
+  "probe": {
+   "dummy": 0,
+   "random": 2
+  }
+ },
+ {
+  "id": "g0102",
+  "layout": "open",
+  "terrain": "ALL_GREEN",
+  "ally": {
+   "BANELING": 14
+  },
+  "enemy": {
+   "ZERGLING": 19,
+   "HYDRALISK": 2
+  },
+  "limit": 150,
+  "value_ratio": 0.9,
+  "probe": {
+   "dummy": 4,
+   "random": 4
+  }
+ },
+ {
+  "id": "g0073",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "ZEALOT": 8,
+   "COLOSSUS": 1
+  },
+  "enemy": {
+   "STALKER": 4,
+   "BANELING": 9
+  },
+  "limit": 150,
+  "value_ratio": 1.04,
+  "probe": {
+   "dummy": 0,
+   "random": 1
+  }
+ },
+ {
+  "id": "g0233",
+  "layout": "wall_gap",
+  "terrain": "NARROW",
+  "ally": {
+   "STALKER": 1,
+   "ZERGLING": 10
+  },
+  "enemy": {
+   "ZEALOT": 4
+  },
+  "limit": 150,
+  "value_ratio": 1.06,
+  "probe": {
+   "dummy": 1,
+   "random": 0
+  }
+ },
+ {
+  "id": "g0242",
+  "layout": "open",
+  "terrain": "SIMPLE",
+  "ally": {
+   "STALKER": 2,
+   "COLOSSUS": 1
+  },
+  "enemy": {
+   "STALKER": 1,
+   "HYDRALISK": 1,
+   "BANELING": 5
+  },
+  "limit": 150,
+  "value_ratio": 1.3,
+  "probe": {
+   "dummy": 3,
+   "random": 3
+  }
+ }
+]

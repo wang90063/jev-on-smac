@@ -789,7 +789,8 @@ def _beam_hits(origin: Dict[str, Any], target: Dict[str, Any], enemies: List[Dic
     dx = float(target["x"]) - float(origin["x"])
     dy = float(target["y"]) - float(origin["y"])
     ratio = dy / dx if abs(dx) >= 1e-9 else (1e12 if dy >= 0 else -1e12)
-    theta = math.atan(-1.0 / ratio)
+    # Level shot (dy == 0): the engine's numpy divide gives -inf -> -pi/2.
+    theta = math.atan(-1.0 / ratio) if abs(ratio) >= 1e-12 else -math.pi / 2
     c, s = math.cos(theta), math.sin(theta)
 
     def xf(x: float, y: float) -> Tuple[float, float]:
@@ -5181,6 +5182,83 @@ class ProgramActionPolicy(JevActionPolicy):
         from tactic_dsl import ProgramClient
 
         super().__init__(client=ProgramClient(prog), tag=tag, full_menu=True)
+
+
+class LibraryPolicy(JevActionPolicy):
+    """Pick a forged program from the library, then let it answer every exam.
+
+    chooser: "jev" asks Jev one Choice among the k nearest programs;
+    "nearest" takes the closest; "random" takes one of the k at random.
+    Re-picks at the start and whenever the force composition changes.
+    No simulator in the loop.
+    """
+
+    def __init__(self, lib: List[Dict[str, Any]], chooser: str = "jev", k: int = 4, selector=None, seed: int = 0, tag: str = ""):
+        import random as _random
+
+        from tactic_dsl import HAND_RULES, ProgramClient
+
+        super().__init__(client=ProgramClient(HAND_RULES), tag=tag or f"lib_{chooser}", full_menu=True)
+        self.lib = lib
+        self.chooser = chooser
+        self.k = k
+        self.selector = selector if selector is not None or chooser != "jev" else JevClient()
+        self._rng = _random.Random(seed)
+        self._pick_sig: Optional[Tuple[int, ...]] = None
+        self.picks_made: List[str] = []
+        self.n_select_calls = 0
+
+    def _choose(self, step: int, snap: Dict[str, Any]) -> None:
+        import tactic_dsl as T
+
+        state = commander_state(step, snap, self._recent, self._hp_trend)
+        cands = T.nearest(self.lib, T.feature_vector(T.features(state)), self.k)
+        if not cands:
+            return
+        pick = cands[0]
+        if self.chooser == "random":
+            pick = self._rng.choice(cands)
+        elif self.chooser == "jev" and len(cands) > 1:
+            criteria = {}
+            for e in cands:
+                tr = e.get("transfer") or {}
+                beat = sum(1 for r in tr.values() if r["wins"] > r["dummy"])
+                criteria[e["id"]] = {
+                    "does": T.summarize(e["program"]),
+                    "idea": e["program"].get("why", ""),
+                    "won_fight_like": {
+                        k: e["feats"].get(k)
+                        for k in ("speed", "reach", "numbers", "our_ranged", "our_melee", "enemy_guns", "enemy_melee_n", "enemy_suicide", "pocket")
+                    },
+                    "record": f"won {e['wins']}/5 where it was written; beat attack-move on {beat} of {len(tr)} training fights",
+                }
+            questions = {
+                "program": {
+                    "type": "choice",
+                    "instructions": (
+                        "Which tactic program should the army run from now on? Each program sets "
+                        "exam picks from physical conditions; code moves the units."
+                    ),
+                    "criteria": criteria,
+                }
+            }
+            result = self.selector.system_one(state, questions)
+            self.n_select_calls += 1
+            answers = (result or {}).get("answers") if isinstance(result, dict) else None
+            chosen = _pick_choice((answers or {}).get("program"), list(criteria), cands[0]["id"])
+            pick = next(e for e in cands if e["id"] == chosen)
+        self.client.prog = pick["program"]
+        self.picks_made.append(f"t={step} {pick['id']}")
+
+    def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
+        if step == 0:
+            self._pick_sig = None
+        # Re-pick only when a role appears or vanishes, not on every death.
+        sig = tuple(v > 0 for v in _force_signature(snap)[2:])
+        if sig != self._pick_sig and living(snap["allies"]) and living(snap["enemies"]):
+            self._choose(step, snap)
+            self._pick_sig = sig
+        return super().act(map_name, step, snap)
 
 
 class ApiActionPolicy(JevActionPolicy):

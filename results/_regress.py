@@ -16,7 +16,7 @@ import os
 import random
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -77,15 +77,24 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith("lib:"):
+        lib = json.loads((ROOT / "kb" / "library" / "programs.json").read_text())
+        h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
+        return J.LibraryPolicy(lib, chooser=spec[4:], seed=h)
     if spec.startswith("force:"):
         picks = dict(kv.split("=", 1) for kv in spec[6:].split(","))
         return J.ForceActionPolicy(picks)
     raise ValueError(spec)
 
 
-def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, Any]:
+def run(spec: str, map_name: str, seed: int, trace: bool = False, scenario: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     pol = make_policy(spec, map_name, seed)
-    env = StarCraft2Env(map_name=map_name, seed=seed)
+    if scenario is not None:
+        import scenarios as SC
+
+        env = SC.make_env(scenario, seed)
+    else:
+        env = StarCraft2Env(map_name=map_name, seed=seed)
     env.reset()
     ret, steps, done, info = 0.0, 0, False, {}
     h = hashlib.sha1()
@@ -111,6 +120,12 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
             steps += 1
             if steps > env.episode_limit + 5:
                 break
+        a_live = [u for u in env._gym.agents.values() if getattr(u, "hp", 0) > 0]
+        e_live = [u for u in env._gym.enemies.values() if getattr(u, "hp", 0) > 0]
+        left = {
+            "A": [len(a_live), round(sum(u.hp + getattr(u, "shield", 0) for u in a_live), 1)],
+            "E": [len(e_live), round(sum(u.hp + getattr(u, "shield", 0) for u in e_live), 1)],
+        }
     finally:
         env.close()
     row = {
@@ -121,6 +136,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
         "ret": round(ret, 3),
         "steps": steps,
         "open": asked,
+        **left,
         "ov": list(getattr(pol, "overrides", [])[:8]),
     }
     if trace:
@@ -128,6 +144,11 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False) -> Dict[str, A
         row["act_hash"] = ha.hexdigest()
         row["steps_h"] = first
     return row
+
+
+def run_scenario(spec: str, scenario: Dict[str, Any], seed: int, trace: bool = False) -> Dict[str, Any]:
+    """Same as run() on a generated scenario (scenarios.py)."""
+    return run(spec, scenario["id"], seed, trace=trace, scenario=scenario)
 
 
 def cmd_trace(args):
@@ -223,10 +244,44 @@ def cmd_force(args):
     return 0
 
 
+def _holdout_job(job):
+    spec, scen, seed = job
+    if scen is None:
+        return run(spec, seed[0], seed[1])
+    return run_scenario(spec, scen, seed)
+
+
+def cmd_holdout(args):
+    """Policies on the frozen test scenarios (and, for reference, official maps)."""
+    from multiprocessing import Pool
+
+    import scenarios as SC
+
+    test = SC.load(args.split)
+    jobs = [(p, sc, s) for p in args.policies for sc in test for s in SEEDS]
+    if args.official:
+        jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in SEEDS]
+    # Jev calls go over the network; keep them serial-ish.
+    with Pool(1 if any(p == "lib:jev" for p in args.policies) else 8) as pool:
+        rows = pool.map(_holdout_job, jobs, chunksize=1)
+    out = Path(args.write)
+    with out.open("w") as f:
+        for (p, sc, s), r in zip(jobs, rows):
+            r["policy"] = p
+            r["set"] = "official" if sc is None else args.split
+            f.write(json.dumps(r) + "\n")
+    table: Dict[Tuple[str, str], List[int]] = {}
+    for (p, sc, s), r in zip(jobs, rows):
+        table.setdefault((p, r["set"]), []).append(r["win"])
+    for (p, st), w in sorted(table.items(), key=lambda kv: (kv[0][1], kv[0][0])):
+        print(f"{st:9s} {p:22s} {sum(w):4d}/{len(w)}")
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd", required=True)
-    for name in ("trace", "gate", "force"):
+    for name in ("trace", "gate", "force", "holdout"):
         sp = sub.add_parser(name)
         sp.add_argument("--maps", nargs="+", default=MAPS)
         sp.add_argument("--seeds", nargs="+", type=int, default=SEEDS)
@@ -241,8 +296,13 @@ def main():
     g.add_argument("--write")
     f = sub.choices["force"]
     f.add_argument("--kinds", nargs="+", default=list(J.KIND_ORDER))
+    h = sub.choices["holdout"]
+    h.add_argument("--policies", nargs="+", default=["dummy", "prog:hand_rules", "lib:nearest", "lib:random"])
+    h.add_argument("--split", default="test")
+    h.add_argument("--official", action="store_true")
+    h.add_argument("--write", required=True)
     args = p.parse_args()
-    return {"trace": cmd_trace, "gate": cmd_gate, "force": cmd_force}[args.cmd](args)
+    return {"trace": cmd_trace, "gate": cmd_gate, "force": cmd_force, "holdout": cmd_holdout}[args.cmd](args)
 
 
 if __name__ == "__main__":

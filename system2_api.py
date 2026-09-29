@@ -116,14 +116,21 @@ class System2Client:
         return parsed
 
 
-    def fill_json(self, instructions: str, user: str, timeout: Optional[float] = None) -> Optional[dict]:
+    def fill_json(
+        self,
+        instructions: str,
+        user: str,
+        timeout: Optional[float] = None,
+        max_tokens: int = 400,
+        temperature: float = 0.0,
+    ) -> Optional[dict]:
         """One JSON object. reasoning off. Never logs the key."""
         body = {
             "model": self.model,
             "instructions": instructions,
             "input": user,
-            "temperature": 0,
-            "max_output_tokens": 400,
+            "temperature": temperature,
+            "max_output_tokens": max_tokens,
             "reasoning": {"effort": "none"},
         }
         t0 = time.perf_counter()

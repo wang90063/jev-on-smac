@@ -253,3 +253,86 @@ HAND_RULES = {
     "rules": [],
     "else": {"ranged": "stutter", "melee": "hold_choke", "bar": "bar", "wing": "step"},
 }
+
+
+def pick_meanings() -> Dict[str, Dict[str, str]]:
+    """What code does for each settable pick (the Cookbook, no map names)."""
+    import jev_smac_policy as J
+
+    def does(table: Dict[str, Any]) -> Dict[str, str]:
+        return {k: (v["does"] if isinstance(v, dict) else v) for k, v in table.items()}
+
+    return {
+        "formation": does(J.FORMATION_CRITERIA),
+        "ranged": does(J.RANGED_JOB_CRITERIA),
+        "kite": {k: v for k, v in does(J.KITE_STYLE_CRITERIA).items() if k in SETTABLE["kite"]},
+        "melee": does(J.MELEE_JOB_CRITERIA),
+        "bait": does(J.BAIT_CRITERIA),
+        "target": dict(J.TARGET_CRITERIA),
+        "bar": {
+            "pack": "A firing laser aims at the enemy with the most neighbors.",
+            "bar": "A firing laser aims where its perpendicular bar touches the most bodies.",
+        },
+        "wing": {
+            "stay": "Outer guns attack-move with the center.",
+            "step": "Before contact, outer guns step sideways away from the center to widen the line.",
+        },
+        "stand": {
+            "shoot": "When enemy melee arrives right at the 0.5s shot window, guns take the shot.",
+            "step": "In that same window, guns step away instead.",
+        },
+        "tie": {
+            "first": "Two enemies within one shot of each other: cover the lower-HP one first.",
+            "second": "Cover the other one first.",
+        },
+    }
+
+
+NOTES = (
+    "An exam only exists when its physics allows it; a pick that is illegal this tick "
+    "falls back to the code default. Defaults: formation=keep, ranged=stack, kite=all, "
+    "melee=charge, bait=bait_one, target=weakest_in_range (clump when we have splash or bombs), "
+    "bar=pack, wing=stay. ranged picks apply only to ranged allies; melee picks only to melee allies."
+)
+
+
+# --- library retrieval (used offline by forge and online by LibraryPolicy) ---
+
+def feature_vector(feats: Dict[str, Any]) -> List[float]:
+    vec: List[float] = []
+    for name, allowed in FEATURES.items():
+        v = feats.get(name)
+        if allowed == "num":
+            x = float(v or 0)
+            vec.append(x / (1.0 + abs(x)))  # squash counts and ratios to (-1, 1)
+        else:
+            vec.extend(1.0 if v == a else 0.0 for a in allowed)
+    return vec
+
+
+def nearest(lib: List[Dict[str, Any]], vec: List[float], k: int) -> List[Dict[str, Any]]:
+    def dist(e):
+        return sum((a - b) ** 2 for a, b in zip(e["vec"], vec))
+
+    return sorted(lib, key=dist)[:k]
+
+
+def summarize(prog: Dict[str, Any]) -> str:
+    """One line a chooser can read: what the program sets, and when."""
+    def fmt_when(w: Dict[str, Any]) -> str:
+        out = []
+        for k, v in w.items():
+            if isinstance(v, dict):
+                out.extend(f"{k}{op}{b}" for op, b in v.items())
+            elif isinstance(v, list):
+                out.append(f"{k} in {'/'.join(map(str, v))}")
+            else:
+                out.append(f"{k}={v}")
+        return " and ".join(out) or "always"
+
+    def fmt_set(st: Dict[str, str]) -> str:
+        return ", ".join(f"{k}={v}" for k, v in st.items()) or "code defaults"
+
+    parts = [f"if {fmt_when(r['when'])}: {fmt_set(r['set'])}" for r in prog.get("rules") or []]
+    parts.append(f"otherwise: {fmt_set(prog.get('else') or {})}")
+    return "; ".join(parts)
