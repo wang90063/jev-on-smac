@@ -288,6 +288,47 @@ def cmd_holdout(args):
     return 0
 
 
+def _sign_test_p(a: int, b: int) -> float:
+    """Two-sided exact binomial (McNemar) p-value for a flips vs b losses."""
+    from math import comb
+
+    n = a + b
+    if n == 0:
+        return 1.0
+    k = min(a, b)
+    tail = sum(comb(n, i) for i in range(k + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
+
+
+def cmd_paired(args):
+    """Pair every policy with the base on the same (set, fight, seed)."""
+    rows: Dict[Tuple[str, str, str, int], int] = {}
+    for fn in args.files:
+        for line in Path(fn).read_text().splitlines():
+            if line.strip():
+                r = json.loads(line)
+                rows[(r["policy"], r.get("set", "?"), r["map"], int(r["seed"]))] = r["win"]
+    policies = sorted({k[0] for k in rows})
+    for st in sorted({k[1] for k in rows}):
+        print(f"== {st}  (base {args.base})")
+        for p in policies:
+            if p == args.base:
+                continue
+            flip = lose = n = 0
+            for (pp, s2, m, seed), w in rows.items():
+                if pp != p or s2 != st:
+                    continue
+                b = rows.get((args.base, st, m, seed))
+                if b is None:
+                    continue
+                n += 1
+                flip += int(w and not b)
+                lose += int(b and not w)
+            if n:
+                print(f"  {p:22s} n={n:4d} flips(+)={flip:3d} losses(-)={lose:3d} net={flip - lose:+4d} p={_sign_test_p(flip, lose):.3f}")
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -311,8 +352,11 @@ def main():
     h.add_argument("--split", default="test")
     h.add_argument("--official", action="store_true")
     h.add_argument("--write", required=True)
+    pr = sub.add_parser("paired")
+    pr.add_argument("--files", nargs="+", required=True)
+    pr.add_argument("--base", default="dummy")
     args = p.parse_args()
-    return {"trace": cmd_trace, "gate": cmd_gate, "force": cmd_force, "holdout": cmd_holdout}[args.cmd](args)
+    return {"trace": cmd_trace, "gate": cmd_gate, "force": cmd_force, "holdout": cmd_holdout, "paired": cmd_paired}[args.cmd](args)
 
 
 if __name__ == "__main__":

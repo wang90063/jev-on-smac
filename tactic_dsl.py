@@ -189,29 +189,63 @@ def validate(prog: Any) -> Tuple[Optional[Dict[str, Any]], List[str]]:
                     out[feat] = want
         return out
 
+    def check_menu(where: str, m: Any) -> Optional[str]:
+        if m is None:
+            return None
+        if m not in MENU_MODES:
+            errs.append(f"{where}: menu={m!r} not in {MENU_MODES}")
+            return None
+        return m
+
     clean_rules = []
-    for i, r in enumerate(rules[:12]):
+    for i, r in enumerate(rules[:16]):
         if not isinstance(r, dict):
             errs.append(f"rule {i}: not an object")
             continue
-        clean_rules.append({"when": check_when(f"rule {i}", r.get("when") or {}), "set": check_set(f"rule {i}", r.get("set") or {})})
+        cr = {"when": check_when(f"rule {i}", r.get("when") or {}), "set": check_set(f"rule {i}", r.get("set") or {})}
+        m = check_menu(f"rule {i}", r.get("menu"))
+        if m:
+            cr["menu"] = m
+        clean_rules.append(cr)
     clean = {
         "name": str(prog.get("name") or "unnamed")[:60],
         "rules": clean_rules,
         "else": check_set("else", prog.get("else") or {}),
     }
+    m = check_menu("program", prog.get("menu"))
+    if m:
+        clean["menu"] = m
     if prog.get("why"):
         clean["why"] = str(prog["why"])[:300]
     return clean, errs
 
 
-def settings_for(prog: Dict[str, Any], feats: Dict[str, Any]) -> Dict[str, str]:
-    out = dict(prog.get("else") or {})
+# open: every executable job is legal; gated: the physics gates Jev sees;
+# dummy: the exact Dummy path (every exam at its code default).
+MENU_MODES = ("open", "gated", "dummy")
+
+
+def _rule_for(prog: Dict[str, Any], feats: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     for r in prog.get("rules") or []:
         if matches(r.get("when") or {}, feats):
-            out.update(r.get("set") or {})
-            break
+            return r
+    return None
+
+
+def settings_for(prog: Dict[str, Any], feats: Dict[str, Any]) -> Dict[str, str]:
+    out = dict(prog.get("else") or {})
+    r = _rule_for(prog, feats)
+    if r is not None:
+        out.update(r.get("set") or {})
     return out
+
+
+def menu_for(prog: Dict[str, Any], feats: Dict[str, Any]) -> str:
+    """Menu mode this tick: the matching rule's, else the program's, else open."""
+    r = _rule_for(prog, feats)
+    if r is not None and r.get("menu"):
+        return r["menu"]
+    return prog.get("menu") or "open"
 
 
 class ProgramClient:

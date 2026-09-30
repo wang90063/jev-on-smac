@@ -65,7 +65,7 @@ def _value(army: Dict[str, int]) -> int:
     return sum(COST[k] * n for k, n in army.items())
 
 
-def random_spec(rng: random.Random, idx: int) -> Optional[Dict[str, Any]]:
+def random_spec(rng: random.Random, idx: int, prefix: str = "g") -> Optional[Dict[str, Any]]:
     layout = rng.choices(list(LAYOUT_WEIGHTS), weights=list(LAYOUT_WEIGHTS.values()))[0]
     budget = rng.uniform(300, 2400)
     ally = _army(rng, budget)
@@ -75,7 +75,7 @@ def random_spec(rng: random.Random, idx: int) -> Optional[Dict[str, Any]]:
     if set(ally) <= {"MEDIVAC"} or set(enemy) <= {"MEDIVAC"}:
         return None
     return {
-        "id": f"g{idx:04d}",
+        "id": f"{prefix}{idx:04d}",
         "layout": layout,
         "terrain": rng.choice(LAYOUTS[layout]["terrain"]),
         "ally": ally,
@@ -199,6 +199,32 @@ def build(n_candidates: int = 900, n_train: int = 60, n_test: int = 40, seed: in
     print(f"train={len(train)} test={len(test)} -> {OUT}")
 
 
+def build_extra(name: str, n: int, seed: int, prefix: str, n_candidates: int = 700) -> None:
+    """A further frozen held-out split, same generator and filter, new ids."""
+    from multiprocessing import Pool
+
+    rng = random.Random(seed)
+    specs: List[Dict[str, Any]] = []
+    i = 0
+    while len(specs) < n_candidates:
+        spec = random_spec(rng, i, prefix)
+        i += 1
+        if spec is not None:
+            specs.append(spec)
+    specs = [s for s in specs if spawn_ok(s)]
+    with Pool(8) as pool:
+        probes = pool.map(_probe, specs, chunksize=4)
+    by_id = {p["id"]: p for p in probes if "error" not in p}
+    keep = [s for s in specs if s["id"] in by_id and by_id[s["id"]]["dummy"] <= 4
+            and max(by_id[s["id"]]["dummy"], by_id[s["id"]]["random"]) >= 1]
+    for s in keep:
+        s["probe"] = {k: by_id[s["id"]][k] for k in ("dummy", "random")}
+    rng.shuffle(keep)
+    out = keep[:n]
+    (OUT / f"{name}.json").write_text(json.dumps(out, indent=1))
+    print(f"{name}={len(out)} (from {len(keep)} contested) -> {OUT}")
+
+
 def load(split: str) -> List[Dict[str, Any]]:
     return json.loads((OUT / f"{split}.json").read_text())
 
@@ -206,3 +232,5 @@ def load(split: str) -> List[Dict[str, Any]]:
 if __name__ == "__main__":
     if sys.argv[1:2] == ["build"]:
         build()
+    elif sys.argv[1:2] == ["build_test2"]:
+        build_extra("test2", 120, seed=20260930, prefix="h")

@@ -5252,6 +5252,26 @@ class ForceActionPolicy(JevActionPolicy):
         super().__init__(client=ForceClient(picks or {"ranged": "stutter"}), tag="force")
 
 
+def _program_mode(policy: "JevActionPolicy", prog: Dict[str, Any], step: int, snap: Dict[str, Any]) -> None:
+    """Point the policy at the program's menu mode for this tick.
+
+    open: every executable job, program answers every exam; gated: the physics
+    gates; dummy: the exact Dummy path. A rule may carry its own mode, so a
+    distilled program can be Dummy in one situation and hold in another.
+    """
+    import tactic_dsl as T
+
+    mode = prog.get("menu") or "open"
+    if any(r.get("menu") for r in prog.get("rules") or []):
+        state = commander_state(step, dict(snap), list(policy._recent), policy._hp_trend)
+        mode = T.menu_for(prog, T.features(state))
+    if mode == "dummy":
+        policy.client, policy.full_menu, policy.open_menu = policy._dummy_client, False, False
+    else:
+        policy._prog_client.prog = prog
+        policy.client, policy.full_menu, policy.open_menu = policy._prog_client, True, mode == "open"
+
+
 class ProgramActionPolicy(JevActionPolicy):
     """Runs one tactic program (tactic_dsl) with no model in the loop."""
 
@@ -5261,6 +5281,13 @@ class ProgramActionPolicy(JevActionPolicy):
         # Forged programs run on the open menu; a program marked "menu": "gated"
         # (the hand baseline) keeps the physics gates it was written against.
         super().__init__(client=ProgramClient(prog), tag=tag, full_menu=True, open_menu=prog.get("menu") != "gated")
+        self.prog = prog
+        self._prog_client = self.client
+        self._dummy_client = DummyClient()
+
+    def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
+        _program_mode(self, self.prog, step, snap)
+        return super().act(map_name, step, snap)
 
 
 class LibraryPolicy(JevActionPolicy):
@@ -5306,6 +5333,7 @@ class LibraryPolicy(JevActionPolicy):
         self.n_select_calls = 0
 
     def _run(self, entry: Optional[Dict[str, Any]]) -> None:
+        self._cur_prog = None if entry is None else entry["program"]
         if entry is None:
             self.client, self.full_menu, self.open_menu = self._dummy_client, False, False
             return
@@ -5397,6 +5425,8 @@ class LibraryPolicy(JevActionPolicy):
         if sig != self._pick_sig and living(snap["allies"]) and living(snap["enemies"]):
             self._choose(step, snap)
             self._pick_sig = sig
+        if getattr(self, "_cur_prog", None) is not None:
+            _program_mode(self, self._cur_prog, step, snap)
         return super().act(map_name, step, snap)
 
 
