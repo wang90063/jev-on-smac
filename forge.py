@@ -488,6 +488,117 @@ def cmd_cluster(lib_path: Path = None, out_dir: Path = None, hints: bool = False
     print(f"library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
 
 
+# --- round 6: search programs by whole-episode outcome ------------------------
+
+OUTCOME_LIB = ROOT / "kb" / "library" / "outcome_programs.json"
+OUTCOME_DIR = ROOT / "results" / "forge6"
+ACCEPT = 2  # a leaf change must add at least this many net wins
+
+
+def _batch_net(pool: Pool, progs: List[Dict[str, Any]], members: List[Dict[str, Any]],
+               dummy: Dict[Tuple[str, int], int], seeds: List[int]) -> List[int]:
+    """Net wins vs Dummy over the cluster for many programs in one pool.map."""
+    jobs = [("prog:" + _prog_path(p), m, k) for p in progs for m in members for k in seeds]
+    rows = pool.map(_episode, jobs, chunksize=1)
+    per = len(members) * len(seeds)
+    out = []
+    for i in range(len(progs)):
+        chunk = zip(jobs[i * per:(i + 1) * per], rows[i * per:(i + 1) * per])
+        out.append(sum(r["win"] - dummy[(m["id"], k)] for (_, m, k), r in chunk))
+    return out
+
+
+def tree_program(skeleton: Dict[str, Any], leaves: List[str], name: str) -> Dict[str, Any]:
+    """The D3 tree's conditions with a macro on every leaf."""
+    import distill as D
+
+    rules = []
+    for r, macro in zip(skeleton["rules"], leaves):
+        mr = D.macro_rule(macro)
+        rules.append({"when": r["when"], "set": mr["set"], "menu": mr["menu"]})
+    return {"name": name, "menu": "dummy", "rules": rules, "else": {}, "why": "leaves: " + ", ".join(leaves)}
+
+
+def cmd_outcome() -> None:
+    import distill as D
+    import search as SE
+
+    OUTCOME_DIR.mkdir(parents=True, exist_ok=True)
+    macros = list(SE.MACROS)
+    dist = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
+    d3 = next(e for e in dist if e["id"] == "D3")
+    skeleton = d3["program"]
+    start_leaves = [r["macro"] for r in _leaf_macros(d3["tree"])]
+    cl = json.loads(CLUSTERS_PATH.read_text())
+    train = {s["id"]: s for s in SC.load("train")}
+    lib3 = json.loads(LIB3_PATH.read_text())
+    lib = json.loads(OUTCOME_LIB.read_text()) if OUTCOME_LIB.is_file() else []
+    with Pool(8) as pool:
+        for j, ids in cl["members"].items():
+            out_path = OUTCOME_DIR / f"cluster{j}.json"
+            if out_path.is_file() or not ids:
+                continue
+            members = [train[i] for i in ids]
+            dummy = {}
+            for seeds in (SEEDS, CONFIRM_SEEDS):
+                jobs = [("dummy", m, k) for m in members for k in seeds]
+                for (_, m, k), r in zip(jobs, pool.map(_episode, jobs, chunksize=1)):
+                    dummy[(m["id"], k)] = r["win"]
+            log: Dict[str, Any] = {"cluster": j, "members": ids, "starts": []}
+            cands: List[Dict[str, Any]] = []
+            for start_name, leaves, passes in (("d3", list(start_leaves), 2), ("none", ["none"] * len(start_leaves), 1)):
+                cur = _batch_net(pool, [tree_program(skeleton, leaves, "x")], members, dummy, SEEDS)[0]
+                trail = [cur]
+                for _ in range(passes):
+                    for i in range(len(leaves)):
+                        alts = [m for m in macros if m != leaves[i]]
+                        progs = [tree_program(skeleton, leaves[:i] + [m] + leaves[i + 1:], "x") for m in alts]
+                        nets = _batch_net(pool, progs, members, dummy, SEEDS)
+                        b = max(range(len(alts)), key=lambda t: nets[t])
+                        if nets[b] >= cur + ACCEPT:
+                            leaves[i], cur = alts[b], nets[b]
+                            trail.append(cur)
+                prog = tree_program(skeleton, leaves, f"outcome_c{j}_{start_name}")
+                cands.append({"program": prog, "leaves": list(leaves), "sel": cur, "source": f"tree_{start_name}"})
+                log["starts"].append({"start": start_name, "trail": trail, "leaves": leaves})
+                print(f"cluster{j} n={len(ids)} start={start_name} sel_net trail={trail}", flush=True)
+            for e in lib3:
+                if e.get("cluster") == int(j) and e.get("source") == "forge":
+                    net = _batch_net(pool, [e["program"]], members, dummy, SEEDS)[0]
+                    cands.append({"program": e["program"], "leaves": None, "sel": net, "source": "lib3"})
+            confirms = _batch_net(pool, [c["program"] for c in cands], members, dummy, CONFIRM_SEEDS)
+            for c, n in zip(cands, confirms):
+                c["confirm"] = n
+            admitted: List[Dict[str, Any]] = []
+            for c in sorted(cands, key=lambda c: c["sel"], reverse=True):
+                if c["confirm"] <= 0 or len(admitted) >= 2:
+                    continue
+                if any(a["leaves"] and c["leaves"] and sum(x != y for x, y in zip(a["leaves"], c["leaves"])) < 2 for a in admitted):
+                    continue
+                admitted.append(c)
+            for n, c in enumerate(admitted):
+                assert c["confirm"] > 0
+                lib.append({
+                    "id": f"O{j}-{n}", "cluster": int(j), "source": c["source"], "program": c["program"],
+                    "sel_net": c["sel"], "confirm_net": c["confirm"], "fights": len(ids) * len(CONFIRM_SEEDS),
+                    "feats": T.features(start_state(members[0])), "vec": cl["centroids"][int(j)],
+                })
+            log["candidates"] = [{k: c[k] for k in ("source", "sel", "confirm", "leaves")} for c in cands]
+            log["admitted"] = [c["source"] for c in admitted]
+            OUTCOME_LIB.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
+            out_path.write_text(json.dumps(log, indent=1, ensure_ascii=False))
+            print(f"cluster{j}: " + "; ".join(f"{c['source']} sel={c['sel']} confirm={c['confirm']}" for c in cands)
+                  + f" -> admitted {log['admitted']}", flush=True)
+    print(f"outcome library size {len(lib)}")
+
+
+def _leaf_macros(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Leaves in the same order distill.to_program emits rules (yes before no)."""
+    if "test" not in tree:
+        return [{"macro": tree["leaf"]}]
+    return _leaf_macros(tree["yes"]) + _leaf_macros(tree["no"])
+
+
 EVIDENCE_PATH = ROOT / "kb" / "library" / "evidence.json"
 
 
@@ -524,6 +635,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "evidence":
         cmd_evidence()
+    elif cmd == "outcome":
+        cmd_outcome()
     elif cmd == "cluster":
         cmd_cluster()
     elif cmd == "cluster_hints":
