@@ -5583,7 +5583,10 @@ class SwitchPolicy(OnlinePolicy):
             return act, state
         if self.model is None:
             return "default", state
-        adv = V.predict_advantages(self.model, V.featurize(snap, state, self._start_ehp))
+        x = V.featurize(snap, state, self._start_ehp)
+        if self.model.get("ext"):
+            x = x + V.featurize_ext(snap, getattr(self, "_last_dist", None))
+        adv = V.predict_advantages(self.model, x)
         best = max(adv, key=adv.get)
         return (best if adv[best] > self.tau else "default"), state
 
@@ -5609,6 +5612,9 @@ class SwitchPolicy(OnlinePolicy):
             act, state = self.decide(step, snap)
             self.apply(act, state)
             self.decisions.append(act)
+            import value as V
+
+            self._last_dist = V.army_distance(snap)
         if getattr(self, "_cur_prog", None) is not None:
             _program_mode(self, self._cur_prog, step, snap)
         return JevActionPolicy.act(self, map_name, step, snap)

@@ -64,6 +64,44 @@ def featurize(snap: Dict[str, Any], state: Dict[str, Any], start_ehp: Optional[T
     return T.feature_vector(T.features(state)) + extra
 
 
+def army_distance(snap: Dict[str, Any]) -> float:
+    import jev_smac_policy as J
+
+    allies, enemies = J.living(snap["allies"]), J.living(snap["enemies"])
+    if not allies or not enemies:
+        return 0.0
+    ax, ay = J._centroid(allies)
+    ex, ey = J._centroid(enemies)
+    return float(((ax - ex) ** 2 + (ay - ey) ** 2) ** 0.5)
+
+
+def featurize_ext(snap: Dict[str, Any], last_dist: Optional[float]) -> List[float]:
+    """Round-8 extra physics: per-role health, speed/range mix, wounded share, closing speed."""
+    import jev_smac_policy as J
+
+    def full(u):
+        return float(u.get("max_hp") or 1) + float(u.get("max_shield") or 0)
+
+    def role_frac(units, role):
+        us = [u for u in units if u.get("role") == role]
+        return sum(J._ehp(u) for u in us) / max(sum(full(u) for u in us), 1.0) if us else 0.0
+
+    out: List[float] = []
+    for side in ("allies", "enemies"):
+        units = J.living(snap[side])
+        out += [role_frac(units, r) for r in ("ranged", "melee", "heal")]
+        out += [
+            float(sum(1 for u in units if float(u.get("speed") or 0) >= 4.0)),
+            float(sum(1 for u in units if float(u.get("speed") or 0) < 4.0)),
+            float(sum(1 for u in units if float(u.get("range") or 0) >= 5.5)),
+            float(sum(1 for u in units if 0 < float(u.get("range") or 0) < 5.5)),
+            sum(1 for u in units if J._ehp(u) < 0.4 * full(u)) / max(len(units), 1),
+        ]
+    d = army_distance(snap)
+    out.append(0.0 if last_dist is None else d - last_dist)
+    return out
+
+
 def _rows(data: List[Dict[str, Any]], actions: List[str]):
     X, y, g, n_feat = [], [], [], None
     for ep in data:

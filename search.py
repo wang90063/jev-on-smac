@@ -177,6 +177,7 @@ def rollout_episode(job) -> Dict[str, Any]:
             if step % J.SwitchPolicy.DECIDE == 0 and J.living(snap["allies"]) and J.living(snap["enemies"]):
                 state = J.commander_state(step, dict(snap), list(pol._recent), pol._hp_trend)
                 x = V.featurize(snap, state, pol._start_ehp)
+                x_ext = V.featurize_ext(snap, getattr(pol, "_last_dist", None))
                 q = {}
                 for a in actions:
                     e2, p2 = copy.deepcopy(env), copy.deepcopy(pol)
@@ -187,7 +188,7 @@ def rollout_episode(job) -> Dict[str, Any]:
                     e_f = _ehp_sum(e2._gym.enemies.values()) / max(e0, 1.0)
                     q[a] = round(float(bool(i2.get("battle_won"))) + 0.1 * (a_f - e_f), 4)
                     e2.close()
-                points.append({"step": step, "x": x, "q": q})
+                points.append({"step": step, "x": x, "x_ext": x_ext, "q": q})
             acts = pol.act("rollout", step, snap)
             _, done, info = env.step(acts)
             step += 1
