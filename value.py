@@ -102,30 +102,43 @@ def featurize_ext(snap: Dict[str, Any], last_dist: Optional[float]) -> List[floa
     return out
 
 
-def _rows(data: List[Dict[str, Any]], actions: List[str]):
+def _x(d: Dict[str, Any], ext: bool) -> List[float]:
+    return d["x"] + (d.get("x_ext") or [0.0] * 17 if ext else [])
+
+
+def _rows(data: List[Dict[str, Any]], actions: List[str], target: str = "adv", ext: bool = False):
+    """One row per (decision point, action). target=adv: y = Q(a) - Q(default);
+    target=q: y = Q(a), with "default" as its own action."""
+    acts = actions if target == "adv" else actions + ["default"]
     X, y, g, n_feat = [], [], [], None
     for ep in data:
         for d in ep["points"]:
             q = d["q"]
-            for i, a in enumerate(actions):
-                onehot = [0.0] * len(actions)
+            x = _x(d, ext)
+            for i, a in enumerate(acts):
+                onehot = [0.0] * len(acts)
                 onehot[i] = 1.0
-                X.append(d["x"] + onehot)
-                y.append(q[a] - q["default"])
+                X.append(x + onehot)
+                y.append(q[a] - q["default"] if target == "adv" else q[a])
                 g.append(ep["id"])
-            n_feat = len(d["x"])
+            n_feat = len(x)
     return np.array(X), np.array(y), np.array(g), n_feat
 
 
 def predict_advantages(model: Dict[str, Any], x: List[float]) -> Dict[str, float]:
     acts = model["actions"]
+    target = model.get("target", "adv")
+    cols = acts if target == "adv" else acts + ["default"]
     rows = []
-    for i in range(len(acts)):
-        onehot = [0.0] * len(acts)
+    for i in range(len(cols)):
+        onehot = [0.0] * len(cols)
         onehot[i] = 1.0
         rows.append(list(x) + onehot)
     pred = model["reg"].predict(np.array(rows))
-    return {a: float(p) for a, p in zip(acts, pred)}
+    if target == "adv":
+        return {a: float(p) for a, p in zip(acts, pred)}
+    base = float(pred[-1])
+    return {a: float(p) - base for a, p in zip(acts, pred[:-1])}
 
 
 def load_model() -> Dict[str, Any]:
@@ -141,43 +154,81 @@ def _load(paths) -> List[Dict[str, Any]]:
     return data
 
 
-def cmd_train(paths=None) -> None:
+def _fit(X, y, depth: int = 4, leaf: int = 40):
     from sklearn.ensemble import HistGradientBoostingRegressor
+
+    return HistGradientBoostingRegressor(max_depth=depth, learning_rate=0.05, max_iter=300,
+                                         min_samples_leaf=leaf, l2_regularization=1.0).fit(X, y)
+
+
+TAUS = (0.05, 0.1, 0.15, 0.2)
+
+
+def cv_gain(data, target="adv", ext=False, depth=4, leaf=40, folds=5) -> Tuple[Dict[float, float], float]:
+    """Grouped CV (by fight): realised advantage of following the model at each tau."""
     from sklearn.model_selection import GroupKFold
 
     actions = _actions()
-    data = _load(paths or DATA_PATHS)
-    X, y, g, n_feat = _rows(data, actions)
-    na = len(actions)
-    print(f"{len(data)} episodes, {len(X) // na} decision points, {n_feat} features")
-
-    def fit(Xt, yt):
-        return HistGradientBoostingRegressor(max_depth=4, learning_rate=0.05, max_iter=300, min_samples_leaf=40, l2_regularization=1.0).fit(Xt, yt)
-
-    # Grouped CV: realised advantage of following the model at each tau.
-    taus = (0.0, 0.05, 0.1, 0.2, 0.3)
-    gain = {t: 0.0 for t in taus}
+    X, y, g, _ = _rows(data, actions, target, ext)
+    nc = len(actions) + (0 if target == "adv" else 1)
+    gain = {t: 0.0 for t in TAUS}
     oracle = 0.0
-    for tr, te in GroupKFold(n_splits=5).split(X, y, g):
-        reg = fit(X[tr], y[tr])
-        p = reg.predict(X[te]).reshape(-1, na)
-        truth = y[te].reshape(-1, na)
+    for tr, te in GroupKFold(n_splits=folds).split(X, y, g):
+        reg = _fit(X[tr], y[tr], depth, leaf)
+        p = reg.predict(X[te]).reshape(-1, nc)
+        truth = y[te].reshape(-1, nc)
+        if target == "q":
+            p = p[:, :-1] - p[:, -1:]
+            truth = truth[:, :-1] - truth[:, -1:]
         oracle += np.maximum(truth.max(1), 0).sum()
-        for t in taus:
-            pick = p.argmax(1)
-            take = p.max(1) > t
-            gain[t] += (truth[np.arange(len(pick)), pick] * take).sum()
-    print(f"CV (held-out fights): oracle gain {oracle:.2f}; " + ", ".join(f"tau={t}: {gain[t]:+.2f}" for t in taus))
-    reg = fit(X, y)
+        pick = p.argmax(1)
+        for t in TAUS:
+            gain[t] += (truth[np.arange(len(pick)), pick] * (p.max(1) > t)).sum()
+    return gain, oracle
+
+
+def cmd_cv(paths) -> None:
+    """Compare target form, features and tree size by grouped CV; train only."""
+    data = _load(paths)
+    has_ext = [e for e in data if e["points"] and "x_ext" in e["points"][0]]
+    print(f"{len(data)} episodes ({len(has_ext)} with extended features)")
+    for name, sub, kw in (
+        ("adv  base d4 l40", data, dict(target="adv")),
+        ("q    base d4 l40", data, dict(target="q")),
+        ("adv  base d3 l80", data, dict(target="adv", depth=3, leaf=80)),
+        ("adv  base d6 l20", data, dict(target="adv", depth=6, leaf=20)),
+        ("adv  base (ext-subset)", has_ext, dict(target="adv")),
+        ("adv  ext  (ext-subset)", has_ext, dict(target="adv", ext=True)),
+    ):
+        if len({e["id"] for e in sub}) < 5:
+            continue
+        gain, oracle = cv_gain(sub, **kw)
+        best = max(gain, key=gain.get)
+        print(f"{name:24s} oracle {oracle:7.1f}  " + "  ".join(f"t{t}:{gain[t]:+6.1f}" for t in TAUS)
+              + f"  best {gain[best] / max(oracle, 1e-9):.1%}", flush=True)
+
+
+def cmd_train(paths=None, target: str = "adv", ext: bool = False, depth: int = 4, leaf: int = 40) -> None:
+    actions = _actions()
+    data = _load(paths or DATA_PATHS)
+    if ext:
+        data = [e for e in data if e["points"] and "x_ext" in e["points"][0]] or data
+    X, y, g, n_feat = _rows(data, actions, target, ext)
+    gain, oracle = cv_gain(data, target, ext, depth, leaf)
+    print(f"{len(data)} episodes, {n_feat} features; CV oracle {oracle:.1f}; " + ", ".join(f"tau={t}: {gain[t]:+.1f}" for t in TAUS))
+    reg = _fit(X, y, depth, leaf)
     MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(MODEL_PATH, "wb") as f:
-        pickle.dump({"reg": reg, "actions": actions, "n_feat": n_feat,
-                     "features": "tactic_dsl.feature_vector + value.featurize extras"}, f)
+        pickle.dump({"reg": reg, "actions": actions, "n_feat": n_feat, "target": target, "ext": ext,
+                     "depth": depth, "leaf": leaf,
+                     "features": "tactic_dsl.feature_vector + value.featurize extras" + (" + featurize_ext" if ext else "")}, f)
     print("wrote", MODEL_PATH)
 
 
 if __name__ == "__main__":
     if sys.argv[1:2] == ["train"]:
         cmd_train([Path(p) for p in sys.argv[2:]] or None)
+    elif sys.argv[1:2] == ["cv"]:
+        cmd_cv([Path(p) for p in sys.argv[2:]])
     else:
         print(__doc__)
