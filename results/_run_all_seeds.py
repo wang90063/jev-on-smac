@@ -18,7 +18,7 @@ os.environ["JEV_QUIET"] = "1"
 from macsmac.env import StarCraft2Env
 from macsmac.maps import MAP_PARAMS
 from macsmac.snapshot import snapshot
-from jev_smac_policy import DummyActionPolicy, JevActionPolicy, OnlinePolicy
+from jev_smac_policy import DummyActionPolicy, JevActionPolicy, OnlinePolicy, ValueOnlinePolicy
 
 SEEDS = [1, 2, 3, 4, 5]
 MAPS = list(MAP_PARAMS.keys())
@@ -204,7 +204,9 @@ def main():
     if "dummy" in modes:
         policies.append(DummyActionPolicy())
     if "online" in modes:
-        policies.append(OnlinePolicy())  # the online default: nearest cluster
+        policies.append(ValueOnlinePolicy())  # the online default since round 8
+    if "online_nearest" in modes:
+        policies.append(OnlinePolicy(tag="online_nearest"))  # previous default
     if "jev" in modes:
         policies.append(JevActionPolicy())
     for pol in policies:

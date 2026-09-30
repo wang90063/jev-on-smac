@@ -77,6 +77,8 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec == "value_online":
+        return J.ValueOnlinePolicy(tag=spec)
     if spec.startswith("switch"):
         # switch = base policy B (nearest cluster re-picked every 5 steps);
         # switch:<tau> = value policy leaving default when predicted advantage > tau.

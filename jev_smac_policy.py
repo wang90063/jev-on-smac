@@ -5620,6 +5620,20 @@ class SwitchPolicy(OnlinePolicy):
         return JevActionPolicy.act(self, map_name, step, snap)
 
 
+class ValueOnlinePolicy(SwitchPolicy):
+    """The online default since round 8: nearest-cluster program, re-decided every
+    5 steps, leaving it for a macro only when the value model predicts an advantage
+    above tau. The model was trained offline on whole-episode rollout returns;
+    online play uses physical features only and never clones state."""
+
+    TAU = 0.1
+
+    def __init__(self, tag: str = "online", tau: Optional[float] = None, **kw):
+        import value as V
+
+        super().__init__(model=V.load_model(), tau=self.TAU if tau is None else tau, tag=tag, **kw)
+
+
 class ApiActionPolicy(JevActionPolicy):
     """Same jobs as Jev, answered by the LLM gateway with reasoning off."""
 
