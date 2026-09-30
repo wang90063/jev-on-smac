@@ -5552,6 +5552,68 @@ class OnlinePolicy(LibraryPolicy):
         super().__init__(lib, chooser=chooser, k=k, seed=seed, tag=tag, clusters=clusters, fallback=True, evidence=evidence, n_neighbors=n_neighbors)
 
 
+class SwitchPolicy(OnlinePolicy):
+    """Re-decide every DECIDE steps: the nearest-cluster program ("default") or a macro.
+
+    With no model it is the base policy B (nearest cluster, re-picked every 5
+    steps). With a value model it leaves "default" only when the predicted
+    advantage of a macro beats tau. force_next pins the next decision; the
+    offline rollout labeller uses it. Nothing here clones simulator state.
+    """
+
+    DECIDE = 5
+
+    def __init__(self, model: Any = None, tau: float = float("inf"), tag: str = "switch", **kw):
+        super().__init__(chooser="nearest", tag=tag, **kw)
+        self.model = model
+        self.tau = tau
+        self.force_next: Optional[str] = None
+        self.current = "default"
+        self.decisions: List[str] = []
+        self._start_ehp: Optional[Tuple[float, float]] = None
+
+    def decide(self, step: int, snap: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
+        """Pick this block's action; returns (action, state) for the caller to log."""
+        import tactic_dsl as T
+        import value as V
+
+        state = commander_state(step, dict(snap), list(self._recent), self._hp_trend)
+        if self.force_next is not None:
+            act, self.force_next = self.force_next, None
+            return act, state
+        if self.model is None:
+            return "default", state
+        adv = V.predict_advantages(self.model, V.featurize(snap, state, self._start_ehp))
+        best = max(adv, key=adv.get)
+        return (best if adv[best] > self.tau else "default"), state
+
+    def apply(self, act: str, state: Dict[str, Any]) -> None:
+        import search as SE
+        import tactic_dsl as T
+
+        if act == "default":
+            cands = self._candidates(T.feature_vector(T.features(state)))
+            self._run(cands[0] if cands else None)
+        else:
+            prog = SE.MACROS[act]
+            self._run(None if prog is None else {"program": dict(prog, name=act)})
+        self.current = act
+
+    def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
+        if step == 0:
+            self._start_ehp = (
+                sum(_ehp(a) for a in living(snap["allies"])),
+                sum(_ehp(e) for e in living(snap["enemies"])),
+            )
+        if step % self.DECIDE == 0 and living(snap["allies"]) and living(snap["enemies"]):
+            act, state = self.decide(step, snap)
+            self.apply(act, state)
+            self.decisions.append(act)
+        if getattr(self, "_cur_prog", None) is not None:
+            _program_mode(self, self._cur_prog, step, snap)
+        return JevActionPolicy.act(self, map_name, step, snap)
+
+
 class ApiActionPolicy(JevActionPolicy):
     """Same jobs as Jev, answered by the LLM gateway with reasoning off."""
 

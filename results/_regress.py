@@ -77,6 +77,14 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith("switch"):
+        # switch = base policy B (nearest cluster re-picked every 5 steps);
+        # switch:<tau> = value policy leaving default when predicted advantage > tau.
+        if ":" not in spec:
+            return J.SwitchPolicy(tag=spec)
+        import value as V
+
+        return J.SwitchPolicy(model=V.load_model(), tau=float(spec.split(":", 1)[1]), tag=spec)
     if spec.startswith("online"):
         # The online default (nearest cluster) or another chooser on the same library.
         # online[:chooser[:k<int>n<int>]], e.g. online:jev2:k5n8

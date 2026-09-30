@@ -1,0 +1,145 @@
+"""Value model: predicted advantage of each macro over the default, from physics only.
+
+Labels come from offline rollouts (search.py rollout): at a state the base
+policy B reached, each action runs for 5 steps and then B plays to the end.
+The model sees only physical features, so online play never clones state.
+
+    python value.py train      # fit on results/search/rollout_train.json, grouped CV report
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import pickle
+import sys
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("JEV_QUIET", "1")
+
+MODEL_PATH = ROOT / "kb" / "library" / "value_model.pkl"
+DATA_PATHS = [ROOT / "results" / "search" / "rollout_train.json"]
+
+
+def _actions() -> List[str]:
+    import search as SE
+
+    return list(SE.MACROS)
+
+
+def featurize(snap: Dict[str, Any], state: Dict[str, Any], start_ehp: Optional[Tuple[float, float]]) -> List[float]:
+    """Coarse DSL features plus continuous physical quantities. No map name."""
+    import jev_smac_policy as J
+    import tactic_dsl as T
+
+    allies = [a for a in J.living(snap["allies"])]
+    enemies = [e for e in J.living(snap["enemies"])]
+    a0, e0 = start_ehp or (1.0, 1.0)
+    a_ehp = sum(J._ehp(a) for a in allies)
+    e_ehp = sum(J._ehp(e) for e in enemies)
+
+    def dps(units):
+        return sum(float(u.get("dmg") or 0) * max(1, int(u.get("attacks") or 1)) / max(float(u.get("max_cd") or 0.86), 0.1) for u in units)
+
+    if allies and enemies:
+        ax, ay = J._centroid(allies)
+        ex, ey = J._centroid(enemies)
+        dist = ((ax - ex) ** 2 + (ay - ey) ** 2) ** 0.5
+        reach = np.mean([float(a.get("range") or 1) for a in allies])
+        eng_a = np.mean([any(J.hypot(a, e) <= J._weapon_reach(a, e) + 1 for e in enemies) for a in allies])
+        eng_e = np.mean([any(J.hypot(e, a) <= J._weapon_reach(e, a) + 1 for a in allies) for e in enemies])
+        spread_a = np.mean([J.hypot(a, {"x": ax, "y": ay}) for a in allies])
+    else:
+        dist = reach = eng_a = eng_e = spread_a = 0.0
+    extra = [
+        a_ehp / max(a0, 1.0), e_ehp / max(e0, 1.0), a_ehp / max(e_ehp, 1.0),
+        dps(allies) / max(dps(enemies), 1e-3), dist / max(reach, 0.5),
+        float(eng_a), float(eng_e), float(spread_a), float(len(allies)), float(len(enemies)),
+    ]
+    return T.feature_vector(T.features(state)) + extra
+
+
+def _rows(data: List[Dict[str, Any]], actions: List[str]):
+    X, y, g, n_feat = [], [], [], None
+    for ep in data:
+        for d in ep["points"]:
+            q = d["q"]
+            for i, a in enumerate(actions):
+                onehot = [0.0] * len(actions)
+                onehot[i] = 1.0
+                X.append(d["x"] + onehot)
+                y.append(q[a] - q["default"])
+                g.append(ep["id"])
+            n_feat = len(d["x"])
+    return np.array(X), np.array(y), np.array(g), n_feat
+
+
+def predict_advantages(model: Dict[str, Any], x: List[float]) -> Dict[str, float]:
+    acts = model["actions"]
+    rows = []
+    for i in range(len(acts)):
+        onehot = [0.0] * len(acts)
+        onehot[i] = 1.0
+        rows.append(list(x) + onehot)
+    pred = model["reg"].predict(np.array(rows))
+    return {a: float(p) for a, p in zip(acts, pred)}
+
+
+def load_model() -> Dict[str, Any]:
+    with open(MODEL_PATH, "rb") as f:
+        return pickle.load(f)
+
+
+def _load(paths) -> List[Dict[str, Any]]:
+    data = []
+    for p in paths:
+        if Path(p).is_file():
+            data += json.loads(Path(p).read_text())
+    return data
+
+
+def cmd_train(paths=None) -> None:
+    from sklearn.ensemble import HistGradientBoostingRegressor
+    from sklearn.model_selection import GroupKFold
+
+    actions = _actions()
+    data = _load(paths or DATA_PATHS)
+    X, y, g, n_feat = _rows(data, actions)
+    na = len(actions)
+    print(f"{len(data)} episodes, {len(X) // na} decision points, {n_feat} features")
+
+    def fit(Xt, yt):
+        return HistGradientBoostingRegressor(max_depth=4, learning_rate=0.05, max_iter=300, min_samples_leaf=40, l2_regularization=1.0).fit(Xt, yt)
+
+    # Grouped CV: realised advantage of following the model at each tau.
+    taus = (0.0, 0.05, 0.1, 0.2, 0.3)
+    gain = {t: 0.0 for t in taus}
+    oracle = 0.0
+    for tr, te in GroupKFold(n_splits=5).split(X, y, g):
+        reg = fit(X[tr], y[tr])
+        p = reg.predict(X[te]).reshape(-1, na)
+        truth = y[te].reshape(-1, na)
+        oracle += np.maximum(truth.max(1), 0).sum()
+        for t in taus:
+            pick = p.argmax(1)
+            take = p.max(1) > t
+            gain[t] += (truth[np.arange(len(pick)), pick] * take).sum()
+    print(f"CV (held-out fights): oracle gain {oracle:.2f}; " + ", ".join(f"tau={t}: {gain[t]:+.2f}" for t in taus))
+    reg = fit(X, y)
+    MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(MODEL_PATH, "wb") as f:
+        pickle.dump({"reg": reg, "actions": actions, "n_feat": n_feat,
+                     "features": "tactic_dsl.feature_vector + value.featurize extras"}, f)
+    print("wrote", MODEL_PATH)
+
+
+if __name__ == "__main__":
+    if sys.argv[1:2] == ["train"]:
+        cmd_train([Path(p) for p in sys.argv[2:]] or None)
+    else:
+        print(__doc__)

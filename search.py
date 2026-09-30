@@ -143,6 +143,69 @@ def search_episode(job) -> Dict[str, Any]:
     return {"id": scen["id"], "seed": seed, "win": int(bool(info.get("battle_won"))), "steps": step, "log": log}
 
 
+def _play_out(env, pol, step: int) -> Tuple[bool, Dict[str, Any]]:
+    done, info = False, {}
+    while not done:
+        acts = pol.act("rollout", step, snapshot(env))
+        _, done, info = env.step(acts)
+        step += 1
+    return done, info
+
+
+def rollout_episode(job) -> Dict[str, Any]:
+    """Whole-episode labels: at every decision point of the driver (base policy B,
+    or a value policy for DAgger), each action runs for one block and B plays on
+    to the end. Offline only; this clones simulator state."""
+    import value as V
+
+    scen, seed = job[0], job[1]
+    model = job[2] if len(job) > 2 else None
+    tau = job[3] if len(job) > 3 else float("inf")
+    env = SC.make_env(scen, seed)
+    env.reset()
+    pol = J.SwitchPolicy(model=model, tau=tau)
+    pol.evidence = None  # the nearest-cluster pick does not use it; keeps copies light
+    snap0 = snapshot(env)
+    pol._start_ehp = (sum(J._ehp(a) for a in J.living(snap0["allies"])), sum(J._ehp(e) for e in J.living(snap0["enemies"])))
+    a0, e0 = _ehp_sum(env._gym.agents.values()), _ehp_sum(env._gym.enemies.values())
+    actions = list(MACROS) + ["default"]
+    points: List[Dict[str, Any]] = []
+    step, done, info = 0, False, {}
+    try:
+        while not done:
+            snap = snapshot(env)
+            if step % J.SwitchPolicy.DECIDE == 0 and J.living(snap["allies"]) and J.living(snap["enemies"]):
+                state = J.commander_state(step, dict(snap), list(pol._recent), pol._hp_trend)
+                x = V.featurize(snap, state, pol._start_ehp)
+                q = {}
+                for a in actions:
+                    e2, p2 = copy.deepcopy(env), copy.deepcopy(pol)
+                    p2.force_next = a
+                    d2, i2 = _play_out(e2, p2, step)
+                    a_f = _ehp_sum(e2._gym.agents.values()) / max(a0, 1.0)
+                    e_f = _ehp_sum(e2._gym.enemies.values()) / max(e0, 1.0)
+                    q[a] = round(float(bool(i2.get("battle_won"))) + 0.1 * (a_f - e_f), 4)
+                    e2.close()
+                points.append({"step": step, "x": x, "q": q})
+            acts = pol.act("rollout", step, snap)
+            _, done, info = env.step(acts)
+            step += 1
+    finally:
+        env.close()
+    return {"id": scen["id"], "seed": seed, "win": int(bool(info.get("battle_won"))), "points": points,
+            "decisions": pol.decisions}
+
+
+def cmd_rollout(split: str = "train", seeds=(1, 2, 3, 4, 5), out_name: str = "rollout_train.json", model=None, tau=float("inf")) -> None:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    jobs = [(s, k, model, tau) for s in SC.load(split) for k in seeds]
+    with Pool(8) as pool:
+        rows = pool.map(rollout_episode, jobs, chunksize=1)
+    (OUT_DIR / out_name).write_text(json.dumps(rows))
+    n = sum(len(r["points"]) for r in rows)
+    print(f"rollout labels: {len(rows)} episodes, {n} decision points; driver wins {sum(r['win'] for r in rows)}/{len(rows)}")
+
+
 def cmd_train(split: str = "train") -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     scens = SC.load(split)
@@ -160,4 +223,9 @@ def cmd_train(split: str = "train") -> None:
 
 
 if __name__ == "__main__":
-    cmd_train(sys.argv[2] if len(sys.argv) > 2 else "train") if sys.argv[1:2] == ["train"] else print(__doc__)
+    if sys.argv[1:2] == ["train"]:
+        cmd_train(sys.argv[2] if len(sys.argv) > 2 else "train")
+    elif sys.argv[1:2] == ["rollout"]:
+        cmd_rollout()
+    else:
+        print(__doc__)
