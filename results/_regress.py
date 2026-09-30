@@ -77,6 +77,11 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith("online"):
+        # The online default (nearest cluster) or another chooser on the same library.
+        chooser = spec.split(":", 1)[1] if ":" in spec else "nearest"
+        h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
+        return J.OnlinePolicy(chooser=chooser, seed=h, tag=spec)
     if spec.startswith("dist:"):
         lib = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
         return J.ProgramActionPolicy(next(e["program"] for e in lib if e["id"] == spec[5:]), tag=spec)
@@ -277,7 +282,7 @@ def cmd_holdout(args):
     if args.official:
         jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in args.seeds]
     # Jev calls go over the network; keep them serial-ish.
-    with Pool(1 if any(p == "lib:jev" for p in args.policies) else 8) as pool:
+    with Pool(4 if any(p.endswith(("jev", "jev2")) for p in args.policies) else 8) as pool:
         rows = pool.map(_holdout_job, jobs, chunksize=1)
     out = Path(args.write)
     with out.open("w") as f:

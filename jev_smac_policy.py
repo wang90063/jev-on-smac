@@ -5311,6 +5311,8 @@ class LibraryPolicy(JevActionPolicy):
         tag: str = "",
         clusters: Optional[Dict[str, Any]] = None,
         fallback: bool = False,
+        evidence: Optional[Dict[str, Any]] = None,
+        n_neighbors: int = 5,
     ):
         import random as _random
 
@@ -5326,6 +5328,9 @@ class LibraryPolicy(JevActionPolicy):
         self.k = k
         self.clusters = clusters
         self.fallback = fallback
+        # evidence: {"train_vecs": {fight: vec}, "programs": {id: {fight: {flip, lose, net}}}}
+        self.evidence = evidence
+        self.n_neighbors = n_neighbors
         self.selector = selector if selector is not None or chooser != "jev" else JevClient()
         self._rng = _random.Random(seed)
         self._pick_sig: Optional[Tuple[int, ...]] = None
@@ -5363,7 +5368,8 @@ class LibraryPolicy(JevActionPolicy):
 
         # Copy so the Dummy path sees exactly the snapshot it would have seen.
         state = commander_state(step, dict(snap), list(self._recent), self._hp_trend)
-        cands: List[Optional[Dict[str, Any]]] = list(self._candidates(T.feature_vector(T.features(state))))
+        vec = T.feature_vector(T.features(state))
+        cands: List[Optional[Dict[str, Any]]] = list(self._candidates(vec))
         if self.fallback:
             cands.append(None)
         if not cands:
@@ -5371,6 +5377,12 @@ class LibraryPolicy(JevActionPolicy):
         pick = cands[0]
         if self.chooser == "random":
             pick = self._rng.choice(cands)
+        elif self.chooser == "evidence":
+            ev = self._neighbor_evidence(vec, cands)
+            best = max(cands, key=lambda e: (ev[self._cid(e)]["net"], -cands.index(e)))
+            pick = best if ev[self._cid(best)]["net"] > 0 else (None if self.fallback else best)
+        elif self.chooser == "jev2" and len(cands) > 1:
+            pick = self._ask_jev2(state, vec, cands)
         elif self.chooser == "jev" and len(cands) > 1:
             criteria = {}
             for e in cands:
@@ -5417,6 +5429,82 @@ class LibraryPolicy(JevActionPolicy):
         self._run(pick)
         self.picks_made.append(f"t={step} {self.NONE_ID if pick is None else pick['id']}")
 
+    def _cid(self, e: Optional[Dict[str, Any]]) -> str:
+        return self.NONE_ID if e is None else e["id"]
+
+    def _neighbor_fights(self, vec: List[float]) -> List[str]:
+        tv = (self.evidence or {}).get("train_vecs") or {}
+        return sorted(tv, key=lambda f: sum((a - b) ** 2 for a, b in zip(tv[f], vec)))[: self.n_neighbors]
+
+    def _neighbor_evidence(self, vec: List[float], cands: List[Optional[Dict[str, Any]]]) -> Dict[str, Dict[str, int]]:
+        """Paired record vs attack-move on the most similar training fights."""
+        fights = self._neighbor_fights(vec)
+        progs = (self.evidence or {}).get("programs") or {}
+        out: Dict[str, Dict[str, int]] = {}
+        for e in cands:
+            cid = self._cid(e)
+            rec = {"flip": 0, "lose": 0, "net": 0, "fights": len(fights)}
+            if e is not None:
+                for f in fights:
+                    r = (progs.get(cid) or {}).get(f)
+                    if r:
+                        rec["flip"] += r["flip"]
+                        rec["lose"] += r["lose"]
+                        rec["net"] += r["net"]
+            out[cid] = rec
+        return out
+
+    def _ask_jev2(self, state: Dict[str, Any], vec: List[float], cands: List[Optional[Dict[str, Any]]]) -> Optional[Dict[str, Any]]:
+        """Jev picks with similarity rank and paired evidence on similar fights."""
+        import tactic_dsl as T
+
+        ev = self._neighbor_evidence(vec, cands)
+        ranks = {}
+        if self.clusters:
+            order = sorted(
+                range(len(self.clusters["centroids"])),
+                key=lambda j: sum((a - b) ** 2 for a, b in zip(self.clusters["centroids"][j], vec)),
+            )
+            ranks = {j: i for i, j in enumerate(order)}
+        criteria = {}
+        for e in cands:
+            cid = self._cid(e)
+            r = ev[cid]
+            if e is None:
+                criteria[cid] = {
+                    "does": "Baseline: attack-move with the code-default target rule. No program.",
+                    "similar_fights_record": "baseline (by definition 0 flips, 0 losses)",
+                }
+                continue
+            rank = ranks.get(e.get("cluster"), 99)
+            criteria[cid] = {
+                "does": T.summarize(e["program"]),
+                "idea": e["program"].get("why", ""),
+                "similarity": ["closest cluster", "second closest cluster", "third closest cluster"][rank] if rank < 3 else "farther cluster",
+                "similar_fights_record": (
+                    f"on the {r['fights']} most similar training fights x 5 seeds, compared seed by seed with "
+                    f"attack-move: turned {r['flip']} losses into wins, turned {r['lose']} wins into losses (net {r['net']:+d})"
+                ),
+            }
+        questions = {
+            "program": {
+                "type": "choice",
+                "instructions": (
+                    "Pick the tactic program for this fight. Code moves the units; a program only sets exam picks. "
+                    "similar_fights_record is paired evidence from training fights most like this one: "
+                    "each count compares the program with attack-move on the same fight and spawn. "
+                    "Prefer a program whose record is clearly positive and that comes from a close cluster. "
+                    "If the evidence is weak, mixed, or negative, choose the baseline."
+                ),
+                "criteria": criteria,
+            }
+        }
+        result = self.selector.system_one(state, questions)
+        self.n_select_calls += 1
+        answers = (result or {}).get("answers") if isinstance(result, dict) else None
+        chosen = _pick_choice((answers or {}).get("program"), list(criteria), self._cid(cands[0]))
+        return next((e for e in cands if self._cid(e) == chosen), None)
+
     def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
         if step == 0:
             self._pick_sig = None
@@ -5428,6 +5516,25 @@ class LibraryPolicy(JevActionPolicy):
         if getattr(self, "_cur_prog", None) is not None:
             _program_mode(self, self._cur_prog, step, snap)
         return super().act(map_name, step, snap)
+
+
+class OnlinePolicy(LibraryPolicy):
+    """The online default: forged cluster library, nearest cluster, Dummy fallback.
+
+    Jev (chooser="jev2") replaces the nearest-cluster pick only once it wins a
+    paired comparison against it on test2.
+    """
+
+    def __init__(self, chooser: str = "nearest", seed: int = 0, tag: str = "online", k: int = 4):
+        import json as _json
+        from pathlib import Path as _Path
+
+        lib_dir = _Path(__file__).resolve().parent / "kb" / "library"
+        lib = [e for e in _json.loads((lib_dir / "cluster_programs.json").read_text()) if e.get("source") != "hand"]
+        clusters = _json.loads((lib_dir / "clusters.json").read_text())
+        ev_path = lib_dir / "evidence.json"
+        evidence = _json.loads(ev_path.read_text()) if ev_path.is_file() else None
+        super().__init__(lib, chooser=chooser, k=k, seed=seed, tag=tag, clusters=clusters, fallback=True, evidence=evidence)
 
 
 class ApiActionPolicy(JevActionPolicy):

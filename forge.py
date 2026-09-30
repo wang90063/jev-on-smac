@@ -488,9 +488,43 @@ def cmd_cluster(lib_path: Path = None, out_dir: Path = None, hints: bool = False
     print(f"library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
 
 
+EVIDENCE_PATH = ROOT / "kb" / "library" / "evidence.json"
+
+
+def cmd_evidence() -> None:
+    """Paired record of every lib3 program vs Dummy on every train fight (seeds 1-5).
+
+    Online choosers look up the fights most similar to the current one here.
+    Train only: val and test never feed this table."""
+    train = SC.load("train")
+    lib = json.loads(LIB3_PATH.read_text())
+    specs = {"dummy": "dummy"}
+    for e in lib:
+        specs[e["id"]] = "prog:" + _prog_path(e["program"])
+    jobs = [(sp, s, k) for sp in specs.values() for s in train for k in SEEDS]
+    with Pool(8) as pool:
+        rows = pool.map(_episode, jobs, chunksize=2)
+    win = {(sp, s["id"], k): r["win"] for (sp, s, k), r in zip(jobs, rows)}
+    programs: Dict[str, Dict[str, Dict[str, int]]] = {}
+    for pid, sp in specs.items():
+        if pid == "dummy":
+            continue
+        rec = programs.setdefault(pid, {})
+        for s in train:
+            flip = sum(int(win[(sp, s["id"], k)] and not win[("dummy", s["id"], k)]) for k in SEEDS)
+            lose = sum(int(win[("dummy", s["id"], k)] and not win[(sp, s["id"], k)]) for k in SEEDS)
+            rec[s["id"]] = {"flip": flip, "lose": lose, "net": flip - lose}
+    vecs = {s["id"]: T.feature_vector(T.features(start_state(s))) for s in train}
+    EVIDENCE_PATH.write_text(json.dumps({"train_vecs": vecs, "programs": programs}))
+    for pid, rec in programs.items():
+        print(pid, "net over train", sum(r["net"] for r in rec.values()), flush=True)
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    if cmd == "cluster":
+    if cmd == "evidence":
+        cmd_evidence()
+    elif cmd == "cluster":
         cmd_cluster()
     elif cmd == "cluster_hints":
         cmd_cluster(ROOT / "kb" / "library" / "hinted_programs.json", ROOT / "results" / "forge4", hints=True)
