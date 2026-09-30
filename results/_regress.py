@@ -79,9 +79,17 @@ def make_policy(spec: str, map_name: str, seed: int):
         return J.ProgramActionPolicy(prog)
     if spec.startswith("online"):
         # The online default (nearest cluster) or another chooser on the same library.
-        chooser = spec.split(":", 1)[1] if ":" in spec else "nearest"
+        # online[:chooser[:k<int>n<int>]], e.g. online:jev2:k5n8
+        parts = spec.split(":")
+        chooser = parts[1] if len(parts) > 1 else "nearest"
+        k, nn = 4, 5
+        if len(parts) > 2:
+            import re as _re
+
+            m = _re.fullmatch(r"k(\d+)n(\d+)", parts[2])
+            k, nn = int(m.group(1)), int(m.group(2))
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
-        return J.OnlinePolicy(chooser=chooser, seed=h, tag=spec)
+        return J.OnlinePolicy(chooser=chooser, seed=h, tag=spec, k=k, n_neighbors=nn)
     if spec.startswith("dist:"):
         lib = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
         return J.ProgramActionPolicy(next(e["program"] for e in lib if e["id"] == spec[5:]), tag=spec)
@@ -282,7 +290,7 @@ def cmd_holdout(args):
     if args.official:
         jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in args.seeds]
     # Jev calls go over the network; keep them serial-ish.
-    with Pool(4 if any(p.endswith(("jev", "jev2")) for p in args.policies) else 8) as pool:
+    with Pool(4 if any(p.split(":")[1:2] and p.split(":")[1].startswith("jev") or p.endswith("jev") for p in args.policies) else 8) as pool:
         rows = pool.map(_holdout_job, jobs, chunksize=1)
     out = Path(args.write)
     with out.open("w") as f:

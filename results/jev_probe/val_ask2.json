@@ -1,0 +1,263 @@
+[
+ {
+  "id": "v0002",
+  "good": "C0-forge",
+  "bad": "C3-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0052",
+  "good": "C2-forge",
+  "bad": "none",
+  "jev": "C2-forge",
+  "evidence": "C2-forge",
+  "nearest": "C2-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0053",
+  "good": "C2-forge",
+  "bad": "C4-forge",
+  "jev": "C4-forge",
+  "evidence": "C4-forge",
+  "nearest": "C4-forge",
+  "prefer_none": "C2-forge"
+ },
+ {
+  "id": "v0066",
+  "good": "C3-forge",
+  "bad": "none",
+  "jev": "none",
+  "evidence": "C3-forge",
+  "nearest": "C3-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0116",
+  "good": "C2-forge",
+  "bad": "C0-forge",
+  "jev": "C2-forge",
+  "evidence": "C2-forge",
+  "nearest": "C2-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0141",
+  "good": "C0-forge",
+  "bad": "C2-forge",
+  "jev": "C0-forge",
+  "evidence": "C2-forge",
+  "nearest": "C2-forge",
+  "prefer_none": "C2-forge"
+ },
+ {
+  "id": "v0142",
+  "good": "C0-forge",
+  "bad": "none",
+  "jev": "none",
+  "evidence": "none",
+  "nearest": "none",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0181",
+  "good": "C0-forge",
+  "bad": "C1-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C1-forge"
+ },
+ {
+  "id": "v0188",
+  "good": "C0-forge",
+  "bad": "C2-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0207",
+  "good": "none",
+  "bad": "C2-forge",
+  "jev": "none",
+  "evidence": "none",
+  "nearest": "none",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0245",
+  "good": "C0-forge",
+  "bad": "C4-forge",
+  "jev": "C4-forge",
+  "evidence": "C4-forge",
+  "nearest": "C4-forge",
+  "prefer_none": "C4-forge"
+ },
+ {
+  "id": "v0253",
+  "good": "C0-forge",
+  "bad": "C2-forge",
+  "jev": "C2-forge",
+  "evidence": "C0-forge",
+  "nearest": "C2-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0259",
+  "good": "C1-forge",
+  "bad": "C3-forge",
+  "jev": "C1-forge",
+  "evidence": "C1-forge",
+  "nearest": "C1-forge",
+  "prefer_none": "C1-forge"
+ },
+ {
+  "id": "v0284",
+  "good": "C0-forge",
+  "bad": "C3-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C3-forge"
+ },
+ {
+  "id": "v0301",
+  "good": "C4-forge",
+  "bad": "C2-forge",
+  "jev": "C2-forge",
+  "evidence": "C2-forge",
+  "nearest": "C2-forge",
+  "prefer_none": "C2-forge"
+ },
+ {
+  "id": "v0309",
+  "good": "C1-forge",
+  "bad": "none",
+  "jev": "C1-forge",
+  "evidence": "C1-forge",
+  "nearest": "C1-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0339",
+  "good": "C2-forge",
+  "bad": "C4-forge",
+  "jev": "C4-forge",
+  "evidence": "C4-forge",
+  "nearest": "C4-forge",
+  "prefer_none": "C2-forge"
+ },
+ {
+  "id": "v0379",
+  "good": "C2-forge",
+  "bad": "none",
+  "jev": "none",
+  "evidence": "C2-forge",
+  "nearest": "none",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0389",
+  "good": "C2-forge",
+  "bad": "none",
+  "jev": "none",
+  "evidence": "none",
+  "nearest": "C2-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0424",
+  "good": "none",
+  "bad": "C0-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0428",
+  "good": "C0-forge",
+  "bad": "C2-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C2-forge"
+ },
+ {
+  "id": "v0476",
+  "good": "none",
+  "bad": "C1-forge",
+  "jev": "none",
+  "evidence": "none",
+  "nearest": "C1-forge",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0488",
+  "good": "C3-forge",
+  "bad": "C0-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C3-forge",
+  "prefer_none": "C3-forge"
+ },
+ {
+  "id": "v0504",
+  "good": "C0-forge",
+  "bad": "C4-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0538",
+  "good": "C3-forge",
+  "bad": "C0-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C3-forge"
+ },
+ {
+  "id": "v0555",
+  "good": "C0-forge",
+  "bad": "C3-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C0-forge"
+ },
+ {
+  "id": "v0562",
+  "good": "C0-forge",
+  "bad": "C1-forge",
+  "jev": "C0-forge",
+  "evidence": "C0-forge",
+  "nearest": "C0-forge",
+  "prefer_none": "C1-forge"
+ },
+ {
+  "id": "v0567",
+  "good": "C2-forge",
+  "bad": "none",
+  "jev": "none",
+  "evidence": "C2-forge",
+  "nearest": "none",
+  "prefer_none": "none"
+ },
+ {
+  "id": "v0571",
+  "good": "none",
+  "bad": "C4-forge",
+  "jev": "none",
+  "evidence": "none",
+  "nearest": "C4-forge",
+  "prefer_none": "none"
+ }
+]

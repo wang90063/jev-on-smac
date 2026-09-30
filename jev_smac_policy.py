@@ -5331,7 +5331,7 @@ class LibraryPolicy(JevActionPolicy):
         # evidence: {"train_vecs": {fight: vec}, "programs": {id: {fight: {flip, lose, net}}}}
         self.evidence = evidence
         self.n_neighbors = n_neighbors
-        self.selector = selector if selector is not None or chooser != "jev" else JevClient()
+        self.selector = selector if selector is not None or chooser not in ("jev", "jev2", "jev3") else JevClient()
         self._rng = _random.Random(seed)
         self._pick_sig: Optional[Tuple[int, ...]] = None
         self.picks_made: List[str] = []
@@ -5383,6 +5383,15 @@ class LibraryPolicy(JevActionPolicy):
             pick = best if ev[self._cid(best)]["net"] > 0 else (None if self.fallback else best)
         elif self.chooser == "jev2" and len(cands) > 1:
             pick = self._ask_jev2(state, vec, cands)
+        elif self.chooser == "jev3" and len(cands) > 1:
+            # Evidence decides when it is clear; Jev only breaks unclear cases.
+            ev = self._neighbor_evidence(vec, cands)
+            ranked = sorted(cands, key=lambda e: (ev[self._cid(e)]["net"], -cands.index(e)), reverse=True)
+            top, second = ev[self._cid(ranked[0])]["net"], ev[self._cid(ranked[1])]["net"]
+            if top >= 3 and top - second >= 2:
+                pick = ranked[0]
+            else:
+                pick = self._ask_jev2(state, vec, cands)
         elif self.chooser == "jev" and len(cands) > 1:
             criteria = {}
             for e in cands:
@@ -5525,7 +5534,7 @@ class OnlinePolicy(LibraryPolicy):
     paired comparison against it on test2.
     """
 
-    def __init__(self, chooser: str = "nearest", seed: int = 0, tag: str = "online", k: int = 4):
+    def __init__(self, chooser: str = "nearest", seed: int = 0, tag: str = "online", k: int = 4, n_neighbors: int = 5):
         import json as _json
         from pathlib import Path as _Path
 
@@ -5534,7 +5543,7 @@ class OnlinePolicy(LibraryPolicy):
         clusters = _json.loads((lib_dir / "clusters.json").read_text())
         ev_path = lib_dir / "evidence.json"
         evidence = _json.loads(ev_path.read_text()) if ev_path.is_file() else None
-        super().__init__(lib, chooser=chooser, k=k, seed=seed, tag=tag, clusters=clusters, fallback=True, evidence=evidence)
+        super().__init__(lib, chooser=chooser, k=k, seed=seed, tag=tag, clusters=clusters, fallback=True, evidence=evidence, n_neighbors=n_neighbors)
 
 
 class ApiActionPolicy(JevActionPolicy):

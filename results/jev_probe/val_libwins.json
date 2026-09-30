@@ -1,0 +1,802 @@
+{
+ "v0042": {
+  "none": 3,
+  "C0-forge": 5,
+  "C1-forge": 3,
+  "C2-forge": 5,
+  "C3-forge": 3,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0620": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0218": {
+  "none": 2,
+  "C0-forge": 0,
+  "C1-forge": 2,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0117": {
+  "none": 2,
+  "C0-forge": 1,
+  "C1-forge": 2,
+  "C2-forge": 1,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0109": {
+  "none": 2,
+  "C0-forge": 1,
+  "C1-forge": 2,
+  "C2-forge": 1,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0087": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 5,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0052": {
+  "none": 1,
+  "C0-forge": 2,
+  "C1-forge": 1,
+  "C2-forge": 4,
+  "C3-forge": 3,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0428": {
+  "none": 1,
+  "C0-forge": 3,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0538": {
+  "none": 3,
+  "C0-forge": 1,
+  "C1-forge": 3,
+  "C2-forge": 2,
+  "C3-forge": 4,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0142": {
+  "none": 0,
+  "C0-forge": 3,
+  "C1-forge": 0,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0139": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0012": {
+  "none": 2,
+  "C0-forge": 4,
+  "C1-forge": 2,
+  "C2-forge": 4,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0562": {
+  "none": 1,
+  "C0-forge": 4,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0053": {
+  "none": 2,
+  "C0-forge": 2,
+  "C1-forge": 2,
+  "C2-forge": 3,
+  "C3-forge": 2,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0236": {
+  "none": 3,
+  "C0-forge": 3,
+  "C1-forge": 3,
+  "C2-forge": 3,
+  "C3-forge": 3,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0141": {
+  "none": 2,
+  "C0-forge": 5,
+  "C1-forge": 2,
+  "C2-forge": 0,
+  "C3-forge": 2,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0250": {
+  "none": 2,
+  "C0-forge": 2,
+  "C1-forge": 2,
+  "C2-forge": 2,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0488": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 3,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0592": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 2,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 1
+ },
+ "v0262": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 2,
+  "C3-forge": 4,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 4
+ },
+ "v0066": {
+  "none": 2,
+  "C0-forge": 3,
+  "C1-forge": 2,
+  "C2-forge": 4,
+  "C3-forge": 5,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0098": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 5,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0345": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0476": {
+  "none": 3,
+  "C0-forge": 1,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0535": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 3,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0585": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0177": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 2,
+  "C2-forge": 1,
+  "C3-forge": 0,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0253": {
+  "none": 2,
+  "C0-forge": 5,
+  "C1-forge": 2,
+  "C2-forge": 0,
+  "C3-forge": 2,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0207": {
+  "none": 4,
+  "C0-forge": 2,
+  "C1-forge": 4,
+  "C2-forge": 0,
+  "C3-forge": 3,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0367": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0547": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 3,
+  "C3-forge": 4,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0492": {
+  "none": 1,
+  "C0-forge": 2,
+  "C1-forge": 1,
+  "C2-forge": 2,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0379": {
+  "none": 0,
+  "C0-forge": 3,
+  "C1-forge": 3,
+  "C2-forge": 5,
+  "C3-forge": 3,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0504": {
+  "none": 1,
+  "C0-forge": 5,
+  "C1-forge": 1,
+  "C2-forge": 5,
+  "C3-forge": 1,
+  "C4-forge": 0,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0120": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0614": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 5,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0181": {
+  "none": 1,
+  "C0-forge": 3,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0464": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0002": {
+  "none": 1,
+  "C0-forge": 3,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 0,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0555": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 1,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 5
+ },
+ "v0552": {
+  "none": 2,
+  "C0-forge": 2,
+  "C1-forge": 2,
+  "C2-forge": 2,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0281": {
+  "none": 3,
+  "C0-forge": 3,
+  "C1-forge": 3,
+  "C2-forge": 3,
+  "C3-forge": 3,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0258": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 2,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0611": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0029": {
+  "none": 2,
+  "C0-forge": 2,
+  "C1-forge": 2,
+  "C2-forge": 2,
+  "C3-forge": 2,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0188": {
+  "none": 2,
+  "C0-forge": 4,
+  "C1-forge": 2,
+  "C2-forge": 0,
+  "C3-forge": 2,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0305": {
+  "none": 3,
+  "C0-forge": 3,
+  "C1-forge": 3,
+  "C2-forge": 3,
+  "C3-forge": 3,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0537": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 4,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0581": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0571": {
+  "none": 4,
+  "C0-forge": 2,
+  "C1-forge": 4,
+  "C2-forge": 2,
+  "C3-forge": 4,
+  "C4-forge": 0,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0116": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 4,
+  "C3-forge": 3,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0099": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0390": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0318": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 4,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0309": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 5,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 4
+ },
+ "v0306": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 5,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 5
+ },
+ "v0301": {
+  "none": 4,
+  "C0-forge": 1,
+  "C1-forge": 4,
+  "C2-forge": 0,
+  "C3-forge": 4,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0424": {
+  "none": 4,
+  "C0-forge": 1,
+  "C1-forge": 4,
+  "C2-forge": 2,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0257": {
+  "none": 0,
+  "C0-forge": 1,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 0,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0182": {
+  "none": 2,
+  "C0-forge": 2,
+  "C1-forge": 2,
+  "C2-forge": 2,
+  "C3-forge": 1,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0539": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 3,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0389": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 0,
+  "C2-forge": 5,
+  "C3-forge": 0,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0436": {
+  "none": 3,
+  "C0-forge": 5,
+  "C1-forge": 3,
+  "C2-forge": 5,
+  "C3-forge": 3,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0259": {
+  "none": 2,
+  "C0-forge": 4,
+  "C1-forge": 5,
+  "C2-forge": 4,
+  "C3-forge": 0,
+  "C4-forge": 2,
+  "C9-forge": 2,
+  "C11-forge": 2
+ },
+ "v0567": {
+  "none": 0,
+  "C0-forge": 1,
+  "C1-forge": 0,
+  "C2-forge": 5,
+  "C3-forge": 1,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0544": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0132": {
+  "none": 4,
+  "C0-forge": 5,
+  "C1-forge": 4,
+  "C2-forge": 5,
+  "C3-forge": 5,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0209": {
+  "none": 0,
+  "C0-forge": 1,
+  "C1-forge": 0,
+  "C2-forge": 0,
+  "C3-forge": 2,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0220": {
+  "none": 0,
+  "C0-forge": 0,
+  "C1-forge": 0,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0502": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0000": {
+  "none": 4,
+  "C0-forge": 4,
+  "C1-forge": 4,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 4,
+  "C9-forge": 4,
+  "C11-forge": 4
+ },
+ "v0570": {
+  "none": 3,
+  "C0-forge": 4,
+  "C1-forge": 3,
+  "C2-forge": 5,
+  "C3-forge": 5,
+  "C4-forge": 5,
+  "C9-forge": 5,
+  "C11-forge": 5
+ },
+ "v0284": {
+  "none": 3,
+  "C0-forge": 5,
+  "C1-forge": 2,
+  "C2-forge": 4,
+  "C3-forge": 1,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 2
+ },
+ "v0493": {
+  "none": 3,
+  "C0-forge": 5,
+  "C1-forge": 3,
+  "C2-forge": 5,
+  "C3-forge": 4,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0613": {
+  "none": 2,
+  "C0-forge": 0,
+  "C1-forge": 2,
+  "C2-forge": 0,
+  "C3-forge": 2,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 0
+ },
+ "v0245": {
+  "none": 2,
+  "C0-forge": 4,
+  "C1-forge": 2,
+  "C2-forge": 3,
+  "C3-forge": 2,
+  "C4-forge": 1,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0339": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 4,
+  "C3-forge": 4,
+  "C4-forge": 0,
+  "C9-forge": 0,
+  "C11-forge": 1
+ },
+ "v0325": {
+  "none": 1,
+  "C0-forge": 1,
+  "C1-forge": 1,
+  "C2-forge": 1,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ },
+ "v0335": {
+  "none": 3,
+  "C0-forge": 2,
+  "C1-forge": 3,
+  "C2-forge": 2,
+  "C3-forge": 3,
+  "C4-forge": 3,
+  "C9-forge": 3,
+  "C11-forge": 3
+ },
+ "v0557": {
+  "none": 1,
+  "C0-forge": 0,
+  "C1-forge": 1,
+  "C2-forge": 0,
+  "C3-forge": 1,
+  "C4-forge": 1,
+  "C9-forge": 1,
+  "C11-forge": 1
+ }
+}

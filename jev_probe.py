@@ -112,6 +112,76 @@ def cmd_ask(split: str) -> None:
     print(f"Jev picked the better program {k}/{n}; one-sided p vs chance = {p:.4f}; calls ok {client.n_calls} fail {client.n_fail}")
 
 
+# --- round 5: the same probe on real library programs, with jev2 information ---
+
+def _lib_job(a):
+    import _regress as R
+
+    pid, spec, scen, seed = a
+    return pid, scen["id"], R.run_scenario(spec, scen, seed)["win"]
+
+
+def cmd_libwins(split: str) -> None:
+    import forge as F
+    import jev_smac_policy as J
+
+    pol = J.OnlinePolicy()
+    specs = {"none": "dummy", **{e["id"]: "prog:" + F._prog_path(e["program"]) for e in pol.lib}}
+    scens = SC.load(split)
+    jobs = [(pid, sp, s, k) for pid, sp in specs.items() for s in scens for k in (1, 2, 3, 4, 5)]
+    with Pool(8) as pool:
+        rows = pool.map(_lib_job, jobs, chunksize=4)
+    wins = {}
+    for pid, sid, w in rows:
+        wins.setdefault(sid, {}).setdefault(pid, 0)
+        wins[sid][pid] += w
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / f"{split}_libwins.json").write_text(json.dumps(wins, indent=1))
+    clear = sum(1 for v in wins.values() if max(v.values()) - min(v.values()) >= GAP)
+    print(f"{len(wins)} scenarios, {clear} with a best-worst library gap >= {GAP}")
+
+
+def cmd_ask2(split: str) -> None:
+    """Jev (jev2 information) vs prefer-none vs evidence vs nearest on clear pairs."""
+    import forge as F
+    import jev_smac_policy as J
+
+    wins = json.loads((OUT / f"{split}_libwins.json").read_text())
+    scens = {s["id"]: s for s in SC.load(split)}
+    pol = J.OnlinePolicy(chooser="jev2")
+    by_id = {e["id"]: e for e in pol.lib}
+    rng = random.Random(20261001)
+    rows = []
+    for sid, w in sorted(wins.items()):
+        good = max(w, key=lambda m: (w[m], m == "none"))
+        bad = min(w, key=lambda m: (w[m], m != "none"))
+        if w[good] - w[bad] < GAP:
+            continue
+        pair = [good, bad]
+        rng.shuffle(pair)
+        cands = [None if m == "none" else by_id[m] for m in pair]
+        state = F.start_state(scens[sid])
+        vec = T.feature_vector(T.features(state))
+        chosen = pol._cid(pol._ask_jev2(state, vec, cands))
+        ev = pol._neighbor_evidence(vec, cands)
+        ev_pick = max(pair, key=lambda m: (ev[m]["net"], m == "none"))
+        ev_pick = ev_pick if ev[ev_pick]["net"] > 0 else ("none" if "none" in pair else ev_pick)
+        near = pol._candidates(vec)
+        near_pick = next((m for m in [e["id"] for e in near] if m in pair), "none" if "none" in pair else pair[0])
+        rows.append({"id": sid, "good": good, "bad": bad, "jev": chosen, "evidence": ev_pick, "nearest": near_pick,
+                     "prefer_none": "none" if "none" in pair else rng.choice(pair)})
+        print(sid, good, w[good], bad, w[bad], "jev ->", chosen, "evidence ->", ev_pick, flush=True)
+    (OUT / f"{split}_ask2.json").write_text(json.dumps(rows, indent=1))
+    n = len(rows)
+    from math import comb
+
+    for who in ("jev", "evidence", "nearest", "prefer_none"):
+        k = sum(r[who] == r["good"] for r in rows)
+        p = sum(comb(n, i) for i in range(k, n + 1)) / 2 ** n if n else 1.0
+        print(f"{who:12s} picked the better program {k}/{n}  (one-sided p vs chance {p:.4f})")
+    print(f"jev calls ok {pol.selector.n_calls} fail {pol.selector.n_fail}")
+
+
 if __name__ == "__main__":
     cmd, split = sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else "test2"
-    {"macros": cmd_macros, "ask": cmd_ask}[cmd](split)
+    {"macros": cmd_macros, "ask": cmd_ask, "libwins": cmd_libwins, "ask2": cmd_ask2}[cmd](split)
