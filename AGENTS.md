@@ -17,7 +17,7 @@
    - **确认**：选出的程序再到簇内所有场景上跑种子 6–10，净胜局也必须为正，才写进 `kb/library/cluster_programs.json`。
    - 人工规则也走这一套选拔和确认。第二轮按单个场景锻造的旧库（`programs.json`）只留作对照。
 3. 新的走位原语（新 job、新 target 规则、新考题）写进 `jev_smac_policy.py`，只在 `_open_menu` 下出现，不能改变 Dummy 的行为。
-4. 泛化只看 test 集（`results/scenarios/test.json`，已冻结）。23 张官方图只作参考，因为人工规则就是从这些图上挑出来的。
+4. 泛化以 test2（`results/scenarios/test2.json`，120 个场景，已冻结）的配对统计为准；test（40 个场景）和 23 张官方图只作参考，因为前者样本太小，后者是人工规则被挑出来的地方。
 
 ## 每次改动都要跑
 
