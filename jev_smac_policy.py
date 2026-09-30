@@ -5634,6 +5634,132 @@ class ValueOnlinePolicy(SwitchPolicy):
         super().__init__(model=V.load_model(), tau=self.TAU if tau is None else tau, tag=tag, **kw)
 
 
+class JevSwitchPolicy(ValueOnlinePolicy):
+    """ValueOnlinePolicy that asks Jev only where the value model is unsure.
+
+    Unsure: the best predicted advantage lies within delta of tau, or the top
+    two are within delta of each other and the best is above tau - delta.
+    Candidates: the model's top 3 macros plus "default". picker="random" picks
+    uniformly among the same candidates at the same moments (control).
+    delta=0 never asks and equals ValueOnlinePolicy.
+    """
+
+    _knn_cache: Dict[str, Any] = {}
+
+    def __init__(self, delta: float = 0.03, picker: str = "jev", tag: str = "jev_switch", **kw):
+        super().__init__(tag=tag, **kw)
+        self.delta = delta
+        self.picker = picker
+        if picker == "jev" and self.selector is None:
+            self.selector = JevClient()
+        self.n_unsure = 0
+        self.n_deviate = 0
+
+    @classmethod
+    def _knn(cls):
+        """Rollout labels for 'similar moments in training' (train fights only)."""
+        if "X" not in cls._knn_cache:
+            import json as _json
+            from pathlib import Path as _Path
+
+            import numpy as np
+
+            base = _Path(__file__).resolve().parent / "results" / "search"
+            X, Q = [], []
+            for name in ("rollout_train.json", "rollout_train_dagger.json", "rollout_train2_B.json", "rollout_train2_dagger.json"):
+                path = base / name
+                if not path.is_file():
+                    continue
+                for ep in _json.loads(path.read_text()):
+                    for d in ep["points"]:
+                        X.append(d["x"])
+                        Q.append(d["q"])
+            X = np.array(X, dtype=float)
+            mu, sd = X.mean(0), X.std(0) + 1e-6
+            cls._knn_cache.update({"X": (X - mu) / sd, "mu": mu, "sd": sd, "Q": Q})
+        return cls._knn_cache
+
+    def _similar(self, x: List[float], acts: List[str], k: int = 20) -> Dict[str, float]:
+        import numpy as np
+
+        kc = self._knn()
+        z = (np.array(x) - kc["mu"]) / kc["sd"]
+        idx = np.argsort(((kc["X"] - z) ** 2).sum(1))[:k]
+        out = {}
+        for a in acts:
+            if a == "default":
+                out[a] = 0.0
+            else:
+                out[a] = float(np.mean([kc["Q"][i][a] - kc["Q"][i]["default"] for i in idx]))
+        return out
+
+    def decide(self, step: int, snap: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
+        import tactic_dsl as T
+        import value as V
+
+        state = commander_state(step, dict(snap), list(self._recent), self._hp_trend)
+        if self.force_next is not None:
+            act, self.force_next = self.force_next, None
+            return act, state
+        x = V.featurize(snap, state, self._start_ehp)
+        adv = V.predict_advantages(self.model, x)
+        ranked = sorted(adv, key=adv.get, reverse=True)
+        best, second = adv[ranked[0]], adv[ranked[1]]
+        model_pick = ranked[0] if best > self.tau else "default"
+        d = self.delta
+        unsure = d > 0 and ((self.tau - d <= best <= self.tau + d) or (best - second < d and best > self.tau - d))
+        if not unsure:
+            return model_pick, state
+        self.n_unsure += 1
+        cands = ranked[:3] + ["default"]
+        if self.picker == "random":
+            pick = self._rng.choice(cands)
+        else:
+            pick = self._ask(state, snap, x, adv, cands, model_pick)
+        self.n_deviate += int(pick != model_pick)
+        return pick, state
+
+    def _ask(self, state, snap, x, adv, cands, model_pick) -> str:
+        import search as SE
+        import tactic_dsl as T
+
+        sim = self._similar(x, cands)
+        criteria = {}
+        for a in cands:
+            if a == "default":
+                criteria[a] = {
+                    "does": "Keep the program the army is running now (nearest-cluster program).",
+                    "model_estimate": "baseline",
+                    "similar_training_moments": "baseline",
+                }
+                continue
+            prog = SE.MACROS[a]
+            criteria[a] = {
+                "does": "Plain attack-move." if prog is None else T.summarize(prog),
+                "model_estimate": f"{100 * adv[a]:+.1f} wins per 100 such choices versus the baseline",
+                "similar_training_moments": f"{100 * sim[a]:+.1f} wins per 100 in the 20 most similar training moments",
+            }
+        ph = state.get("physics") or {}
+        questions = {
+            "macro": {
+                "type": "choice",
+                "instructions": (
+                    "Mid-fight: which tactic should the army run for the next few seconds? Code moves the units. "
+                    "The value model is unsure here; its estimates are noisy. model_estimate and "
+                    "similar_training_moments compare each option with the baseline on this kind of moment. "
+                    f"The model's own pick would be {model_pick!r}. Depart from it only for a clear reason "
+                    f"in the physics (speed {ph.get('speed')}, reach {ph.get('reach')}, numbers {ph.get('numbers')}, "
+                    f"contact {ph.get('contact')}, trend {ph.get('hp_trend')})."
+                ),
+                "criteria": criteria,
+            }
+        }
+        result = self.selector.system_one(state, questions)
+        self.n_select_calls += 1
+        answers = (result or {}).get("answers") if isinstance(result, dict) else None
+        return _pick_choice((answers or {}).get("macro"), cands, model_pick)
+
+
 class ApiActionPolicy(JevActionPolicy):
     """Same jobs as Jev, answered by the LLM gateway with reasoning off."""
 

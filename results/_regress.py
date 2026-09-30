@@ -77,6 +77,11 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith("jevswitch"):
+        # jevswitch:<picker>:<delta>, picker jev|random
+        _, picker, delta = spec.split(":")
+        h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
+        return J.JevSwitchPolicy(delta=float(delta), picker=picker, seed=h, tag=spec)
     if spec == "value_online":
         return J.ValueOnlinePolicy(tag=spec)
     if spec.startswith("switch"):
@@ -302,7 +307,7 @@ def cmd_holdout(args):
     if args.official:
         jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in args.seeds]
     # Jev calls go over the network; keep them serial-ish.
-    with Pool(4 if any(p.split(":")[1:2] and p.split(":")[1].startswith("jev") or p.endswith("jev") for p in args.policies) else 8) as pool:
+    with Pool(4 if any((p.split(":")[1:2] and p.split(":")[1].startswith("jev")) or p.endswith("jev") for p in args.policies) else 8) as pool:
         rows = pool.map(_holdout_job, jobs, chunksize=1)
     out = Path(args.write)
     with out.open("w") as f:
