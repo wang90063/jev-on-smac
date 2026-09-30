@@ -1,0 +1,250 @@
+{
+ "cluster": "1",
+ "members": [
+  "g0068",
+  "g0364",
+  "g0278",
+  "g0641",
+  "g0369",
+  "g1092",
+  "g0361"
+ ],
+ "dummy_sel": {
+  "g0068": 1,
+  "g0364": 3,
+  "g0278": 4,
+  "g0641": 4,
+  "g0369": 1,
+  "g1092": 1,
+  "g0361": 4
+ },
+ "dummy_confirm": {
+  "g0068": 3,
+  "g0364": 3,
+  "g0278": 5,
+  "g0641": 3,
+  "g0369": 0,
+  "g1092": 0,
+  "g0361": 2
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "hold_and_wait: rule 0: unknown exam 'menu'",
+    "spread_then_charge: rule 0: unknown exam 'menu'",
+    "kite_gap: rule 0: unknown exam 'menu'",
+    "choke_anchor: rule 0: unknown exam 'menu'",
+    "threat_rotate: rule 0: unknown exam 'menu'",
+    "dummy_amove: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    -4,
+    2,
+    -1,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "kite_gap",
+     "rules": [
+      {
+       "when": {
+        "speed": "we_are_faster"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "melee": "hold"
+       }
+      },
+      {
+       "when": {
+        "if_we_withdraw": "we_open_a_gap"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_within_two_shots"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "charge",
+      "target": "guns"
+     },
+     "why": "Whenever we are faster or standing would let melee in, stutter and open a gap instead of holding.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    2,
+    1,
+    -4,
+    -4,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "speed_stutter_open",
+     "rules": [
+      {
+       "when": {
+        "speed": "we_are_faster"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "melee": "hold",
+        "stand": "step"
+       }
+      },
+      {
+       "when": {
+        "if_we_withdraw": "we_open_a_gap"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_within_two_shots"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold",
+      "target": "guns"
+     },
+     "why": "Opposite of stand-still: when we are faster or withdraw opens a gap, stutter-kite every gun and hold melee so bombs do not walk into theirs.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    2,
+    0,
+    0,
+    0,
+    -3,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "hold_unless_faster",
+     "rules": [
+      {
+       "when": {
+        "speed": "we_are_faster"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "melee": "hold",
+        "stand": "step",
+        "target": "clump",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold",
+        "target": "clump",
+        "stand": "shoot"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold",
+        "target": "clump"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_before_next_shot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "stand": "step"
+       }
+      },
+      {
+       "when": {
+        "our_suicide": {
+         ">=": 1
+        },
+        "enemy_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "melee": "snipe",
+        "target": "clump",
+        "ranged": "hold"
+       }
+      }
+     ],
+     "else": {
+      "formation": "keep",
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "clump",
+      "kite": "all"
+     },
+     "why": "Lookahead wants hold most of the time so guns chip while our bombs stay back; when we are actually faster, stutter and hold melee so we open a gap vs chasing banelings without walking our own bombs in. Clump focus for splash; snipe only if their suicide pack is smaller than ours.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": 4
+ },
+ "admitted": {
+  "sel": 2,
+  "confirm": 4
+ }
+}

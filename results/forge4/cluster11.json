@@ -1,0 +1,202 @@
+{
+ "cluster": "11",
+ "members": [
+  "g0350",
+  "g0747",
+  "g0467",
+  "g0457",
+  "g0209",
+  "g0102",
+  "g0073"
+ ],
+ "dummy_sel": {
+  "g0350": 3,
+  "g0747": 0,
+  "g0467": 4,
+  "g0457": 3,
+  "g0209": 0,
+  "g0102": 4,
+  "g0073": 0
+ },
+ "dummy_confirm": {
+  "g0350": 5,
+  "g0747": 0,
+  "g0467": 5,
+  "g0457": 3,
+  "g0209": 0,
+  "g0102": 5,
+  "g0073": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "spread_then_hold_vs_bombs: rule 0: unknown exam 'menu'",
+    "always_a_move: rule 0: unknown exam 'menu'",
+    "our_banes_detonate_clump: rule 0: unknown exam 'menu'",
+    "choke_funnel_only: rule 0: unknown exam 'menu'",
+    "kite_and_rotate_hurt: rule 0: unknown exam 'menu'",
+    "hand_gated_wings: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    -2,
+    0,
+    0,
+    1,
+    0,
+    3
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 1,
+    "program": {
+     "name": "hand_gated_wings",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "stand": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Gated hand: stutter guns, melee at choke, bar splash, step wings to widen before blades.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -2,
+    0,
+    -7,
+    0,
+    3,
+    3
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 0,
+    "program": {
+     "name": "fall_back_funnel",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "pocket": "in_neck"
+       },
+       "set": {
+        "melee": "hold_choke",
+        "ranged": "hold"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "melee": "hold_choke",
+      "formation": "keep"
+     },
+     "why": "Walk guns to rally/choke then hold; melee parks at the neck so banelings funnel one at a time instead of detonating a clump in the open.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [
+    "bomb_charge_or_dummy: rule 1: unknown exam 'menu'"
+   ],
+   "nets": [
+    -2,
+    0,
+    -2,
+    3,
+    3,
+    0
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 0,
+    "program": {
+     "name": "rally_funnel",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "pocket": "in_neck"
+       },
+       "set": {
+        "melee": "hold_choke",
+        "ranged": "hold"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold_choke"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "melee": "hold_choke"
+     },
+     "why": "Walk guns to the rally/choke then hold; melee never leaves the neck so banelings queue one-wide instead of detonating in the open.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": 0
+ },
+ "admitted": {
+  "sel": 3,
+  "confirm": 1
+ }
+}

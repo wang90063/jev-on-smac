@@ -1,0 +1,256 @@
+{
+ "cluster": "10",
+ "members": [
+  "g0207"
+ ],
+ "dummy_sel": {
+  "g0207": 1
+ },
+ "dummy_confirm": {
+  "g0207": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "kite_stutter_rotate: rule 0: unknown exam 'menu'",
+    "pure_attack_move: rule 0: unknown exam 'menu'",
+    "stand_and_hold: rule 0: unknown exam 'menu'",
+    "retreat_to_choke: rule 0: unknown exam 'menu'",
+    "fan_concave_stack: rule 0: unknown exam 'menu'",
+    "weakest_focus_stack: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "kite_stutter_rotate",
+     "rules": [
+      {
+       "when": {
+        "enemy_melee": true,
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "formation": "open",
+        "target": "threat",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true,
+        "if_we_stand_to_shoot": "gap_holds"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "threat",
+        "wounded": "rotate",
+        "stand": "shoot"
+       }
+      },
+      {
+       "when": {
+        "enemy_melee": true,
+        "if_we_keep_standing": "melee_arrives_before_next_shot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "wounded": "rotate",
+        "stand": "step"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "wounded": "rotate",
+        "kite": "bait_one"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "wounded": "rotate"
+     },
+     "why": "Hydras outrange equal-speed zealots; stutter keeps the 0.5s stand only when gap_holds, rotate peels wounded, threat focuses the most dangerous zealot so kiting actually wins rather than trading.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    -1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "kite_combo_winner",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "formation": "open",
+        "wing": "step",
+        "target": "threat",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "gap_holds"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "target": "threat",
+        "wounded": "rotate",
+        "stand": "shoot"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_before_next_shot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "wounded": "rotate",
+        "stand": "step",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "bait_one",
+        "wounded": "rotate",
+        "target": "threat"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "threat",
+      "wounded": "rotate",
+      "stand": "step"
+     },
+     "why": "Search preferred stutter plus rotate and threat in contact, concave before; hydras keep the range gap vs equal-speed zealots and peel wounded so more fights convert than attack-move.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "stutter_rotate_threat",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "formation": "open",
+        "wing": "step",
+        "kite": "all",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "gap_holds"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "wounded": "rotate",
+        "stand": "shoot",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_before_next_shot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "wounded": "rotate",
+        "stand": "step",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "bait_one",
+        "wounded": "rotate",
+        "target": "threat"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "wounded": "rotate",
+      "target": "threat",
+      "stand": "step"
+     },
+     "why": "Before contact fan a concave; once the 0.5s stand is safe stutter-kite, peel wounded, and focus highest dps-per-hp so hydras keep the range gap vs equal-speed zealots instead of walking into blades.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 0
+ },
+ "admitted": null
+}

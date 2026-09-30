@@ -1,0 +1,229 @@
+{
+ "cluster": "2",
+ "members": [
+  "g0804",
+  "g0573",
+  "g0119",
+  "g1139",
+  "g0427",
+  "g0277",
+  "g0595",
+  "g0682",
+  "g0289",
+  "g1132",
+  "g1014",
+  "g0859"
+ ],
+ "dummy_sel": {
+  "g0804": 2,
+  "g0573": 4,
+  "g0119": 2,
+  "g1139": 4,
+  "g0427": 2,
+  "g0277": 4,
+  "g0595": 4,
+  "g0682": 2,
+  "g0289": 4,
+  "g1132": 3,
+  "g1014": 3,
+  "g0859": 4
+ },
+ "dummy_confirm": {
+  "g0804": 5,
+  "g0573": 5,
+  "g0119": 2,
+  "g1139": 2,
+  "g0427": 1,
+  "g0277": 4,
+  "g0595": 3,
+  "g0682": 0,
+  "g0289": 4,
+  "g1132": 4,
+  "g1014": 2,
+  "g0859": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "hold_then_hand: rule 0: unknown exam 'menu'",
+    "pure_stack: rule 0: unknown exam 'menu'",
+    "always_stutter_kite: rule 0: unknown exam 'menu'",
+    "fall_back_choke: rule 0: unknown exam 'menu'",
+    "concave_threat_splash: rule 0: unknown exam 'menu'",
+    "spread_rotate_guns: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    1,
+    0,
+    5,
+    0,
+    1,
+    0
+   ],
+   "round_best": {
+    "sel": 5,
+    "confirm": 1,
+    "program": {
+     "name": "always_stutter_kite",
+     "rules": [
+      {
+       "when": {
+        "guns_ready": "some_ready"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "wounded": "stay"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "formation": "keep"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "target": "weakest_in_range"
+     },
+     "why": "Every gun kites with stutter regardless of range; no hold, no gated hand.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [
+    "hold_then_hand_rotate: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    1,
+    -2,
+    1,
+    1,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 0,
+    "program": {
+     "name": "rally_fall_back_hold",
+     "rules": [
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "fall_back"
+       }
+      },
+      {
+       "when": {
+        "alive_ratio": {
+         "<=": 0.9
+        }
+       },
+       "set": {
+        "ranged": "fall_back",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "frontline"
+     },
+     "why": "Always walk to rally/choke then hold; never kite or stack-chase.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [
+    "hold_then_hand_rotate_threat: rule 0: unknown exam 'menu'",
+    "pure_stack_guns_spread: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    -2,
+    1,
+    -1,
+    0,
+    -1
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 0,
+    "program": {
+     "name": "rally_then_hold_choke",
+     "rules": [
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke",
+        "wounded": "rotate",
+        "target": "frontline"
+       }
+      },
+      {
+       "when": {
+        "numbers": "they_outnumber_badly"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke"
+       }
+      },
+      {
+       "when": {
+        "alive_ratio": {
+         "<=": 0.85
+        }
+       },
+       "set": {
+        "ranged": "fall_back",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "melee": "hold",
+      "target": "frontline"
+     },
+     "why": "Walk to rally/choke whenever rally is behind or we are outnumbered, then hold; never chase or kite in the open.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": -6
+ },
+ "admitted": {
+  "sel": 5,
+  "confirm": 1
+ }
+}

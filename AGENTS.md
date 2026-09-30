@@ -23,6 +23,7 @@
 
 - `python results/_regress.py trace --policies dummy default force:ranged=stutter --out new.json --compare old.json --actions-only`：确认 Dummy 的逐步动作没变。
 - `python results/_regress.py gate`：Dummy 在官方图上不许有任何一局从赢变输。
-- `python results/_regress.py holdout --write out.jsonl`：在 test 集上和 `results/iter2_baseline.jsonl` 对比。
+- `python results/_regress.py holdout --split test2 --write out.jsonl`，再用 `python results/_regress.py paired --files <基线> out.jsonl` 看相对 Dummy 的翻盘和丢盘，以及 p 值。泛化结论以 test2（120 个场景 × 5 局）的配对统计为准，40 个场景的 test 集样本太小，只作参考。
+- 离线搜索（`search.py`）会复制模拟器状态，只能用来估计上限和给蒸馏打标签，永远不能用在对局里。
 
 Force 是测试用的客户端，把某一个选项钉死，不调用 Jev。Cookbook 是考试题里对每个选项的说明，只写这个选项会让代码做什么、在什么物理条件下出现，不写「这张图请选它」。

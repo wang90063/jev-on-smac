@@ -1,0 +1,204 @@
+{
+ "cluster": "7",
+ "members": [
+  "g0491",
+  "g0832",
+  "g0233"
+ ],
+ "dummy_sel": {
+  "g0491": 1,
+  "g0832": 2,
+  "g0233": 1
+ },
+ "dummy_confirm": {
+  "g0491": 1,
+  "g0832": 4,
+  "g0233": 1
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "choke_hold_then_guns: rule 0: unknown exam 'menu'",
+    "always_stack_amove: rule 0: unknown exam 'menu'",
+    "pure_stutter_kite: rule 0: unknown exam 'menu'",
+    "fall_back_rally: rule 0: unknown exam 'menu'",
+    "melee_charge_splash: rule 0: unknown exam 'menu'",
+    "gated_hand_kite: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    1,
+    0,
+    -1,
+    0,
+    1,
+    1
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": -1,
+    "program": {
+     "name": "gated_hand_kite",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "target": "threat",
+        "bar": "bar"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "wounded": "rotate",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar"
+     },
+     "why": "Gated hand: stutter guns, melee pinned at choke, bar lasers, wing step. Distinct from open hold-then-guns.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [
+    "pure_amove_dummy: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    1,
+    0,
+    1,
+    0,
+    -1,
+    -1
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": -1,
+    "program": {
+     "name": "charge_concave_clump",
+     "rules": [
+      {
+       "when": {
+        "allied_melee": true
+       },
+       "set": {
+        "melee": "charge",
+        "ranged": "concave",
+        "target": "clump",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "allied_melee": false
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "heaviest"
+       }
+      }
+     ],
+     "else": {
+      "melee": "charge",
+      "ranged": "concave",
+      "target": "clump"
+     },
+     "why": "Send melee in immediately, fan guns on a ring, splash the densest pack. Opposite of holding the gap.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    1,
+    0,
+    0,
+    1,
+    1,
+    1
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": -1,
+    "program": {
+     "name": "gated_hand_bar",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "target": "threat",
+        "bar": "bar"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "wounded": "rotate",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar"
+     },
+     "why": "Gated hand: stutter, melee pinned at choke, bar lasers and wing step to widen the line.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 1,
+  "confirm": -1
+ },
+ "admitted": null
+}

@@ -1,0 +1,169 @@
+{
+ "cluster": "9",
+ "members": [
+  "g0517",
+  "g0083"
+ ],
+ "dummy_sel": {
+  "g0517": 4,
+  "g0083": 3
+ },
+ "dummy_confirm": {
+  "g0517": 1,
+  "g0083": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "gated_hand_guns: rule 0: unknown exam 'menu'",
+    "pure_stack: else: unknown exam 'menu'"
+   ],
+   "nets": [
+    1,
+    0,
+    1,
+    1,
+    -3,
+    -3
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 1,
+    "program": {
+     "name": "always_stutter_kite",
+     "rules": [
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "stand": "step",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "charge",
+      "target": "threat"
+     },
+     "why": "Every gun kites independently; ignores choke and splash bar.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -1,
+    1,
+    0,
+    -3,
+    -1,
+    1
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 1,
+    "program": {
+     "name": "always_stutter_rotate",
+     "rules": [
+      {
+       "when": {
+        "enemy_melee": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "stand": "step",
+        "wounded": "rotate",
+        "target": "threat"
+       }
+      },
+      {
+       "when": {
+        "suicide_blast": "would_chain"
+       },
+       "set": {
+        "formation": "open",
+        "melee": "snipe"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "charge",
+      "target": "threat"
+     },
+     "why": "Independent kite every gun; rotate wounded; ignore choke geometry.",
+     "menu": "open"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -1,
+    0,
+    1,
+    1,
+    1,
+    0
+   ],
+   "round_best": {
+    "sel": 1,
+    "confirm": 3,
+    "program": {
+     "name": "concave_clump_splash",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "target": "clump",
+        "bar": "bar",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "enemy_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "melee": "snipe",
+        "bait": "bait_one",
+        "formation": "open"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "melee": "charge",
+      "target": "clump"
+     },
+     "why": "Fan guns into a ring, pack the laser bar onto densest neighbors, and snipe suicide; splash-first idea rather than guns-focus or personal kite.",
+     "menu": "open"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 1
+ },
+ "admitted": {
+  "sel": 1,
+  "confirm": 3
+ }
+}

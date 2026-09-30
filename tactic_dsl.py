@@ -202,8 +202,11 @@ def validate(prog: Any) -> Tuple[Optional[Dict[str, Any]], List[str]]:
         if not isinstance(r, dict):
             errs.append(f"rule {i}: not an object")
             continue
-        cr = {"when": check_when(f"rule {i}", r.get("when") or {}), "set": check_set(f"rule {i}", r.get("set") or {})}
-        m = check_menu(f"rule {i}", r.get("menu"))
+        st = dict(r.get("set") or {}) if isinstance(r.get("set"), dict) else r.get("set")
+        # Writers sometimes put the menu inside "set"; it belongs to the rule.
+        menu_raw = r.get("menu") or (st.pop("menu", None) if isinstance(st, dict) else None)
+        cr = {"when": check_when(f"rule {i}", r.get("when") or {}), "set": check_set(f"rule {i}", st or {})}
+        m = check_menu(f"rule {i}", menu_raw)
         if m:
             cr["menu"] = m
         clean_rules.append(cr)

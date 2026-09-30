@@ -326,8 +326,8 @@ def cluster_eval(pool: Pool, prog: Dict[str, Any], members: List[Dict[str, Any]]
     return {"net": net, "margin": round(margin, 1), "per": per}
 
 
-def cluster_prompt(members_desc: List[Dict[str, Any]], history: List[Dict[str, Any]], k: int) -> str:
-    parts = {
+def cluster_prompt(members_desc: List[Dict[str, Any]], history: List[Dict[str, Any]], k: int, hints: Optional[Dict[str, Any]] = None) -> str:
+    parts: Dict[str, Any] = {
         "task": (
             f"Write {k} programs. ONE program must win as many of these similar fights as possible; "
             "it is scored by wins minus attack-move wins, summed over all of them, then checked on "
@@ -340,11 +340,13 @@ def cluster_prompt(members_desc: List[Dict[str, Any]], history: List[Dict[str, A
             for h in history[-8:]
         ],
     }
+    if hints:
+        parts["teacher_hints"] = hints
     return json.dumps(parts, ensure_ascii=False)
 
 
-def propose_cluster(client, desc, history, k: int):
-    reply = client.fill_json(INSTRUCTIONS, cluster_prompt(desc, history, k), timeout=120, max_tokens=6000, temperature=0.8)
+def propose_cluster(client, desc, history, k: int, hints: Optional[Dict[str, Any]] = None):
+    reply = client.fill_json(INSTRUCTIONS, cluster_prompt(desc, history, k, hints), timeout=120, max_tokens=6000, temperature=0.8)
     progs, errs = [], []
     for raw in (reply or {}).get("programs") or []:
         clean, e = T.validate(raw)
@@ -357,12 +359,42 @@ def propose_cluster(client, desc, history, k: int):
     return progs, errs
 
 
-def cmd_cluster() -> None:
+def teacher_hints(ids: List[str]) -> Dict[str, Any]:
+    """What the offline look-ahead search preferred on these fights, by phase.
+
+    Picks are counted only where the best macro beat plain attack-move by a
+    clear margin, so ties do not drown the signal."""
+    import search as SE
+
+    rows = json.loads((ROOT / "results" / "search" / "train.json").read_text())
+    counts: Dict[str, Dict[str, int]] = {"before_contact": {}, "in_contact": {}}
+    for r in rows:
+        if r["id"] not in ids:
+            continue
+        for d in r["log"]:
+            sc = d["scores"]
+            best = max(sc, key=sc.get)
+            if best == "none" or sc[best] - sc["none"] < 0.05:
+                continue
+            phase = "in_contact" if d["feats"].get("someone_can_shoot_now") else "before_contact"
+            counts[phase][best] = counts[phase].get(best, 0) + 1
+    macros = {n: (None if p is None else {"menu": p.get("menu", "open"), "set": p.get("else")}) for n, p in SE.MACROS.items()}
+    return {
+        "what": "An offline look-ahead search that tries each macro for 12 steps and keeps the best wins far more often than attack-move. Counts of the macros it preferred on these fights:",
+        "preferred_macros": counts,
+        "macro_definitions": macros,
+        "note": "Rules may set \"menu\": \"open\" | \"gated\" | \"dummy\" per rule; dummy means plain attack-move for that situation.",
+    }
+
+
+def cmd_cluster(lib_path: Path = None, out_dir: Path = None, hints: bool = False) -> None:
     from system2_api import System2Client
 
+    lib_path = lib_path or LIB3_PATH
+    out_dir = out_dir or FORGE3_DIR
     client = System2Client(model=writer_model(), timeout=120)
     print(f"writer model: {client.model}", flush=True)
-    FORGE3_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     train = SC.load("train")
     states = {s["id"]: start_state(s) for s in train}
     vecs = [T.feature_vector(T.features(states[s["id"]])) for s in train]
@@ -374,10 +406,10 @@ def cmd_cluster() -> None:
         CLUSTERS_PATH.parent.mkdir(parents=True, exist_ok=True)
         CLUSTERS_PATH.write_text(json.dumps(cl))
     by_id = {s["id"]: s for s in train}
-    lib = json.loads(LIB3_PATH.read_text()) if LIB3_PATH.is_file() else []
+    lib = json.loads(lib_path.read_text()) if lib_path.is_file() else []
     with Pool(8) as pool:
         for j, ids in cl["members"].items():
-            out_path = FORGE3_DIR / f"cluster{j}.json"
+            out_path = out_dir / f"cluster{j}.json"
             if out_path.is_file() or not ids:
                 continue
             members = [by_id[i] for i in ids]
@@ -387,6 +419,7 @@ def cmd_cluster() -> None:
             log: Dict[str, Any] = {"cluster": j, "members": ids, "dummy_sel": dsel, "dummy_confirm": dcon, "rounds": []}
             history: List[Dict[str, Any]] = []
             cands: List[Dict[str, Any]] = []
+            hint = teacher_hints(ids) if hints else None
 
             def consider(prog: Dict[str, Any], source: str) -> Dict[str, Any]:
                 """Score a program on the cluster in each menu mode; keep the better mode."""
@@ -404,7 +437,7 @@ def cmd_cluster() -> None:
             stale = 0
             top = None
             for rnd in range(ROUNDS):
-                progs, errs = propose_cluster(client, desc, history, K)
+                progs, errs = propose_cluster(client, desc, history, K, hint)
                 rb = None
                 tried = []
                 for prog in progs:
@@ -449,7 +482,7 @@ def cmd_cluster() -> None:
                     "feats": feats,
                     "vec": cl["centroids"][int(j)],
                 })
-            LIB3_PATH.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
+            lib_path.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
             log["admitted"] = admitted and {"sel": admitted["sel"]["net"], "confirm": admitted["confirm"]["net"]}
             out_path.write_text(json.dumps(log, indent=1, ensure_ascii=False))
     print(f"library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
@@ -459,6 +492,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "cluster":
         cmd_cluster()
+    elif cmd == "cluster_hints":
+        cmd_cluster(ROOT / "kb" / "library" / "hinted_programs.json", ROOT / "results" / "forge4", hints=True)
     elif cmd == "forge":
         cmd_forge(int(sys.argv[2]) if len(sys.argv) > 2 else None)
     elif cmd == "transfer":

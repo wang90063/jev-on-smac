@@ -1,0 +1,586 @@
+[
+ {
+  "id": "h0000",
+  "good": "hand",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "fall_back",
+  "correct": false
+ },
+ {
+  "id": "h0010",
+  "good": "hold",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0012",
+  "good": "concave",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "hold",
+  "correct": false
+ },
+ {
+  "id": "h0057",
+  "good": "hand",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "hand",
+  "correct": true
+ },
+ {
+  "id": "h0059",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0071",
+  "good": "guns",
+  "bad": "none",
+  "gap": 5,
+  "jev": "none",
+  "correct": false
+ },
+ {
+  "id": "h0080",
+  "good": "hold",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0088",
+  "good": "rotate",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "hold",
+  "correct": false
+ },
+ {
+  "id": "h0103",
+  "good": "guns",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0108",
+  "good": "spread",
+  "bad": "stutter",
+  "gap": 5,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0109",
+  "good": "kite_combo",
+  "bad": "none",
+  "gap": 5,
+  "jev": "kite_combo",
+  "correct": true
+ },
+ {
+  "id": "h0113",
+  "good": "guns",
+  "bad": "none",
+  "gap": 5,
+  "jev": "none",
+  "correct": false
+ },
+ {
+  "id": "h0114",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0126",
+  "good": "rotate",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "fall_back",
+  "correct": false
+ },
+ {
+  "id": "h0150",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 3,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0154",
+  "good": "guns",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0161",
+  "good": "guns",
+  "bad": "none",
+  "gap": 3,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0178",
+  "good": "hand",
+  "bad": "hold",
+  "gap": 5,
+  "jev": "hold",
+  "correct": false
+ },
+ {
+  "id": "h0180",
+  "good": "hold",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "hold",
+  "correct": true
+ },
+ {
+  "id": "h0220",
+  "good": "guns",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0278",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "fall_back",
+  "correct": false
+ },
+ {
+  "id": "h0292",
+  "good": "guns",
+  "bad": "stutter",
+  "gap": 5,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0293",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0300",
+  "good": "stutter",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0304",
+  "good": "hold",
+  "bad": "none",
+  "gap": 3,
+  "jev": "none",
+  "correct": false
+ },
+ {
+  "id": "h0309",
+  "good": "stutter",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0323",
+  "good": "none",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0353",
+  "good": "stutter",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0356",
+  "good": "hand",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "hand",
+  "correct": true
+ },
+ {
+  "id": "h0358",
+  "good": "none",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0366",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0368",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0380",
+  "good": "hand",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "hand",
+  "correct": true
+ },
+ {
+  "id": "h0385",
+  "good": "hand",
+  "bad": "none",
+  "gap": 5,
+  "jev": "none",
+  "correct": false
+ },
+ {
+  "id": "h0392",
+  "good": "hand",
+  "bad": "hold",
+  "gap": 5,
+  "jev": "hand",
+  "correct": true
+ },
+ {
+  "id": "h0418",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0429",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0440",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0493",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 3,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0505",
+  "good": "hold_choke",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "hold",
+  "correct": false
+ },
+ {
+  "id": "h0521",
+  "good": "stutter",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0525",
+  "good": "stutter",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0526",
+  "good": "spread",
+  "bad": "none",
+  "gap": 4,
+  "jev": "spread",
+  "correct": true
+ },
+ {
+  "id": "h0528",
+  "good": "none",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0529",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 3,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0538",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0555",
+  "good": "hold",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "hold",
+  "correct": true
+ },
+ {
+  "id": "h0559",
+  "good": "spread",
+  "bad": "none",
+  "gap": 4,
+  "jev": "spread",
+  "correct": true
+ },
+ {
+  "id": "h0561",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0568",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0569",
+  "good": "guns",
+  "bad": "none",
+  "gap": 5,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0590",
+  "good": "rotate",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "rotate",
+  "correct": true
+ },
+ {
+  "id": "h0638",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0647",
+  "good": "guns",
+  "bad": "stutter",
+  "gap": 3,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0657",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0662",
+  "good": "none",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0668",
+  "good": "hold",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "hold",
+  "correct": true
+ },
+ {
+  "id": "h0682",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0688",
+  "good": "hand",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "hand",
+  "correct": true
+ },
+ {
+  "id": "h0694",
+  "good": "rotate",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "rotate",
+  "correct": true
+ },
+ {
+  "id": "h0698",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0730",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 3,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0759",
+  "good": "guns",
+  "bad": "stutter",
+  "gap": 5,
+  "jev": "guns",
+  "correct": true
+ },
+ {
+  "id": "h0761",
+  "good": "concave",
+  "bad": "hold",
+  "gap": 5,
+  "jev": "hold",
+  "correct": false
+ },
+ {
+  "id": "h0784",
+  "good": "none",
+  "bad": "hold",
+  "gap": 3,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0799",
+  "good": "none",
+  "bad": "stutter",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": false
+ },
+ {
+  "id": "h0806",
+  "good": "rotate",
+  "bad": "fall_back",
+  "gap": 4,
+  "jev": "rotate",
+  "correct": true
+ },
+ {
+  "id": "h0827",
+  "good": "stutter",
+  "bad": "none",
+  "gap": 4,
+  "jev": "stutter",
+  "correct": true
+ },
+ {
+  "id": "h0833",
+  "good": "none",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0855",
+  "good": "hold",
+  "bad": "fall_back",
+  "gap": 3,
+  "jev": "hold",
+  "correct": true
+ },
+ {
+  "id": "h0868",
+  "good": "none",
+  "bad": "hold",
+  "gap": 4,
+  "jev": "none",
+  "correct": true
+ },
+ {
+  "id": "h0873",
+  "good": "hold",
+  "bad": "fall_back",
+  "gap": 5,
+  "jev": "fall_back",
+  "correct": false
+ },
+ {
+  "id": "h0878",
+  "good": "hold",
+  "bad": "stutter",
+  "gap": 5,
+  "jev": "stutter",
+  "correct": false
+ }
+]

@@ -1,0 +1,259 @@
+{
+ "cluster": "6",
+ "members": [
+  "g0583",
+  "g0033",
+  "g0354",
+  "g0486"
+ ],
+ "dummy_sel": {
+  "g0583": 1,
+  "g0033": 2,
+  "g0354": 0,
+  "g0486": 1
+ },
+ "dummy_confirm": {
+  "g0583": 0,
+  "g0033": 5,
+  "g0354": 0,
+  "g0486": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "fallback_when_fast: else: unknown exam 'menu'"
+   ],
+   "nets": [
+    3,
+    3,
+    1,
+    0,
+    2,
+    3
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 1,
+    "program": {
+     "name": "always_stutter_spread",
+     "rules": [
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "melee_reaches_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "kite": "all",
+        "stand": "step"
+       }
+      },
+      {
+       "when": {
+        "enemy_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "target": "clump",
+        "ranged": "stutter"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "frontline"
+     },
+     "why": "Always kite with open spacing; ignore hold so guns never freeze in place.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    2,
+    0,
+    2,
+    4,
+    3,
+    4
+   ],
+   "round_best": {
+    "sel": 4,
+    "confirm": 0,
+    "program": {
+     "name": "pure_stand_heaviest",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "hold",
+        "target": "heaviest"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "gap_holds"
+       },
+       "set": {
+        "ranged": "hold",
+        "stand": "shoot",
+        "target": "heaviest"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "hold",
+      "target": "heaviest",
+      "wounded": "stay"
+     },
+     "why": "Never kite: hold ground and dump DPS into the tankiest body. Opposite of stutter/rotate.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    1,
+    -1,
+    2,
+    3,
+    2,
+    3
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 1,
+    "program": {
+     "name": "spread_stutter_guns",
+     "rules": [
+      {
+       "when": {
+        "ally_spacing": "clumped"
+       },
+       "set": {
+        "formation": "open",
+        "ranged": "stutter"
+       }
+      },
+      {
+       "when": {
+        "if_we_stand_to_shoot": "melee_reaches_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "stand": "step",
+        "kite": "all"
+       }
+      },
+      {
+       "when": {
+        "enemy_guns": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stutter",
+        "target": "guns",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "kite": "all",
+      "target": "frontline",
+      "wounded": "rotate"
+     },
+     "why": "Always unclump and stutter-kite enemy guns first; stand-step if melee would arrive on the shot window.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 3,
+   "errors": [
+    "stack_guns_dummy_far: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    4,
+    -1,
+    6,
+    -1,
+    2,
+    5
+   ],
+   "round_best": {
+    "sel": 6,
+    "confirm": -1,
+    "program": {
+     "name": "gap_fallback_healers",
+     "rules": [
+      {
+       "when": {
+        "if_we_withdraw": "we_open_a_gap"
+       },
+       "set": {
+        "ranged": "fall_back",
+        "melee": "hold_choke",
+        "target": "healer"
+       }
+      },
+      {
+       "when": {
+        "enemy_heal": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "stutter",
+        "target": "healer",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "rally_is_behind_us": true
+       },
+       "set": {
+        "ranged": "fall_back",
+        "target": "guns"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "target": "frontline",
+      "wounded": "rotate"
+     },
+     "why": "When we are faster, walk to rally and hold; focus healers/air then guns.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": -1
+ },
+ "admitted": {
+  "sel": 3,
+  "confirm": 1
+ }
+}

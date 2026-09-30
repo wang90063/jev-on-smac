@@ -1,0 +1,160 @@
+{
+ "cluster": "5",
+ "members": [
+  "g1129",
+  "g0805"
+ ],
+ "dummy_sel": {
+  "g1129": 4,
+  "g0805": 1
+ },
+ "dummy_confirm": {
+  "g1129": 5,
+  "g0805": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "guns_stutter_rotate: rule 0: unknown exam 'menu'",
+    "pure_stack: rule 0: unknown exam 'menu'",
+    "stand_and_hold: rule 0: unknown exam 'menu'",
+    "choke_fallback: rule 0: unknown exam 'menu'",
+    "heaviest_concave: rule 0: unknown exam 'menu'",
+    "threat_no_kite: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    0,
+    -2,
+    0,
+    -2,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "pure_stack",
+     "rules": [
+      {
+       "when": {
+        "tick_frac": {
+         ">=": 0
+        }
+       },
+       "set": {}
+      }
+     ],
+     "else": {
+      "ranged": "stack"
+     },
+     "why": "Baseline attack-move; never kites or changes target, so the winner is scored against this.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    -2,
+    -2,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "threat_concave_rotate",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "target": "threat",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "if_we_keep_standing": "melee_arrives_within_two_shots"
+       },
+       "set": {
+        "ranged": "concave",
+        "target": "threat",
+        "wounded": "rotate"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "target": "threat",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "threat"
+     },
+     "why": "Fan a concave, always pick highest DPS-per-HP (colossus/hydras), rotate once blades close.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    0,
+    0,
+    0,
+    -2,
+    -2,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": 0,
+    "program": {
+     "name": "stack_clump_stay",
+     "rules": [
+      {
+       "when": {
+        "tick_frac": {
+         ">=": 0
+        }
+       },
+       "set": {
+        "ranged": "stack",
+        "target": "clump",
+        "wounded": "stay",
+        "bar": "bar"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stack",
+      "target": "clump"
+     },
+     "why": "Pure attack-move onto the densest pack, wounded stay; splash/colossus-bar idea without kiting.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 0
+ },
+ "admitted": null
+}

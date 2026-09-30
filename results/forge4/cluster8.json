@@ -1,0 +1,184 @@
+{
+ "cluster": "8",
+ "members": [
+  "g0088",
+  "g0559"
+ ],
+ "dummy_sel": {
+  "g0088": 1,
+  "g0559": 4
+ },
+ "dummy_confirm": {
+  "g0088": 2,
+  "g0559": 4
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "hold_then_stutter_guns: rule 0: unknown exam 'menu'",
+    "pure_a_move: else: unknown exam 'menu'",
+    "always_stutter_kite: rule 0: unknown exam 'menu'",
+    "fall_back_choke: rule 0: unknown exam 'menu'",
+    "concave_threat_splash: rule 0: unknown exam 'menu'",
+    "hand_gated_spread: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    -1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "hand_gated_spread",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "wounded": "rotate"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Gated hand combo: stutter plus hold_choke bar wing, plus spread; different from open hold.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "wing_bar_hand_stutter",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "guns_in_blades": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold",
+        "wounded": "rotate",
+        "bar": "bar"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Gated hand combo: stutter plus hold_choke, bar laser, and wing step to widen before contact.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 0,
+    "confirm": -1,
+    "program": {
+     "name": "baneling_snipe_open",
+     "rules": [
+      {
+       "when": {
+        "our_suicide": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "formation": "open",
+        "melee": "snipe",
+        "bait": "bait_one",
+        "ranged": "concave",
+        "target": "clump"
+       }
+      },
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "concave",
+        "wing": "step",
+        "target": "threat"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "melee": "charge",
+      "target": "clump"
+     },
+     "why": "When we have bombs, open spacing and send closest melee into clumps; otherwise concave onto threat.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": -1
+ },
+ "admitted": null
+}

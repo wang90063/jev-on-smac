@@ -1,0 +1,210 @@
+{
+ "cluster": "3",
+ "members": [
+  "g0778",
+  "g0271",
+  "g0134",
+  "g0070",
+  "g0453"
+ ],
+ "dummy_sel": {
+  "g0778": 4,
+  "g0271": 1,
+  "g0134": 4,
+  "g0070": 4,
+  "g0453": 0
+ },
+ "dummy_confirm": {
+  "g0778": 5,
+  "g0271": 1,
+  "g0134": 4,
+  "g0070": 5,
+  "g0453": 0
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "hold_then_detonate: rule 0: unknown exam 'menu'",
+    "always_amove: rule 0: unknown exam 'menu'",
+    "choke_sit: rule 0: unknown exam 'menu'",
+    "spread_stutter_guns: rule 0: unknown exam 'menu'",
+    "rotate_threat: rule 0: unknown exam 'menu'",
+    "gated_hand: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    0,
+    2,
+    0,
+    0,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 2,
+    "program": {
+     "name": "gated_hand",
+     "rules": [
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Gated hand macro: stutter guns, hold_choke melee, bar lasers and step wings for a concave that search used in contact.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [
+    "hold_until_boom: rule 0: unknown exam 'menu'",
+    "plain_amove: rule 0: unknown exam 'menu'",
+    "funnel_choke: rule 0: unknown exam 'menu'",
+    "gated_hand_line: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    2
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 2,
+    "program": {
+     "name": "gated_hand_line",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "we_can_shoot"
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "why": "Gated hand the search liked in contact: stutter guns, hold_choke melee, bar lasers and step wings for a wide concave rather than a blob.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    2,
+    0,
+    0,
+    2,
+    0,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 2,
+    "program": {
+     "name": "hold_then_hand",
+     "rules": [
+      {
+       "when": {
+        "contact": "far"
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold",
+        "target": "clump",
+        "formation": "keep"
+       }
+      },
+      {
+       "when": {
+        "contact": "almost_in_range"
+       },
+       "set": {
+        "ranged": "hold",
+        "melee": "hold",
+        "target": "clump"
+       }
+      },
+      {
+       "when": {
+        "someone_can_shoot_now": true
+       },
+       "set": {
+        "ranged": "stutter",
+        "melee": "hold_choke",
+        "bar": "bar",
+        "wing": "step",
+        "target": "clump"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step",
+      "target": "clump"
+     },
+     "why": "Search holds before contact so banelings arrive together, then gated hand (stutter, hold_choke, bar, wing step) once anyone can shoot so splash and lasers fan without walking into guns.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": 2
+ },
+ "admitted": {
+  "sel": 2,
+  "confirm": 2
+ }
+}

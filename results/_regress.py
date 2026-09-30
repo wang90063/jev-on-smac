@@ -80,12 +80,14 @@ def make_policy(spec: str, map_name: str, seed: int):
     if spec.startswith("dist:"):
         lib = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
         return J.ProgramActionPolicy(next(e["program"] for e in lib if e["id"] == spec[5:]), tag=spec)
-    if spec.startswith(("lib3:", "lib3h:")):
+    if spec.startswith(("lib3:", "lib3h:", "lib4:")):
         # Round 3: cluster library with the Dummy fallback. lib3 = forged only,
         # lib3h = forged + hand rules that passed the same gate.
+        # Round 4: lib4 = forged with offline-search hints, forged only.
         kind, chooser = spec.split(":", 1)
-        lib = json.loads((ROOT / "kb" / "library" / "cluster_programs.json").read_text())
-        if kind == "lib3":
+        name = "hinted_programs.json" if kind == "lib4" else "cluster_programs.json"
+        lib = json.loads((ROOT / "kb" / "library" / name).read_text())
+        if kind in ("lib3", "lib4"):
             lib = [e for e in lib if e.get("source") != "hand"]
         clusters = json.loads((ROOT / "kb" / "library" / "clusters.json").read_text())
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)

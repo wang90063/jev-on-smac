@@ -1,0 +1,163 @@
+{
+ "cluster": "4",
+ "members": [
+  "g0032",
+  "g0831",
+  "g0224",
+  "g0767",
+  "g0746",
+  "g1085",
+  "g0544"
+ ],
+ "dummy_sel": {
+  "g0032": 3,
+  "g0831": 1,
+  "g0224": 3,
+  "g0767": 3,
+  "g0746": 4,
+  "g1085": 3,
+  "g0544": 4
+ },
+ "dummy_confirm": {
+  "g0032": 4,
+  "g0831": 1,
+  "g0224": 3,
+  "g0767": 3,
+  "g0746": 5,
+  "g1085": 3,
+  "g0544": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "hold_line_everywhere: rule 0: unknown exam 'menu'",
+    "choke_anchor: rule 0: unknown exam 'menu'",
+    "pure_a_move: rule 0: unknown exam 'menu'",
+    "stutter_kiting: rule 0: unknown exam 'menu'",
+    "splash_clump_focus: rule 0: unknown exam 'menu'",
+    "healer_snipe_then_threat: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    -2,
+    -1,
+    -1,
+    0,
+    3,
+    2
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 2,
+    "program": {
+     "name": "splash_clump_focus",
+     "rules": [
+      {
+       "when": {
+        "enemy_air": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "healer",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 4
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "clump",
+      "bar": "pack"
+     },
+     "why": "Concave and bar-splash onto clumps to punish colossus packs, ignoring hold.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    1,
+    -1,
+    0,
+    3,
+    2,
+    -1
+   ],
+   "round_best": {
+    "sel": 3,
+    "confirm": 2,
+    "program": {
+     "name": "splash_concave",
+     "rules": [
+      {
+       "when": {
+        "enemy_air": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "healer",
+        "formation": "open"
+       }
+      },
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 4
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "clump",
+      "bar": "pack"
+     },
+     "why": "Fan a concave and bar-aim splash onto clumps/colossus packs rather than standing still.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [
+    "writer returned nothing"
+   ],
+   "nets": [],
+   "round_best": null
+  }
+ ],
+ "hand": {
+  "sel": 0,
+  "confirm": 1
+ },
+ "admitted": {
+  "sel": 3,
+  "confirm": 2
+ }
+}

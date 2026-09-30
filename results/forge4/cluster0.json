@@ -1,0 +1,190 @@
+{
+ "cluster": "0",
+ "members": [
+  "g1061",
+  "g0874",
+  "g0081",
+  "g0298",
+  "g0726",
+  "g0005",
+  "g0922",
+  "g0242"
+ ],
+ "dummy_sel": {
+  "g1061": 4,
+  "g0874": 3,
+  "g0081": 4,
+  "g0298": 2,
+  "g0726": 4,
+  "g0005": 1,
+  "g0922": 1,
+  "g0242": 3
+ },
+ "dummy_confirm": {
+  "g1061": 2,
+  "g0874": 5,
+  "g0081": 0,
+  "g0298": 2,
+  "g0726": 5,
+  "g0005": 1,
+  "g0922": 3,
+  "g0242": 5
+ },
+ "rounds": [
+  {
+   "round": 0,
+   "errors": [
+    "spread_hold_then_kite: rule 0: unknown exam 'menu'",
+    "always_stack: rule 0: unknown exam 'menu'",
+    "retreat_to_rally: rule 0: unknown exam 'menu'",
+    "early_concave_splash: rule 0: unknown exam 'menu'",
+    "hand_on_contact: rule 0: unknown exam 'menu'",
+    "threat_rotate_only: rule 0: unknown exam 'menu'"
+   ],
+   "nets": [
+    -9,
+    0,
+    0,
+    2,
+    2,
+    0
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "early_concave_splash",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "heaviest"
+     },
+     "why": "Fan a concave immediately and bar-splash the densest pack; never hold or walk away.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 1,
+   "errors": [],
+   "nets": [
+    -9,
+    -1,
+    0,
+    0,
+    2,
+    -9
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "early_concave_bar",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "concave",
+        "stand": "shoot",
+        "target": "clump"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "heaviest"
+     },
+     "why": "Fan immediately and bar-splash the densest pack; no hold or retreat, different from hold-then-kite.",
+     "menu": "gated"
+    }
+   }
+  },
+  {
+   "round": 2,
+   "errors": [],
+   "nets": [
+    -9,
+    0,
+    2,
+    -1,
+    0,
+    -1
+   ],
+   "round_best": {
+    "sel": 2,
+    "confirm": 4,
+    "program": {
+     "name": "concave_bar_splash",
+     "rules": [
+      {
+       "when": {
+        "our_ranged": {
+         ">=": 1
+        }
+       },
+       "set": {
+        "ranged": "concave",
+        "bar": "bar",
+        "target": "clump",
+        "wing": "step"
+       }
+      },
+      {
+       "when": {
+        "contact": "melee_on_us"
+       },
+       "set": {
+        "ranged": "concave",
+        "stand": "shoot",
+        "target": "clump"
+       }
+      }
+     ],
+     "else": {
+      "ranged": "concave",
+      "target": "heaviest"
+     },
+     "why": "Fan a concave immediately, bar-laser the densest pack, never retreat. Splash-geometry idea, not kite.",
+     "menu": "gated"
+    }
+   }
+  }
+ ],
+ "hand": {
+  "sel": 2,
+  "confirm": 4
+ },
+ "admitted": {
+  "sel": 2,
+  "confirm": 4
+ }
+}
