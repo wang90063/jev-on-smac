@@ -181,6 +181,7 @@ def rollout_episode(job) -> Dict[str, Any]:
                 for a in actions:
                     e2, p2 = copy.deepcopy(env), copy.deepcopy(pol)
                     p2.force_next = a
+                    p2.model = None  # after this block the base policy B plays on
                     d2, i2 = _play_out(e2, p2, step)
                     a_f = _ehp_sum(e2._gym.agents.values()) / max(a0, 1.0)
                     e_f = _ehp_sum(e2._gym.enemies.values()) / max(e0, 1.0)
