@@ -5534,14 +5534,20 @@ class OnlinePolicy(LibraryPolicy):
     paired comparison against it on test2.
     """
 
-    def __init__(self, chooser: str = "nearest", seed: int = 0, tag: str = "online", k: int = 4, n_neighbors: int = 5):
+    LIBRARIES = {
+        "lib3": ("cluster_programs.json", "evidence.json"),
+        "outcome": ("outcome_programs.json", "evidence_outcome.json"),
+    }
+
+    def __init__(self, chooser: str = "nearest", seed: int = 0, tag: str = "online", k: int = 4, n_neighbors: int = 5, library: str = "lib3"):
         import json as _json
         from pathlib import Path as _Path
 
         lib_dir = _Path(__file__).resolve().parent / "kb" / "library"
-        lib = [e for e in _json.loads((lib_dir / "cluster_programs.json").read_text()) if e.get("source") != "hand"]
+        lib_file, ev_file = self.LIBRARIES[library]
+        lib = [e for e in _json.loads((lib_dir / lib_file).read_text()) if e.get("source") != "hand"]
         clusters = _json.loads((lib_dir / "clusters.json").read_text())
-        ev_path = lib_dir / "evidence.json"
+        ev_path = lib_dir / ev_file
         evidence = _json.loads(ev_path.read_text()) if ev_path.is_file() else None
         super().__init__(lib, chooser=chooser, k=k, seed=seed, tag=tag, clusters=clusters, fallback=True, evidence=evidence, n_neighbors=n_neighbors)
 

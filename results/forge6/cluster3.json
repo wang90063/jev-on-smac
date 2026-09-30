@@ -1,0 +1,89 @@
+{
+ "cluster": "3",
+ "members": [
+  "g0778",
+  "g0271",
+  "g0134",
+  "g0070",
+  "g0453"
+ ],
+ "starts": [
+  {
+   "start": "d3",
+   "trail": [
+    -4,
+    2,
+    4
+   ],
+   "leaves": [
+    "none",
+    "hand",
+    "none",
+    "spread",
+    "none",
+    "stutter",
+    "kite_combo",
+    "rotate"
+   ]
+  },
+  {
+   "start": "none",
+   "trail": [
+    0,
+    5
+   ],
+   "leaves": [
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "rotate"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "source": "tree_d3",
+   "sel": 4,
+   "confirm": 1,
+   "leaves": [
+    "none",
+    "hand",
+    "none",
+    "spread",
+    "none",
+    "stutter",
+    "kite_combo",
+    "rotate"
+   ]
+  },
+  {
+   "source": "tree_none",
+   "sel": 5,
+   "confirm": 1,
+   "leaves": [
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "rotate"
+   ]
+  },
+  {
+   "source": "lib3",
+   "sel": 2,
+   "confirm": 2,
+   "leaves": null
+  }
+ ],
+ "admitted": [
+  "tree_none",
+  "tree_d3"
+ ]
+}

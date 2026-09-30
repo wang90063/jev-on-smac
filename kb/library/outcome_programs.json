@@ -1,0 +1,2923 @@
+[
+ {
+  "id": "O0-0",
+  "cluster": 0,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c0_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "why": "leaves: hold, hand, none, spread, none, stutter, kite_combo, hand"
+  },
+  "sel_net": 10,
+  "confirm_net": 12,
+  "fights": 40,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 30,
+   "alive_ratio": 0.1,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 8,
+   "enemy_melee_n": 22,
+   "enemy_heal": 0,
+   "enemy_suicide": 17,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.125,
+   0.0,
+   0.625,
+   0.25,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.25,
+   0.75,
+   0.0,
+   1.0,
+   0.8331331699346405,
+   0.9202588965693804,
+   0.3305341936934759,
+   0.8313970588235294,
+   0.0,
+   0.0625,
+   0.0,
+   0.7711988304093568,
+   0.8846973075233945,
+   0.08333333333333333,
+   0.8831876456876456,
+   0.08333333333333333,
+   0.0
+  ]
+ },
+ {
+  "id": "O0-1",
+  "cluster": 0,
+  "source": "lib3",
+  "program": {
+   "name": "concave_threat_stack",
+   "rules": [
+    {
+     "when": {
+      "contact": "far"
+     },
+     "set": {
+      "ranged": "concave",
+      "wing": "step",
+      "formation": "open"
+     }
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "threat"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "target": "threat",
+    "formation": "keep",
+    "wing": "stay"
+   },
+   "why": "Fan a concave then attack-move onto highest DPS-per-HP; ignore kiting and splash bars.",
+   "menu": "open"
+  },
+  "sel_net": 9,
+  "confirm_net": 4,
+  "fights": 40,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "would_chain",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 30,
+   "alive_ratio": 0.1,
+   "our_ranged": 3,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 8,
+   "enemy_melee_n": 22,
+   "enemy_heal": 0,
+   "enemy_suicide": 17,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.125,
+   0.0,
+   0.625,
+   0.25,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.25,
+   0.75,
+   0.0,
+   1.0,
+   0.8331331699346405,
+   0.9202588965693804,
+   0.3305341936934759,
+   0.8313970588235294,
+   0.0,
+   0.0625,
+   0.0,
+   0.7711988304093568,
+   0.8846973075233945,
+   0.08333333333333333,
+   0.8831876456876456,
+   0.08333333333333333,
+   0.0
+  ]
+ },
+ {
+  "id": "O1-0",
+  "cluster": 1,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c1_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "melee": "hold_choke"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "why": "leaves: fall_back, hand, none, spread, none, stutter, kite_combo, hand"
+  },
+  "sel_net": 3,
+  "confirm_net": 3,
+  "fights": 35,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "almost_in_range",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 12,
+   "their_alive": 18,
+   "alive_ratio": 0.667,
+   "our_ranged": 3,
+   "our_melee": 9,
+   "our_heal": 0,
+   "our_suicide": 9,
+   "enemy_guns": 0,
+   "enemy_melee_n": 18,
+   "enemy_heal": 0,
+   "enemy_suicide": 18,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.2857142857142857,
+   0.7142857142857143,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.42857142857142855,
+   0.0,
+   0.42857142857142855,
+   0.14285714285714285,
+   0.7142857142857143,
+   0.14285714285714285,
+   0.14285714285714285,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.5714285714285714,
+   0.2857142857142857,
+   0.14285714285714285,
+   0.0,
+   0.0,
+   0.2857142857142857,
+   0.0,
+   0.7142857142857143,
+   0.0,
+   0.0,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.5714285714285714,
+   0.42857142857142855,
+   0.0,
+   1.0,
+   0.9050355806658328,
+   0.9126633197413597,
+   0.4775959764733368,
+   0.6761904761904761,
+   0.8717687074829932,
+   0.0,
+   0.8560177917320775,
+   0.37244897959183676,
+   0.88279318987123,
+   0.0,
+   0.7458884279664678,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O1-1",
+  "cluster": 1,
+  "source": "tree_none",
+  "program": {
+   "name": "outcome_c1_none",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    }
+   ],
+   "else": {},
+   "why": "leaves: none, none, stutter, none, none, none, none, none"
+  },
+  "sel_net": 2,
+  "confirm_net": 4,
+  "fights": 35,
+  "feats": {
+   "speed": "even",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "almost_in_range",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 12,
+   "their_alive": 18,
+   "alive_ratio": 0.667,
+   "our_ranged": 3,
+   "our_melee": 9,
+   "our_heal": 0,
+   "our_suicide": 9,
+   "enemy_guns": 0,
+   "enemy_melee_n": 18,
+   "enemy_heal": 0,
+   "enemy_suicide": 18,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.2857142857142857,
+   0.7142857142857143,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.42857142857142855,
+   0.0,
+   0.42857142857142855,
+   0.14285714285714285,
+   0.7142857142857143,
+   0.14285714285714285,
+   0.14285714285714285,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.5714285714285714,
+   0.2857142857142857,
+   0.14285714285714285,
+   0.0,
+   0.0,
+   0.2857142857142857,
+   0.0,
+   0.7142857142857143,
+   0.0,
+   0.0,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.5714285714285714,
+   0.42857142857142855,
+   0.0,
+   1.0,
+   0.9050355806658328,
+   0.9126633197413597,
+   0.4775959764733368,
+   0.6761904761904761,
+   0.8717687074829932,
+   0.0,
+   0.8560177917320775,
+   0.37244897959183676,
+   0.88279318987123,
+   0.0,
+   0.7458884279664678,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O2-0",
+  "cluster": 2,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c2_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "wounded": "rotate"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "why": "leaves: hold, rotate, none, spread, none, stutter, kite_combo, hand"
+  },
+  "sel_net": 10,
+  "confirm_net": 2,
+  "fights": 60,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 6,
+   "their_alive": 7,
+   "alive_ratio": 0.857,
+   "our_ranged": 6,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.3333333333333333,
+   0.0,
+   0.5,
+   0.16666666666666666,
+   0.9166666666666666,
+   0.0,
+   0.08333333333333333,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.08333333333333333,
+   0.9166666666666666,
+   0.4166666666666667,
+   0.5833333333333334,
+   0.0,
+   1.0,
+   0.8654867086318699,
+   0.8678931424855337,
+   0.4836046212390383,
+   0.8620144864096478,
+   0.0,
+   0.05555555555555555,
+   0.0,
+   0.8663825757575756,
+   0.0,
+   0.1111111111111111,
+   0.0,
+   0.1111111111111111,
+   0.0
+  ]
+ },
+ {
+  "id": "O2-1",
+  "cluster": 2,
+  "source": "tree_none",
+  "program": {
+   "name": "outcome_c2_none",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    }
+   ],
+   "else": {},
+   "why": "leaves: hold, none, none, none, none, none, none, none"
+  },
+  "sel_net": 10,
+  "confirm_net": 5,
+  "fights": 60,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "they_have_a_few_more",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 6,
+   "their_alive": 7,
+   "alive_ratio": 0.857,
+   "our_ranged": 6,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.3333333333333333,
+   0.0,
+   0.5,
+   0.16666666666666666,
+   0.9166666666666666,
+   0.0,
+   0.08333333333333333,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.08333333333333333,
+   0.9166666666666666,
+   0.4166666666666667,
+   0.5833333333333334,
+   0.0,
+   1.0,
+   0.8654867086318699,
+   0.8678931424855337,
+   0.4836046212390383,
+   0.8620144864096478,
+   0.0,
+   0.05555555555555555,
+   0.0,
+   0.8663825757575756,
+   0.0,
+   0.1111111111111111,
+   0.0,
+   0.1111111111111111,
+   0.0
+  ]
+ },
+ {
+  "id": "O3-0",
+  "cluster": 3,
+  "source": "tree_none",
+  "program": {
+   "name": "outcome_c3_none",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "wounded": "rotate"
+     },
+     "menu": "open"
+    }
+   ],
+   "else": {},
+   "why": "leaves: none, none, none, none, none, none, none, rotate"
+  },
+  "sel_net": 5,
+  "confirm_net": 1,
+  "fights": 25,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 11,
+   "their_alive": 7,
+   "alive_ratio": 1.571,
+   "our_ranged": 5,
+   "our_melee": 6,
+   "our_heal": 0,
+   "our_suicide": 6,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.8,
+   0.0,
+   0.2,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9252001799370222,
+   0.8781225296442688,
+   0.6029657100766335,
+   0.3466666666666667,
+   0.9038217338217338,
+   0.0,
+   0.8888217338217338,
+   0.8781225296442688,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O3-1",
+  "cluster": 3,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c3_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "wounded": "rotate"
+     },
+     "menu": "open"
+    }
+   ],
+   "else": {},
+   "why": "leaves: none, hand, none, spread, none, stutter, kite_combo, rotate"
+  },
+  "sel_net": 4,
+  "confirm_net": 1,
+  "fights": 25,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 11,
+   "their_alive": 7,
+   "alive_ratio": 1.571,
+   "our_ranged": 5,
+   "our_melee": 6,
+   "our_heal": 0,
+   "our_suicide": 6,
+   "enemy_guns": 7,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.8,
+   0.0,
+   0.2,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9252001799370222,
+   0.8781225296442688,
+   0.6029657100766335,
+   0.3466666666666667,
+   0.9038217338217338,
+   0.0,
+   0.8888217338217338,
+   0.8781225296442688,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O4-0",
+  "cluster": 4,
+  "source": "lib3",
+  "program": {
+   "name": "pure_stack_amove",
+   "rules": [
+    {
+     "when": {
+      "enemy_heal": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "target": "healer",
+      "ranged": "stack",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "our_ranged": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "frontline"
+     }
+    }
+   ],
+   "else": {
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "frontline",
+    "formation": "keep"
+   },
+   "why": "Baseline attack-move: never kite, always charge, focus nearest frontline so sim defaults do the walking.",
+   "menu": "gated"
+  },
+  "sel_net": 2,
+  "confirm_net": 1,
+  "fights": 35,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "no_enemy_melee",
+   "if_we_keep_standing": "no_enemy_melee",
+   "if_we_withdraw": "no_enemy_melee",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": false,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 3,
+   "their_alive": 1,
+   "alive_ratio": 3.0,
+   "our_ranged": 1,
+   "our_melee": 2,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 1,
+   "enemy_melee_n": 0,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.8571428571428571,
+   0.0,
+   0.14285714285714285,
+   0.0,
+   0.8571428571428571,
+   0.0,
+   0.14285714285714285,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.14285714285714285,
+   0.8571428571428571,
+   0.0,
+   1.0,
+   0.898889458617455,
+   0.8303803339517625,
+   0.6439830114937818,
+   0.7748681290698097,
+   0.8292158968850698,
+   0.07142857142857142,
+   0.0,
+   0.8239229024943311,
+   0.0,
+   0.19047619047619047,
+   0.0,
+   0.19047619047619047,
+   0.0
+  ]
+ },
+ {
+  "id": "O7-0",
+  "cluster": 7,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c7_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "why": "leaves: hold, hand, none, spread, none, none, none, hand"
+  },
+  "sel_net": 4,
+  "confirm_net": 1,
+  "fights": 15,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_outnumber_badly",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_within_two_shots",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 6,
+   "their_alive": 18,
+   "alive_ratio": 0.333,
+   "our_ranged": 6,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 3,
+   "enemy_melee_n": 15,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.3333333333333333,
+   0.0,
+   0.6666666666666666,
+   1.0,
+   0.0,
+   0.0,
+   0.3333333333333333,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.3333333333333333,
+   0.6666666666666666,
+   0.0,
+   0.0,
+   0.0,
+   0.3333333333333333,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.6666666666666666,
+   0.3333333333333333,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.3333333333333333,
+   0.6666666666666666,
+   0.0,
+   1.0,
+   0.8875661375661376,
+   0.9006379585326952,
+   0.41967760827486617,
+   0.6190476190476191,
+   0.5946969696969697,
+   0.0,
+   0.0,
+   0.5,
+   0.8949561403508772,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O9-0",
+  "cluster": 9,
+  "source": "tree_none",
+  "program": {
+   "name": "outcome_c9_none",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    }
+   ],
+   "else": {},
+   "why": "leaves: none, none, none, none, none, none, none, stutter"
+  },
+  "sel_net": 3,
+  "confirm_net": 2,
+  "fights": 10,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "we_can_shoot",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_before_next_shot",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": true,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 21,
+   "their_alive": 29,
+   "alive_ratio": 0.724,
+   "our_ranged": 21,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 6,
+   "enemy_melee_n": 23,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.5,
+   0.0,
+   0.5,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.9147727272727273,
+   0.9648148148148148,
+   0.31596576583494684,
+   0.7272727272727273,
+   0.42857142857142855,
+   0.0,
+   0.0,
+   0.873015873015873,
+   0.9528508771929824,
+   0.0,
+   0.4166666666666667,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O9-1",
+  "cluster": 9,
+  "source": "lib3",
+  "program": {
+   "name": "pure_stack_front",
+   "rules": [
+    {
+     "when": {
+      "enemy_suicide": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "target": "frontline",
+      "melee": "charge"
+     }
+    },
+    {
+     "when": {
+      "our_ranged": {
+       ">=": 10
+      }
+     },
+     "set": {
+      "ranged": "stack",
+      "target": "frontline"
+     }
+    }
+   ],
+   "else": {
+    "formation": "keep",
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "frontline",
+    "kite": "all",
+    "wing": "stay"
+   },
+   "why": "Never kite; attack-move the nearest damage dealer so both compositions crash like default AM.",
+   "menu": "gated"
+  },
+  "sel_net": 0,
+  "confirm_net": 1,
+  "fights": 10,
+  "feats": {
+   "speed": "they_are_faster",
+   "reach": "we_outrange",
+   "numbers": "they_have_a_few_more",
+   "contact": "we_can_shoot",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "melee_arrives_before_next_shot",
+   "if_we_withdraw": "they_catch_us",
+   "suicide_blast": "none",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": false,
+   "enemy_melee": true,
+   "someone_can_shoot_now": true,
+   "rally_is_behind_us": true,
+   "guns_in_blades": false,
+   "our_alive": 21,
+   "their_alive": 29,
+   "alive_ratio": 0.724,
+   "our_ranged": 21,
+   "our_melee": 0,
+   "our_heal": 0,
+   "our_suicide": 0,
+   "enemy_guns": 6,
+   "enemy_melee_n": 23,
+   "enemy_heal": 0,
+   "enemy_suicide": 0,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   0.0,
+   1.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.5,
+   0.0,
+   0.5,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.9147727272727273,
+   0.9648148148148148,
+   0.31596576583494684,
+   0.7272727272727273,
+   0.42857142857142855,
+   0.0,
+   0.0,
+   0.873015873015873,
+   0.9528508771929824,
+   0.0,
+   0.4166666666666667,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O11-0",
+  "cluster": 11,
+  "source": "tree_d3",
+  "program": {
+   "name": "outcome_c11_d3",
+   "menu": "dummy",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "why": "leaves: none, stutter, none, spread, none, stutter, kite_combo, hand"
+  },
+  "sel_net": 14,
+  "confirm_net": 7,
+  "fights": 35,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 5,
+   "their_alive": 3,
+   "alive_ratio": 1.667,
+   "our_ranged": 0,
+   "our_melee": 5,
+   "our_heal": 0,
+   "our_suicide": 4,
+   "enemy_guns": 1,
+   "enemy_melee_n": 2,
+   "enemy_heal": 0,
+   "enemy_suicide": 2,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.42857142857142855,
+   0.5714285714285714,
+   0.0,
+   0.5714285714285714,
+   0.0,
+   0.42857142857142855,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.14285714285714285,
+   0.14285714285714285,
+   0.7142857142857143,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9110410830999067,
+   0.8909503195217481,
+   0.5396885563831103,
+   0.31071428571428567,
+   0.8877504848093084,
+   0.0,
+   0.24761904761904763,
+   0.5976190476190476,
+   0.8593537414965988,
+   0.0,
+   0.7188775510204082,
+   0.0,
+   0.0
+  ]
+ },
+ {
+  "id": "O11-1",
+  "cluster": 11,
+  "source": "lib3",
+  "program": {
+   "name": "amove_if_guns_snipe_if_thin",
+   "rules": [
+    {
+     "when": {
+      "our_suicide": {
+       ">=": 1
+      }
+     },
+     "set": {
+      "formation": "keep",
+      "melee": "charge",
+      "target": "clump",
+      "ranged": "stack"
+     }
+    },
+    {
+     "when": {
+      "our_ranged": {
+       ">=": 2
+      }
+     },
+     "set": {
+      "formation": "keep",
+      "ranged": "stack",
+      "melee": "charge",
+      "target": "frontline",
+      "kite": "all"
+     }
+    },
+    {
+     "when": {
+      "suicide_blast": "would_chain"
+     },
+     "set": {
+      "formation": "open",
+      "melee": "snipe",
+      "bait": "bait_two",
+      "target": "clump"
+     }
+    }
+   ],
+   "else": {
+    "formation": "keep",
+    "ranged": "stack",
+    "melee": "charge",
+    "target": "threat"
+   },
+   "why": "A-move wins mixed-range trades; when we have 0-1 guns vs chain bombs, spread and send two bait walkers so the rest stay outside blast; own bombs still ball onto the densest clump.",
+   "menu": "open"
+  },
+  "sel_net": 12,
+  "confirm_net": 10,
+  "fights": 35,
+  "feats": {
+   "speed": "even",
+   "reach": "even",
+   "numbers": "we_outnumber",
+   "contact": "far",
+   "pocket": "open",
+   "hp_trend": "no_trade_yet",
+   "if_we_stand_to_shoot": "gap_holds",
+   "if_we_keep_standing": "gap_holds",
+   "if_we_withdraw": "gap_stays_they_chase",
+   "suicide_blast": "our_bombs",
+   "ally_spacing": "clumped",
+   "guns_ready": "some_ready",
+   "allied_melee": true,
+   "enemy_melee": true,
+   "someone_can_shoot_now": false,
+   "rally_is_behind_us": false,
+   "guns_in_blades": false,
+   "our_alive": 5,
+   "their_alive": 3,
+   "alive_ratio": 1.667,
+   "our_ranged": 0,
+   "our_melee": 5,
+   "our_heal": 0,
+   "our_suicide": 4,
+   "enemy_guns": 1,
+   "enemy_melee_n": 2,
+   "enemy_heal": 0,
+   "enemy_suicide": 2,
+   "enemy_air": 0,
+   "tick_frac": 0.0
+  },
+  "vec": [
+   0.0,
+   1.0,
+   0.0,
+   0.42857142857142855,
+   0.5714285714285714,
+   0.0,
+   0.5714285714285714,
+   0.0,
+   0.42857142857142855,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   0.14285714285714285,
+   0.14285714285714285,
+   0.7142857142857143,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.9110410830999067,
+   0.8909503195217481,
+   0.5396885563831103,
+   0.31071428571428567,
+   0.8877504848093084,
+   0.0,
+   0.24761904761904763,
+   0.5976190476190476,
+   0.8593537414965988,
+   0.0,
+   0.7188775510204082,
+   0.0,
+   0.0
+  ]
+ }
+]

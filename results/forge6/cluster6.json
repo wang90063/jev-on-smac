@@ -1,0 +1,79 @@
+{
+ "cluster": "6",
+ "members": [
+  "g0583",
+  "g0033",
+  "g0354",
+  "g0486"
+ ],
+ "starts": [
+  {
+   "start": "d3",
+   "trail": [
+    2,
+    4,
+    6
+   ],
+   "leaves": [
+    "fall_back",
+    "hand",
+    "none",
+    "fall_back",
+    "none",
+    "stutter",
+    "kite_combo",
+    "hand"
+   ]
+  },
+  {
+   "start": "none",
+   "trail": [
+    0,
+    6
+   ],
+   "leaves": [
+    "fall_back",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none"
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "source": "tree_d3",
+   "sel": 6,
+   "confirm": -5,
+   "leaves": [
+    "fall_back",
+    "hand",
+    "none",
+    "fall_back",
+    "none",
+    "stutter",
+    "kite_combo",
+    "hand"
+   ]
+  },
+  {
+   "source": "tree_none",
+   "sel": 6,
+   "confirm": -4,
+   "leaves": [
+    "fall_back",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none"
+   ]
+  }
+ ],
+ "admitted": []
+}

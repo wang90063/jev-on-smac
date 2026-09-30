@@ -602,17 +602,8 @@ def _leaf_macros(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
 EVIDENCE_PATH = ROOT / "kb" / "library" / "evidence.json"
 
 
-def cmd_evidence() -> None:
-    """Paired record of every lib3 program vs Dummy on every train fight (seeds 1-5).
-
-    Online choosers look up the fights most similar to the current one here.
-    Train only: val and test never feed this table."""
-    train = SC.load("train")
-    lib = json.loads(LIB3_PATH.read_text())
-    specs = {"dummy": "dummy"}
-    for e in lib:
-        specs[e["id"]] = "prog:" + _prog_path(e["program"])
-    jobs = [(sp, s, k) for sp in specs.values() for s in train for k in SEEDS]
+def _paired_table(train, specs: Dict[str, str], seeds: List[int]) -> Dict[str, Dict[str, Dict[str, int]]]:
+    jobs = [(sp, s, k) for sp in specs.values() for s in train for k in seeds]
     with Pool(8) as pool:
         rows = pool.map(_episode, jobs, chunksize=2)
     win = {(sp, s["id"], k): r["win"] for (sp, s, k), r in zip(jobs, rows)}
@@ -622,19 +613,52 @@ def cmd_evidence() -> None:
             continue
         rec = programs.setdefault(pid, {})
         for s in train:
-            flip = sum(int(win[(sp, s["id"], k)] and not win[("dummy", s["id"], k)]) for k in SEEDS)
-            lose = sum(int(win[("dummy", s["id"], k)] and not win[(sp, s["id"], k)]) for k in SEEDS)
+            flip = sum(int(win[(sp, s["id"], k)] and not win[("dummy", s["id"], k)]) for k in seeds)
+            lose = sum(int(win[("dummy", s["id"], k)] and not win[(sp, s["id"], k)]) for k in seeds)
             rec[s["id"]] = {"flip": flip, "lose": lose, "net": flip - lose}
+    return programs
+
+
+def cmd_evidence(lib_path: Path = None, out_path: Path = None, headroom: bool = False) -> None:
+    """Paired record of every library program vs Dummy on every train fight (seeds 1-5).
+
+    Online choosers look up the fights most similar to the current one here.
+    Train only: val and test never feed this table. With headroom, also runs
+    seeds 6-10 and reports the cross-validated room for per-fight selection."""
+    lib_path = lib_path or LIB3_PATH
+    out_path = out_path or EVIDENCE_PATH
+    train = SC.load("train")
+    lib = json.loads(lib_path.read_text())
+    specs = {"dummy": "dummy"}
+    for e in lib:
+        specs[e["id"]] = "prog:" + _prog_path(e["program"])
+    programs = _paired_table(train, specs, SEEDS)
     vecs = {s["id"]: T.feature_vector(T.features(start_state(s))) for s in train}
-    EVIDENCE_PATH.write_text(json.dumps({"train_vecs": vecs, "programs": programs}))
+    out_path.write_text(json.dumps({"train_vecs": vecs, "programs": programs}))
     for pid, rec in programs.items():
         print(pid, "net over train", sum(r["net"] for r in rec.values()), flush=True)
+    if not headroom:
+        return
+    fresh = _paired_table(train, specs, CONFIRM_SEEDS)
+    ids = list(programs)
+    best_single = max(ids, key=lambda p: sum(r["net"] for r in programs[p].values()))
+    single = sum(r["net"] for r in fresh[best_single].values())
+    per = 0
+    for s in train:
+        pick = max(ids + ["none"], key=lambda p: programs[p][s["id"]]["net"] if p != "none" else 0)
+        per += 0 if pick == "none" else fresh[pick][s["id"]]["net"]
+    print(f"headroom on fresh seeds 6-10: best single program ({best_single}) {single:+d}; "
+          f"per-fight pick chosen on seeds 1-5 {per:+d}; room for selection {per - single:+d}", flush=True)
 
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "evidence":
         cmd_evidence()
+    elif cmd == "evidence_outcome":
+        cmd_evidence(OUTCOME_LIB, ROOT / "kb" / "library" / "evidence_outcome.json", headroom=True)
+    elif cmd == "headroom_lib3":
+        cmd_evidence(LIB3_PATH, Path(tempfile.gettempdir()) / "evidence_lib3_check.json", headroom=True)
     elif cmd == "outcome":
         cmd_outcome()
     elif cmd == "cluster":

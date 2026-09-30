@@ -88,8 +88,10 @@ def make_policy(spec: str, map_name: str, seed: int):
 
             m = _re.fullmatch(r"k(\d+)n(\d+)", parts[2])
             k, nn = int(m.group(1)), int(m.group(2))
+        # online@outcome:... picks from the round-6 outcome library instead of lib3.
+        library = parts[0].split("@", 1)[1] if "@" in parts[0] else "lib3"
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
-        return J.OnlinePolicy(chooser=chooser, seed=h, tag=spec, k=k, n_neighbors=nn)
+        return J.OnlinePolicy(chooser=chooser, seed=h, tag=spec, k=k, n_neighbors=nn, library=library)
     if spec.startswith("dist:"):
         lib = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
         return J.ProgramActionPolicy(next(e["program"] for e in lib if e["id"] == spec[5:]), tag=spec)
