@@ -77,6 +77,9 @@ def make_policy(spec: str, map_name: str, seed: int):
         name = spec[5:]
         prog = T.HAND_RULES if name == "hand_rules" else json.loads(Path(name).read_text())
         return J.ProgramActionPolicy(prog)
+    if spec.startswith("dist:"):
+        lib = json.loads((ROOT / "kb" / "library" / "distilled_programs.json").read_text())
+        return J.ProgramActionPolicy(next(e["program"] for e in lib if e["id"] == spec[5:]), tag=spec)
     if spec.startswith(("lib3:", "lib3h:")):
         # Round 3: cluster library with the Dummy fallback. lib3 = forged only,
         # lib3h = forged + hand rules that passed the same gate.
@@ -268,9 +271,9 @@ def cmd_holdout(args):
     import scenarios as SC
 
     test = SC.load(args.split)
-    jobs = [(p, sc, s) for p in args.policies for sc in test for s in SEEDS]
+    jobs = [(p, sc, s) for p in args.policies for sc in test for s in args.seeds]
     if args.official:
-        jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in SEEDS]
+        jobs += [(p, None, (m, s)) for p in args.policies for m in MAPS for s in args.seeds]
     # Jev calls go over the network; keep them serial-ish.
     with Pool(1 if any(p == "lib:jev" for p in args.policies) else 8) as pool:
         rows = pool.map(_holdout_job, jobs, chunksize=1)

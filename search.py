@@ -91,8 +91,27 @@ def _advance(env, pol, step: int, n: int) -> Tuple[int, bool, Dict[str, Any]]:
     return step, done, info
 
 
-def search_episode(job: Tuple[Dict[str, Any], int]) -> Dict[str, Any]:
-    scen, seed = job
+def predict(tree: Dict[str, Any], feats: Dict[str, Any]) -> str:
+    """Macro a distilled tree picks for these features."""
+    node = tree
+    while "test" in node:
+        name, op, v = node["test"]
+        x = feats.get(name)
+        yes = (float(x or 0) < v) if op == "<" else (x == v)
+        node = node["yes"] if yes else node["no"]
+    return node["leaf"]
+
+
+def search_episode(job) -> Dict[str, Any]:
+    """Teacher labels every decision point. With a student tree, the student
+    drives (DAgger): the episode follows the student's pick with probability
+    1 - beta, so the labels cover the states the student actually reaches."""
+    import random
+
+    scen, seed = job[0], job[1]
+    student = job[2] if len(job) > 2 else None
+    beta = job[3] if len(job) > 3 else 1.0
+    rng = random.Random(f"{scen['id']}:{seed}:{beta}")
     env = SC.make_env(scen, seed)
     env.reset()
     pol = MacroPolicy()
@@ -112,8 +131,12 @@ def search_episode(job: Tuple[Dict[str, Any], int]) -> Dict[str, Any]:
                 e2.close()
             # Ties go to "none" so the teacher only departs from Dummy for a reason.
             best = max(MACROS, key=lambda n: (scores[n], n == "none"))
-            log.append({"step": step, "feats": T.features(state), "pick": best, "scores": scores})
-            pol.set_macro(best)
+            feats = T.features(state)
+            log.append({"step": step, "feats": feats, "pick": best, "scores": scores})
+            run = best
+            if student is not None and rng.random() >= beta:
+                run = predict(student, feats)
+            pol.set_macro(run)
             step, done, info = _advance(env, pol, step, DECIDE)
     finally:
         env.close()

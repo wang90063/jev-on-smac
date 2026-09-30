@@ -1,0 +1,862 @@
+[
+ {
+  "id": "D1",
+  "source": "tree",
+  "program": {
+   "name": "tree_d1",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "menu": "dummy",
+   "why": "distilled from offline look-ahead search: hold, hand"
+  },
+  "tree": {
+   "leaf": "none",
+   "n": 3002,
+   "regret": 2027.447,
+   "test": [
+    "someone_can_shoot_now",
+    "==",
+    false
+   ],
+   "yes": {
+    "leaf": "hold",
+    "n": 979,
+    "regret": 437.689
+   },
+   "no": {
+    "leaf": "hand",
+    "n": 2023,
+    "regret": 819.772
+   }
+  }
+ },
+ {
+  "id": "D2",
+  "source": "tree",
+  "program": {
+   "name": "tree_d2",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none"
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "menu": "dummy",
+   "why": "distilled from offline look-ahead search: hold, spread, stutter, hand"
+  },
+  "tree": {
+   "leaf": "none",
+   "n": 3002,
+   "regret": 2027.447,
+   "test": [
+    "someone_can_shoot_now",
+    "==",
+    false
+   ],
+   "yes": {
+    "leaf": "hold",
+    "n": 979,
+    "regret": 437.689,
+    "test": [
+     "suicide_blast",
+     "==",
+     "none"
+    ],
+    "yes": {
+     "leaf": "hold",
+     "n": 586,
+     "regret": 180.606
+    },
+    "no": {
+     "leaf": "spread",
+     "n": 393,
+     "regret": 59.645
+    }
+   },
+   "no": {
+    "leaf": "hand",
+    "n": 2023,
+    "regret": 819.772,
+    "test": [
+     "our_alive",
+     "<",
+     2.0
+    ],
+    "yes": {
+     "leaf": "stutter",
+     "n": 160,
+     "regret": 51.44
+    },
+    "no": {
+     "leaf": "hand",
+     "n": 1863,
+     "regret": 618.558
+    }
+   }
+  }
+ },
+ {
+  "id": "D3",
+  "source": "tree",
+  "program": {
+   "name": "tree_d3",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster"
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ]
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    }
+   ],
+   "else": {},
+   "menu": "dummy",
+   "why": "distilled from offline look-ahead search: hold, hand, none, spread, none, stutter, kite_combo, hand"
+  },
+  "tree": {
+   "leaf": "none",
+   "n": 3002,
+   "regret": 2027.447,
+   "test": [
+    "someone_can_shoot_now",
+    "==",
+    false
+   ],
+   "yes": {
+    "leaf": "hold",
+    "n": 979,
+    "regret": 437.689,
+    "test": [
+     "suicide_blast",
+     "==",
+     "none"
+    ],
+    "yes": {
+     "leaf": "hold",
+     "n": 586,
+     "regret": 180.606,
+     "test": [
+      "alive_ratio",
+      "<",
+      1.858
+     ],
+     "yes": {
+      "leaf": "hold",
+      "n": 461,
+      "regret": 75.239
+     },
+     "no": {
+      "leaf": "hand",
+      "n": 125,
+      "regret": 43.089
+     }
+    },
+    "no": {
+     "leaf": "spread",
+     "n": 393,
+     "regret": 59.645,
+     "test": [
+      "speed",
+      "==",
+      "we_are_faster"
+     ],
+     "yes": {
+      "leaf": "none",
+      "n": 115,
+      "regret": 11.923
+     },
+     "no": {
+      "leaf": "spread",
+      "n": 278,
+      "regret": 36.885
+     }
+    }
+   },
+   "no": {
+    "leaf": "hand",
+    "n": 2023,
+    "regret": 819.772,
+    "test": [
+     "our_alive",
+     "<",
+     2.0
+    ],
+    "yes": {
+     "leaf": "stutter",
+     "n": 160,
+     "regret": 51.44,
+     "test": [
+      "if_we_withdraw",
+      "==",
+      "we_open_a_gap"
+     ],
+     "yes": {
+      "leaf": "none",
+      "n": 59,
+      "regret": 10.289
+     },
+     "no": {
+      "leaf": "stutter",
+      "n": 101,
+      "regret": 30.465
+     }
+    },
+    "no": {
+     "leaf": "hand",
+     "n": 1863,
+     "regret": 618.558,
+     "test": [
+      "hp_trend",
+      "==",
+      "no_damage"
+     ],
+     "yes": {
+      "leaf": "kite_combo",
+      "n": 177,
+      "regret": 151.432
+     },
+     "no": {
+      "leaf": "hand",
+      "n": 1686,
+      "regret": 422.498
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "D4",
+  "source": "tree",
+  "program": {
+   "name": "tree_d4",
+   "rules": [
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "pocket": "past_pocket",
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "pocket": [
+       "open",
+       "in_neck",
+       "at_mouth",
+       "in_pocket"
+      ],
+      "alive_ratio": {
+       "<": 1.858
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 1.858,
+       "<": 2.5
+      }
+     },
+     "set": {
+      "ranged": "hold",
+      "melee": "hold"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": "none",
+      "alive_ratio": {
+       ">=": 2.5
+      }
+     },
+     "set": {
+      "target": "guns"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster",
+      "tick_frac": {
+       "<": 0.367
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": "we_are_faster",
+      "tick_frac": {
+       ">=": 0.367
+      }
+     },
+     "set": {
+      "ranged": "fall_back",
+      "melee": "hold_choke"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ],
+      "if_we_stand_to_shoot": "gap_holds"
+     },
+     "set": {
+      "formation": "open"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": false,
+      "suicide_blast": [
+       "our_bombs",
+       "would_chain"
+      ],
+      "speed": [
+       "even",
+       "they_are_faster"
+      ],
+      "if_we_stand_to_shoot": [
+       "melee_reaches_us",
+       "no_enemy_melee"
+      ]
+     },
+     "set": {
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": "we_open_a_gap",
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "if_we_withdraw": [
+       "they_stand_we_open_gap",
+       "gap_stays_they_chase",
+       "they_catch_us",
+       "no_enemy_melee"
+      ],
+      "our_alive": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 2.0,
+       "<": 4.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "wounded": "rotate",
+      "target": "threat"
+     },
+     "menu": "open"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": "no_damage",
+      "our_alive": {
+       ">=": 4.0
+      }
+     },
+     "set": {},
+     "menu": "dummy"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      },
+      "enemy_heal": {
+       "<": 2.0
+      }
+     },
+     "set": {
+      "ranged": "stutter",
+      "melee": "hold_choke",
+      "bar": "bar",
+      "wing": "step"
+     },
+     "menu": "gated"
+    },
+    {
+     "when": {
+      "someone_can_shoot_now": true,
+      "hp_trend": [
+       "no_trade_yet",
+       "we_are_bleeding",
+       "they_are_bleeding",
+       "trading"
+      ],
+      "our_alive": {
+       ">=": 2.0
+      },
+      "enemy_heal": {
+       ">=": 2.0
+      }
+     },
+     "set": {
+      "melee": "hold_choke"
+     },
+     "menu": "open"
+    }
+   ],
+   "else": {},
+   "menu": "dummy",
+   "why": "distilled from offline look-ahead search: spread, hold, hold, guns, none, fall_back, spread, threat, none, stutter, kite_combo, none, hand, hold_choke"
+  },
+  "tree": {
+   "leaf": "none",
+   "n": 3002,
+   "regret": 2027.447,
+   "test": [
+    "someone_can_shoot_now",
+    "==",
+    false
+   ],
+   "yes": {
+    "leaf": "hold",
+    "n": 979,
+    "regret": 437.689,
+    "test": [
+     "suicide_blast",
+     "==",
+     "none"
+    ],
+    "yes": {
+     "leaf": "hold",
+     "n": 586,
+     "regret": 180.606,
+     "test": [
+      "alive_ratio",
+      "<",
+      1.858
+     ],
+     "yes": {
+      "leaf": "hold",
+      "n": 461,
+      "regret": 75.239,
+      "test": [
+       "pocket",
+       "==",
+       "past_pocket"
+      ],
+      "yes": {
+       "leaf": "spread",
+       "n": 116,
+       "regret": 10.214
+      },
+      "no": {
+       "leaf": "hold",
+       "n": 345,
+       "regret": 44.96
+      }
+     },
+     "no": {
+      "leaf": "hand",
+      "n": 125,
+      "regret": 43.089,
+      "test": [
+       "alive_ratio",
+       "<",
+       2.5
+      ],
+      "yes": {
+       "leaf": "hold",
+       "n": 74,
+       "regret": 21.272
+      },
+      "no": {
+       "leaf": "guns",
+       "n": 51,
+       "regret": 1.331
+      }
+     }
+    },
+    "no": {
+     "leaf": "spread",
+     "n": 393,
+     "regret": 59.645,
+     "test": [
+      "speed",
+      "==",
+      "we_are_faster"
+     ],
+     "yes": {
+      "leaf": "none",
+      "n": 115,
+      "regret": 11.923,
+      "test": [
+       "tick_frac",
+       "<",
+       0.367
+      ],
+      "yes": {
+       "leaf": "none",
+       "n": 68,
+       "regret": 1.854
+      },
+      "no": {
+       "leaf": "fall_back",
+       "n": 47,
+       "regret": 1.573
+      }
+     },
+     "no": {
+      "leaf": "spread",
+      "n": 278,
+      "regret": 36.885,
+      "test": [
+       "if_we_stand_to_shoot",
+       "==",
+       "gap_holds"
+      ],
+      "yes": {
+       "leaf": "spread",
+       "n": 142,
+       "regret": 25.531
+      },
+      "no": {
+       "leaf": "threat",
+       "n": 136,
+       "regret": 1.773
+      }
+     }
+    }
+   },
+   "no": {
+    "leaf": "hand",
+    "n": 2023,
+    "regret": 819.772,
+    "test": [
+     "our_alive",
+     "<",
+     2.0
+    ],
+    "yes": {
+     "leaf": "stutter",
+     "n": 160,
+     "regret": 51.44,
+     "test": [
+      "if_we_withdraw",
+      "==",
+      "we_open_a_gap"
+     ],
+     "yes": {
+      "leaf": "none",
+      "n": 59,
+      "regret": 10.289
+     },
+     "no": {
+      "leaf": "stutter",
+      "n": 101,
+      "regret": 30.465
+     }
+    },
+    "no": {
+     "leaf": "hand",
+     "n": 1863,
+     "regret": 618.558,
+     "test": [
+      "hp_trend",
+      "==",
+      "no_damage"
+     ],
+     "yes": {
+      "leaf": "kite_combo",
+      "n": 177,
+      "regret": 151.432,
+      "test": [
+       "our_alive",
+       "<",
+       4.0
+      ],
+      "yes": {
+       "leaf": "kite_combo",
+       "n": 114,
+       "regret": 65.527
+      },
+      "no": {
+       "leaf": "none",
+       "n": 63,
+       "regret": 11.784
+      }
+     },
+     "no": {
+      "leaf": "hand",
+      "n": 1686,
+      "regret": 422.498,
+      "test": [
+       "enemy_heal",
+       "<",
+       2.0
+      ],
+      "yes": {
+       "leaf": "hand",
+       "n": 1446,
+       "regret": 317.953
+      },
+      "no": {
+       "leaf": "hold_choke",
+       "n": 240,
+       "regret": 73.331
+      }
+     }
+    }
+   }
+  }
+ }
+]
