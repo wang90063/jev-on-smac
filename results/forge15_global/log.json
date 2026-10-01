@@ -1,0 +1,1513 @@
+{
+ "model": "Grok-4.7",
+ "reasoning": "medium",
+ "attempts": [
+  {
+   "name": "sticky_focus_stutter",
+   "idea": "Leave the default pathing alone. Override only for a shared focus target (banelings, then low-EHP high DPS, sticky once wounded), cooldown stutter-kiting versus melee, melee stepping off enemy banelings when ranged can kill them, baneling clump detonation, and medivac heal/backline.",
+   "sel": -38,
+   "critic": {
+    "net_vs_default": -38,
+    "flips": 10,
+    "losses": 48,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "baneling": 4,
+       "zealot": 1
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 2
+      },
+      "terrain": "open",
+      "steps": 5,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 4,
+       "ally_id": 1
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 5,
+       "allies_alive": 5,
+       "enemies_alive": 3
+      },
+      "distinct_targets_per_step": 1.0
+     },
+     {
+      "ours": {
+       "baneling": 4,
+       "zealot": 1
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 2
+      },
+      "terrain": "open",
+      "steps": 5,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": null,
+      "contact": {
+       "step": 0,
+       "allies_attacking": 5,
+       "allies_alive": 5,
+       "enemies_alive": 3
+      },
+      "distinct_targets_per_step": 1.2
+     },
+     {
+      "ours": {
+       "stalker": 6
+      },
+      "theirs": {
+       "hydralisk": 3,
+       "marauder": 4
+      },
+      "terrain": "corridor",
+      "steps": 36,
+      "left": {
+       "ours": 0,
+       "theirs": 2
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 5
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 6,
+       "allies_alive": 6,
+       "enemies_alive": 7
+      },
+      "distinct_targets_per_step": 1.0
+     },
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 32,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 5,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 1.0
+     },
+     {
+      "ours": {
+       "zergling": 14,
+       "zealot": 2
+      },
+      "theirs": {
+       "baneling": 5,
+       "hydralisk": 2
+      },
+      "terrain": "open",
+      "steps": 5,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 4,
+       "ally_id": 2
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 16,
+       "allies_alive": 16,
+       "enemies_alive": 7
+      },
+      "distinct_targets_per_step": 1.0
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "zealot": 7,
+       "baneling": 12
+      },
+      "theirs": {
+       "stalker": 10
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 8
+      },
+      "theirs": {
+       "hydralisk": 3
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "marine": 8,
+       "hydralisk": 2
+      },
+      "theirs": {
+       "marine": 4,
+       "zealot": 3,
+       "hydralisk": 2
+      },
+      "terrain": "ravine"
+     }
+    ]
+   }
+  },
+  {
+   "name": "splash_split_range",
+   "idea": "Spatial control instead of a global focus: detonate banelings on the blast that removes the most HP, walk melee off enemy banelings, split allies when splash is near, hold a range band and stutter only inside it, and keep medivacs behind the army healing the lowest HP ratio.",
+   "sel": -31,
+   "critic": {
+    "net_vs_default": -31,
+    "flips": 9,
+    "losses": 40,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "colossus": 3
+      },
+      "theirs": {
+       "zealot": 5,
+       "hydralisk": 8,
+       "baneling": 17
+      },
+      "terrain": "wall_gap",
+      "steps": 78,
+      "left": {
+       "ours": 0,
+       "theirs": 6
+      },
+      "first_death": {
+       "step": 10,
+       "ally_id": 1
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 3,
+       "allies_alive": 3,
+       "enemies_alive": 30
+      },
+      "distinct_targets_per_step": 1.08
+     },
+     {
+      "ours": {
+       "baneling": 4,
+       "zealot": 1
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 2
+      },
+      "terrain": "open",
+      "steps": 5,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 4,
+       "ally_id": 1
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 5,
+       "allies_alive": 5,
+       "enemies_alive": 3
+      },
+      "distinct_targets_per_step": 1.0
+     },
+     {
+      "ours": {
+       "baneling": 4,
+       "zealot": 1
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 2
+      },
+      "terrain": "open",
+      "steps": 5,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": null,
+      "contact": {
+       "step": 0,
+       "allies_attacking": 5,
+       "allies_alive": 5,
+       "enemies_alive": 3
+      },
+      "distinct_targets_per_step": 1.2
+     },
+     {
+      "ours": {
+       "stalker": 6
+      },
+      "theirs": {
+       "hydralisk": 3,
+       "marauder": 4
+      },
+      "terrain": "corridor",
+      "steps": 31,
+      "left": {
+       "ours": 0,
+       "theirs": 3
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 5
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 6,
+       "allies_alive": 6,
+       "enemies_alive": 7
+      },
+      "distinct_targets_per_step": 1.74
+     },
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 34,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 1.56
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "zealot": 2,
+       "hydralisk": 1
+      },
+      "theirs": {
+       "colossus": 1
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "zealot": 7,
+       "baneling": 12
+      },
+      "theirs": {
+       "stalker": 10
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 8
+      },
+      "theirs": {
+       "hydralisk": 3
+      },
+      "terrain": "wall_gap"
+     }
+    ]
+   }
+  },
+  {
+   "name": "clump_detonate",
+   "idea": "Leave the default policy on every fighting unit. Override only medivacs (heal, else flee, else catch wounded) and banelings when four or more enemies make a different blast clearly better than the nearest body: detonate the in-range clump, otherwise walk to a much fatter one.",
+   "sel": -6,
+   "critic": {
+    "net_vs_default": -6,
+    "flips": 1,
+    "losses": 7,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "baneling": 12,
+       "marine": 9,
+       "zealot": 2
+      },
+      "theirs": {
+       "hydralisk": 4,
+       "stalker": 2,
+       "zealot": 4
+      },
+      "terrain": "open",
+      "steps": 31,
+      "left": {
+       "ours": 0,
+       "theirs": 8
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 12,
+       "allies_alive": 23,
+       "enemies_alive": 10
+      },
+      "distinct_targets_per_step": 1.35
+     },
+     {
+      "ours": {
+       "baneling": 12,
+       "marine": 9,
+       "zealot": 2
+      },
+      "theirs": {
+       "hydralisk": 4,
+       "stalker": 2,
+       "zealot": 4
+      },
+      "terrain": "open",
+      "steps": 31,
+      "left": {
+       "ours": 0,
+       "theirs": 8
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 12,
+       "allies_alive": 23,
+       "enemies_alive": 10
+      },
+      "distinct_targets_per_step": 1.55
+     },
+     {
+      "ours": {
+       "baneling": 7,
+       "zealot": 5
+      },
+      "theirs": {
+       "marine": 6,
+       "stalker": 3
+      },
+      "terrain": "open",
+      "steps": 49,
+      "left": {
+       "ours": 0,
+       "theirs": 3
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 3
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 7,
+       "allies_alive": 12,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 1.06
+     },
+     {
+      "ours": {
+       "baneling": 11,
+       "marauder": 4,
+       "stalker": 2
+      },
+      "theirs": {
+       "hydralisk": 2,
+       "marine": 10,
+       "zealot": 5
+      },
+      "terrain": "open",
+      "steps": 35,
+      "left": {
+       "ours": 0,
+       "theirs": 15
+      },
+      "first_death": {
+       "step": 5,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 11,
+       "allies_alive": 17,
+       "enemies_alive": 17
+      },
+      "distinct_targets_per_step": 1.5
+     },
+     {
+      "ours": {
+       "stalker": 1,
+       "baneling": 6
+      },
+      "theirs": {
+       "zergling": 10,
+       "baneling": 7
+      },
+      "terrain": "open",
+      "steps": 15,
+      "left": {
+       "ours": 0,
+       "theirs": 13
+      },
+      "first_death": {
+       "step": 4,
+       "ally_id": 1
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 6,
+       "allies_alive": 7,
+       "enemies_alive": 17
+      },
+      "distinct_targets_per_step": 1.0
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "marauder": 3,
+       "zealot": 2,
+       "medivac": 1
+      },
+      "theirs": {
+       "marauder": 7
+      },
+      "terrain": "open"
+     }
+    ]
+   }
+  },
+  {
+   "name": "speed_edge_finish",
+   "idea": "Default does the fighting. A ready ranged unit overrides only to spend a shot that is enough to finish a live target (banelings and healers first, one shooter per kill). Between shots, a unit steps back only if it is strictly faster than a melee or baneling already inside its range. Medivacs heal or keep distance.",
+   "sel": 5,
+   "critic": {
+    "net_vs_default": 5,
+    "flips": 9,
+    "losses": 4,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 45,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 0
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 2.16
+     },
+     {
+      "ours": {
+       "marine": 30
+      },
+      "theirs": {
+       "stalker": 3,
+       "marine": 24
+      },
+      "terrain": "open",
+      "steps": 51,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 17
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 30,
+       "allies_alive": 30,
+       "enemies_alive": 27
+      },
+      "distinct_targets_per_step": 3.2
+     },
+     {
+      "ours": {
+       "marine": 30
+      },
+      "theirs": {
+       "stalker": 3,
+       "marine": 24
+      },
+      "terrain": "open",
+      "steps": 50,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 17
+      },
+      "contact": {
+       "step": 1,
+       "allies_attacking": 30,
+       "allies_alive": 30,
+       "enemies_alive": 27
+      },
+      "distinct_targets_per_step": 3.86
+     },
+     {
+      "ours": {
+       "stalker": 1,
+       "zergling": 10
+      },
+      "theirs": {
+       "zealot": 4
+      },
+      "terrain": "wall_gap",
+      "steps": 58,
+      "left": {
+       "ours": 0,
+       "theirs": 2
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 11,
+       "allies_alive": 11,
+       "enemies_alive": 4
+      },
+      "distinct_targets_per_step": 1.94
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "hydralisk": 2,
+       "stalker": 2,
+       "marauder": 2
+      },
+      "theirs": {
+       "marauder": 3,
+       "zergling": 15
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "zealot": 9,
+       "marine": 12,
+       "stalker": 4
+      },
+      "theirs": {
+       "colossus": 2,
+       "marauder": 6,
+       "medivac": 2
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "stalker": 9
+      },
+      "theirs": {
+       "marine": 13,
+       "zealot": 4,
+       "medivac": 2
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "stalker": 9
+      },
+      "theirs": {
+       "marine": 13,
+       "zealot": 4,
+       "medivac": 2
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "hydralisk": 11
+      },
+      "theirs": {
+       "hydralisk": 8,
+       "stalker": 6
+      },
+      "terrain": "octagon"
+     }
+    ]
+   }
+  },
+  {
+   "name": "screened_bane_budget",
+   "idea": "Keep the default fight plan, but spend ready non-splash shots to delete banelings that are already on top of the army (lethal budget, no overkill). Last-hit only suicides, healers, and high-damage units, and in big fights do not peel gunners onto nearly-dead marines or lings. Stutter-step only when strictly faster than a melee or baneling and no friendly melee is already screening it. Medivacs heal the lowest in-range ratio, else flee.",
+   "sel": 3,
+   "critic": {
+    "net_vs_default": 3,
+    "flips": 8,
+    "losses": 5,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 45,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 0
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 2.16
+     },
+     {
+      "ours": {
+       "marine": 14,
+       "stalker": 7
+      },
+      "theirs": {
+       "marauder": 4,
+       "hydralisk": 3,
+       "marine": 13,
+       "medivac": 2
+      },
+      "terrain": "open",
+      "steps": 71,
+      "left": {
+       "ours": 0,
+       "theirs": 3
+      },
+      "first_death": {
+       "step": 7,
+       "ally_id": 3
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 21,
+       "allies_alive": 21,
+       "enemies_alive": 22
+      },
+      "distinct_targets_per_step": 3.0
+     },
+     {
+      "ours": {
+       "zealot": 5,
+       "hydralisk": 1,
+       "baneling": 4
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 5,
+       "stalker": 2
+      },
+      "terrain": "open",
+      "steps": 43,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 5,
+       "allies_attacking": 2,
+       "allies_alive": 7,
+       "enemies_alive": 7
+      },
+      "distinct_targets_per_step": 1.03
+     },
+     {
+      "ours": {
+       "hydralisk": 16
+      },
+      "theirs": {
+       "baneling": 10,
+       "marauder": 7,
+       "marine": 11,
+       "medivac": 2
+      },
+      "terrain": "open",
+      "steps": 44,
+      "left": {
+       "ours": 0,
+       "theirs": 7
+      },
+      "first_death": {
+       "step": 9,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 5,
+       "allies_attacking": 16,
+       "allies_alive": 16,
+       "enemies_alive": 30
+      },
+      "distinct_targets_per_step": 3.77
+     },
+     {
+      "ours": {
+       "stalker": 1,
+       "zergling": 10
+      },
+      "theirs": {
+       "zealot": 4
+      },
+      "terrain": "wall_gap",
+      "steps": 61,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 11,
+       "allies_alive": 11,
+       "enemies_alive": 4
+      },
+      "distinct_targets_per_step": 1.79
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "hydralisk": 2,
+       "stalker": 2,
+       "marauder": 2
+      },
+      "theirs": {
+       "marauder": 3,
+       "zergling": 15
+      },
+      "terrain": "wall_gap"
+     },
+     {
+      "ours": {
+       "zealot": 9,
+       "marine": 12,
+       "stalker": 4
+      },
+      "theirs": {
+       "colossus": 2,
+       "marauder": 6,
+       "medivac": 2
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "stalker": 9
+      },
+      "theirs": {
+       "marine": 13,
+       "zealot": 4,
+       "medivac": 2
+      },
+      "terrain": "open"
+     }
+    ]
+   }
+  },
+  {
+   "name": "fat_clump_healer",
+   "idea": "Different lever than focus-fire: banelings stay on the default contact unless a nearby blast is clearly fatter than the isolated body they are touching, then they walk to or hit that clump. Separately, a few ready gunners pour only enough damage to finish an enemy healer already under 90 ehp. Stalkers stutter-step slower melee between shots. Medivacs prefer wounded high-damage allies over a one-hp zergling.",
+   "sel": 5,
+   "critic": {
+    "net_vs_default": 5,
+    "flips": 7,
+    "losses": 2,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "baneling": 12,
+       "marine": 9,
+       "zealot": 2
+      },
+      "theirs": {
+       "hydralisk": 4,
+       "stalker": 2,
+       "zealot": 4
+      },
+      "terrain": "open",
+      "steps": 31,
+      "left": {
+       "ours": 0,
+       "theirs": 6
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 12,
+       "allies_alive": 23,
+       "enemies_alive": 10
+      },
+      "distinct_targets_per_step": 1.58
+     },
+     {
+      "ours": {
+       "stalker": 1,
+       "zergling": 10
+      },
+      "theirs": {
+       "zealot": 4
+      },
+      "terrain": "wall_gap",
+      "steps": 56,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 11,
+       "allies_alive": 11,
+       "enemies_alive": 4
+      },
+      "distinct_targets_per_step": 1.97
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "stalker": 9
+      },
+      "theirs": {
+       "marine": 13,
+       "zealot": 4,
+       "medivac": 2
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "stalker": 9
+      },
+      "theirs": {
+       "marine": 13,
+       "zealot": 4,
+       "medivac": 2
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "colossus": 1,
+       "baneling": 9,
+       "marine": 8
+      },
+      "theirs": {
+       "marine": 22
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "baneling": 13,
+       "stalker": 3
+      },
+      "theirs": {
+       "baneling": 28
+      },
+      "terrain": "open"
+     }
+    ]
+   }
+  },
+  {
+   "name": "volley_budget_focus",
+   "idea": "Leave pathing to the default. Ready ranged units share one damage budget and only override to finish a close baneling, a healer this volley can actually drop, or the lowest-ehp enemy already in range when at least two guns can hit it, so shots stop stacking once the target is dead. In-range banelings retarget only if a different blast is clearly fatter. Medivacs heal the wounded ally with the most missing damage, or flee.",
+   "sel": -20,
+   "critic": {
+    "net_vs_default": -20,
+    "flips": 12,
+    "losses": 32,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "colossus": 3
+      },
+      "theirs": {
+       "zealot": 5,
+       "hydralisk": 8,
+       "baneling": 17
+      },
+      "terrain": "wall_gap",
+      "steps": 38,
+      "left": {
+       "ours": 0,
+       "theirs": 9
+      },
+      "first_death": {
+       "step": 10,
+       "ally_id": 1
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 3,
+       "allies_alive": 3,
+       "enemies_alive": 30
+      },
+      "distinct_targets_per_step": 1.18
+     },
+     {
+      "ours": {
+       "stalker": 6
+      },
+      "theirs": {
+       "hydralisk": 3,
+       "marauder": 4
+      },
+      "terrain": "corridor",
+      "steps": 29,
+      "left": {
+       "ours": 0,
+       "theirs": 3
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 5
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 6,
+       "allies_alive": 6,
+       "enemies_alive": 7
+      },
+      "distinct_targets_per_step": 1.86
+     },
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 33,
+      "left": {
+       "ours": 0,
+       "theirs": 5
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 0
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 2.12
+     },
+     {
+      "ours": {
+       "zealot": 9,
+       "marine": 12,
+       "stalker": 4
+      },
+      "theirs": {
+       "colossus": 2,
+       "marauder": 6,
+       "medivac": 2
+      },
+      "terrain": "ravine",
+      "steps": 59,
+      "left": {
+       "ours": 0,
+       "theirs": 5
+      },
+      "first_death": {
+       "step": 5,
+       "ally_id": 3
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 25,
+       "allies_alive": 25,
+       "enemies_alive": 10
+      },
+      "distinct_targets_per_step": 2.27
+     },
+     {
+      "ours": {
+       "marine": 14,
+       "stalker": 7
+      },
+      "theirs": {
+       "marauder": 4,
+       "hydralisk": 3,
+       "marine": 13,
+       "medivac": 2
+      },
+      "terrain": "open",
+      "steps": 47,
+      "left": {
+       "ours": 0,
+       "theirs": 7
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 4
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 21,
+       "allies_alive": 21,
+       "enemies_alive": 22
+      },
+      "distinct_targets_per_step": 3.83
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "baneling": 9,
+       "hydralisk": 3
+      },
+      "theirs": {
+       "baneling": 18
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "marauder": 10
+      },
+      "theirs": {
+       "zergling": 9,
+       "stalker": 2,
+       "zealot": 4
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "marine": 8,
+       "hydralisk": 2
+      },
+      "theirs": {
+       "marine": 4,
+       "zealot": 3,
+       "hydralisk": 2
+      },
+      "terrain": "ravine"
+     },
+     {
+      "ours": {
+       "hydralisk": 4
+      },
+      "theirs": {
+       "colossus": 1
+      },
+      "terrain": "open"
+     }
+    ]
+   }
+  },
+  {
+   "name": "range_hold_and_screen",
+   "idea": "A unit that outranges a melee or baneling and is not slower holds the gap: fire when the weapon is ready, step back only during cooldown, and never give ground once already inside the enemy's hit radius unless it is strictly faster. One melee peels each baneling that is about to reach the guns. Solo last-hits still delete bombs and healers. Medivacs keep the proven heal-or-flee rule.",
+   "sel": 7,
+   "critic": {
+    "net_vs_default": 7,
+    "flips": 14,
+    "losses": 7,
+    "max_error_rate": 0.0,
+    "errors": [],
+    "fights_it_lost_that_default_won": [
+     {
+      "ours": {
+       "zergling": 14,
+       "hydralisk": 4
+      },
+      "theirs": {
+       "marauder": 2,
+       "marine": 4,
+       "colossus": 1,
+       "medivac": 2
+      },
+      "terrain": "corridor",
+      "steps": 45,
+      "left": {
+       "ours": 0,
+       "theirs": 4
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 0
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 18,
+       "allies_alive": 18,
+       "enemies_alive": 9
+      },
+      "distinct_targets_per_step": 2.16
+     },
+     {
+      "ours": {
+       "marine": 30
+      },
+      "theirs": {
+       "stalker": 3,
+       "marine": 24
+      },
+      "terrain": "open",
+      "steps": 51,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 17
+      },
+      "contact": {
+       "step": 0,
+       "allies_attacking": 30,
+       "allies_alive": 30,
+       "enemies_alive": 27
+      },
+      "distinct_targets_per_step": 3.2
+     },
+     {
+      "ours": {
+       "marine": 30
+      },
+      "theirs": {
+       "stalker": 3,
+       "marine": 24
+      },
+      "terrain": "open",
+      "steps": 50,
+      "left": {
+       "ours": 0,
+       "theirs": 1
+      },
+      "first_death": {
+       "step": 6,
+       "ally_id": 17
+      },
+      "contact": {
+       "step": 1,
+       "allies_attacking": 30,
+       "allies_alive": 30,
+       "enemies_alive": 27
+      },
+      "distinct_targets_per_step": 3.86
+     },
+     {
+      "ours": {
+       "zealot": 5,
+       "hydralisk": 1,
+       "baneling": 4
+      },
+      "theirs": {
+       "marauder": 1,
+       "baneling": 5,
+       "stalker": 2
+      },
+      "terrain": "open",
+      "steps": 52,
+      "left": {
+       "ours": 0,
+       "theirs": 2
+      },
+      "first_death": {
+       "step": 3,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 10,
+       "allies_attacking": 6,
+       "allies_alive": 6,
+       "enemies_alive": 6
+      },
+      "distinct_targets_per_step": 1.25
+     },
+     {
+      "ours": {
+       "marine": 12,
+       "stalker": 3
+      },
+      "theirs": {
+       "colossus": 1,
+       "zealot": 10
+      },
+      "terrain": "wall_gap",
+      "steps": 60,
+      "left": {
+       "ours": 0,
+       "theirs": 5
+      },
+      "first_death": {
+       "step": 14,
+       "ally_id": 7
+      },
+      "contact": {
+       "step": 3,
+       "allies_attacking": 13,
+       "allies_alive": 15,
+       "enemies_alive": 11
+      },
+      "distinct_targets_per_step": 2.08
+     }
+    ],
+    "fights_it_won_that_default_lost": [
+     {
+      "ours": {
+       "marauder": 11
+      },
+      "theirs": {
+       "zergling": 9,
+       "zealot": 5,
+       "baneling": 8
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "marauder": 11
+      },
+      "theirs": {
+       "zergling": 9,
+       "zealot": 5,
+       "baneling": 8
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "marine": 24
+      },
+      "theirs": {
+       "baneling": 12,
+       "stalker": 5
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "marine": 24
+      },
+      "theirs": {
+       "baneling": 12,
+       "stalker": 5
+      },
+      "terrain": "open"
+     },
+     {
+      "ours": {
+       "zealot": 9,
+       "marine": 12,
+       "stalker": 4
+      },
+      "theirs": {
+       "colossus": 2,
+       "marauder": 6,
+       "medivac": 2
+      },
+      "terrain": "ravine"
+     }
+    ]
+   }
+  }
+ ],
+ "best": {
+  "name": "range_hold_and_screen",
+  "idea": "A unit that outranges a melee or baneling and is not slower holds the gap: fire when the weapon is ready, step back only during cooldown, and never give ground once already inside the enemy's hit radius unless it is strictly faster. One melee peels each baneling that is about to reach the guns. Solo last-hits still delete bombs and healers. Medivacs keep the proven heal-or-flee rule.",
+  "sel": 7,
+  "confirm": 9,
+  "confirm_flips": 18,
+  "confirm_losses": 9
+ }
+}
