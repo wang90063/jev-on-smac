@@ -80,8 +80,14 @@ def cmd_states() -> None:
     rng = random.Random(7)
     sample = rng.sample(points, min(N_SAMPLE, len(points)))
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "points.json").write_text(json.dumps(sample))
-    print(f"{len(points)} labelled points matched their replay ({mismatch} did not); sampled {len(sample)}")
+    if not (OUT / "points.json").is_file():
+        (OUT / "points.json").write_text(json.dumps(sample))
+    # Second batch for round 11: disjoint from the first, same seed scheme.
+    first = {(p["id"], p["seed"], p["step"]) for p in json.loads((OUT / "points.json").read_text())}
+    rest = [p for p in points if (p["id"], p["seed"], p["step"]) not in first]
+    batch2 = random.Random(11).sample(rest, min(N_SAMPLE, len(rest)))
+    (OUT / "points2.json").write_text(json.dumps(batch2))
+    print(f"{len(points)} labelled points matched their replay ({mismatch} did not); batch1 {len(first)}, batch2 {len(batch2)}")
 
 
 def _describe(a: str) -> str:
@@ -267,11 +273,11 @@ def _examples(idx: List[int], actions: List[str]) -> List[Dict[str, Any]]:
     return out
 
 
-def cmd_ask_icl() -> None:
+def cmd_ask_icl(src: str = "answers.json", dst: str = "answers_icl.json") -> None:
     import search as SE
     from jev_api import JevClient
 
-    pts = json.loads((OUT / "answers.json").read_text())
+    pts = json.loads((OUT / src).read_text())
     actions = list(SE.MACROS) + ["default"]
     base_q = _questions(actions)
     client = JevClient()
@@ -296,7 +302,7 @@ def cmd_ask_icl() -> None:
         res = list(ex.map(one, pts))
     for p, r in zip(pts, res):
         p.update(r)
-    (OUT / "answers_icl.json").write_text(json.dumps(pts))
+    (OUT / dst).write_text(json.dumps(pts))
     print(f"asked {len(pts)} points with {K_EXAMPLES} examples each; calls ok {client.n_calls} fail {client.n_fail}; "
           f"mean input tokens {np.mean([r['tokens'] for r in res]):.0f}")
 
@@ -334,5 +340,45 @@ def cmd_score_icl() -> None:
         print(f"  {name:22s} gain at tau 0/0.05/0.1/0.2 (departures): {'  '.join(gains)}   rank corr {rc:.3f}")
 
 
+def gate_rule_gains(pts, thresholds=None, tau: float = 0.05):
+    """Fixed round-11 rule: kNN-average proposal above tau, taken only when the
+    situation signal is below its threshold (first-batch median)."""
+    import search as SE
+
+    macros = list(SE.MACROS)
+    t = _train_index()
+    true = np.array([[p["q"][a] - p["q"]["default"] for a in macros] for p in pts])
+    kadv = np.array([[np.mean([t["Q"][i][a] - t["Q"][i]["default"] for i in p["idx"]]) for a in macros] for p in pts])
+    sig = {
+        "jev": np.array([p["jev_icl"]["now"] for p in pts]),
+        "health": np.array([p["x"][-8] for p in pts]),
+        "knn": np.array([np.mean([t["Q"][i]["default"] >= 0.5 for i in p["idx"]]) for p in pts]),
+    }
+    if thresholds is None:
+        thresholds = {k: float(np.median(v)) for k, v in sig.items()}
+    pick = kadv.argmax(1)
+    g = true[np.arange(len(pick)), pick]
+    prop = kadv.max(1) > tau
+    out = {"none": (float((g * prop).sum()), int(prop.sum()))}
+    for k, v in sig.items():
+        take = prop & (v < thresholds[k])
+        out[k] = (float((g * take).sum()), int(take.sum()))
+    return out, thresholds, float(np.maximum(true.max(1), 0).sum())
+
+
+def cmd_check2() -> None:
+    b1 = [p for p in json.loads((OUT / "answers_icl.json").read_text()) if not np.isnan(p["jev_icl"]["now"])]
+    b2 = [p for p in json.loads((OUT / "answers2_icl.json").read_text()) if not np.isnan(p["jev_icl"]["now"])]
+    for p in b2:
+        p.setdefault("idx", neighbors(p["x"]))
+    r1, thr, o1 = gate_rule_gains(b1)
+    r2, _, o2 = gate_rule_gains(b2, thr)
+    print("thresholds (batch-1 medians):", {k: round(v, 3) for k, v in thr.items()})
+    for name, r, o in (("batch 1 (rule chosen here)", r1, o1), ("batch 2 (fresh)", r2, o2)):
+        print(f"{name}: oracle {o:.2f}  " + "  ".join(f"{k}: {v[0]:+.2f} ({v[1]})" for k, v in r.items()))
+
+
 if __name__ == "__main__":
-    {"states": cmd_states, "ask": cmd_ask, "score": cmd_score, "ask_icl": cmd_ask_icl, "score_icl": cmd_score_icl}[sys.argv[1]]()
+    cmds = {"states": cmd_states, "ask": cmd_ask, "score": cmd_score, "ask_icl": cmd_ask_icl, "score_icl": cmd_score_icl,
+            "ask2_icl": lambda: cmd_ask_icl("points2.json", "answers2_icl.json"), "check2": cmd_check2}
+    cmds[sys.argv[1]]()
