@@ -599,6 +599,179 @@ def _leaf_macros(tree: Dict[str, Any]) -> List[Dict[str, Any]]:
     return _leaf_macros(tree["yes"]) + _leaf_macros(tree["no"])
 
 
+# --- round 15: the writer writes micro code (LLM-SMAC style) ------------------
+
+CODE_LIB = ROOT / "kb" / "library" / "code_programs.json"
+CODE_DIR = ROOT / "kb" / "library" / "code"
+FORGE15_DIR = ROOT / "results" / "forge15"
+CODE_ROUNDS = 4
+CODE_K = 3
+MAX_ERROR_RATE = 0.10
+
+
+def _code_path(src: str) -> str:
+    import hashlib
+
+    PROG_DIR.mkdir(parents=True, exist_ok=True)
+    path = PROG_DIR / ("code_" + hashlib.md5(src.encode()).hexdigest()[:12] + ".py")
+    if not path.is_file():
+        path.write_text(src)
+    return str(path)
+
+
+def code_episode(job) -> Dict[str, Any]:
+    """Play one fight with a code program (or the online default if src is None); collect critic stats."""
+    import jev_smac_policy as J
+    from macsmac.snapshot import snapshot
+
+    import code_policy as CP
+
+    src, scen, seed = job
+    env = SC.make_env(scen, seed)
+    env.reset()
+    pol = J.ValueOnlinePolicy() if src is None else CP.CodeActionPolicy(src)
+    step, done, info = 0, False, {}
+    first_death = None
+    targets_per_step: List[int] = []
+    contact = None
+    try:
+        while not done:
+            snap = snapshot(env)
+            acts = pol.act("code", step, snap)
+            alive = [a for a in snap["allies"] if a.get("alive")]
+            if first_death is None and len(alive) < snap["n_agents"]:
+                dead = [a for a in snap["allies"] if not a.get("alive")]
+                first_death = {"step": step, "ally_id": dead[0]["id"]}
+            tg = {a - 6 for i, a in enumerate(acts) if a >= 6 and snap["allies"][i].get("alive") and snap["allies"][i].get("role") != "heal"}
+            if tg:
+                targets_per_step.append(len(tg))
+                if contact is None:
+                    enemies = [e for e in snap["enemies"] if e.get("alive")]
+                    contact = {"step": step, "allies_attacking": len([1 for a in acts if a >= 6]), "allies_alive": len(alive),
+                               "enemies_alive": len(enemies)}
+            _, done, info = env.step(acts)
+            step += 1
+        a_live = [u for u in env._gym.agents.values() if u.hp > 0]
+        e_live = [u for u in env._gym.enemies.values() if u.hp > 0]
+    finally:
+        env.close()
+    out = {"id": scen["id"], "seed": seed, "win": int(bool(info.get("battle_won"))), "steps": step,
+           "left": {"ours": len(a_live), "theirs": len(e_live)}, "first_death": first_death, "contact": contact,
+           "distinct_targets_per_step": round(sum(targets_per_step) / max(len(targets_per_step), 1), 2)}
+    if src is not None:
+        out.update(error_rate=round(pol.error_rate, 3), overrides=pol.overrides, last_error=pol.last_error)
+    return out
+
+
+def _critic(rows: List[Dict[str, Any]], base: Dict[Tuple[str, int], int]) -> Dict[str, Any]:
+    """Per-fight paired result and a compact story of each loss (no extra model call)."""
+    per: Dict[str, Any] = {}
+    for r in rows:
+        f = per.setdefault(r["id"], {"wins": 0, "default_wins": 0, "losses": []})
+        f["wins"] += r["win"]
+        f["default_wins"] += base[(r["id"], r["seed"])]
+        if not r["win"] and len(f["losses"]) < 2:
+            f["losses"].append({k: r.get(k) for k in ("steps", "left", "first_death", "contact", "distinct_targets_per_step")})
+    errs = [r.get("last_error") for r in rows if r.get("last_error")]
+    return {"per_fight": per, "net_vs_default": sum(f["wins"] - f["default_wins"] for f in per.values()),
+            "max_error_rate": max((r.get("error_rate", 0) for r in rows), default=0), "errors": errs[:2],
+            "mean_overrides": round(sum(r.get("overrides", 0) for r in rows) / max(len(rows), 1), 1)}
+
+
+CODE_INSTRUCTIONS = (
+    "You write StarCraft II micro-control code for a fight simulator. Output one JSON object only, no markdown: "
+    '{"programs": [{"name": str, "idea": str, "code": str}]}. Each "code" is a complete Python source that defines '
+    "def act(obs, mem). Make the programs genuinely different ideas. Keep each under 120 lines."
+)
+
+
+def code_prompt(desc: List[Dict[str, Any]], history: List[Dict[str, Any]], best: Optional[Dict[str, Any]], k: int) -> str:
+    import code_policy as CP
+
+    parts: Dict[str, Any] = {
+        "task": (f"Write {k} programs. ONE program must beat the default on as many of these similar fights as possible; "
+                 "it is scored by its wins minus the default's wins on the same fights and spawns, summed, and then "
+                 "checked on fresh spawns. Programs with errors in more than 10% of steps are disqualified."),
+        "api": CP.API_DOC,
+        "fights": desc,
+    }
+    if best:
+        parts["best_program_so_far"] = {"net_vs_default": best["sel"], "code": best["source"], "critic": best["critic"]}
+    parts["earlier_attempts"] = [{"name": h["name"], "idea": h["idea"], "net_vs_default": h["sel"], "critic": h["critic"]}
+                                 for h in history[-6:]]
+    return json.dumps(parts, ensure_ascii=False, default=str)
+
+
+def cmd_code() -> None:
+    from system2_api import System2Client
+
+    import code_policy as CP
+
+    client = System2Client(model=writer_model(), timeout=180)
+    print(f"writer model: {client.model}", flush=True)
+    FORGE15_DIR.mkdir(parents=True, exist_ok=True)
+    CODE_DIR.mkdir(parents=True, exist_ok=True)
+    cl = json.loads(CLUSTERS_PATH.read_text())
+    train = {s["id"]: s for s in SC.load("train")}
+    lib = json.loads(CODE_LIB.read_text()) if CODE_LIB.is_file() else []
+    with Pool(8) as pool:
+        for j, ids in cl["members"].items():
+            out_path = FORGE15_DIR / f"cluster{j}.json"
+            if out_path.is_file() or not ids:
+                continue
+            members = [train[i] for i in ids]
+            jobs = [(None, m, k) for m in members for k in SEEDS + CONFIRM_SEEDS]
+            base = {(r["id"], r["seed"]): r["win"] for r in pool.map(code_episode, jobs, chunksize=1)}
+            desc = [describe_scenario(m, start_state(m)) for m in members]
+            history: List[Dict[str, Any]] = []
+            best: Optional[Dict[str, Any]] = None
+            log: Dict[str, Any] = {"cluster": j, "members": ids, "rounds": []}
+            for rnd in range(CODE_ROUNDS):
+                reply = client.fill_json(CODE_INSTRUCTIONS, code_prompt(desc, history, best, CODE_K),
+                                         timeout=180, max_tokens=12000, temperature=0.7)
+                progs = [p for p in (reply or {}).get("programs") or [] if isinstance(p, dict) and isinstance(p.get("code"), str)]
+                tried = []
+                for p in progs:
+                    src = p["code"]
+                    bad = CP.check_source(src)
+                    if bad:
+                        crit = {"net_vs_default": None, "errors": [bad]}
+                        history.append({"name": p.get("name"), "idea": p.get("idea"), "sel": None, "critic": crit})
+                        tried.append(None)
+                        continue
+                    rows = pool.map(code_episode, [(src, m, k) for m in members for k in SEEDS], chunksize=1)
+                    crit = _critic(rows, base)
+                    sel = crit["net_vs_default"] if crit["max_error_rate"] <= MAX_ERROR_RATE else None
+                    h = {"name": p.get("name"), "idea": p.get("idea"), "sel": sel, "critic": crit, "source": src}
+                    history.append(h)
+                    tried.append(sel)
+                    if sel is not None and (best is None or sel > best["sel"]):
+                        best = h
+                log["rounds"].append({"round": rnd, "nets": tried, "reply_ok": reply is not None})
+                print(f"cluster{j} n={len(ids)} r{rnd} nets={tried} best={best and best['sel']}", flush=True)
+            admitted = None
+            if best is not None and best["sel"] > 0:
+                rows = pool.map(code_episode, [(best["source"], m, k) for m in members for k in CONFIRM_SEEDS], chunksize=1)
+                conf = _critic(rows, base)
+                best["confirm"] = conf["net_vs_default"]
+                log["confirm"] = best["confirm"]
+                if conf["net_vs_default"] > 0 and conf["max_error_rate"] <= MAX_ERROR_RATE:
+                    admitted = best
+            if admitted is not None:
+                src_file = CODE_DIR / f"C{j}.py"
+                src_file.write_text(admitted["source"])
+                lib = [e for e in lib if e["cluster"] != int(j)]
+                lib.append({"id": f"K{j}", "cluster": int(j), "name": admitted["name"], "idea": admitted["idea"],
+                            "file": str(src_file.relative_to(ROOT)), "sel_net": admitted["sel"],
+                            "confirm_net": admitted["confirm"], "fights": len(ids) * len(CONFIRM_SEEDS)})
+                CODE_LIB.write_text(json.dumps(lib, indent=1, ensure_ascii=False))
+            log["admitted"] = admitted and {k: admitted[k] for k in ("name", "idea", "sel", "confirm")}
+            log["attempts"] = [{k: h.get(k) for k in ("name", "idea", "sel", "critic")} for h in history]
+            out_path.write_text(json.dumps(log, indent=1, ensure_ascii=False, default=str))
+            print(f"cluster{j}: admitted={log['admitted'] and (log['admitted']['sel'], log['admitted']['confirm'])}", flush=True)
+    print(f"code library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
+
+
 EVIDENCE_PATH = ROOT / "kb" / "library" / "evidence.json"
 
 
@@ -655,6 +828,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "evidence":
         cmd_evidence()
+    elif cmd == "code":
+        cmd_code()
     elif cmd == "evidence_outcome":
         cmd_evidence(OUTCOME_LIB, ROOT / "kb" / "library" / "evidence_outcome.json", headroom=True)
     elif cmd == "headroom_lib3":
