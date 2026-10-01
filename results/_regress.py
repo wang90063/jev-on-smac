@@ -88,6 +88,12 @@ def make_policy(spec: str, map_name: str, seed: int):
         return J.KnnSwitchPolicy(k=int(k), tau=float(tau), tag=spec)
     if spec == "value_online":
         return J.ValueOnlinePolicy(tag=spec)
+    if spec.startswith("switchh2:"):
+        # history-feature model after one DAgger round with its own driver
+        import value as V
+
+        return J.SwitchPolicy(model=V.load_model(V.ROOT / "kb" / "library" / "value_model_hist2.pkl"),
+                              tau=float(spec.split(":", 1)[1]), tag=spec)
     if spec.startswith("switchh:"):
         # value policy with the history-feature model
         import value as V
