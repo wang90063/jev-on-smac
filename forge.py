@@ -607,6 +607,7 @@ FORGE15_DIR = ROOT / "results" / "forge15"
 CODE_ROUNDS = 4
 CODE_K = 3
 MAX_ERROR_RATE = 0.10
+CODE_REASONING = os.environ.get("FORGE_REASONING", "high")  # writing code needs thinking; Codex itself runs high
 
 
 def _code_path(src: str) -> str:
@@ -707,7 +708,7 @@ def _write_with_retry(client, instructions: str, prompt: str, tries: int = 4):
     import time
 
     for i in range(tries):
-        reply = client.fill_json(instructions, prompt, timeout=180, max_tokens=12000, temperature=0.7)
+        reply = client.fill_json(instructions, prompt, timeout=600, max_tokens=32000, reasoning=CODE_REASONING)
         if reply is not None:
             return reply
         time.sleep(30 * (i + 1))
@@ -719,8 +720,8 @@ def cmd_code() -> None:
 
     import code_policy as CP
 
-    client = System2Client(model=writer_model(), timeout=180)
-    print(f"writer model: {client.model}", flush=True)
+    client = System2Client(model=writer_model(), timeout=600)
+    print(f"writer model: {client.model}, reasoning: {CODE_REASONING}", flush=True)
     FORGE15_DIR.mkdir(parents=True, exist_ok=True)
     CODE_DIR.mkdir(parents=True, exist_ok=True)
     cl = json.loads(CLUSTERS_PATH.read_text())

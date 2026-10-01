@@ -123,16 +123,18 @@ class System2Client:
         timeout: Optional[float] = None,
         max_tokens: int = 400,
         temperature: float = 0.0,
+        reasoning: str = "none",
     ) -> Optional[dict]:
-        """One JSON object. reasoning off. Never logs the key."""
+        """One JSON object. Reasoning off by default (fast choices); pass reasoning="high" for code writing. Never logs the key."""
         body = {
             "model": self.model,
             "instructions": instructions,
             "input": user,
-            "temperature": temperature,
             "max_output_tokens": max_tokens,
-            "reasoning": {"effort": "none"},
+            "reasoning": {"effort": reasoning},
         }
+        if reasoning == "none":
+            body["temperature"] = temperature
         t0 = time.perf_counter()
         to = timeout if timeout is not None else self.timeout
         try:

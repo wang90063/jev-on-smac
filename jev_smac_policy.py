@@ -5785,6 +5785,42 @@ class KnnSwitchPolicy(SwitchPolicy):
         return (best if adv[best] > self.tau else "default"), state
 
 
+class CodePolicy:
+    """Round 15: at the start, find the nearest scenario cluster; run that cluster's
+    writer-authored code program if one passed the library gate, else the online default."""
+
+    def __init__(self, tag: str = "code_online"):
+        import json as _json
+        from pathlib import Path as _Path
+
+        root = _Path(__file__).resolve().parent
+        lib_path = root / "kb" / "library" / "code_programs.json"
+        self.lib = _json.loads(lib_path.read_text()) if lib_path.is_file() else []
+        self.clusters = _json.loads((root / "kb" / "library" / "clusters.json").read_text())
+        self.root = root
+        self.tag = tag
+        self.inner: Any = None
+        self.picked: Optional[str] = None
+
+    def _pick(self, snap: Dict[str, Any]) -> None:
+        import code_policy as CP
+        import tactic_dsl as T
+
+        vec = T.feature_vector(T.features(commander_state(0, dict(snap), [], "no_trade_yet")))
+        cents = self.clusters["centroids"]
+        j = min(range(len(cents)), key=lambda i: sum((a - b) ** 2 for a, b in zip(cents[i], vec)))
+        entry = next((e for e in self.lib if e["cluster"] == j), None)
+        if entry is None:
+            self.inner, self.picked = ValueOnlinePolicy(tag="code_fallback"), "default"
+        else:
+            self.inner, self.picked = CP.CodeActionPolicy((self.root / entry["file"]).read_text()), entry["id"]
+
+    def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
+        if step == 0 or self.inner is None:
+            self._pick(snap)
+        return self.inner.act(map_name, step, snap)
+
+
 class ApiActionPolicy(JevActionPolicy):
     """Same jobs as Jev, answered by the LLM gateway with reasoning off."""
 
