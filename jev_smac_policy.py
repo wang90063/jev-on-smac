@@ -5785,6 +5785,25 @@ class KnnSwitchPolicy(SwitchPolicy):
         return (best if adv[best] > self.tau else "default"), state
 
 
+class WrittenOnlinePolicy:
+    """The online default since round 15: a writer-authored micro program
+    (kb/library/code/general.py, written by Grok-4.7 with simulator feedback) run in
+    the code sandbox on top of ValueOnlinePolicy. Units the program does not command
+    follow ValueOnlinePolicy. No simulator state is cloned online."""
+
+    def __init__(self, tag: str = "online"):
+        from pathlib import Path as _Path
+
+        import code_policy as CP
+
+        src = (_Path(__file__).resolve().parent / "kb" / "library" / "code" / "general.py").read_text()
+        self.inner = CP.CodeActionPolicy(src, tag=tag)
+        self.tag = tag
+
+    def act(self, map_name: str, step: int, snap: Dict[str, Any]) -> List[int]:
+        return self.inner.act(map_name, step, snap)
+
+
 class CodePolicy:
     """Round 15: at the start, find the nearest scenario cluster; run that cluster's
     writer-authored code program if one passed the library gate, else the online default."""
