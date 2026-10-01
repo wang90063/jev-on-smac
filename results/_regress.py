@@ -88,6 +88,11 @@ def make_policy(spec: str, map_name: str, seed: int):
         return J.KnnSwitchPolicy(k=int(k), tau=float(tau), tag=spec)
     if spec == "value_online":
         return J.ValueOnlinePolicy(tag=spec)
+    if spec.startswith("switchh:"):
+        # value policy with the history-feature model
+        import value as V
+
+        return J.SwitchPolicy(model=V.load_model(V.HIST_MODEL_PATH), tau=float(spec.split(":", 1)[1]), tag=spec)
     if spec.startswith("switch"):
         # switch = base policy B (nearest cluster re-picked every 5 steps);
         # switch:<tau> = value policy leaving default when predicted advantage > tau.

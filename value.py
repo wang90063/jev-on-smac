@@ -106,7 +106,22 @@ def _x(d: Dict[str, Any], ext: bool) -> List[float]:
     return d["x"] + (d.get("x_ext") or [0.0] * 17 if ext else [])
 
 
-def _rows(data: List[Dict[str, Any]], actions: List[str], target: str = "adv", ext: bool = False):
+def with_history(x: List[float], prev: Optional[List[float]]) -> List[float]:
+    """Current features + change since the previous decision (5 steps earlier) + a has-history flag."""
+    if prev is None:
+        return list(x) + [0.0] * len(x) + [0.0]
+    return list(x) + [a - b for a, b in zip(x, prev)] + [1.0]
+
+
+def _attach_prev(data: List[Dict[str, Any]]) -> None:
+    """Give each labelled point its previous decision point's features (same episode, step - 5)."""
+    for ep in data:
+        pts = sorted(ep["points"], key=lambda d: d["step"])
+        for j, d in enumerate(pts):
+            d["_prev"] = pts[j - 1]["x"] if j >= 1 and pts[j - 1]["step"] == d["step"] - 5 else None
+
+
+def _rows(data: List[Dict[str, Any]], actions: List[str], target: str = "adv", ext: bool = False, hist: bool = False):
     """One row per (decision point, action). target=adv: y = Q(a) - Q(default);
     target=q: y = Q(a), with "default" as its own action."""
     acts = actions if target == "adv" else actions + ["default"]
@@ -115,6 +130,8 @@ def _rows(data: List[Dict[str, Any]], actions: List[str], target: str = "adv", e
         for d in ep["points"]:
             q = d["q"]
             x = _x(d, ext)
+            if hist:
+                x = with_history(x, d.get("_prev"))
             for i, a in enumerate(acts):
                 onehot = [0.0] * len(acts)
                 onehot[i] = 1.0
@@ -141,8 +158,11 @@ def predict_advantages(model: Dict[str, Any], x: List[float]) -> Dict[str, float
     return {a: float(p) - base for a, p in zip(acts, pred[:-1])}
 
 
-def load_model() -> Dict[str, Any]:
-    with open(MODEL_PATH, "rb") as f:
+HIST_MODEL_PATH = ROOT / "kb" / "library" / "value_model_hist.pkl"
+
+
+def load_model(path: Optional[Path] = None) -> Dict[str, Any]:
+    with open(path or MODEL_PATH, "rb") as f:
         return pickle.load(f)
 
 
@@ -164,12 +184,14 @@ def _fit(X, y, depth: int = 4, leaf: int = 40):
 TAUS = (0.05, 0.1, 0.15, 0.2)
 
 
-def cv_gain(data, target="adv", ext=False, depth=4, leaf=40, folds=5) -> Tuple[Dict[float, float], float]:
+def cv_gain(data, target="adv", ext=False, depth=4, leaf=40, folds=5, hist=False) -> Tuple[Dict[float, float], float]:
     """Grouped CV (by fight): realised advantage of following the model at each tau."""
     from sklearn.model_selection import GroupKFold
 
     actions = _actions()
-    X, y, g, _ = _rows(data, actions, target, ext)
+    if hist:
+        _attach_prev(data)
+    X, y, g, _ = _rows(data, actions, target, ext, hist)
     nc = len(actions) + (0 if target == "adv" else 1)
     gain = {t: 0.0 for t in TAUS}
     oracle = 0.0
@@ -208,21 +230,25 @@ def cmd_cv(paths) -> None:
               + f"  best {gain[best] / max(oracle, 1e-9):.1%}", flush=True)
 
 
-def cmd_train(paths=None, target: str = "adv", ext: bool = False, depth: int = 4, leaf: int = 40) -> None:
+def cmd_train(paths=None, target: str = "adv", ext: bool = False, depth: int = 4, leaf: int = 40,
+              hist: bool = False, out_path: Optional[Path] = None) -> None:
     actions = _actions()
     data = _load(paths or DATA_PATHS)
     if ext:
         data = [e for e in data if e["points"] and "x_ext" in e["points"][0]] or data
-    X, y, g, n_feat = _rows(data, actions, target, ext)
-    gain, oracle = cv_gain(data, target, ext, depth, leaf)
+    if hist:
+        _attach_prev(data)
+    X, y, g, n_feat = _rows(data, actions, target, ext, hist)
+    gain, oracle = cv_gain(data, target, ext, depth, leaf, hist=hist)
     print(f"{len(data)} episodes, {n_feat} features; CV oracle {oracle:.1f}; " + ", ".join(f"tau={t}: {gain[t]:+.1f}" for t in TAUS))
     reg = _fit(X, y, depth, leaf)
-    MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(MODEL_PATH, "wb") as f:
+    out_path = out_path or MODEL_PATH
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "wb") as f:
         pickle.dump({"reg": reg, "actions": actions, "n_feat": n_feat, "target": target, "ext": ext,
-                     "depth": depth, "leaf": leaf,
+                     "depth": depth, "leaf": leaf, "hist": hist,
                      "features": "tactic_dsl.feature_vector + value.featurize extras" + (" + featurize_ext" if ext else "")}, f)
-    print("wrote", MODEL_PATH)
+    print("wrote", out_path)
 
 
 # --- round 10: how far a moment is from anything in the training data ---------
@@ -306,6 +332,8 @@ def ood_threshold() -> float:
 if __name__ == "__main__":
     if sys.argv[1:2] == ["train"]:
         cmd_train([Path(p) for p in sys.argv[2:]] or None)
+    elif sys.argv[1:2] == ["train_hist"]:
+        cmd_train(TRAIN_ROLLOUTS, hist=True, out_path=HIST_MODEL_PATH)
     elif sys.argv[1:2] == ["ood"]:
         build_ood()
     elif sys.argv[1:2] == ["cv"]:

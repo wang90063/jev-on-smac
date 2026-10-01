@@ -5584,8 +5584,13 @@ class SwitchPolicy(OnlinePolicy):
         if self.model is None:
             return "default", state
         x = V.featurize(snap, state, self._start_ehp)
+        x_now = x
         if self.model.get("ext"):
             x = x + V.featurize_ext(snap, getattr(self, "_last_dist", None))
+        if self.model.get("hist"):
+            prev = getattr(self, "_prev_x", None)
+            x = V.with_history(x, prev[1] if prev and prev[0] == step - self.DECIDE else None)
+            self._prev_x = (step, x_now)
         adv = V.predict_advantages(self.model, x)
         best = max(adv, key=adv.get)
         return (best if adv[best] > self.tau else "default"), state
