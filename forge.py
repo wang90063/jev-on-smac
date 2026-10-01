@@ -784,6 +784,109 @@ def cmd_code() -> None:
     print(f"code library size {len(lib)}; writer calls {client.n_calls} fails {client.n_fail}")
 
 
+# --- round 15, light: one general program, few calls ---------------------------
+
+GLOBAL_ROUNDS = 4
+GLOBAL_K = 2
+GLOBAL_GAP_S = 120  # at least this long between writer calls
+GLOBAL_DIR = ROOT / "results" / "forge15_global"
+
+
+def _fight_digest(scen: Dict[str, Any]) -> Dict[str, Any]:
+    return {"ours": {k.lower(): n for k, n in scen["ally"].items()}, "theirs": {k.lower(): n for k, n in scen["enemy"].items()},
+            "terrain": scen["layout"]}
+
+
+def _global_critic(rows: List[Dict[str, Any]], base: Dict[Tuple[str, int], int], scens: Dict[str, Any]) -> Dict[str, Any]:
+    net = sum(r["win"] - base[(r["id"], r["seed"])] for r in rows)
+    lost = [r for r in rows if base[(r["id"], r["seed"])] and not r["win"]]
+    gained = [r for r in rows if r["win"] and not base[(r["id"], r["seed"])]]
+    return {
+        "net_vs_default": net, "flips": len(gained), "losses": len(lost),
+        "max_error_rate": max((r.get("error_rate", 0) for r in rows), default=0),
+        "errors": [r["last_error"] for r in rows if r.get("last_error")][:2],
+        "fights_it_lost_that_default_won": [dict(_fight_digest(scens[r["id"]]), **{k: r.get(k) for k in ("steps", "left", "first_death", "contact", "distinct_targets_per_step")}) for r in lost[:5]],
+        "fights_it_won_that_default_lost": [_fight_digest(scens[r["id"]]) for r in gained[:5]],
+    }
+
+
+def cmd_code_global() -> None:
+    import time
+
+    from system2_api import System2Client
+
+    import code_policy as CP
+
+    client = System2Client(model=writer_model(), timeout=600)
+    effort = os.environ.get("FORGE_REASONING", "medium")
+    print(f"writer model: {client.model}, reasoning: {effort}", flush=True)
+    GLOBAL_DIR.mkdir(parents=True, exist_ok=True)
+    train = SC.load("train")
+    scens = {s["id"]: s for s in train}
+    cl = json.loads(CLUSTERS_PATH.read_text())
+    examples = [_fight_digest(scens[ids[0]]) for ids in cl["members"].values() if ids]
+    with Pool(8) as pool:
+        base = {(r["id"], r["seed"]): r["win"] for r in pool.map(code_episode, [(None, s, k) for s in train for k in (1, 2, 3, 4, 5)], chunksize=1)}
+        print(f"default on train seeds 1-5: {sum(base.values())}/{len(base)}", flush=True)
+        history: List[Dict[str, Any]] = []
+        best: Optional[Dict[str, Any]] = None
+        last_call = 0.0
+        for rnd in range(GLOBAL_ROUNDS):
+            prompt = {
+                "task": (f"Write {GLOBAL_K} programs. ONE general program that beats the default across many different fights "
+                         "(60 training fights, 2 spawns each). Score = its wins minus the default's wins on the same fights "
+                         "and spawns; then it is checked on fresh spawns. Overriding the default is risky: only override "
+                         "where the physics clearly favours it. Programs erroring in more than 10% of steps are disqualified."),
+                "api": CP.API_DOC,
+                "kinds_of_fights": {"examples": examples, "unit_types": sorted({k.lower() for s in train for k in list(s["ally"]) + list(s["enemy"])})},
+                "unit_stats": _unit_stats(sorted({k for s in train for k in list(s["ally"]) + list(s["enemy"])})),
+            }
+            if best:
+                prompt["best_program_so_far"] = {"net_vs_default": best["sel"], "code": best["source"], "critic": best["critic"]}
+            prompt["earlier_attempts"] = [{k: h[k] for k in ("name", "idea", "sel", "critic")} for h in history[-4:]]
+            wait = GLOBAL_GAP_S - (time.time() - last_call)
+            if wait > 0:
+                time.sleep(wait)
+            last_call = time.time()
+            reply = None
+            for i in range(3):
+                reply = client.fill_json(CODE_INSTRUCTIONS, json.dumps(prompt, ensure_ascii=False, default=str),
+                                         timeout=600, max_tokens=24000, reasoning=effort)
+                if reply is not None:
+                    break
+                time.sleep(GLOBAL_GAP_S * (i + 1))
+            tried = []
+            for p in (reply or {}).get("programs") or []:
+                if not isinstance(p, dict) or not isinstance(p.get("code"), str):
+                    continue
+                src = p["code"]
+                bad = CP.check_source(src)
+                if bad:
+                    history.append({"name": p.get("name"), "idea": p.get("idea"), "sel": None, "critic": {"errors": [bad]}})
+                    tried.append(None)
+                    continue
+                rows = pool.map(code_episode, [(src, s, k) for s in train for k in (1, 2)], chunksize=1)
+                crit = _global_critic(rows, base, scens)
+                sel = crit["net_vs_default"] if crit["max_error_rate"] <= MAX_ERROR_RATE else None
+                h = {"name": p.get("name"), "idea": p.get("idea"), "sel": sel, "critic": crit, "source": src}
+                history.append(h)
+                tried.append(sel)
+                (GLOBAL_DIR / f"r{rnd}_{len(tried)}.py").write_text(src)
+                if sel is not None and (best is None or sel > best["sel"]):
+                    best = h
+            print(f"round {rnd}: nets on 120 train episodes {tried}; best {best and best['sel']}; writer calls {client.n_calls} fails {client.n_fail}", flush=True)
+        log: Dict[str, Any] = {"model": client.model, "reasoning": effort, "attempts": [{k: h.get(k) for k in ("name", "idea", "sel", "critic")} for h in history]}
+        if best is not None and best["sel"] > 0:
+            rows = pool.map(code_episode, [(best["source"], s, k) for s in train for k in (3, 4, 5)], chunksize=1)
+            conf = _global_critic(rows, base, scens)
+            log["best"] = {"name": best["name"], "idea": best["idea"], "sel": best["sel"], "confirm": conf["net_vs_default"],
+                           "confirm_flips": conf["flips"], "confirm_losses": conf["losses"]}
+            (GLOBAL_DIR / "best.py").write_text(best["source"])
+            print(f"best '{best['name']}': selection {best['sel']:+d} (seeds 1-2), confirmation {conf['net_vs_default']:+d} "
+                  f"({conf['flips']} flips / {conf['losses']} losses, seeds 3-5)", flush=True)
+        (GLOBAL_DIR / "log.json").write_text(json.dumps(log, indent=1, ensure_ascii=False, default=str))
+
+
 EVIDENCE_PATH = ROOT / "kb" / "library" / "evidence.json"
 
 
@@ -842,6 +945,8 @@ if __name__ == "__main__":
         cmd_evidence()
     elif cmd == "code":
         cmd_code()
+    elif cmd == "code_global":
+        cmd_code_global()
     elif cmd == "evidence_outcome":
         cmd_evidence(OUTCOME_LIB, ROOT / "kb" / "library" / "evidence_outcome.json", headroom=True)
     elif cmd == "headroom_lib3":
