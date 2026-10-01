@@ -702,6 +702,18 @@ def code_prompt(desc: List[Dict[str, Any]], history: List[Dict[str, Any]], best:
     return json.dumps(parts, ensure_ascii=False, default=str)
 
 
+def _write_with_retry(client, instructions: str, prompt: str, tries: int = 4):
+    """The gateway enforces a tokens-per-minute cap; back off and retry on a failed call."""
+    import time
+
+    for i in range(tries):
+        reply = client.fill_json(instructions, prompt, timeout=180, max_tokens=12000, temperature=0.7)
+        if reply is not None:
+            return reply
+        time.sleep(30 * (i + 1))
+    return None
+
+
 def cmd_code() -> None:
     from system2_api import System2Client
 
@@ -727,8 +739,7 @@ def cmd_code() -> None:
             best: Optional[Dict[str, Any]] = None
             log: Dict[str, Any] = {"cluster": j, "members": ids, "rounds": []}
             for rnd in range(CODE_ROUNDS):
-                reply = client.fill_json(CODE_INSTRUCTIONS, code_prompt(desc, history, best, CODE_K),
-                                         timeout=180, max_tokens=12000, temperature=0.7)
+                reply = _write_with_retry(client, CODE_INSTRUCTIONS, code_prompt(desc, history, best, CODE_K))
                 progs = [p for p in (reply or {}).get("programs") or [] if isinstance(p, dict) and isinstance(p.get("code"), str)]
                 tried = []
                 for p in progs:
