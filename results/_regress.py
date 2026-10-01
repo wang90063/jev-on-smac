@@ -203,7 +203,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False, scenario: Opti
         "steps": steps,
         "open": asked,
         **left,
-        "ov": list(getattr(pol, "overrides", [])[:8]),
+        "ov": (lambda o: list(o[:8]) if isinstance(o, list) else o)(getattr(pol, "overrides", [])),
     }
     if trace:
         row["hash"] = h.hexdigest()
