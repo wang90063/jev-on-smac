@@ -1,0 +1,206 @@
+"""Can Jev serve as a value model? Offline test on val ground-truth labels.
+
+results/search/rollout_val.json holds, for decision points the online default
+reached on val, the whole-episode return of each of 13 actions. Here Jev sees
+the same moment (commander_state) and gives P(win) now and P(win | action) for
+each action, as two-way choices with probabilities. We compare with the truth
+and with the trained value model on the same points. No games are played for
+scoring; the val episodes are only replayed to recover each moment's state.
+
+    python jev_value.py states     # local: replay val, store states for the labelled points
+    python jev_value.py ask        # TypeSafe API: ~300 calls
+    python jev_value.py score      # local: compare
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import random
+import sys
+from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import Pool
+from pathlib import Path
+from typing import Any, Dict, List
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("JEV_QUIET", "1")
+
+OUT = ROOT / "results" / "jev_value"
+LABELS = ROOT / "results" / "search" / "rollout_val.json"
+N_SAMPLE = 300
+
+
+def _replay(job) -> List[Dict[str, Any]]:
+    """Re-run one val episode exactly as the labeller's driver did; return states at its decision points."""
+    import jev_smac_policy as J
+    import scenarios as SC
+    import value as V
+    from macsmac.snapshot import snapshot
+
+    scen, seed = job
+    env = SC.make_env(scen, seed)
+    env.reset()
+    pol = J.SwitchPolicy(model=V.load_model(), tau=0.1)
+    pol.evidence = None
+    s0 = snapshot(env)
+    pol._start_ehp = (sum(J._ehp(a) for a in J.living(s0["allies"])), sum(J._ehp(e) for e in J.living(s0["enemies"])))
+    out, step, done = [], 0, False
+    while not done:
+        snap = snapshot(env)
+        if step % J.SwitchPolicy.DECIDE == 0 and J.living(snap["allies"]) and J.living(snap["enemies"]):
+            state = J.commander_state(step, dict(snap), list(pol._recent), pol._hp_trend)
+            out.append({"step": step, "state": state, "x": V.featurize(snap, state, pol._start_ehp)})
+        _, done, _ = env.step(pol.act("replay", step, snap))
+        step += 1
+    env.close()
+    return out
+
+
+def cmd_states() -> None:
+    import scenarios as SC
+
+    labels = json.loads(LABELS.read_text())
+    scens = {s["id"]: s for s in SC.load("val")}
+    with Pool(8) as pool:
+        replays = pool.map(_replay, [(scens[ep["id"]], ep["seed"]) for ep in labels], chunksize=1)
+    points, mismatch = [], 0
+    for ep, rep in zip(labels, replays):
+        by_step = {r["step"]: r for r in rep}
+        for d in ep["points"]:
+            r = by_step.get(d["step"])
+            if r is None or np.abs(np.array(r["x"]) - np.array(d["x"])).max() > 1e-6:
+                mismatch += 1
+                continue
+            points.append({"id": ep["id"], "seed": ep["seed"], "step": d["step"], "x": d["x"], "q": d["q"],
+                           "won": ep["win"], "state": r["state"]})
+    rng = random.Random(7)
+    sample = rng.sample(points, min(N_SAMPLE, len(points)))
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "points.json").write_text(json.dumps(sample))
+    print(f"{len(points)} labelled points matched their replay ({mismatch} did not); sampled {len(sample)}")
+
+
+def _describe(a: str) -> str:
+    import search as SE
+    import tactic_dsl as T
+
+    if a == "default":
+        return "keep running the program the army runs now (chosen by similarity to past fights)"
+    prog = SE.MACROS[a]
+    return "plain attack-move with default targeting" if prog is None else T.summarize(prog)
+
+
+def _questions(actions: List[str]) -> Dict[str, Any]:
+    two = {"win": {"does": "Our army wipes the enemy before the time limit."},
+           "lose": {"does": "We are wiped, or time runs out with enemies alive."}}
+    q = {"win_now": {"type": "choice", "instructions": "If our army keeps fighting the way it is now, which side wins this fight?", "criteria": two}}
+    for a in actions:
+        q[f"win_if_{a}"] = {
+            "type": "choice",
+            "instructions": f"If for the next few seconds our army does this: {_describe(a)}; and then fights on as usual, which side wins?",
+            "criteria": two,
+        }
+    return q
+
+
+def _p_win(ans: Any) -> float:
+    if isinstance(ans, dict):
+        probs = ans.get("probabilities") or {}
+        if "win" in probs:
+            return float(probs["win"])
+        if ans.get("choice") in ("win", "lose"):
+            return 1.0 if ans["choice"] == "win" else 0.0
+    return float("nan")
+
+
+def cmd_ask() -> None:
+    import search as SE
+    from jev_api import JevClient
+
+    pts = json.loads((OUT / "points.json").read_text())
+    actions = list(SE.MACROS) + ["default"]
+    questions = _questions(actions)
+    client = JevClient()
+
+    def one(p):
+        r = client.system_one(p["state"], questions)
+        ans = (r or {}).get("answers") or {}
+        return {"now": _p_win(ans.get("win_now")), **{a: _p_win(ans.get(f"win_if_{a}")) for a in actions}}
+
+    with ThreadPoolExecutor(4) as ex:
+        res = list(ex.map(one, pts))
+    for p, r in zip(pts, res):
+        p["jev"] = r
+    (OUT / "answers.json").write_text(json.dumps(pts))
+    print(f"asked {len(pts)} points; calls ok {client.n_calls} fail {client.n_fail}")
+
+
+def _auc(score: np.ndarray, y: np.ndarray) -> float:
+    pos, neg = score[y == 1], score[y == 0]
+    if not len(pos) or not len(neg):
+        return float("nan")
+    return float(np.mean([(s > neg).mean() + 0.5 * (s == neg).mean() for s in pos]))
+
+
+def cmd_score() -> None:
+    import search as SE
+    import value as V
+
+    pts = [p for p in json.loads((OUT / "answers.json").read_text()) if not np.isnan(p["jev"]["now"])]
+    macros = list(SE.MACROS)
+    model = V.load_model()
+    print(f"{len(pts)} points with answers")
+
+    # 1. State value: does Jev's P(win now) rank outcomes?
+    y = np.array([1 if p["q"]["default"] >= 0.5 else 0 for p in pts])  # win if the base policy plays on
+    jev_now = np.array([p["jev"]["now"] for p in pts])
+    ehp_ratio = np.array([p["x"][-8] for p in pts])  # our ehp / their ehp (value.featurize extras)
+    print(f"[state value] AUC vs actual outcome: Jev P(win now) {_auc(jev_now, y):.3f}; "
+          f"health ratio alone {_auc(ehp_ratio, y):.3f}; win rate {y.mean():.2f}")
+
+    # 2. Action value: follow Jev's argmax vs the trained model's, on the same points.
+    true = np.array([[p["q"][a] - p["q"]["default"] for a in macros] for p in pts])
+    jadv = np.array([[p["jev"][a] - p["jev"]["default"] for a in macros] for p in pts])
+    madv = np.array([[V.predict_advantages(model, p["x"])[a] for a in macros] for p in pts])
+    oracle = np.maximum(true.max(1), 0).sum()
+
+    def realised(adv, tau):
+        pick = np.nanargmax(np.nan_to_num(adv, nan=-9), axis=1)
+        take = np.nanmax(np.nan_to_num(adv, nan=-9), axis=1) > tau
+        return float((true[np.arange(len(pick)), pick] * take).sum()), int(take.sum())
+
+    print(f"[action value] oracle gain {oracle:.2f} over {len(pts)} points")
+    for tau in (0.0, 0.05, 0.1, 0.2):
+        g, n = realised(jadv, tau)
+        print(f"  Jev   tau={tau:<4} gain {g:+.2f}  (departs at {n} points)")
+    g, n = realised(madv, 0.1)
+    print(f"  model tau=0.1  gain {g:+.2f}  (departs at {n} points)")
+    flat_t, flat_j, flat_m = true.ravel(), np.nan_to_num(jadv).ravel(), madv.ravel()
+    rank = lambda v: np.argsort(np.argsort(v))
+    print(f"  rank correlation with true advantage: Jev {np.corrcoef(rank(flat_j), rank(flat_t))[0, 1]:.3f}, "
+          f"model {np.corrcoef(rank(flat_m), rank(flat_t))[0, 1]:.3f}")
+    print(f"  Jev answer spread: P(win|action) std across actions, mean over points {np.nanmean(np.nanstd(np.array([[p['jev'][a] for a in macros] for p in pts]), axis=1)):.3f}")
+
+    # 3. Does Jev add information beyond the model? Grouped CV within these points.
+    from sklearn.linear_model import Ridge
+    from sklearn.model_selection import GroupKFold
+
+    groups = np.repeat([p["id"] for p in pts], len(macros))
+    feats_m = flat_m.reshape(-1, 1)
+    feats_mj = np.column_stack([flat_m, flat_j])
+    for name, F in (("model only", feats_m), ("model + Jev", feats_mj)):
+        pred = np.zeros_like(flat_t)
+        for tr, te in GroupKFold(n_splits=5).split(F, flat_t, groups):
+            pred[te] = Ridge(alpha=1.0).fit(F[tr], flat_t[tr]).predict(F[te])
+        p2 = pred.reshape(-1, len(macros))
+        pick = p2.argmax(1)
+        best = [(true[np.arange(len(pick)), pick] * (p2.max(1) > t)).sum() for t in (0.0, 0.05, 0.1)]
+        print(f"  [stacking] {name:12s} realised gain at tau 0/0.05/0.1: " + " / ".join(f"{b:+.2f}" for b in best))
+
+
+if __name__ == "__main__":
+    {"states": cmd_states, "ask": cmd_ask, "score": cmd_score}[sys.argv[1]]()
