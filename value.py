@@ -261,6 +261,30 @@ def build_ood(percentile: float = 90.0) -> None:
           f"p90={np.percentile(loo, 90):.2f} p99={np.percentile(loo, 99):.2f}; threshold={thr:.2f}")
 
 
+_KNN: Dict[str, Any] = {}
+
+
+def knn_advantages(x: List[float], k: int = 8) -> Dict[str, float]:
+    """Mean advantage of each macro over default on the k most similar training moments."""
+    if not _KNN:
+        X, Q = [], []
+        for p in TRAIN_ROLLOUTS:
+            for ep in json.loads(p.read_text()):
+                for d in ep["points"]:
+                    X.append(d["x"])
+                    Q.append(d["q"])
+        X = np.array(X, dtype=float)
+        mu, sd = X.mean(0), X.std(0) + 1e-6
+        acts = _actions()
+        A = np.array([[q[a] - q["default"] for a in acts] for q in Q])
+        _KNN.update({"Z": (X - mu) / sd, "mu": mu, "sd": sd, "A": A, "acts": acts})
+    z = (np.array(x) - _KNN["mu"]) / _KNN["sd"]
+    d2 = ((_KNN["Z"] - z) ** 2).sum(1)
+    idx = np.argpartition(d2, k)[:k]
+    mean = _KNN["A"][idx].mean(0)
+    return {a: float(v) for a, v in zip(_KNN["acts"], mean)}
+
+
 _OOD: Dict[str, Any] = {}
 
 

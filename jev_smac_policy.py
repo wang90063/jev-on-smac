@@ -5760,6 +5760,26 @@ class JevSwitchPolicy(ValueOnlinePolicy):
         return _pick_choice((answers or {}).get("macro"), cands, model_pick)
 
 
+class KnnSwitchPolicy(SwitchPolicy):
+    """SwitchPolicy whose deviations come from the k most similar training moments
+    (mean whole-episode advantage of each macro over default), not a fitted model."""
+
+    def __init__(self, k: int = 8, tau: float = 0.05, tag: str = "knn", **kw):
+        super().__init__(model=None, tau=tau, tag=tag, **kw)
+        self.k = k
+
+    def decide(self, step: int, snap: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
+        import value as V
+
+        state = commander_state(step, dict(snap), list(self._recent), self._hp_trend)
+        if self.force_next is not None:
+            act, self.force_next = self.force_next, None
+            return act, state
+        adv = V.knn_advantages(V.featurize(snap, state, self._start_ehp), self.k)
+        best = max(adv, key=adv.get)
+        return (best if adv[best] > self.tau else "default"), state
+
+
 class ApiActionPolicy(JevActionPolicy):
     """Same jobs as Jev, answered by the LLM gateway with reasoning off."""
 

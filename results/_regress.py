@@ -82,6 +82,10 @@ def make_policy(spec: str, map_name: str, seed: int):
         _, picker, delta = spec.split(":")
         h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
         return J.JevSwitchPolicy(delta=float(delta), picker=picker, seed=h, tag=spec)
+    if spec.startswith("knn:"):
+        # knn:<k>:<tau>
+        _, k, tau = spec.split(":")
+        return J.KnnSwitchPolicy(k=int(k), tau=float(tau), tag=spec)
     if spec == "value_online":
         return J.ValueOnlinePolicy(tag=spec)
     if spec.startswith("switch"):
