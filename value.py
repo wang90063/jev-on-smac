@@ -225,9 +225,65 @@ def cmd_train(paths=None, target: str = "adv", ext: bool = False, depth: int = 4
     print("wrote", MODEL_PATH)
 
 
+# --- round 10: how far a moment is from anything in the training data ---------
+
+TRAIN_ROLLOUTS = [ROOT / "results" / "search" / n for n in
+                  ("rollout_train.json", "rollout_train_dagger.json", "rollout_train2_B.json", "rollout_train2_dagger.json")]
+OOD_PATH = ROOT / "kb" / "library" / "ood_index.pkl"
+OOD_K = 10
+
+
+def build_ood(percentile: float = 90.0) -> None:
+    """Standardised training points plus a threshold: the given percentile of
+    each training point's mean distance to its K nearest points from OTHER fights."""
+    X, groups = [], []
+    for p in TRAIN_ROLLOUTS:
+        for ep in json.loads(p.read_text()):
+            for d in ep["points"]:
+                X.append(d["x"])
+                groups.append(ep["id"])
+    X = np.array(X, dtype=float)
+    mu, sd = X.mean(0), X.std(0) + 1e-6
+    Z = (X - mu) / sd
+    g = np.array(groups)
+    sq = (Z ** 2).sum(1)
+    loo = np.empty(len(Z))
+    for i in range(0, len(Z), 400):
+        blk = Z[i:i + 400]
+        d2 = (blk ** 2).sum(1)[:, None] + sq[None, :] - 2 * blk @ Z.T
+        d2[g[i:i + 400][:, None] == g[None, :]] = np.inf
+        part = np.partition(d2, OOD_K, axis=1)[:, :OOD_K]
+        loo[i:i + 400] = np.sqrt(np.maximum(part, 0)).mean(1)
+    thr = float(np.percentile(loo, percentile))
+    with open(OOD_PATH, "wb") as f:
+        pickle.dump({"Z": Z, "mu": mu, "sd": sd, "threshold": thr, "percentile": percentile, "k": OOD_K}, f)
+    print(f"{len(Z)} training points; leave-one-fight-out kNN distance p50={np.percentile(loo, 50):.2f} "
+          f"p90={np.percentile(loo, 90):.2f} p99={np.percentile(loo, 99):.2f}; threshold={thr:.2f}")
+
+
+_OOD: Dict[str, Any] = {}
+
+
+def ood_score(x: List[float]) -> float:
+    if not _OOD:
+        with open(OOD_PATH, "rb") as f:
+            _OOD.update(pickle.load(f))
+    z = (np.array(x) - _OOD["mu"]) / _OOD["sd"]
+    d2 = ((_OOD["Z"] - z) ** 2).sum(1)
+    return float(np.sqrt(np.partition(d2, _OOD["k"])[: _OOD["k"]]).mean())
+
+
+def ood_threshold() -> float:
+    if not _OOD:
+        ood_score([0.0] * 78)
+    return float(_OOD["threshold"])
+
+
 if __name__ == "__main__":
     if sys.argv[1:2] == ["train"]:
         cmd_train([Path(p) for p in sys.argv[2:]] or None)
+    elif sys.argv[1:2] == ["ood"]:
+        build_ood()
     elif sys.argv[1:2] == ["cv"]:
         cmd_cv([Path(p) for p in sys.argv[2:]])
     else:
