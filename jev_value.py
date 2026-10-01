@@ -202,5 +202,137 @@ def cmd_score() -> None:
         print(f"  [stacking] {name:12s} realised gain at tau 0/0.05/0.1: " + " / ".join(f"{b:+.2f}" for b in best))
 
 
+# --- in-context learning: the 8 most similar training moments, with true results ---
+
+K_EXAMPLES = 8
+TRAIN_FILES = ["rollout_train.json", "rollout_train_dagger.json", "rollout_train2_B.json", "rollout_train2_dagger.json"]
+EXTRA_NAMES = ["our_health_left", "their_health_left", "health_ratio_us_vs_them", "dps_ratio_us_vs_them",
+               "distance_over_our_range", "our_share_engaged", "their_share_engaged", "our_spread", "our_units", "their_units"]
+
+
+def decode(x: List[float]) -> Dict[str, Any]:
+    """Readable physics summary from a feature vector (inverse of tactic_dsl.feature_vector + extras)."""
+    import tactic_dsl as T
+
+    out: Dict[str, Any] = {}
+    i = 0
+    for name, allowed in T.FEATURES.items():
+        if allowed == "num":
+            s = max(min(x[i], 0.999), -0.999)
+            out[name] = round(s / (1 - abs(s)), 2)
+            i += 1
+        else:
+            block = x[i:i + len(allowed)]
+            out[name] = allowed[int(np.argmax(block))] if max(block) > 0 else None
+            i += len(allowed)
+    for name, v in zip(EXTRA_NAMES, x[i:]):
+        out[name] = round(float(v), 2)
+    keep = ("speed", "reach", "numbers", "contact", "pocket", "hp_trend", "if_we_withdraw", "allied_melee", "enemy_melee",
+            "our_ranged", "our_melee", "enemy_guns", "enemy_melee_n", "enemy_suicide", "tick_frac", *EXTRA_NAMES)
+    return {k: out[k] for k in keep if k in out}
+
+
+_TRAIN: Dict[str, Any] = {}
+
+
+def _train_index():
+    if not _TRAIN:
+        X, Q = [], []
+        for name in TRAIN_FILES:
+            for ep in json.loads((ROOT / "results" / "search" / name).read_text()):
+                for d in ep["points"]:
+                    X.append(d["x"])
+                    Q.append(d["q"])
+        X = np.array(X, dtype=float)
+        mu, sd = X.mean(0), X.std(0) + 1e-6
+        _TRAIN.update({"Z": (X - mu) / sd, "mu": mu, "sd": sd, "Q": Q, "X": X})
+    return _TRAIN
+
+
+def neighbors(x: List[float], k: int = K_EXAMPLES) -> List[int]:
+    t = _train_index()
+    z = (np.array(x) - t["mu"]) / t["sd"]
+    return list(np.argsort(((t["Z"] - z) ** 2).sum(1))[:k])
+
+
+def _examples(idx: List[int], actions: List[str]) -> List[Dict[str, Any]]:
+    t = _train_index()
+    out = []
+    for i in idx:
+        q = t["Q"][i]
+        out.append({
+            "situation": decode(list(t["X"][i])),
+            "result_of_each_option": {a: ("win" if q[a] >= 0.5 else "lose") for a in actions},
+        })
+    return out
+
+
+def cmd_ask_icl() -> None:
+    import search as SE
+    from jev_api import JevClient
+
+    pts = json.loads((OUT / "answers.json").read_text())
+    actions = list(SE.MACROS) + ["default"]
+    base_q = _questions(actions)
+    client = JevClient()
+
+    def one(p):
+        idx = neighbors(p["x"])
+        state = dict(p["state"])
+        state["now_in_numbers"] = decode(p["x"])
+        state["similar_training_moments"] = {
+            "what": (f"The {K_EXAMPLES} training moments most similar to now, by physics. For each, every option "
+                     "was actually played out to the end; 'win'/'lose' is what really happened. Compare them with "
+                     "now: weigh moments that match the current situation more, and note where they differ."),
+            "moments": _examples(idx, actions),
+        }
+        r = client.system_one(state, base_q)
+        ans = (r or {}).get("answers") or {}
+        return {"idx": [int(i) for i in idx],
+                "jev_icl": {"now": _p_win(ans.get("win_now")), **{a: _p_win(ans.get(f"win_if_{a}")) for a in actions}},
+                "tokens": int(((r or {}).get("usage") or {}).get("input_tokens") or 0)}
+
+    with ThreadPoolExecutor(4) as ex:
+        res = list(ex.map(one, pts))
+    for p, r in zip(pts, res):
+        p.update(r)
+    (OUT / "answers_icl.json").write_text(json.dumps(pts))
+    print(f"asked {len(pts)} points with {K_EXAMPLES} examples each; calls ok {client.n_calls} fail {client.n_fail}; "
+          f"mean input tokens {np.mean([r['tokens'] for r in res]):.0f}")
+
+
+def cmd_score_icl() -> None:
+    import search as SE
+    import value as V
+
+    pts = [p for p in json.loads((OUT / "answers_icl.json").read_text()) if not np.isnan(p["jev_icl"]["now"])]
+    macros = list(SE.MACROS)
+    model = V.load_model()
+    t = _train_index()
+    true = np.array([[p["q"][a] - p["q"]["default"] for a in macros] for p in pts])
+    y = np.array([1 if p["q"]["default"] >= 0.5 else 0 for p in pts])
+    adv = {
+        "Jev (no examples)": np.array([[p["jev"][a] - p["jev"]["default"] for a in macros] for p in pts]),
+        "Jev + 8 examples": np.array([[p["jev_icl"][a] - p["jev_icl"]["default"] for a in macros] for p in pts]),
+        "kNN average (same 8)": np.array([[np.mean([t["Q"][i][a] - t["Q"][i]["default"] for i in p["idx"]]) for a in macros] for p in pts]),
+        "value model": np.array([[V.predict_advantages(model, p["x"])[a] for a in macros] for p in pts]),
+    }
+    knn_now = np.array([np.mean([t["Q"][i]["default"] >= 0.5 for i in p["idx"]]) for p in pts])
+    print(f"{len(pts)} points; oracle gain {np.maximum(true.max(1), 0).sum():.2f}")
+    print(f"[state value AUC] Jev no examples {_auc(np.array([p['jev']['now'] for p in pts]), y):.3f}; "
+          f"Jev + examples {_auc(np.array([p['jev_icl']['now'] for p in pts]), y):.3f}; "
+          f"kNN {_auc(knn_now, y):.3f}; health ratio {_auc(np.array([p['x'][-8] for p in pts]), y):.3f}")
+    rank = lambda v: np.argsort(np.argsort(v))
+    for name, a in adv.items():
+        a = np.nan_to_num(a, nan=-9)
+        gains = []
+        for tau in (0.0, 0.05, 0.1, 0.2):
+            pick = a.argmax(1)
+            take = a.max(1) > tau
+            gains.append(f"{(true[np.arange(len(pick)), pick] * take).sum():+6.2f}({int(take.sum()):3d})")
+        rc = np.corrcoef(rank(a.ravel()), rank(true.ravel()))[0, 1]
+        print(f"  {name:22s} gain at tau 0/0.05/0.1/0.2 (departures): {'  '.join(gains)}   rank corr {rc:.3f}")
+
+
 if __name__ == "__main__":
-    {"states": cmd_states, "ask": cmd_ask, "score": cmd_score}[sys.argv[1]]()
+    {"states": cmd_states, "ask": cmd_ask, "score": cmd_score, "ask_icl": cmd_ask_icl, "score_icl": cmd_score_icl}[sys.argv[1]]()
