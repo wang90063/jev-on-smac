@@ -1,0 +1,12 @@
+g11.py vs g8.py on train+train2 seeds [1, 2, 3, 4]: n=720
+  wins 548 -> 557 (net +9; flips 20 / losses 11; p=0.150); mean hp-margin delta -0.006
+  max error rate 0.0; mean overrides/episode 56
+  our-melee/vs-bane      n=  16    15 ->   15  (+0 / -0)
+  our-melee/vs-melee     n=  24    18 ->   18  (+0 / -0)
+  our-melee/vs-ranged    n=  32    22 ->   22  (+0 / -0)
+  our-mixed/vs-bane      n=  84    72 ->   73  (+1 / -0)
+  our-mixed/vs-melee     n=  96    69 ->   74  (+7 / -2)
+  our-mixed/vs-ranged    n= 128    80 ->   83  (+12 / -9)
+  our-ranged/vs-bane     n=  88    85 ->   85  (+0 / -0)
+  our-ranged/vs-melee    n= 116    94 ->   94  (+0 / -0)
+  our-ranged/vs-ranged   n= 136    93 ->   93  (+0 / -0)

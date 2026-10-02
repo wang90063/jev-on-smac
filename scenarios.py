@@ -238,5 +238,7 @@ if __name__ == "__main__":
         build_extra("test4", 200, seed=20261004, prefix="w", n_candidates=1100)
     elif sys.argv[1:2] == ["build_test5"]:
         build_extra("test5", 200, seed=20261005, prefix="x", n_candidates=1100)
+    elif sys.argv[1:2] == ["build_test6"]:
+        build_extra("test6", 200, seed=20261006, prefix="y", n_candidates=1100)
     elif sys.argv[1:2] == ["build_val"]:
         build_extra("val", 80, seed=20261001, prefix="v", n_candidates=500)

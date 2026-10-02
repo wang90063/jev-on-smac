@@ -200,6 +200,7 @@ obs.walkable (grid[y][x], 1 = walkable). mem is a dict kept for the whole episod
 Helpers: dist(a, b); legal(u) -> list of legal actions; can_attack(u, e); attack(u, e); heal(u, ally);
 move_toward(u, x, y); move_away(u, x, y); stop(u); default_action(u).
 Actions: 0 no-op, 1 stop, 2 north (+y), 3 south (-y), 4 east (+x), 5 west (-x), 6 + i attack enemy i (healers: heal ally i).
-A unit can attack only when the enemy is in range (can_attack). A move takes the unit ~2 cells. Win = every enemy dead
-before obs.limit steps; timing out is a loss.
+can_attack(u, e) only means the attack order is legal (the enemy is visible), NOT that it is in range: an attack order
+on a distant enemy makes the unit walk to it. In range means dist(u, e) <= u.range + u.radius + e.radius. A move takes
+the unit ~2 cells. Win = every enemy dead before obs.limit steps; timing out is a loss.
 """
