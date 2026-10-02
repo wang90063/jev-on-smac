@@ -204,7 +204,7 @@ def main():
     if "dummy" in modes:
         policies.append(DummyActionPolicy())
     if "online" in modes:
-        policies.append(WrittenOnlinePolicy())  # the online default since round 15
+        policies.append(WrittenOnlinePolicy())  # the online default (round 16: Claude-written program)
     if "online_value" in modes:
         policies.append(ValueOnlinePolicy(tag="online_value"))  # default in rounds 8-14
     if "online_nearest" in modes:

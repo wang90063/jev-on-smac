@@ -5786,17 +5786,19 @@ class KnnSwitchPolicy(SwitchPolicy):
 
 
 class WrittenOnlinePolicy:
-    """The online default since round 15: a writer-authored micro program
-    (kb/library/code/general.py, written by Grok-4.7 with simulator feedback) run in
-    the code sandbox on top of ValueOnlinePolicy. Units the program does not command
-    follow ValueOnlinePolicy. No simulator state is cloned online."""
+    """The online default: a written micro program run in the code sandbox on top of
+    ValueOnlinePolicy. Units the program does not command follow ValueOnlinePolicy.
+    No simulator state is cloned online.
 
-    def __init__(self, tag: str = "online"):
+    Round 16 on: kb/library/code/general_claude.py (written by Claude with simulator feedback).
+    Round 15: kb/library/code/general.py (written by Grok-4.7), kept as program="general.py"."""
+
+    def __init__(self, tag: str = "online", program: str = "general_claude.py"):
         from pathlib import Path as _Path
 
         import code_policy as CP
 
-        src = (_Path(__file__).resolve().parent / "kb" / "library" / "code" / "general.py").read_text()
+        src = (_Path(__file__).resolve().parent / "kb" / "library" / "code" / program).read_text()
         self.inner = CP.CodeActionPolicy(src, tag=tag)
         self.tag = tag
 
