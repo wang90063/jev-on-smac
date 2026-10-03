@@ -133,6 +133,19 @@ td.g { font-family: var(--mono); font-weight: 600; color: var(--accent); white-s
 .tips li > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 520px) { body { font-size: 15px; } .wrap { padding-block: 32px 56px; padding-inline: 16px; } h2 { font-size: 22px; } }
+
+/* component blocks */
+.comps { display: flex; flex-direction: column; gap: 18px; }
+.group-title { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; border-bottom: 1px solid var(--rule); padding-bottom: 4px; margin-top: 8px; }
+.comp { background: var(--sheet); border: 1px solid var(--rule); display: flex; flex-direction: column; }
+.comp-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 12px 18px 8px; }
+.comp-head .gen { font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--accent); }
+.comp-head h3 { font-size: 17px; }
+.comp-head .file { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: auto; }
+.comp .facts { padding-top: 4px; }
+.comp.failed .comp-head h3::after { content: "没用上"; font-size: 11.5px; font-weight: 700; color: var(--bad); background: var(--bad-soft); border-radius: 3px; padding: 0 6px; margin-left: 8px; vertical-align: 2px; }
+pre.ex { margin: 6px 0 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; background: var(--paper); border: 1px solid var(--rule); padding: 10px 12px; overflow-x: auto; white-space: pre; color: var(--ink); }
+@media (max-width: 560px) { .comp-head .file { margin-left: 0; } }
 </style>
 
 <div class="wrap">
@@ -153,11 +166,12 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
   <ol>
     <li><a href="#overview">1 现在的系统长什么样</a></li>
     <li><a href="#gens">2 五代架构</a></li>
-    <li><a href="#roles">3 Jev 接过的位置</a></li>
-    <li><a href="#why">4 为什么没用</a></li>
-    <li><a href="#works">5 最有用的方法</a></li>
-    <li><a href="#tips">6 Jev 使用技巧与经验</a></li>
-    <li><a href="#method">7 实验设置与评测纪律</a></li>
+    <li><a href="#parts">3 核心组件</a></li>
+    <li><a href="#roles">4 Jev 接过的位置</a></li>
+    <li><a href="#why">5 为什么没用</a></li>
+    <li><a href="#works">6 最有用的方法</a></li>
+    <li><a href="#tips">7 Jev 使用技巧</a></li>
+    <li><a href="#method">8 评测纪律</a></li>
   </ol>
 </nav>
 
@@ -332,8 +346,171 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
   <p class="caption">test6：200 个新场景 × 5 局，四种策略在同一批对局上比较，只跑了一次。测试集只收"有悬念"的场景：剔除了 Dummy 5 局全胜的场景，也剔除了 Dummy 和随机策略都 5 局全输的场景。A1 没有在 test6 上跑。</p>
 </section>
 
+<section id="parts">
+  <h2>3 核心组件逐个说明</h2>
+  <p>按架构分组。每个组件写四件事：解决什么问题、怎么做、一个例子、效果。标"没用上"的组件做过，但没有进入最终系统。</p>
+  <div class="comps">
+<div class="group-title">基础设施（所有架构共用）</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">基础</span><h3>程序生成的场景与配对评测</h3><span class="file">scenarios.py · results/_regress.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>官方图只有 23 张，而且最早的人工规则就是在这些图上挑的，用它们评测会高估效果。另外，样本小时根本看不出差别。</dd>
+      <dt>怎么做</dt><dd>随机生成兵种组合（9 种兵）、5 种地形和出生点，双方价值大致相当；只保留"有悬念"的场景（Dummy 不是 5 局全胜，也不是和随机策略一起 5 局全输）。每个种子让出生点抖动 ±1.5 格。生成后冻结，分成 train / train2 / val / test2–test6。新旧策略在同一场景、同一种子上逐局比较，统计翻盘和丢盘，用精确符号检验算 p 值。</dd>
+      <dt>例子</dt><dd>场景 <code>g0032</code>：带隘口的地形，我方 2 狂热者 + 1 刺蛇，对面 1 巨像，限时 150 步。</dd>
+      <dt>效果</dt><dd>第三轮在 40 个场景上看不出差别；第四轮换成 120 个场景 × 5 局后，同一个战术库显出了 +44（p&lt;0.001）。之后所有结论都靠这套方法得出。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">A0：考题 + 走位原语</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A0</span><h3>考题与走位原语</h3><span class="file">jev_smac_policy.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>让高层只做"选战术"，不碰具体的移动和攻击。这样 Jev 或规则只需要回答几个有限的选择题，执行细节交给代码。</dd>
+      <dt>怎么做</dt><dd>每一步，代码根据物理情况列出考题和合法选项：阵型（散开 / 保持）、远程（攻击移动 / 拉扯 / 扇形包围 / 原地守 / 退到集合点）、近战（冲锋 / 守隘口 / 原地守 / 去引爆自爆兵）、目标（最近的输出单位 / 射程内最弱 / 治疗单位 / 扎堆的 / 威胁最大）、残血单位是否后撤等。答案交给走位原语，编译成每个单位的动作。</dd>
+      <dt>例子</dt><dd>远程考题选"拉扯"：已经冷却好的单位，只有在"原地站 0.5 秒不会被近战贴脸"时才开火，否则往后走一步。</dd>
+      <dt>效果</dt><dd>这一层到现在都是所有上层的执行器。它的上限也决定了 A0 到 A2 的上限：第二轮测得，从这些选项里事后挑最好的，12 个场景只能从 24 胜提到 32 胜。</dd>
+    </dl>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A0</span><h3>Dummy 与证据门控</h3><span class="file">jev_smac_policy.py · EXAM_EVIDENCE</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>需要一个固定不变的基线；也要防止高层在"选了反而更差"的考题上乱选。</dd>
+      <dt>怎么做</dt><dd>Dummy 走和 Jev 完全相同的代码路径，只是每道题都选代码默认值。某道考题只有在"钉死某个答案"确实比 Dummy 赢得多时，才开放给 Jev 回答，其余考题直接用默认值。每次改代码后，都检查 Dummy 在 345 局里的逐步动作有没有变，以及官方图上有没有从赢变输的局。</dd>
+      <dt>例子</dt><dd>阵型、拉扯风格、诱饵等考题因为没有证据支持，被关闭，始终用默认答案。</dd>
+      <dt>效果</dt><dd>16 轮里 Dummy 始终是 53/115（官方图），所有比较都以它为准。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">A1：战术程序 + 离线锻造 + 开局挑选</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A1</span><h3>战术程序（规则语言）</h3><span class="file">tactic_dsl.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>让大模型能写出"什么情况下怎么打"，并且能被模拟器检验、换场景复用，而不是每一步临时作答。</dd>
+      <dt>怎么做</dt><dd>一个程序就是一串"物理条件 → 考题答案"的规则，加一个兜底。条件只能用 31 个物理特征，比如速度对比、射程对比、人数对比、是否接敌、是否在隘口、血量趋势、双方远程 / 近战 / 自爆兵数量，不能写地图名。每一步取第一条满足的规则，没设置的考题用默认值。</dd>
+      <dt>例子</dt><dd>第三轮从簇 11 选出的程序（选拔 +12，确认 +10）：
+<pre class="ex">{"name": "amove_if_guns_snipe_if_thin",
+ "rules": [
+  {"when": {"our_suicide": {"&gt;=": 1}},       "set": {"melee": "charge", "target": "clump"}},
+  {"when": {"our_ranged": {"&gt;=": 2}},        "set": {"ranged": "stack", "target": "frontline"}},
+  {"when": {"suicide_blast": "would_chain"}, "set": {"melee": "snipe", "bait": "bait_two"}}],
+ "else": {"ranged": "stack", "melee": "charge", "target": "threat"}}</pre></dd>
+      <dt>效果</dt><dd>规则语言本身可用，但能表达的东西被考题选项限制住了：它只能在已有选项里组合，不能写出"把 3 发子弹分给 3 个快死的目标"这种逐个单位的计算。</dd>
+    </dl>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A1</span><h3>离线锻造：按簇选拔 + 换种子确认</h3><span class="file">forge.py cluster</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>第二轮按单个场景挑程序，赢家诅咒严重：train 上 208 胜，换场景后只有 4/33 个程序是正收益。</dd>
+      <dt>怎么做</dt><dd>把 60 个训练场景按开局物理特征分成 12 簇。Grok 为每个簇写候选程序，在簇内所有场景、种子 1–5 上和 Dummy 逐局比较；最好的程序再用新种子 6–10 确认，净胜为正才入库。人工规则也必须走同一套流程。</dd>
+      <dt>例子</dt><dd>簇 2 的候选，选拔时 +4，确认时变成 −4，被拦下；簇 0 的程序选拔 +9、确认 +4，入库。</dd>
+      <dt>效果</dt><dd>共入库 12 个程序（锻造 7 个，人工规则 5 个）。确认这一步多次拦下了虚高的结果。</dd>
+    </dl>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A1</span><h3>战术程序库与挑选方式</h3><span class="file">jev_smac_policy.py · OnlinePolicy</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>对局开始时，从库里给这场战斗选一个程序。</dd>
+      <dt>怎么做</dt><dd>算出开局的物理特征向量，找最相似的簇，用这个簇的程序（最近簇）。另外试过两种挑法：证据挑法，即看每个候选在最相似的几场训练战斗里翻盘多少、丢盘多少；以及让 Jev 挑，并给它簇的相似度和同样的证据。</dd>
+      <dt>例子</dt><dd>开局判断出"我方 5 个近战（其中 4 个自爆兵），对面 3 个单位"，最接近簇 11，于是用上面那个程序。</dd>
+      <dt>效果</dt><dd>最近簇：test2 上相对 Dummy +44（p&lt;0.001）。证据挑法 +45，Jev 挑 +45，和最近簇几乎逐局相同。第六轮测得，每个场景都挑对程序，最多也只有 +24 到 +27 / 300 局，挑选已经不是瓶颈。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">A1 → A2 之间：找上限、试蒸馏</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">离线</span><h3>离线搜索上限</h3><span class="file">search.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>想知道"如果能在对局中途随时换战术"能多赢多少，判断值不值得往这个方向做。</dd>
+      <dt>怎么做</dt><dd>只在离线使用：每 5 步把模拟器复制 12 份，12 个宏动作各往前试跑 12 步，挑结果最好的执行。在线永远不允许这样做。</dd>
+      <dt>例子</dt><dd>搜索最常选的是：什么都不改、原地守、残血后撤、边打边退。</dd>
+      <dt>效果</dt><dd>train 60 个场景 × 5 局：Dummy 152 胜，人工规则 163 胜，搜索 235 胜。说明"中途切换"大约有 80 局的空间，这成了 A2 的动机。</dd>
+    </dl>
+  </div>
+
+  <div class="comp failed">
+    <div class="comp-head"><span class="gen">离线</span><h3>蒸馏树与 DAgger</h3><span class="file">distill.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>把搜索的选择学成一棵"条件 → 宏动作"的决策树，在线不用复制状态也能用。</dd>
+      <dt>怎么做</dt><dd>以搜索在每个决策点的选择和得分为标签，训练代价敏感的决策树；再做 3 轮 DAgger，让学生自己打、老师重新打标签。</dd>
+      <dt>例子</dt><dd>在真正决定胜负的 218 个决策点上，树选对了 168 个。</dd>
+      <dt>效果</dt><dd>放进整局对局就不行了：train 新种子上 D3 树 −2；test2 上 +28（p=0.052），不如最近簇的 +44；DAgger 之后 test2 上 −21。原因是标签只看接下来 12 步，树在大量普通决策点上平均比"不改"差一点，小亏累积成输局。这个教训直接促成了 A2 的"完整对局回报"标签。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">A2：价值模型，对局中途切换</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A2</span><h3>宏动作与完整对局回报标签</h3><span class="file">search.py MACROS · search.py rollout</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>价值模型需要知道"在这个局面换成某个战术，最后能多赢多少"，而且这个标签必须看整局，不能只看接下来几步。</dd>
+      <dt>怎么做</dt><dd>宏动作是 12 个固定的战术程序：什么都不改、拉扯、原地守、退到集合点、守隘口、散开、按威胁集火、先打远程、残血后撤、扇形包围、拉扯组合、人工规则。在基准策略实际走到的每个决策点，离线复制模拟器，把 13 个选项（12 个宏动作 + 继续当前程序）各执行 5 步，再由基准策略打到结束。回报 = 胜负 + 0.1 × 双方剩余血量比例之差。</dd>
+      <dt>例子</dt><dd>第七轮在 train 上得到 2717 个决策点，其中 284 个决策点上存在能把胜负翻过来的选项。最终合计 180 个场景、约 1.1 万个决策点，其中一部分来自 DAgger。</dd>
+      <dt>效果</dt><dd>这批标签就是价值模型的训练数据，后来也用来离线检验 Jev（AUC、挑动作的收益）。</dd>
+    </dl>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A2</span><h3>价值模型与切换策略</h3><span class="file">value.py · ValueOnlinePolicy</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>在线不能复制状态，但要在对局中途判断"现在要不要换战术、换哪个"。</dd>
+      <dt>怎么做</dt><dd>梯度提升树（树深 4），输入 78 个物理特征：规则语言的特征，加上双方血量比例、输出比、两军距离与射程之比、交火比例、人数等；输出每个宏动作相对"继续当前程序"的预测优势。每 5 步算一次，最大优势超过 τ=0.1 才换，否则继续用开局选的程序。</dd>
+      <dt>例子</dt><dd>实际运行时，大约只有 1.8% 的决策点会换，换的多半是退到集合点、残血后撤、按威胁集火。</dd>
+      <dt>效果</dt><dd>test4：相对 Dummy +90，相对 A1 +21（p=0.029）。后来几次改进（加特征、直接预测 Q 值、近邻平均、历史帧）都是离线交叉验证好、在线 val 不好，因为新模型偏离得更多，小错累积起来就输了。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">A3 / A4：大模型写微操代码</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A3</span><h3>微操程序沙箱</h3><span class="file">code_policy.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>考题和宏动作表达不了逐个单位的计算，比如分配目标避免溢出伤害、按冷却时间决定开火还是后退。</dd>
+      <dt>怎么做</dt><dd>写手写一个 Python 函数 <code>act(obs, mem)</code>，返回 <code>{单位 id: 动作}</code>。<code>obs</code> 里是每个单位的位置、血量、护盾、冷却、射程、速度、伤害等；<code>mem</code> 在整局里保留。先让 A2 算出每个单位的默认动作，程序只覆盖它下了令的单位。沙箱不能 import，单步超时 0.5 秒，抛异常或返回非法动作时退回默认，异常步数超过 10% 的程序不合格。</dd>
+      <dt>例子</dt><dd>现在程序里的集火分配（节选）：
+<pre class="ex">ready = [u for u in A if u.cooldown &lt; 0.5]          # 这一步能开火的单位
+for u in ready:                                       # 选择余地少的先挑
+    for e in enemies_in_real_range(u):
+        left = ehp(e) - claimed[e]                    # 扣掉已经分配的伤害
+        score = threat(e) / max(left, hit(u, e))      # 输出 ÷ 剩余血量
+    out[u.id] = attack(u, best)
+    claimed[best] += hit(u, best)                     # 记账，避免溢出</pre></dd>
+      <dt>效果</dt><dd>test5：Grok 写的程序相对 A2 +65；test6：Claude 写的程序相对 Grok 程序 +125，胜率 72.0%。</dd>
+    </dl>
+  </div>
+
+  <div class="comp">
+    <div class="comp-head"><span class="gen">A3/A4</span><h3>写手与模拟器反馈</h3><span class="file">forge.py code_global · results/_dev16.py · results/dev16/</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>让写手知道自己的程序哪里输了、怎么改。</dd>
+      <dt>怎么做</dt><dd>A3（Grok-4.7）：每轮写 2 个程序，共 4 轮，调用间隔至少 2 分钟；每个程序在 train 120 局上和默认逐局比较，自动生成的评审（输局里谁先死、集火了几个目标、接敌时的情况）作为下一轮反馈。A4（Claude）：读模拟器源码；用 <code>trace.py</code> 逐步追踪单局；用 <code>losses.py</code> 按剩余兵种列出输局；每改一处，就在 720 局上和上一版配对比较；换种子确认后再上 val 和 test6。</dd>
+      <dt>例子</dt><dd>追踪一局 30 机枪兵对 3 追猎者加 24 机枪兵，发现默认策略把火力集中在追猎者上，敌方机枪兵没人管，于是写了集火分配。读源码时发现 <code>can_attack</code> 只表示敌人在视野内，修正后，同一个分配器从 −100 变成 +64。</dd>
+      <dt>效果</dt><dd>Grok：4 轮从 −38 提到 +7（train 120 局）。Claude：从 461 胜提到 548 胜（720 局）。差别主要在反馈带宽，接口和沙箱完全相同。</dd>
+    </dl>
+  </div>
+
+<div class="group-title">Jev 接口</div>
+  <div class="comp">
+    <div class="comp-head"><span class="gen">Jev</span><h3>Jev 调用方式</h3><span class="file">jev_api.py · jev_value.py · results/dev16/jev_choice.py</span></div>
+    <dl class="facts">
+      <dt>解决什么</dt><dd>把局面和选项交给 Jev，拿回每个选项的概率。</dd>
+      <dt>怎么做</dt><dd>调用 TypeSafe System One：输入一个局面 JSON 和若干选择题，每个选项写成"标签 → 一句话说明"，选项数控制在 3 到 5 个。上下文学习的做法是：按物理特征确定性地取最相似的 8 个训练样例，把它们的真实结果一起放进局面里。</dd>
+      <dt>例子</dt><dd>第十六轮的开局二选一：
+<pre class="ex">{"plan": {"type": "choice",
+  "instructions": "Which opening wins this fight more often? Use the similar fights ...",
+  "criteria": {
+    "wait": {"does": "Hold near our start in a tight group; they walk into our focused fire."},
+    "push": {"does": "Walk straight at the enemy and engage them where they are."}}}}
+# 局面里还有：this_fight、unit_stats、similar_fights（8 场，各自 wait_wins / push_wins）</pre></dd>
+      <dt>效果</dt><dd>调用稳定（除第九轮的网络超时外没有失败），带 8 个示例时每次约 6.8k 输入 token。效果见下一节。</dd>
+    </dl>
+  </div>
+
+  </div>
+</section>
+
 <section id="roles">
-  <h2>3 Jev 接过的位置</h2>
+  <h2>4 Jev 接过的位置</h2>
   <p>每一行是一个独立实验。"对照"是用同样的信息、不用 Jev 的简单做法。Jev 要算有用，必须同时赢过当时的默认和对照。</p>
   <div class="tablebox">
     <table>
@@ -358,7 +535,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 </section>
 
 <section id="why">
-  <h2>4 为什么没用</h2>
+  <h2>5 为什么没用</h2>
   <div class="grid">
     <div class="card">
       <span class="k">选择空间太小</span>
@@ -394,7 +571,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 </section>
 
 <section id="works">
-  <h2>5 最有用的方法</h2>
+  <h2>6 最有用的方法</h2>
   <p>就是第 2 节里的 A3 和 A4：大模型离线写微操程序，用模拟器反馈迭代，在线只执行。现在的程序（<code>kb/library/code/general_claude.py</code>）做五件事：</p>
   <ol>
     <li>集火分配：优先级 = 敌方输出 ÷ 剩余血量，记账避免溢出伤害，计入护甲和克制加成；</li>
@@ -427,7 +604,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 </section>
 
 <section id="tips">
-  <h2>6 Jev 使用技巧与经验</h2>
+  <h2>7 Jev 使用技巧与经验</h2>
   <ol class="tips">
     <li><div><b>先测选择空间，再决定要不要用 Jev。</b><span>用一部分种子给每个场景挑最好的选项，再在另一部分种子上检验，这就是能拿到的真实空间。如果只有几个百分点，谁来挑都差不多。</span></div></li>
     <li><div><b>一定要和"同样信息的简单做法"比。</b><span>至少要比三个对照：同样候选里随机挑、同样示例直接投票或平均、什么都不改。Jev 只有同时赢过这三个，才算贡献了自己的判断。</span></div></li>
@@ -442,9 +619,9 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 </section>
 
 <section id="method">
-  <h2>7 实验设置与评测纪律</h2>
+  <h2>8 评测纪律</h2>
   <ul>
-    <li><b>场景</b>：程序生成的战斗，随机兵种、5 种地形，每个种子会让出生点抖动。train（60）和 train2（120）用于训练，val（80）用于调参，test2 到 test6 各只用一次做最终判断。23 张官方图只作参考，因为最早的人工规则就是在这些图上挑出来的。</li>
+    <li><b>数据划分</b>：train（60）和 train2（120）用于训练，val（80）用于调参，test2 到 test6 各只用一次做最终判断。23 张官方图只作参考。</li>
     <li><b>配对比较</b>：在同一场景、同一种子上逐局比较，统计翻盘数和丢盘数，用精确符号检验算 p 值。200 局、胜率五成左右时，标准误约 ±10 局，所以第三轮在 40 个场景上看不出效果，第四轮换成 600 局后，同一个库显出了 +44。</li>
     <li><b>选拔和确认分开</b>：选拔用一组种子，确认换一组新种子。确认阶段多次拦下了虚高的结果，比如 +5 → −4、+6 → −5、+7 → −14。</li>
     <li><b>回归检查</b>：每次改动后跑 <code>trace --actions-only</code>，确认 Dummy 在 345 局里的逐步动作没变；跑 <code>gate</code>，确认官方图上没有任何一局从赢变输。</li>
