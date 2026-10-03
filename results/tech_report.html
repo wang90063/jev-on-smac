@@ -174,6 +174,19 @@ details.more > summary { cursor: pointer; padding: 12px 18px; font-weight: 700; 
 details.more > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 details.more[open] > summary { border-bottom: 1px solid var(--rule); }
 details.more .comps { padding: 16px; }
+
+/* basics */
+.example { background: var(--sheet); border: 1px solid var(--rule); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+.example .k { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.04em; }
+.units { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: 8px; }
+.unit { background: var(--sheet); border: 1px solid var(--rule); padding: 8px 12px; font-size: 14px; line-height: 1.55; min-width: 0; }
+.unit b { font-size: 14.5px; }
+.unit .role { font-size: 12px; font-weight: 700; padding: 0 6px; border-radius: 3px; margin-left: 6px; }
+.unit .role.r { background: var(--accent-soft); color: var(--accent); }
+.unit .role.m { background: var(--bad-soft); color: var(--bad); }
+.unit .role.h { background: var(--good-soft); color: var(--good); }
+.unit span.d { display: block; color: var(--muted); font-size: 13px; }
+.gloss-group { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; margin-top: 4px; }
 </style>
 
 <div class="wrap">
@@ -192,6 +205,7 @@ details.more .comps { padding: 16px; }
 
 <nav class="toc" aria-label="目录">
   <ol>
+    <li><a href="#basics">0 基础知识</a></li>
     <li><a href="#overview">1 现在的系统长什么样</a></li>
     <li><a href="#gens">2 五代架构</a></li>
     <li><a href="#parts">3 组件关系</a></li>
@@ -203,17 +217,81 @@ details.more .comps { padding: 16px; }
   </ol>
 </nav>
 
+<section id="basics">
+  <h2>0 先读这里：基础知识</h2>
+
+  <h3>这个任务是什么</h3>
+  <p>星际争霸里，"微操"是指打仗时对每个单位的精细操作：谁打谁、什么时候往前、什么时候往后退。我们用的是 SMAClite，一个不需要游戏客户端的简化版战斗模拟器。每一局都是两支小部队在一张小地图上对打：</p>
+  <ul>
+    <li><b>我们控制一方</b>，每一步给自己的每个单位下一个指令：停下、往东南西北走一步、攻击某个敌人（医疗艇是治疗某个队友）。一步大约 0.5 秒，一局 150 到 220 步。</li>
+    <li><b>敌方由游戏内置的简单规则控制</b>：一直朝我方出生点冲，遇到我方单位就打最近的那个。</li>
+    <li><b>赢的条件</b>：在时间用完前消灭全部敌人。时间到了双方都还有人，也算我们输。</li>
+  </ul>
+  <div class="example">
+    <span class="k">一局的例子</span>
+    <p>我方 5 个追猎者，对面 4 个刺蛇加 1 个巨像，开阔地形。追猎者跑得比刺蛇快，但巨像的射程比追猎者远。好的打法是：先集中火力打掉刺蛇，避开巨像的射程，最后围杀巨像。差的打法是：一窝蜂冲上去，各打各的。</p>
+  </div>
+
+  <h3>出现的兵种</h3>
+  <div class="units">
+    <div class="unit"><b>机枪兵</b><span class="role r">远程</span><span class="d">便宜、血少，射程 5，能打空中</span></div>
+    <div class="unit"><b>掠夺者</b><span class="role r">远程</span><span class="d">射程 6，打重甲单位伤害翻倍，打不了空中</span></div>
+    <div class="unit"><b>追猎者</b><span class="role r">远程</span><span class="d">射程 6，跑得快，有护盾，能打空中</span></div>
+    <div class="unit"><b>刺蛇</b><span class="role r">远程</span><span class="d">射程 5，攻速快，能打空中</span></div>
+    <div class="unit"><b>巨像</b><span class="role r">远程</span><span class="d">射程最远（7），一炮打一排</span></div>
+    <div class="unit"><b>狂热者</b><span class="role m">近战</span><span class="d">血厚，有护盾，要贴身才能打</span></div>
+    <div class="unit"><b>跳虫</b><span class="role m">近战</span><span class="d">便宜，跑得快</span></div>
+    <div class="unit"><b>自爆兵</b><span class="role m">近战</span><span class="d">冲到人群里爆炸，范围伤害，炸完就死</span></div>
+    <div class="unit"><b>医疗艇</b><span class="role h">治疗</span><span class="d">飞在空中给队友回血；只有机枪兵、刺蛇、追猎者能打到它</span></div>
+  </div>
+
+  <h3>几种常见打法</h3>
+  <ul>
+    <li><b>集火</b>：几个单位一起打同一个敌人，尽快把它打死，减少对方的输出。打得太多会浪费（"溢出伤害"）。</li>
+    <li><b>拉扯</b>（也叫边打边退）：远程单位开一枪就往后退一步，等武器冷却好再开枪，让跑得慢的近战敌人一直够不着。</li>
+    <li><b>残血后撤</b>：快死的单位退到后面，让敌人改打别人。</li>
+    <li><b>守隘口</b>：在狭窄的通道口等敌人，让对方一次只能上来几个。</li>
+    <li><b>原地等 / 直接压</b>：开局是原地等敌人冲过来，还是主动迎上去。</li>
+  </ul>
+
+  <h3>参与的模型</h3>
+  <ul>
+    <li><b>Jev</b>（TypeSafe System One）：一个专门做选择题的模型。给它一段局面描述和几道选择题，每道题有 3 到 5 个选项，它对每个选项给出一个概率。它不写代码，也不直接控制单位。</li>
+    <li><b>Grok</b>：大语言模型，在对局前写规则或代码（第 2–15 轮）。</li>
+    <li><b>Claude</b>：大语言模型，第 16 轮直接写代码。</li>
+  </ul>
+
+  <h3>报告里的术语</h3>
+  <dl class="terms">
+    <dt class="gloss-group" style="grid-column: 1 / -1">系统里的东西</dt>
+    <dt>战术</dt><dd>一种打法，比如上面的集火、拉扯、守隘口。</dd>
+    <dt>考题</dt><dd>代码每一步提出的几道选择题，问的是"现在用什么战术"。比如"远程单位怎么打？① 攻击移动 ② 拉扯 ③ 扇形包围 ④ 原地守 ⑤ 退到集合点"。另外还有阵型、近战怎么打、优先打谁等题。最早就是让 Jev 来答这些题。</dd>
+    <dt>走位原语</dt><dd>人写的代码，把考题的答案翻译成每个单位的具体指令。比如答案是"拉扯"，它就算出每个远程单位这一步该开枪还是该后退。</dd>
+    <dt>Dummy</dt><dd>每道考题都选默认答案的策略，是所有比较的基线。</dd>
+    <dt>战术程序</dt><dd>一组写好的"看情况选答案"的规则，比如"敌人是近战、我们跑得更快时，远程选拉扯"。有了它，就不用每一步临时问人或问模型。</dd>
+    <dt>簇 / 最近簇</dt><dd>把训练用的 60 场战斗按开局情况（双方兵种、人数、射程、速度等）分成 12 组，每组叫一个簇，组内的战斗彼此相似。每个簇配一个战术程序。来了一场新战斗，就找它最像的那个簇，用那个簇的程序，这叫"最近簇"。</dd>
+    <dt>宏动作</dt><dd>12 个固定的战术程序，比如"原地守""退到集合点""残血后撤"，供对局中途切换用。</dd>
+    <dt>价值模型</dt><dd>一个机器学习模型。输入当前局面，预测"现在换成某个宏动作，比不换多赢多少"。</dd>
+    <dt>微操程序</dt><dd>大模型写的一段 Python 代码，每一步直接给部分单位下指令，不再经过考题。</dd>
+    <dt>在线 / 离线</dt><dd>在线 = 正式打一局的时候，只能看当前局面；离线 = 对局前准备，可以把模拟器复制很多份反复试。</dd>
+
+    <dt class="gloss-group" style="grid-column: 1 / -1">评测用的词</dt>
+    <dt>种子</dt><dd>同一场战斗换个种子，出生位置会略有不同，相当于"同一场仗再打一次"。</dd>
+    <dt>train / val / test</dt><dd>三批互不重叠的战斗。train 用来写规则和训练，val 用来调参数，test 只在最后用一次，判断是否真的变好。用过的 test 不再用来做判断。</dd>
+    <dt>配对比较</dt><dd>新旧两个策略打同一批战斗、同样的种子，逐局对比。新赢旧输叫"翻盘"，旧赢新输叫"丢盘"，翻盘减丢盘叫"净胜"。</dd>
+    <dt>p 值</dt><dd>"这个差别只是运气"的可能性。p &lt; 0.05 才算显著，也就是基本可以排除运气。</dd>
+
+    <dt class="gloss-group" style="grid-column: 1 / -1">方法上的词</dt>
+    <dt>kNN 投票</dt><dd>找出和当前情况最像的几场训练战斗，看它们用哪个选项赢得多，就选哪个。这是最简单的"参考历史"做法，用来和 Jev 对比。</dd>
+    <dt>示例（上下文学习）</dt><dd>调用 Jev 时，把几场相似战斗和它们的真实结果一起放进输入里，让它参考。</dd>
+    <dt>AUC</dt><dd>衡量"判断能不能赢"准不准的指标。0.5 等于瞎猜，1.0 等于全对。</dd>
+    <dt>DAgger</dt><dd>让新策略自己去打，在它实际遇到的局面上补训练数据，再重新训练。用来解决"训练时没见过这种局面"的问题。</dd>
+  </dl>
+</section>
+
 <section id="overview">
   <h2>1 现在的系统长什么样</h2>
-  <p>五代架构并不是互相替换，而是一层一层叠上去的：每一代都在上一代的上面加一层，上层没管的事交给下层。对局时从上往下执行；对局前的离线部分负责生产每一层用的东西。先看几个术语：</p>
-  <dl class="terms">
-    <dt>考题</dt><dd>代码在每一步提出的战术问题，比如阵型、远程怎么打、近战怎么打、打谁、谁去拉扯。每道题只列出物理上可行的选项。</dd>
-    <dt>走位原语</dt><dd>人写的代码，把考题的答案翻译成每个单位的具体动作（移动方向或攻击目标）。</dd>
-    <dt>Dummy</dt><dd>每道考题都选代码默认值。所有比较的基线。</dd>
-    <dt>战术程序</dt><dd>一组"物理条件 → 考题答案"的规则，比如"敌方是近战、我方是远程且更快时，远程选拉扯"。由大模型写。</dd>
-    <dt>宏动作</dt><dd>12 个固定的战术程序，比如原地守、退到集合点、残血后撤、按威胁集火，供中途切换用。</dd>
-    <dt>微操程序</dt><dd>大模型写的一段 Python 函数 <code>act(obs, mem)</code>，直接给某些单位下动作，在沙箱里运行。</dd>
-  </dl>
+  <p>五代架构并不是互相替换，而是一层一层叠上去的：每一代都在上一代的上面加一层，上层没管的事交给下层。对局时从上往下执行；对局前的离线部分负责生产每一层用的东西。术语见第 0 节。</p>
 
   <div class="stack">
     <div class="col">
