@@ -146,6 +146,34 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 .comp.failed .comp-head h3::after { content: "没用上"; font-size: 11.5px; font-weight: 700; color: var(--bad); background: var(--bad-soft); border-radius: 3px; padding: 0 6px; margin-left: 8px; vertical-align: 2px; }
 pre.ex { margin: 6px 0 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; background: var(--paper); border: 1px solid var(--rule); padding: 10px 12px; overflow-x: auto; white-space: pre; color: var(--ink); }
 @media (max-width: 560px) { .comp-head .file { margin-left: 0; } }
+
+/* component relationship diagram */
+.rel svg { min-width: 760px; }
+.rel .bx { fill: var(--sheet); stroke: var(--rule); stroke-width: 1.2; }
+.rel .bx.on { stroke: var(--accent); }
+.rel .bx.env { fill: var(--flat-soft); }
+.rel .bx.fail { stroke-dasharray: 4 3; }
+.rel .bx.base { fill: var(--accent-soft); stroke: var(--accent); }
+.rel .bx.jev { fill: var(--jev-soft); stroke: var(--jev); }
+.rel .t { font-size: 13.5px; font-weight: 700; fill: var(--ink); }
+.rel .s { font-size: 12px; fill: var(--muted); }
+.rel .g { font-family: var(--mono); font-size: 11.5px; font-weight: 600; fill: var(--accent); }
+.rel .tj { font-size: 13.5px; font-weight: 700; fill: var(--jev); }
+.rel .sj { font-size: 12px; fill: var(--jev); }
+.rel .ln { stroke: var(--muted); stroke-width: 1.3; fill: none; }
+.rel .ln.feed { stroke: var(--accent); }
+.rel .ln.jev { stroke: var(--jev); stroke-dasharray: 5 4; }
+.rel .lab { font-size: 11.5px; fill: var(--muted); }
+.rel .lab.feed { fill: var(--accent); font-family: var(--mono); }
+.rel .hd { font-size: 12.5px; font-weight: 700; fill: var(--muted); letter-spacing: 0.04em; }
+.rel .ah { fill: var(--muted); }
+.rel .ah.feed { fill: var(--accent); }
+.rel .ah.jev { fill: var(--jev); }
+details.more { background: var(--sheet); border: 1px solid var(--rule); }
+details.more > summary { cursor: pointer; padding: 12px 18px; font-weight: 700; color: var(--accent); list-style-position: inside; }
+details.more > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+details.more[open] > summary { border-bottom: 1px solid var(--rule); }
+details.more .comps { padding: 16px; }
 </style>
 
 <div class="wrap">
@@ -166,7 +194,7 @@ pre.ex { margin: 6px 0 0; font-family: var(--mono); font-size: 12.5px; line-heig
   <ol>
     <li><a href="#overview">1 现在的系统长什么样</a></li>
     <li><a href="#gens">2 五代架构</a></li>
-    <li><a href="#parts">3 核心组件</a></li>
+    <li><a href="#parts">3 组件关系</a></li>
     <li><a href="#roles">4 Jev 接过的位置</a></li>
     <li><a href="#why">5 为什么没用</a></li>
     <li><a href="#works">6 最有用的方法</a></li>
@@ -347,9 +375,120 @@ pre.ex { margin: 6px 0 0; font-family: var(--mono); font-size: 12.5px; line-heig
 </section>
 
 <section id="parts">
-  <h2>3 核心组件逐个说明</h2>
-  <p>按架构分组。每个组件写四件事：解决什么问题、怎么做、一个例子、效果。标"没用上"的组件做过，但没有进入最终系统。</p>
-  <div class="comps">
+  <h2>3 核心组件和它们的关系</h2>
+  <p>左边的离线环节为右边在线的每一层生产东西；在线时从上往下执行。蓝底的"场景生成 + 配对评测"给所有离线环节打分。</p>
+  <div class="chartbox rel" role="img" aria-label="组件关系图：左边是离线环节，右边是在线的四层，箭头表示离线环节产出什么给哪一层；Jev 用虚线标出曾接入的位置">
+    <svg viewBox="0 0 880 560" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+        <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah feed" d="M0,0 L10,5 L0,10 z"/></marker>
+        <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah jev" d="M0,0 L10,5 L0,10 z"/></marker>
+      </defs>
+      <text class="hd" x="20" y="20">离线：对局前，可以复制模拟器</text>
+      <text class="hd" x="420" y="20">在线：每一步从上往下，不复制状态</text>
+
+      <!-- online stack -->
+      <rect class="bx on" x="420" y="34" width="280" height="62" rx="3"/>
+      <text class="g" x="432" y="54">A3/A4</text><text class="t" x="482" y="54">微操程序沙箱</text>
+      <text class="s" x="432" y="78">覆盖部分单位：集火、拉扯、打破僵持</text>
+
+      <rect class="bx on" x="420" y="140" width="280" height="62" rx="3"/>
+      <text class="g" x="432" y="160">A2</text><text class="t" x="482" y="160">价值模型切换</text>
+      <text class="s" x="432" y="184">每 5 步：继续当前程序，还是换宏动作</text>
+
+      <rect class="bx on" x="420" y="246" width="280" height="62" rx="3"/>
+      <text class="g" x="432" y="266">A1</text><text class="t" x="482" y="266">战术程序库 + 最近簇</text>
+      <text class="s" x="432" y="290">开局选一个程序，回答考题</text>
+
+      <rect class="bx on" x="420" y="352" width="280" height="62" rx="3"/>
+      <text class="g" x="432" y="372">A0</text><text class="t" x="482" y="372">考题 + 走位原语</text>
+      <text class="s" x="432" y="396">把考题答案编译成每个单位的动作</text>
+
+      <rect class="bx env" x="420" y="458" width="280" height="40" rx="3"/>
+      <text class="t" x="432" y="483">SMAClite 环境</text>
+
+      <path class="ln" d="M560,96 V136" marker-end="url(#a1)"/><text class="lab" x="568" y="122">没下令的单位</text>
+      <path class="ln" d="M560,202 V242" marker-end="url(#a1)"/><text class="lab" x="568" y="228">当前生效的程序</text>
+      <path class="ln" d="M560,308 V348" marker-end="url(#a1)"/><text class="lab" x="568" y="334">考题答案</text>
+      <path class="ln" d="M560,414 V454" marker-end="url(#a1)"/><text class="lab" x="568" y="440">单位动作</text>
+
+      <!-- offline producers -->
+      <rect class="bx" x="20" y="34" width="300" height="62" rx="3"/>
+      <text class="t" x="32" y="56">写手写 act() + 模拟器反馈</text>
+      <text class="s" x="32" y="80">Grok → Claude（读源码、追踪输局）</text>
+
+      <rect class="bx" x="20" y="112" width="140" height="48" rx="3"/>
+      <text class="t" x="30" y="132">离线搜索上限</text>
+      <text class="s" x="30" y="150">证明中途切换有空间</text>
+      <rect class="bx fail" x="180" y="112" width="140" height="48" rx="3"/>
+      <text class="t" x="190" y="132">蒸馏树 / DAgger</text>
+      <text class="s" x="190" y="150">没用上：标签太短视</text>
+      <path class="ln" d="M160,136 H176" marker-end="url(#a1)"/>
+
+      <rect class="bx" x="20" y="176" width="300" height="48" rx="3"/>
+      <text class="t" x="32" y="196">宏动作 + 完整对局回报标签</text>
+      <text class="s" x="32" y="214">复制状态，13 个选项各打到结束 → 训练模型</text>
+      <path class="ln" d="M90,160 V172" marker-end="url(#a1)"/>
+
+      <rect class="bx" x="20" y="246" width="300" height="62" rx="3"/>
+      <text class="t" x="32" y="268">规则语言 + 锻造</text>
+      <text class="s" x="32" y="292">Grok 写规则，按簇选拔，换种子确认</text>
+
+      <rect class="bx" x="20" y="352" width="300" height="62" rx="3"/>
+      <text class="t" x="32" y="374">Dummy + 证据门控</text>
+      <text class="s" x="32" y="398">基线；没证据的考题一律用默认答案</text>
+
+      <rect class="bx base" x="20" y="458" width="300" height="76" rx="3"/>
+      <text class="t" x="32" y="480">场景生成 + 配对评测</text>
+      <text class="s" x="32" y="502">冻结的 train / val / test，逐局比较</text>
+      <text class="s" x="32" y="522">上面每个离线环节都用它打分</text>
+      <path class="ln" d="M10,500 H16" /><path class="ln" d="M10,500 V64 H16" marker-end="url(#a1)"/>
+      <path class="ln" d="M10,200 H16" marker-end="url(#a1)"/><path class="ln" d="M10,277 H16" marker-end="url(#a1)"/><path class="ln" d="M10,383 H16" marker-end="url(#a1)"/>
+
+      <!-- feeds -->
+      <path class="ln feed" d="M320,65 H416" marker-end="url(#a2)"/><text class="lab feed" x="326" y="58">程序代码</text>
+      <path class="ln feed" d="M320,200 C360,200 370,171 416,171" marker-end="url(#a2)"/><text class="lab feed" x="326" y="193">价值模型</text>
+      <path class="ln feed" d="M320,277 H416" marker-end="url(#a2)"/><text class="lab feed" x="326" y="270">12 个程序</text>
+      <path class="ln feed" d="M320,383 H416" marker-end="url(#a2)"/><text class="lab feed" x="326" y="376">开放哪些考题</text>
+
+      <!-- Jev -->
+      <rect class="bx jev" x="752" y="170" width="116" height="150" rx="3"/>
+      <text class="tj" x="764" y="194">Jev</text>
+      <text class="sj" x="764" y="218">曾接入过</text>
+      <text class="sj" x="764" y="238">4 层中的每一层</text>
+      <text class="sj" x="764" y="262">现在不在</text>
+      <text class="sj" x="764" y="282">任何一层</text>
+      <path class="ln jev" d="M752,186 C730,120 730,70 704,65" marker-end="url(#a3)"/><text class="sj" x="712" y="112">开局二选一</text>
+      <path class="ln jev" d="M752,210 C735,190 720,172 704,171" marker-end="url(#a3)"/>
+      <path class="ln jev" d="M752,262 C735,270 720,277 704,277" marker-end="url(#a3)"/>
+      <path class="ln jev" d="M752,306 C730,360 725,383 704,383" marker-end="url(#a3)"/><text class="sj" x="712" y="350">答考题</text>
+      <text class="sj" x="706" y="160">拿不准时</text>
+      <text class="sj" x="706" y="298">挑程序</text>
+    </svg>
+  </div>
+  <p class="caption">蓝色箭头：离线环节产出什么、给在线的哪一层用。灰色箭头：在线时上层没管的事交给下层。黄色虚线：Jev 曾经接入的位置，四处在测试集上都没有显著赢过当时的默认，所以现在 Jev 不在任何一层里。</p>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>组件</th><th>层</th><th>解决什么</th><th>效果</th></tr></thead>
+      <tbody>
+        <tr><td>场景生成 + 配对评测</td><td class="g">基础</td><td>官方图太少，小样本看不出差别</td><td>所有结论的依据；600 局才测出 +44</td></tr>
+        <tr><td>考题 + 走位原语</td><td class="g">A0</td><td>高层只选战术，执行交给代码</td><td>至今是所有上层的执行器；选项上限低</td></tr>
+        <tr><td>Dummy + 证据门控</td><td class="g">A0</td><td>固定基线；防止在没证据的考题上乱选</td><td>16 轮始终 53/115，没有变过</td></tr>
+        <tr><td>规则语言 + 锻造</td><td class="g">A1</td><td>让大模型写可检验、可复用的"条件 → 答案"规则</td><td>入库 12 个程序；确认阶段拦下多个虚高结果</td></tr>
+        <tr><td>战术程序库 + 最近簇</td><td class="g">A1</td><td>开局给这场战斗选一个程序</td><td>test2 +44（相对 Dummy）；Jev 挑和它一样</td></tr>
+        <tr><td>离线搜索上限</td><td class="g">离线</td><td>中途切换值不值得做</td><td>多赢约 80 / 300 局，成为 A2 的动机</td></tr>
+        <tr><td>蒸馏树 / DAgger</td><td class="g">离线</td><td>把搜索学成一棵决策树</td><td><span class="chip bad">没用上</span> 标签只看 12 步，整局反而输</td></tr>
+        <tr><td>宏动作 + 回报标签</td><td class="g">A2</td><td>给价值模型提供"看整局"的标签</td><td>约 1.1 万个决策点；也用来离线检验 Jev</td></tr>
+        <tr><td>价值模型切换</td><td class="g">A2</td><td>不复制状态，中途判断换不换战术</td><td>test4 相对 A1 +21；只在 1.8% 的时刻换</td></tr>
+        <tr><td>微操程序沙箱</td><td class="g">A3/A4</td><td>逐个单位的计算，选项表达不了</td><td>test5 +65，test6 +125</td></tr>
+        <tr><td>写手 + 模拟器反馈</td><td class="g">A3/A4</td><td>让写手知道哪里输了、怎么改</td><td>Grok 4 轮 +7；Claude 461 → 548 胜</td></tr>
+        <tr><td>Jev 调用方式</td><td class="g">Jev</td><td>把局面和选项交给 Jev，拿回概率</td><td>调用稳定；带 8 个示例时局势判断最好，挑动作不行</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <details class="more">
+    <summary>展开每个组件的详细说明（怎么做、例子）</summary>
+    <div class="comps">
 <div class="group-title">基础设施（所有架构共用）</div>
   <div class="comp">
     <div class="comp-head"><span class="gen">基础</span><h3>程序生成的场景与配对评测</h3><span class="file">scenarios.py · results/_regress.py</span></div>
@@ -507,6 +646,7 @@ for u in ready:                                       # 选择余地少的先挑
   </div>
 
   </div>
+  </details>
 </section>
 
 <section id="roles">
