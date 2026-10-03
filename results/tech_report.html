@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: one reading column (~46em) with a compact contents block; tables and the chart scroll inside their own boxes. */
+/* Layout: one reading column (~50rem). Architecture diagrams are built from boxes (flex/grid) so they follow the theme and wrap on phones. */
 :root {
   --paper: #f5f6f4;
   --sheet: #ffffff;
@@ -12,6 +12,8 @@
   --rule: #d9ddd8;
   --accent: #2f5d7c;
   --accent-soft: #e3ecf2;
+  --jev: #8a5a12;
+  --jev-soft: #f6ead3;
   --good: #2e7d4f;
   --good-soft: #e1f1e7;
   --bad: #a3412f;
@@ -26,20 +28,22 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #14181b; --sheet: #1b2024; --ink: #e4e8ea; --muted: #9aa5ac; --rule: #2f363b;
-    --accent: #8db8d6; --accent-soft: #22323d; --good: #7fcf9c; --good-soft: #1f3328;
-    --bad: #e59a88; --bad-soft: #3a2420; --flat: #a5aaae; --flat-soft: #262b2f; --bar: #5d6b75;
+    --accent: #8db8d6; --accent-soft: #22323d; --jev: #e6b766; --jev-soft: #3a2e19;
+    --good: #7fcf9c; --good-soft: #1f3328; --bad: #e59a88; --bad-soft: #3a2420;
+    --flat: #a5aaae; --flat-soft: #262b2f; --bar: #5d6b75;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #14181b; --sheet: #1b2024; --ink: #e4e8ea; --muted: #9aa5ac; --rule: #2f363b;
-  --accent: #8db8d6; --accent-soft: #22323d; --good: #7fcf9c; --good-soft: #1f3328;
-  --bad: #e59a88; --bad-soft: #3a2420; --flat: #a5aaae; --flat-soft: #262b2f; --bar: #5d6b75;
+  --accent: #8db8d6; --accent-soft: #22323d; --jev: #e6b766; --jev-soft: #3a2e19;
+  --good: #7fcf9c; --good-soft: #1f3328; --bad: #e59a88; --bad-soft: #3a2420;
+  --flat: #a5aaae; --flat-soft: #262b2f; --bar: #5d6b75;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.75; }
-.wrap { max-width: 50rem; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: flex; flex-direction: column; gap: 40px; }
+.wrap { max-width: 50rem; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: flex; flex-direction: column; gap: 44px; }
 header { display: flex; flex-direction: column; gap: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 22px; }
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
 h1 { font-family: var(--display); font-weight: 900; font-size: clamp(30px, 6vw, 44px); line-height: 1.2; margin: 0; text-wrap: balance; }
@@ -53,18 +57,62 @@ code { font-family: var(--mono); font-size: 0.88em; background: var(--flat-soft)
 .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .thesis { background: var(--sheet); border: 1px solid var(--rule); border-left: 4px solid var(--accent); padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
 .thesis p { max-width: none; }
-.thesis strong { color: var(--ink); }
 nav.toc { font-size: 14px; color: var(--muted); }
 nav.toc ol { flex-direction: row; flex-wrap: wrap; gap: 4px 18px; padding-left: 0; list-style: none; max-width: none; }
 nav.toc a { color: var(--accent); text-decoration: none; }
 nav.toc a:hover, nav.toc a:focus-visible { text-decoration: underline; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* glossary */
+dl.terms { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; background: var(--sheet); border: 1px solid var(--rule); padding: 16px 18px; font-size: 15px; }
+dl.terms dt { font-weight: 700; white-space: nowrap; }
+dl.terms dd { margin: 0; min-width: 0; color: var(--ink); }
+@media (max-width: 560px) { dl.terms { grid-template-columns: 1fr; gap: 2px; } dl.terms dd { margin-bottom: 8px; } }
+
+/* layer stack: the current system */
+.stack { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); gap: 14px; align-items: start; }
+@media (max-width: 680px) { .stack { grid-template-columns: 1fr; } }
+.col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.col-title { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
+.layer { background: var(--sheet); border: 1px solid var(--rule); padding: 10px 14px; display: grid; grid-template-columns: 3.2em 1fr; gap: 2px 12px; min-width: 0; }
+.layer .gen { grid-row: span 2; font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--accent); padding-top: 2px; }
+.layer b { font-size: 15px; }
+.layer span.d { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+.layer.top { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.layer.env { background: var(--flat-soft); }
+.down { text-align: center; color: var(--muted); font-size: 12px; line-height: 1; }
+.jevtag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--jev); background: var(--jev-soft); border-radius: 3px; padding: 0 6px; margin-left: 6px; white-space: nowrap; vertical-align: 1px; }
+.factory { background: var(--sheet); border: 1px dashed var(--rule); padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.factory b { font-size: 14.5px; }
+.factory span { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.factory .feeds { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+/* one architecture generation */
+.arch { background: var(--sheet); border: 1px solid var(--rule); display: flex; flex-direction: column; }
+.arch-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 18px 10px; border-bottom: 1px solid var(--rule); }
+.arch-head .gen { font-family: var(--mono); font-weight: 600; color: var(--accent); }
+.arch-head h3 { font-size: 18px; }
+.arch-head .rounds { font-size: 13px; color: var(--muted); margin-left: auto; }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 14px 18px; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.node { background: var(--sheet); border: 1px solid var(--rule); padding: 5px 10px; font-size: 13.5px; line-height: 1.45; border-radius: 3px; }
+.node.new { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.node.jev { border-color: var(--jev); background: var(--jev-soft); color: var(--jev); font-weight: 700; }
+.node.off { border-style: dashed; color: var(--muted); }
+.arr { color: var(--muted); font-size: 14px; }
+.flow .sep { flex-basis: 100%; height: 0; }
+.flow .lbl { font-size: 12px; color: var(--muted); font-weight: 700; min-width: 3em; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; padding: 14px 18px 16px; font-size: 15px; }
+.facts dt { font-weight: 700; color: var(--muted); font-size: 13.5px; padding-top: 1px; white-space: nowrap; }
+.facts dd { margin: 0; min-width: 0; }
+@media (max-width: 560px) { .facts { grid-template-columns: 1fr; gap: 0; } .facts dd { margin-bottom: 8px; } .arch-head .rounds { margin-left: 0; } }
+
 .tablebox { overflow-x: auto; background: var(--sheet); border: 1px solid var(--rule); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.55; }
 th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
 th { font-weight: 700; font-size: 13px; color: var(--muted); background: var(--paper); white-space: nowrap; }
 tr:last-child td { border-bottom: 0; }
 td.r, th.r { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.g { font-family: var(--mono); font-weight: 600; color: var(--accent); white-space: nowrap; }
 .chip { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 10px; white-space: nowrap; }
 .chip.bad { background: var(--bad-soft); color: var(--bad); }
 .chip.flat { background: var(--flat-soft); color: var(--flat); }
@@ -83,7 +131,6 @@ td.r, th.r { text-align: right; font-family: var(--mono); font-variant-numeric: 
 .tips li { counter-increment: tip; display: grid; grid-template-columns: 2.2em 1fr; gap: 0 10px; }
 .tips li::before { content: counter(tip); font-family: var(--mono); font-weight: 600; color: var(--accent); font-size: 14px; padding-top: 2px; }
 .tips li > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.tips b { font-weight: 700; }
 footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 520px) { body { font-size: 15px; } .wrap { padding-block: 32px 56px; padding-inline: 16px; } h2 { font-size: 22px; } }
 </style>
@@ -93,110 +140,221 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
 <header>
   <div class="eyebrow">SMAClite · 16 轮迭代 · 2026-09-29 至 2026-10-03</div>
   <h1>Jev 星际微操技术报告</h1>
-  <p class="sub">项目的目标是用 Jev（TypeSafe System One，给出带校准概率的类型化选择）加上 Grok（写战术的大模型），在 SMAClite 上做星际微操。本报告总结十六轮实验的结论：Jev 在这个任务里没有用；真正有效的方法，是让大模型离线写单位级的微操代码，再用模拟器反馈反复改进。</p>
+  <p class="sub">项目的目标是用 Jev（TypeSafe System One，给出带校准概率的类型化选择）加上大模型写手，在 SMAClite 上做星际微操。架构前后换过五代。本报告按架构讲清楚：每一代是什么结构、改了什么、Jev 接在哪里、结果如何。</p>
 </header>
 
 <div class="thesis">
-  <p><strong>核心结论。</strong>十六轮里，Jev 先后被放在 10 个不同的位置上：菜单指挥官、从战术库挑程序、带证据挑选、对局中途拿不准时挑、离群局面、价值模型、胜负判断门控、开局"等 / 压"二选一等。在没用过的测试集上，它<strong>没有一次显著赢过当时的默认策略</strong>，也没有显著赢过用同样信息做的 kNN 投票。</p>
-  <p><strong>最有用的方法</strong>是大模型离线写 <code>act(obs, mem)</code> 微操程序，放在沙箱里运行。在 200 个新场景 × 5 局的 test6 上，现在的程序胜率 <span class="num">72.0%</span>；Grok 写的程序 <span class="num">59.5%</span>，价值模型策略 <span class="num">51.9%</span>，基线 Dummy <span class="num">47.5%</span>。</p>
-  <p><strong>Jev 唯一稳定的长处</strong>是：给它 8 个相似的历史示例后，判断"这局能不能赢"（AUC <span class="num">0.874</span>，高于血量比的 <span class="num">0.835</span>，但还不显著）。不过 SMAC 里没有撤退，也没有投降，判断出要输，并没有能换来胜局的动作。</p>
+  <p><strong>核心结论。</strong>五代架构里，Jev 先后接在 10 个不同的位置上。在没用过的测试集上，它<strong>没有一次显著赢过当时的默认策略</strong>，也没有显著赢过用同样信息做的 kNN 投票。</p>
+  <p><strong>最有用的是第五代</strong>：大模型离线写单位级的微操程序，叠在原有系统的最上层。test6（200 个新场景 × 5 局）上胜率 <span class="num">72.0%</span>；同一批对局里，Grok 写的程序 <span class="num">59.5%</span>，价值模型策略 <span class="num">51.9%</span>，基线 Dummy <span class="num">47.5%</span>。</p>
+  <p><strong>Jev 唯一稳定的长处</strong>是：给它 8 个相似的历史示例后，判断"这局能不能赢"（AUC <span class="num">0.874</span>，血量比是 <span class="num">0.835</span>）。但 SMAC 里没有撤退，也没有投降，这个判断换不成胜局。</p>
 </div>
 
 <nav class="toc" aria-label="目录">
   <ol>
-    <li><a href="#setup">1 实验设置</a></li>
-    <li><a href="#timeline">2 默认策略的演进</a></li>
-    <li><a href="#roles">3 Jev 试过的位置</a></li>
+    <li><a href="#overview">1 现在的系统长什么样</a></li>
+    <li><a href="#gens">2 五代架构</a></li>
+    <li><a href="#roles">3 Jev 接过的位置</a></li>
     <li><a href="#why">4 为什么没用</a></li>
     <li><a href="#works">5 最有用的方法</a></li>
     <li><a href="#tips">6 Jev 使用技巧与经验</a></li>
-    <li><a href="#method">7 评测纪律</a></li>
+    <li><a href="#method">7 实验设置与评测纪律</a></li>
   </ol>
 </nav>
 
-<section id="setup">
-  <h2>1 实验设置</h2>
-  <ul>
-    <li><b>环境</b>：SMAClite（不需要星际 2 客户端），通过 macsmac 取快照。每个单位每一步的动作是：无操作、停止、向四个方向移动、攻击第 i 个敌人（医疗艇是治疗第 i 个友军）。1 步约 0.5 秒。超时算输。</li>
-    <li><b>Jev</b>：TypeSafe System One（<code>jev-latest</code>）。输入是局面描述和若干选择题，每道题有 3 到 5 个带文字描述的选项；输出是每个选项的概率。</li>
-    <li><b>写手</b>：第 2–15 轮是 Grok-4.6 / 4.7，通过 API 网关调用；第 16 轮由 Claude 直接写。</li>
-    <li><b>场景</b>：程序生成的战斗，随机兵种、5 种地形，每个种子会让出生点抖动。所有场景集都冻结：train（60）、train2（120）用于训练，val（80）用于调参，test2–test6 各用一次做最终判断。23 张官方图只作参考，因为最早的人工规则就是在这些图上挑出来的。</li>
-    <li><b>比较方式</b>：在同一场景、同一种子上逐局配对，统计翻盘数（新策略赢、旧策略输）和丢盘数（反过来），用精确符号检验算 p 值。</li>
-    <li><b>Dummy</b>：每道考题都选代码默认值，是所有比较的基线。每次改动后都检查 Dummy 的逐步动作（345 局）和官方图胜负，确认它没有变。</li>
-  </ul>
+<section id="overview">
+  <h2>1 现在的系统长什么样</h2>
+  <p>五代架构并不是互相替换，而是一层一层叠上去的：每一代都在上一代的上面加一层，上层没管的事交给下层。对局时从上往下执行；对局前的离线部分负责生产每一层用的东西。先看几个术语：</p>
+  <dl class="terms">
+    <dt>考题</dt><dd>代码在每一步提出的战术问题，比如阵型、远程怎么打、近战怎么打、打谁、谁去拉扯。每道题只列出物理上可行的选项。</dd>
+    <dt>走位原语</dt><dd>人写的代码，把考题的答案翻译成每个单位的具体动作（移动方向或攻击目标）。</dd>
+    <dt>Dummy</dt><dd>每道考题都选代码默认值。所有比较的基线。</dd>
+    <dt>战术程序</dt><dd>一组"物理条件 → 考题答案"的规则，比如"敌方是近战、我方是远程且更快时，远程选拉扯"。由大模型写。</dd>
+    <dt>宏动作</dt><dd>12 个固定的战术程序，比如原地守、退到集合点、残血后撤、按威胁集火，供中途切换用。</dd>
+    <dt>微操程序</dt><dd>大模型写的一段 Python 函数 <code>act(obs, mem)</code>，直接给某些单位下动作，在沙箱里运行。</dd>
+  </dl>
+
+  <div class="stack">
+    <div class="col">
+      <div class="col-title">在线：每一步从上往下执行，不复制模拟器状态</div>
+      <div class="layer top"><span class="gen">A4</span><b>微操程序（沙箱）</b><span class="d">拿到下层算好的默认动作，只覆盖它有把握的单位：集火分配、医疗艇、拦截自爆兵、拉扯、打破僵持。</span></div>
+      <div class="down">↓ 没下令的单位交给下层</div>
+      <div class="layer"><span class="gen">A2</span><b>价值模型切换 <span class="jevtag">Jev 曾接在这里</span></b><span class="d">每 5 步判断一次：继续用开局选的战术程序，还是换成某个宏动作（预测优势 &gt; 0.1 才换）。</span></div>
+      <div class="down">↓ 当前生效的战术程序</div>
+      <div class="layer"><span class="gen">A1</span><b>战术程序库 <span class="jevtag">Jev 曾接在这里</span></b><span class="d">开局按物理特征找最相似的场景簇，使用这个簇的战术程序。</span></div>
+      <div class="down">↓ 程序给出考题答案</div>
+      <div class="layer"><span class="gen">A0</span><b>考题 + 走位原语 <span class="jevtag">Jev 最初在这里</span></b><span class="d">每一步列出考题和合法选项，把答案编译成每个单位的动作。</span></div>
+      <div class="down">↓ 检查合法后执行</div>
+      <div class="layer env"><span class="gen">env</span><b>SMAClite</b><span class="d">单位动作：停止、四向移动、攻击第 i 个敌人（医疗艇是治疗第 i 个友军）。1 步约 0.5 秒，超时算输。</span></div>
+    </div>
+    <div class="col">
+      <div class="col-title">离线：对局前生产各层的东西</div>
+      <div class="factory"><span class="feeds">→ A3/A4 微操程序</span><b>写程序 + 模拟器打分</b><span>写手（Grok 或 Claude）写 <code>act()</code>，在训练场景上和当前默认逐局比较，换种子确认后才采用。</span></div>
+      <div class="factory"><span class="feeds">→ A2 价值模型</span><b>复制状态打真值标签</b><span>在每个决策点复制模拟器，把 13 个选项各打到结束，得到约 1.1 万条标签，训练梯度提升树。</span></div>
+      <div class="factory"><span class="feeds">→ A1 战术程序库</span><b>锻造战术程序</b><span>Grok 按场景簇写"条件 → 答案"规则，用簇内场景选拔，再换种子确认后入库。</span></div>
+    </div>
+  </div>
+  <p class="caption">A0–A4 是第几代架构加上的层。Jev 现在不在任何一层里；黄色标签标的是它曾经接入的位置。A3 和 A4 的运行时结构相同，区别在离线部分谁写程序、怎么迭代。</p>
 </section>
 
-<section id="timeline">
-  <h2>2 默认策略的演进</h2>
-  <p>默认策略换过五次，每次都要在一个没用过的测试集上显著赢过上一任才换。Jev 一次都没能进入默认。</p>
-  <div class="tablebox">
-    <table>
-      <thead><tr><th>轮次</th><th>在线默认</th><th>做法</th><th class="r">判断用的测试集</th><th class="r">相对上一任</th><th>有没有 Jev</th></tr></thead>
-      <tbody>
-        <tr><td class="num">0–4</td><td>Dummy</td><td>攻击移动，加上代码里写死的默认走位</td><td class="r">—</td><td class="r">—</td><td><span class="chip flat">无</span></td></tr>
-        <tr><td class="num">5–7</td><td>OnlinePolicy</td><td>锻造出的战术库，开局按物理特征选最近的簇</td><td class="r">test2</td><td class="r">+44 vs Dummy，p&lt;0.001</td><td><span class="chip flat">Jev 挑没更好</span></td></tr>
-        <tr><td class="num">8–14</td><td>ValueOnlinePolicy</td><td>价值模型每 5 步判断，预测优势 &gt; 0.1 才换宏动作</td><td class="r">test4</td><td class="r">+21，p=0.029</td><td><span class="chip flat">Jev 补位没更好</span></td></tr>
-        <tr><td class="num">15</td><td>Grok 程序</td><td>Grok-4.7 写的 <code>act()</code>，经 4 轮模拟器反馈</td><td class="r">test5</td><td class="r">+65，p&lt;0.001</td><td><span class="chip flat">无</span></td></tr>
-        <tr><td class="num">16</td><td>Claude 程序</td><td>Claude 读模拟器源码、追踪输局后写的 <code>act()</code></td><td class="r">test6</td><td class="r">+125，p&lt;0.001</td><td><span class="chip flat">无</span></td></tr>
-      </tbody>
-    </table>
+<section id="gens">
+  <h2>2 五代架构</h2>
+  <p>每一代都写三件事：改了什么、Jev 在哪、结果如何。图里蓝框是这一代新加的部分，黄框是 Jev，虚线框是只在离线运行的部分。</p>
+
+  <div class="arch">
+    <div class="arch-head"><span class="gen">A0</span><h3>Jev 当指挥官</h3><span class="rounds">第 0–1 轮</span></div>
+    <div class="flow">
+      <span class="node">局面快照</span><span class="arr">→</span>
+      <span class="node">代码列出考题和合法选项</span><span class="arr">→</span>
+      <span class="node jev">Jev 每道题选一个</span><span class="arr">→</span>
+      <span class="node">走位原语编译</span><span class="arr">→</span>
+      <span class="node">单位动作</span>
+    </div>
+    <dl class="facts">
+      <dt>结构</dt><dd>代码在每一步提出考题，Jev 作答，代码负责执行。一套"说明书"告诉 Jev 每个选项适合什么兵种组合。考题是否开放给 Jev，由证据门控决定：只有"钉死某个答案"确实比 Dummy 赢得多的考题才开放，其余都用默认值。</dd>
+      <dt>结果</dt><dd>23 张官方图上 77/115，Dummy 53/115。但同样的四条人工规则有 92/115。换到程序生成的新场景上，随机作答（97/200）都比 Jev 挑程序（84/200）赢得多。</dd>
+      <dt>问题</dt><dd>效果全靠选项和说明书怎么写，Jev 并没有泛化能力。所以下一代改成"让大模型写规则，用模拟器检验"。</dd>
+    </dl>
   </div>
 
-  <div class="chartbox" role="img" aria-label="test6 上四种策略的胜场：Dummy 475，价值模型策略 519，Grok 程序 595，Claude 程序 720，每种 1000 局">
+  <div class="arch">
+    <div class="arch-head"><span class="gen">A1</span><h3>战术程序 + 离线锻造 + 开局挑选</h3><span class="rounds">第 2–6 轮</span></div>
+    <div class="flow">
+      <span class="lbl">离线</span>
+      <span class="node off">Grok 写战术程序</span><span class="arr">→</span>
+      <span class="node off">簇内场景打分，换种子确认</span><span class="arr">→</span>
+      <span class="node new">战术程序库（12 个簇）</span>
+      <span class="sep"></span>
+      <span class="lbl">在线</span>
+      <span class="node">开局快照</span><span class="arr">→</span>
+      <span class="node new">最近簇 / <span style="color:var(--jev)">Jev</span> 挑一个程序</span><span class="arr">→</span>
+      <span class="node">程序答考题</span><span class="arr">→</span>
+      <span class="node">走位原语</span><span class="arr">→</span>
+      <span class="node">单位动作</span>
+    </div>
+    <dl class="facts">
+      <dt>改了什么</dt><dd>考题不再由 Jev 现场作答，改成由战术程序回答。程序是离线写好、经模拟器检验过的。同时改用程序生成的训练场景和冻结测试集，评测改成逐局配对统计。第二轮发现"每个场景单独挑最好的程序"会严重过拟合，第三轮起改成按簇选拔，并要求换种子确认。</dd>
+      <dt>Jev 在哪</dt><dd>开局时从库里挑一个程序。后来给它加上了簇的相似度和近邻配对战绩。</dd>
+      <dt>结果</dt><dd>按最近簇挑：test2 上相对 Dummy +44（p&lt;0.001）。Jev 挑：相对最近簇分别是 −4、−24（p=0.009）、+1、+10，都不显著或更差。</dd>
+      <dt>问题</dt><dd>离线搜索显示，如果能在对局中途按局面切换宏动作，可以再多赢约 80 局（train 300 局里）。开局挑一次的静态程序拿不到这部分收益。</dd>
+    </dl>
+  </div>
+
+  <div class="arch">
+    <div class="arch-head"><span class="gen">A2</span><h3>价值模型，对局中途切换</h3><span class="rounds">第 7–14 轮</span></div>
+    <div class="flow">
+      <span class="lbl">离线</span>
+      <span class="node off">复制状态，13 个选项各打到结束</span><span class="arr">→</span>
+      <span class="node off">1.1 万条标签 + DAgger</span><span class="arr">→</span>
+      <span class="node new">价值模型（梯度提升树）</span>
+      <span class="sep"></span>
+      <span class="lbl">在线</span>
+      <span class="node">每 5 步：78 个物理特征</span><span class="arr">→</span>
+      <span class="node new">预测每个宏动作的优势</span><span class="arr">→</span>
+      <span class="node">优势 &gt; 0.1 才换，否则用 A1 的程序</span><span class="arr">→</span>
+      <span class="node">走位原语</span>
+    </div>
+    <dl class="facts">
+      <dt>改了什么</dt><dd>在 A1 上面加了一层"每 5 步重新决定"。标签来自离线复制模拟器状态后打完整局的真实结果，在线只用物理特征。模型要求很保守，只在约 1.8% 的决策点偏离。</dd>
+      <dt>Jev 在哪</dt><dd>先后试了四种接法：模型拿不准时问 Jev；训练数据没见过的局面问 Jev；直接让 Jev 当价值模型；用 Jev 的胜负判断决定什么时候冒险。</dd>
+      <dt>结果</dt><dd>价值模型：test4 上相对 Dummy +90，相对 A1 +21（p=0.029）。Jev 的四种接法：+4（p=0.61）；前提不成立，没有调用；比血量比还差；在新数据上没有复现。</dd>
+      <dt>问题</dt><dd>之后几次改进价值模型（加特征、近邻平均、历史帧）都是离线好、在线不好。宏动作只是"一组考题答案"，表达能力已经到头了。</dd>
+    </dl>
+  </div>
+
+  <div class="arch">
+    <div class="arch-head"><span class="gen">A3</span><h3>大模型写微操代码</h3><span class="rounds">第 15 轮</span></div>
+    <div class="flow">
+      <span class="lbl">离线</span>
+      <span class="node off">Grok-4.7 写 act()，4 轮 × 2 个</span><span class="arr">→</span>
+      <span class="node off">train 120 局和默认比较 + 自动评审</span><span class="arr">→</span>
+      <span class="node new">一个通用微操程序</span>
+      <span class="sep"></span>
+      <span class="lbl">在线</span>
+      <span class="node">A2 算出每个单位的默认动作</span><span class="arr">→</span>
+      <span class="node new">act(obs, mem) 覆盖部分单位</span><span class="arr">→</span>
+      <span class="node">检查合法，否则退回默认</span><span class="arr">→</span>
+      <span class="node">单位动作</span>
+    </div>
+    <dl class="facts">
+      <dt>改了什么</dt><dd>不再让模型在"考题答案"里选，而是直接写代码控制每个单位。这一层叠在 A2 上面：程序只写它有把握的单位，其余单位照 A2 的动作执行。沙箱不允许 import，单步有超时，出错就退回默认。</dd>
+      <dt>Jev 在哪</dt><dd>不在。</dd>
+      <dt>结果</dt><dd>test5 上相对 A2 +65（p&lt;0.001），相对 Dummy +141。是当时最大的一次提升。Grok 一共只调用了 4 次。</dd>
+    </dl>
+  </div>
+
+  <div class="arch">
+    <div class="arch-head"><span class="gen">A4</span><h3>Claude 写微操代码（当前）</h3><span class="rounds">第 16 轮</span></div>
+    <div class="flow">
+      <span class="lbl">离线</span>
+      <span class="node new">读模拟器源码</span><span class="arr">→</span>
+      <span class="node new">逐步追踪输局</span><span class="arr">→</span>
+      <span class="node off">改一处，720 局配对比较</span><span class="arr">→</span>
+      <span class="node off">换种子确认 → val → test6</span>
+      <span class="sep"></span>
+      <span class="lbl">在线</span>
+      <span class="node">与 A3 相同，换成新程序</span>
+    </div>
+    <dl class="facts">
+      <dt>改了什么</dt><dd>运行时结构不变，接口、沙箱、可见信息都和 A3 一样。变的是离线开发方式：写手换成 Claude，可以读模拟器源码、逐步追踪单局、按剩余兵种列出输局、每改一处就重测。同时修正了接口文档里的一处错误：<code>can_attack</code> 只表示敌人在视野内，不表示在射程内。</dd>
+      <dt>Jev 在哪</dt><dd>在 A4 上又测了两个位置：开局"原地等 / 直接压"二选一，以及中途"要输就切换"（这个只测了空间，没有调用 Jev）。</dd>
+      <dt>结果</dt><dd>test6 上相对 A3 +125（翻盘 170 / 丢盘 45，p&lt;0.001），胜率 72.0%。Jev 的二选一：+6，和 kNN 投票 +5 一样。</dd>
+    </dl>
+  </div>
+
+  <div class="chartbox" role="img" aria-label="test6 上四代默认策略的胜场：Dummy 475，价值模型策略 519，Grok 程序 595，Claude 程序 720，每种 1000 局">
     <svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg">
-      <!-- scale: x = 170 + wins * 0.42 (0..1000 -> 170..590) -->
       <g stroke="var(--rule)" stroke-width="1">
-        <line x1="170" y1="16" x2="170" y2="196"/>
-        <line x1="275" y1="16" x2="275" y2="196"/>
-        <line x1="380" y1="16" x2="380" y2="196"/>
-        <line x1="485" y1="16" x2="485" y2="196"/>
+        <line x1="190" y1="16" x2="190" y2="196"/>
+        <line x1="290" y1="16" x2="290" y2="196"/>
+        <line x1="390" y1="16" x2="390" y2="196"/>
+        <line x1="490" y1="16" x2="490" y2="196"/>
         <line x1="590" y1="16" x2="590" y2="196"/>
       </g>
-      <text class="tick" x="170" y="216" text-anchor="middle">0</text>
-      <text class="tick" x="275" y="216" text-anchor="middle">250</text>
-      <text class="tick" x="380" y="216" text-anchor="middle">500</text>
-      <text class="tick" x="485" y="216" text-anchor="middle">750</text>
+      <text class="tick" x="190" y="216" text-anchor="middle">0</text>
+      <text class="tick" x="290" y="216" text-anchor="middle">250</text>
+      <text class="tick" x="390" y="216" text-anchor="middle">500</text>
+      <text class="tick" x="490" y="216" text-anchor="middle">750</text>
       <text class="tick" x="590" y="216" text-anchor="middle">1000</text>
-      <text x="160" y="43" text-anchor="end" font-size="14">Dummy</text>
-      <rect x="170" y="26" width="199.5" height="26" fill="var(--bar)"/>
-      <text class="val" x="377" y="44">475</text>
-      <text x="160" y="87" text-anchor="end" font-size="14">价值模型策略</text>
-      <rect x="170" y="70" width="218" height="26" fill="var(--bar)"/>
-      <text class="val" x="396" y="88">519</text>
-      <text x="160" y="131" text-anchor="end" font-size="14">Grok 程序</text>
-      <rect x="170" y="114" width="249.9" height="26" fill="var(--bar)"/>
-      <text class="val" x="428" y="132">595</text>
-      <text x="160" y="175" text-anchor="end" font-size="14" font-weight="700">Claude 程序</text>
-      <rect x="170" y="158" width="302.4" height="26" fill="var(--accent)"/>
-      <text class="val" x="481" y="176">720</text>
+      <text x="180" y="43" text-anchor="end" font-size="14">A0 Dummy</text>
+      <rect x="190" y="26" width="190" height="26" fill="var(--bar)"/>
+      <text class="val" x="386" y="44">475</text>
+      <text x="180" y="87" text-anchor="end" font-size="14">A2 价值模型</text>
+      <rect x="190" y="70" width="207.6" height="26" fill="var(--bar)"/>
+      <text class="val" x="404" y="88">519</text>
+      <text x="180" y="131" text-anchor="end" font-size="14">A3 Grok 程序</text>
+      <rect x="190" y="114" width="238" height="26" fill="var(--bar)"/>
+      <text class="val" x="434" y="132">595</text>
+      <text x="180" y="175" text-anchor="end" font-size="14" font-weight="700">A4 Claude 程序</text>
+      <rect x="190" y="158" width="288" height="26" fill="var(--accent)"/>
+      <text class="val" x="484" y="176">720</text>
     </svg>
   </div>
-  <p class="caption">test6：200 个新场景 × 5 局，四种策略在同一批对局上比较，只跑了一次。测试集只收"有悬念"的场景：剔除了 Dummy 5 局全胜的场景，也剔除了 Dummy 和随机策略都 5 局全输的场景。所以这里的胜率是势均力敌对局里的胜率。</p>
+  <p class="caption">test6：200 个新场景 × 5 局，四种策略在同一批对局上比较，只跑了一次。测试集只收"有悬念"的场景：剔除了 Dummy 5 局全胜的场景，也剔除了 Dummy 和随机策略都 5 局全输的场景。A1 没有在 test6 上跑。</p>
 </section>
 
 <section id="roles">
-  <h2>3 Jev 试过的位置</h2>
-  <p>每一行都是一个独立的实验。"对照"指的是用同样的信息、不用 Jev 的简单做法，比如最近簇、证据投票、kNN 平均或随机。Jev 要有用，必须同时赢过当时的默认和这些对照。</p>
+  <h2>3 Jev 接过的位置</h2>
+  <p>每一行是一个独立实验。"对照"是用同样的信息、不用 Jev 的简单做法。Jev 要算有用，必须同时赢过当时的默认和对照。</p>
   <div class="tablebox">
     <table>
-      <thead><tr><th>位置</th><th>轮次</th><th>Jev 看到什么</th><th>结果</th><th>对照</th><th>结论</th></tr></thead>
+      <thead><tr><th>架构</th><th>位置</th><th>轮次</th><th>结果</th><th>对照</th><th>结论</th></tr></thead>
       <tbody>
-        <tr><td>菜单指挥官：每步回答"集火 / 拉扯 / 阵型"等考题</td><td class="num">0–1</td><td>局面摘要 + 战术说明书</td><td>官方图 77/115（Dummy 53）</td><td>人工规则 92/115；换到生成场景上，随机作答 97/200，比 Jev 挑程序的 84 还高</td><td><span class="chip bad">靠选项</span></td></tr>
-        <tr><td>从战术库挑程序</td><td class="num">2–3</td><td>候选程序的文字描述</td><td>test：84/200，lib3 上 92/200</td><td>随机挑 84、94；最近簇 85、89</td><td><span class="chip flat">与随机持平</span></td></tr>
-        <tr><td>一好一坏二选一（能力测试）</td><td class="num">4</td><td>两个程序</td><td>挑对 45/73</td><td>"有不做任何改变的选项就选它"：46/73</td><td><span class="chip flat">无增益</span></td></tr>
-        <tr><td>在战术库上替代最近簇</td><td class="num">4</td><td>候选程序</td><td>test2：lib3 −4（p=0.73），lib4 <b>−24（p=0.009）</b></td><td>最近簇</td><td><span class="chip bad">更差</span></td></tr>
-        <tr><td>加上簇相似度和近邻配对战绩</td><td class="num">5–6</td><td>每个候选在相似场景上的翻盘 / 丢盘</td><td>test2：相对最近簇 +1（p=1.0）；第六轮 +10（p=0.24）</td><td>证据投票：+1、+11</td><td><span class="chip flat">照抄证据</span></td></tr>
-        <tr><td>对局中途，价值模型拿不准时问</td><td class="num">9</td><td>前 3 个宏动作 + 模型估计 + 20 个近邻战绩</td><td>test4：+4（19 / 15，p=0.61）</td><td>随机挑：−4；Jev 相对随机 +8（p=0.26）</td><td><span class="chip flat">不显著</span></td></tr>
-        <tr><td>只在训练数据没见过的局面问</td><td class="num">10</td><td>—</td><td>前提不成立，没有调用 Jev</td><td>离群局面上模型损失 0.097，非离群局面 0.130</td><td><span class="chip flat">已停止</span></td></tr>
-        <tr><td>当价值模型：每个动作的 P(赢)</td><td class="num">10</td><td>局面 + 13 个"做某个动作后能不能赢"</td><td>局势 AUC 0.787；按它选动作 −6.3 到 −1.1</td><td>血量比 AUC 0.835；价值模型 +1.1</td><td><span class="chip bad">更差</span></td></tr>
-        <tr><td>同上，加 8 个相似示例</td><td class="num">10</td><td>8 个最近的训练时刻，以及每个选项的真实胜负</td><td>AUC <b>0.857</b>；挑动作 +0.1</td><td>8 个示例直接平均：AUC 0.771，挑动作 <b>+5.4</b></td><td><span class="chip good">会判局势</span> <span class="chip bad">不会挑动作</span></td></tr>
-        <tr><td>胜负判断当门控：判断要输时才冒险</td><td class="num">11</td><td>同上</td><td>第一批 +5.42，<b>换一批新数据 +0.06</b></td><td>不加门控直接按近邻偏离：+2.13</td><td><span class="chip bad">没有复现</span></td></tr>
-        <tr><td>开局"原地等 / 直接压"二选一</td><td class="num">16</td><td>这场战斗 + 兵种属性 + 8 场相似战斗的真实"等 / 压"结果</td><td>+6 / 720（P &gt; 0.7 时 −1）</td><td>同样 8 个邻居投票：+5；这个决策点的上限 +25</td><td><span class="chip flat">与 kNN 相同</span></td></tr>
-        <tr><td>中途"判断要输就切换成压"</td><td class="num">16</td><td>只测了空间，没有调用 Jev</td><td>按血量判断：−3 到 +10</td><td>一律切换 +7；kNN 门控 +15</td><td><span class="chip flat">空间约 1%</span></td></tr>
+        <tr><td class="g">A0</td><td>每步回答考题</td><td class="num">0–1</td><td>官方图 77/115</td><td>人工规则 92/115；生成场景上随机作答 97/200</td><td><span class="chip bad">靠选项</span></td></tr>
+        <tr><td class="g">A1</td><td>开局从库里挑程序</td><td class="num">2–3</td><td>84/200，lib3 上 92/200</td><td>随机挑 84、94；最近簇 85、89</td><td><span class="chip flat">与随机持平</span></td></tr>
+        <tr><td class="g">A1</td><td>一好一坏二选一（能力测试）</td><td class="num">4</td><td>挑对 45/73</td><td>"有不改变的选项就选它"：46/73</td><td><span class="chip flat">无增益</span></td></tr>
+        <tr><td class="g">A1</td><td>替代最近簇</td><td class="num">4</td><td>test2：−4（p=0.73），−24（p=0.009）</td><td>最近簇</td><td><span class="chip bad">更差</span></td></tr>
+        <tr><td class="g">A1</td><td>加上相似度和近邻配对战绩</td><td class="num">5–6</td><td>相对最近簇 +1（p=1.0），+10（p=0.24）</td><td>证据投票：+1、+11</td><td><span class="chip flat">照抄证据</span></td></tr>
+        <tr><td class="g">A2</td><td>模型拿不准时问</td><td class="num">9</td><td>test4：+4（19 / 15，p=0.61）</td><td>随机挑 −4；Jev 相对随机 +8（p=0.26）</td><td><span class="chip flat">不显著</span></td></tr>
+        <tr><td class="g">A2</td><td>训练数据没见过的局面问</td><td class="num">10</td><td>前提不成立，没有调用</td><td>离群局面上模型损失 0.097，非离群 0.130</td><td><span class="chip flat">已停止</span></td></tr>
+        <tr><td class="g">A2</td><td>当价值模型（每个动作的 P(赢)）</td><td class="num">10</td><td>局势 AUC 0.787；挑动作 −6.3 到 −1.1</td><td>血量比 AUC 0.835；价值模型 +1.1</td><td><span class="chip bad">更差</span></td></tr>
+        <tr><td class="g">A2</td><td>同上，加 8 个相似示例</td><td class="num">10</td><td>AUC <b>0.857</b>；挑动作 +0.1</td><td>示例直接平均：AUC 0.771，挑动作 <b>+5.4</b></td><td><span class="chip good">会判局势</span> <span class="chip bad">不会挑动作</span></td></tr>
+        <tr><td class="g">A2</td><td>胜负判断当门控</td><td class="num">11</td><td>第一批 +5.42，<b>新一批 +0.06</b></td><td>不加门控直接按近邻偏离：+2.13</td><td><span class="chip bad">没有复现</span></td></tr>
+        <tr><td class="g">A4</td><td>开局"原地等 / 直接压"</td><td class="num">16</td><td>+6 / 720（P &gt; 0.7 时 −1）</td><td>同样 8 个邻居投票 +5；上限 +25</td><td><span class="chip flat">与 kNN 相同</span></td></tr>
+        <tr><td class="g">A4</td><td>中途"要输就切换"</td><td class="num">16</td><td>只测空间：按血量判断 −3 到 +10</td><td>一律切换 +7；kNN 门控 +15</td><td><span class="chip flat">空间约 1%</span></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="caption">数字来源：<code>results/iter2_report.md</code> 至 <code>iter16_report.md</code>，以及 <code>results/jev_value/report.md</code>。所有 Jev 调用都走 TypeSafe API，除第九轮 val 上有 75 次网络超时外，没有失败。</p>
+  <p class="caption">数字来源：<code>results/iter2_report.md</code> 至 <code>iter16_report.md</code>，以及 <code>results/jev_value/report.md</code>。所有 Jev 调用都走 TypeSafe API；除第九轮 val 上有 75 次网络超时外，没有失败。</p>
 </section>
 
 <section id="why">
@@ -205,112 +363,98 @@ footer { border-top: 1px solid var(--rule); padding-top: 18px; font-size: 13px; 
     <div class="card">
       <span class="k">选择空间太小</span>
       <h3>选项本身改变不了战局</h3>
-      <p>第二轮上限测试：在 12 个场景上，从随机程序里事后挑最好的，只能从 24 局提到 32 局。第六轮：每个场景单独挑对程序，最多 +24 到 +27 / 300 局。第十六轮：开局"等 / 压"的上限是 +25 / 720。候选之间差别小的时候，用什么挑都和随机一样。</p>
+      <p>A1 里，每个场景单独挑对程序，最多也只有 +24 到 +27 / 300 局；A4 里，开局"等 / 压"的上限是 +25 / 720。候选之间差别小的时候，用什么挑都和随机一样。</p>
     </div>
     <div class="card">
       <span class="k">分不清选项</span>
       <h3>对不同动作给出几乎一样的概率</h3>
-      <p>当价值模型时，13 个动作的 P(赢) 标准差只有 0.047，和真实优势的排序相关性只有 0.054。它读的是文字描述，而动作之间的差别藏在射程、冷却、站位的数值计算里。第十六轮里，它 P(压) &gt; 0.7 的那些场景，结果反而是 −1：概率越高，并不代表越可能选对。</p>
+      <p>当价值模型时，13 个动作的 P(赢) 标准差只有 0.047，和真实优势的排序相关性只有 0.054。动作之间的差别藏在射程、冷却、站位的数值计算里，从文字描述里读不出来。概率越高，也不代表越可能选对。</p>
     </div>
     <div class="card">
       <span class="k">有了证据就照抄</span>
       <h3>给了证据，它就跟着证据走</h3>
-      <p>第五轮在 test2 上，Jev 和证据投票只有 1 局翻盘、1 局丢盘不同；第十六轮，Jev +6，同样邻居直接投票 +5。示例让它不再比随机差，但它没有在示例之外加上自己的判断。</p>
+      <p>A1 第五轮：Jev 和证据投票在 600 局里只有 2 局结果不同。A4：Jev +6，同样邻居直接投票 +5。示例让它不再比随机差，但它没有在示例之外加上自己的判断。</p>
     </div>
     <div class="card">
       <span class="k">判断不能变成动作</span>
       <h3>看得出胜负，不等于知道该换什么</h3>
-      <p>Jev + 示例是全项目最好的胜负判断器。但第十一轮用它决定"什么时候冒险"，换一批新数据后收益是 +0.06。第十六轮也发现：中途已经落后的局，切不切都会输。SMAC 没有撤退和投降，判断出要输，也没有能换来胜局的动作。</p>
+      <p>它是全项目最好的胜负判断器，但用它决定"什么时候冒险"，换一批新数据后收益是 +0.06。已经落后的局，切不切都会输。SMAC 没有撤退和投降，判断出要输，也没有能换来胜局的动作。</p>
     </div>
     <div class="card">
       <span class="k">提升来自执行</span>
       <h3>胜负取决于每个单位、每一步的计算</h3>
-      <p>第十五、十六轮最大的两次提升（+65、+125），来自集火分配、避免溢出伤害、射程判断、按冷却拉扯。这些是对每个单位、每一步的精确计算，写成代码很自然，变成选择题就丢了。</p>
+      <p>A3 和 A4 两次最大的提升，来自集火分配、避免溢出伤害、射程判断、按冷却拉扯。这些写成代码很自然，变成考题或选项就丢了。A0 到 A2 的上限，被"考题答案"的表达能力卡住了。</p>
     </div>
     <div class="card">
       <span class="k">小差别测不出来</span>
       <h3>小提升需要几千局才能验证</h3>
-      <p>Jev 相对随机的 +8（第九轮），在 1000 局里的 p 只有 0.26。真想测出这么小的差别，需要几千局。而每次在 val 上挑一个看起来最好的变体，又会引入挑选偏差：第五轮在 val 上的 +10 到 +12，到 test2 上只剩 +1。</p>
+      <p>Jev 相对随机的 +8，在 1000 局里 p 只有 0.26。而每次在 val 上挑一个看起来最好的变体，又会引入挑选偏差：第五轮在 val 上的 +10 到 +12，到 test2 上只剩 +1。</p>
     </div>
   </div>
 </section>
 
 <section id="works">
   <h2>5 最有用的方法</h2>
-  <h3>大模型离线写微操程序，模拟器反馈，在线只执行</h3>
-  <ul>
-    <li><b>接口</b>（<code>code_policy.py</code>）：程序是 <code>def act(obs, mem) -&gt; {unit_id: action}</code>，每步调用一次。可以用 <code>dist</code>、<code>attack</code>、<code>move_toward</code>、<code>move_away</code>、<code>default_action</code> 等辅助函数。程序没有下令的单位，执行价值模型策略的动作。</li>
-    <li><b>沙箱</b>：不能 import，单步有 0.5 秒超时，抛异常或返回非法动作时退回默认动作，异常步数超过 10% 的程序不合格。对局中永远不复制模拟器状态。</li>
-    <li><b>现在的程序</b>（<code>kb/library/code/general_claude.py</code>）只做五件事：
-      <ol>
-        <li>集火分配：优先级 = 敌方输出 ÷ 剩余血量，记账避免溢出伤害，计入护甲和克制加成；</li>
-        <li>医疗艇治疗或后撤；</li>
-        <li>近战单位拦截冲向我方远程的自爆兵；</li>
-        <li>射程和速度占优时，冷却期间后撤拉扯；</li>
-        <li>连续 10 步双方都没掉血，就全军进攻，因为超时算输。</li>
-      </ol>
-    </li>
-  </ul>
+  <p>就是第 2 节里的 A3 和 A4：大模型离线写微操程序，用模拟器反馈迭代，在线只执行。现在的程序（<code>kb/library/code/general_claude.py</code>）做五件事：</p>
+  <ol>
+    <li>集火分配：优先级 = 敌方输出 ÷ 剩余血量，记账避免溢出伤害，计入护甲和克制加成；</li>
+    <li>医疗艇治疗或后撤；</li>
+    <li>近战单位拦截冲向我方远程的自爆兵；</li>
+    <li>射程和速度占优时，冷却期间后撤拉扯；</li>
+    <li>连续 10 步双方都没掉血，就全军进攻，因为超时算输。</li>
+  </ol>
 
-  <h3>第十六轮的迭代（train + train2，720 局，和上一版逐局配对）</h3>
+  <h3>A4 的迭代过程（train + train2，720 局，和上一版逐局配对）</h3>
   <div class="tablebox">
     <table>
       <thead><tr><th>版本</th><th>改动</th><th class="r">净胜</th><th class="r">胜场</th></tr></thead>
       <tbody>
-        <tr><td>g0</td><td>Grok 程序</td><td class="r">+25（对空程序）</td><td class="r">461</td></tr>
+        <tr><td>g0</td><td>Grok 程序（A3）</td><td class="r">+25（对 A2）</td><td class="r">461</td></tr>
         <tr><td>g2</td><td>集火分配，但用 <code>can_attack</code> 判断射程</td><td class="r">−100</td><td class="r">361</td></tr>
         <tr><td>g3</td><td>同一个分配器，改用真实射程判断</td><td class="r">+64</td><td class="r">525</td></tr>
         <tr><td>g4</td><td>近战单位也参与集火</td><td class="r">+8</td><td class="r">533</td></tr>
-        <tr><td><b>g8</b></td><td>打破僵持 + 对远程敌人也拉扯</td><td class="r">+15</td><td class="r"><b>548</b></td></tr>
+        <tr><td><b>g8</b></td><td>打破僵持 + 对远程敌人也拉扯（现在的程序）</td><td class="r">+15</td><td class="r"><b>548</b></td></tr>
         <tr><td>g13</td><td>残血后撤 + 更细的威胁估算</td><td class="r">+7（换种子后 −14）</td><td class="r">555</td></tr>
       </tbody>
     </table>
   </div>
-
-  <h3>这一轮最重要的几条经验</h3>
   <ul>
-    <li><b>先读模拟器源码。</b><code>can_attack</code> 只表示敌人在视野内，并不表示在射程内。接口文档写错了，Grok 被误导，只敢在"能打出击杀"时才下攻击令；我第一版也因此让全军开局就冲上去。改对这一处，就是 −100 和 +64 的差别。敌人的索敌规则、医疗艇只有部分兵种能打、超时算输，这些也都是从源码里读出来的。</li>
-    <li><b>逐步追踪输局。</b>比如 30 个机枪兵对 3 追猎者加 24 机枪兵，追踪发现默认策略把火力集中在高血量的追猎者上，敌方机枪兵没人管。光看分数和评审，看不出这种问题。</li>
-    <li><b>换种子确认。</b>挑选种子上 +7 到 +13 的小改动，换了种子之后变成了 −14（p=0.049）。小于 +15 / 720 的提升，一定要换种子确认。</li>
-    <li><b>反馈带宽比写手更重要。</b>Grok 一共调用 4 次，每次只能看到汇总分数。Claude 能读源码、追踪单局、每改一处就重测。两者用的是同一个接口和沙箱。</li>
-  </ul>
-
-  <h3>做价值模型时学到的（第 7–14 轮）</h3>
-  <ul>
-    <li>偏离默认要保守：现在的默认只在 1.8% 的决策点偏离。近邻平均偏离 21% 到 32%，在线就输了。</li>
-    <li>离线交叉验证好、在线却变差，出现过三次：第四轮蒸馏、第十二轮近邻平均、第十三轮历史特征。在线 val 才算数。</li>
-    <li>新策略会走到训练数据里没有的局面，所以要用它自己驱动补一轮 DAgger 标签，而且被评估的动作执行完后，要由基线策略接着打到结束。</li>
+    <li><b>先读模拟器源码。</b><code>can_attack</code> 的含义一旦弄错，就是 −100 和 +64 的差别。敌人的索敌规则、医疗艇只有部分兵种能打、超时算输，这些也都是从源码里读出来的。</li>
+    <li><b>逐步追踪输局。</b>比如追踪发现，默认策略把火力集中在高血量的追猎者上，敌方机枪兵没人管。光看分数看不出这种问题。</li>
+    <li><b>换种子确认。</b>小于 +15 / 720 的提升，换了种子可能就反过来（g13：+7 → −14）。</li>
+    <li><b>反馈带宽比写手更重要。</b>A3 的 Grok 只调用了 4 次，每次只能看到汇总分数；A4 能读源码、追踪单局、每改一处就重测。两者的接口和沙箱完全相同。</li>
   </ul>
 </section>
 
 <section id="tips">
   <h2>6 Jev 使用技巧与经验</h2>
   <ol class="tips">
-    <li><div><b>先测选择空间，再决定要不要用 Jev。</b><span>用一部分种子给每个场景挑最好的选项，再在另一部分种子上检验，这就是能拿到的真实空间。如果只有几个百分点，谁来挑都差不多，也就不用花 Jev 的调用量。</span></div></li>
-    <li><div><b>一定要和"同样信息的简单做法"比。</b><span>至少要比三个对照：同样候选里随机挑、同样示例直接投票或平均、什么都不改。Jev 只有同时赢过这三个，才算贡献了自己的判断。在本项目里，它多数时候和投票打平。</span></div></li>
-    <li><div><b>上下文学习是有效的：用确定性检索给 8 个示例。</b><span>按物理特征取最近的 8 个训练样例（不让模型自己挑），每个附上真实结果。胜负判断的 AUC 从 0.787 提高到 0.857，这个提升是显著的。每次调用大约 6.8k 输入 token。</span></div></li>
-    <li><div><b>用它判断局势，不要让它区分动作。</b><span>它能综合局面判断大势，但对不同动作给出的概率几乎一样。如果要区分的东西藏在数值计算里，比如射程、冷却、站位，就交给代码或价值模型。</span></div></li>
-    <li><div><b>不要指望置信度越高，判断越准。</b><span>它给出的概率看起来像是校准过的，但在本项目里，高置信度的子集并没有更准。如果想用阈值做门控，先在有真值标签的数据上检查"置信度和对错"的关系。</span></div></li>
-    <li><div><b>选择题的写法。</b><span>选项写成"标签 → 一句话说明它做什么"；选项数控制在 3 到 5 个，选项太多时概率会变得很尖；选出非法选项时，在合法选项里重新取最高的。这几条来自最早几轮的实验。</span></div></li>
-    <li><div><b>先离线验证，再上线。</b><span>先在有真值的决策点上离线比较（真值来自离线复制状态后，让每个动作打到结束），确认有效再上 val，最后在新测试集上只跑一次。第十轮就是在离线这一步发现前提不成立，没花一次调用就停了。</span></div></li>
-    <li><div><b>只让 Jev 做小范围偏离，旁边永远有兜底。</b><span>让 Jev 只在少数时刻偏离默认，同时保留一条和 Dummy 完全一致的路径。这样它判断错了也损失有限，方便单独衡量它的作用。</span></div></li>
+    <li><div><b>先测选择空间，再决定要不要用 Jev。</b><span>用一部分种子给每个场景挑最好的选项，再在另一部分种子上检验，这就是能拿到的真实空间。如果只有几个百分点，谁来挑都差不多。</span></div></li>
+    <li><div><b>一定要和"同样信息的简单做法"比。</b><span>至少要比三个对照：同样候选里随机挑、同样示例直接投票或平均、什么都不改。Jev 只有同时赢过这三个，才算贡献了自己的判断。</span></div></li>
+    <li><div><b>上下文学习有效：用确定性检索给 8 个示例。</b><span>按物理特征取最近的 8 个训练样例（不让模型自己挑），每个附上真实结果。胜负判断的 AUC 从 0.787 提高到 0.857，这个提升是显著的。每次调用约 6.8k 输入 token。</span></div></li>
+    <li><div><b>用它判断局势，不要让它区分动作。</b><span>它能综合局面判断大势，但对不同动作给出的概率几乎一样。要区分的东西藏在数值计算里时，交给代码或价值模型。</span></div></li>
+    <li><div><b>不要指望置信度越高，判断越准。</b><span>在本项目里，高置信度的子集并没有更准。如果想用阈值做门控，先在有真值的数据上检查置信度和对错的关系。</span></div></li>
+    <li><div><b>选择题的写法。</b><span>选项写成"标签 → 一句话说明它做什么"；选项数控制在 3 到 5 个，太多时概率会变得很尖；选出非法选项时，在合法选项里重新取最高的。</span></div></li>
+    <li><div><b>先离线验证，再上线。</b><span>先在有真值的决策点上离线比较，确认有效再上 val，最后在新测试集上只跑一次。第十轮就是在离线这一步发现前提不成立，没花一次调用就停了。</span></div></li>
+    <li><div><b>让 Jev 只做小范围偏离，旁边永远有兜底。</b><span>只在少数时刻偏离默认，并保留一条和 Dummy 完全一致的路径。这样判断错了损失有限，也方便单独衡量它的作用。</span></div></li>
     <li><div><b>Jev 更适合什么样的任务。</b><span>决策数量少、但每次都很关键；局势能用文字说清楚；而且有一个动作能把"判断能不能赢"直接变成收益，比如撤退、放弃、增援、要不要打这一波。完整星际里的宏观决策符合这些条件，SMAC 的小规模微操正好相反。</span></div></li>
   </ol>
 </section>
 
 <section id="method">
-  <h2>7 评测纪律</h2>
+  <h2>7 实验设置与评测纪律</h2>
   <ul>
-    <li>每个测试集只做一次最终判断。test2 到 test6 都已用过，下一次要生成新的测试集，id 前缀用没用过的字母（已用：g h t u v w x y）。</li>
-    <li>200 局、胜率五成左右时，标准误大约是 ±10 局。第三轮在 40 个场景上看不出效果；第四轮换成 600 局后，同一个库显出了 +44。</li>
-    <li>选拔和确认分开：选拔用一组种子，确认换一组新种子。确认阶段多次拦下了虚高的程序，比如 +5 → −4，+6 → −5，以及第十六轮的 +7 → −14。</li>
-    <li>每次改动后跑两项回归检查：<code>trace --actions-only</code> 确认 Dummy 的逐步动作没变，<code>gate</code> 确认官方图上没有任何一局从赢变输。</li>
+    <li><b>场景</b>：程序生成的战斗，随机兵种、5 种地形，每个种子会让出生点抖动。train（60）和 train2（120）用于训练，val（80）用于调参，test2 到 test6 各只用一次做最终判断。23 张官方图只作参考，因为最早的人工规则就是在这些图上挑出来的。</li>
+    <li><b>配对比较</b>：在同一场景、同一种子上逐局比较，统计翻盘数和丢盘数，用精确符号检验算 p 值。200 局、胜率五成左右时，标准误约 ±10 局，所以第三轮在 40 个场景上看不出效果，第四轮换成 600 局后，同一个库显出了 +44。</li>
+    <li><b>选拔和确认分开</b>：选拔用一组种子，确认换一组新种子。确认阶段多次拦下了虚高的结果，比如 +5 → −4、+6 → −5、+7 → −14。</li>
+    <li><b>回归检查</b>：每次改动后跑 <code>trace --actions-only</code>，确认 Dummy 在 345 局里的逐步动作没变；跑 <code>gate</code>，确认官方图上没有任何一局从赢变输。</li>
+    <li><b>测试集</b>：test2 到 test6 都已用过。下一次最终判断要生成新的测试集，id 前缀用没用过的字母（已用：g h t u v w x y）。</li>
   </ul>
 </section>
 
 <footer>
   <span>代码和数据：<code>/Users/wangzhi/Desktop/code/jev</code>。每轮的报告在 <code>results/iter*_report.md</code>，项目约定在 <code>AGENTS.md</code>。</span>
-  <span>第十六轮的开发工具：<code>results/_dev16.py</code>（配对比较）、<code>results/dev16/trace.py</code>（逐步追踪）、<code>losses.py</code>（输局分类）、<code>headroom.py</code>（选择空间）、<code>jev_choice.py</code>（Jev 二选一测试）。</span>
+  <span>各层代码：A0 <code>jev_smac_policy.py</code>（考题和走位原语）；A1 <code>tactic_dsl.py</code>、<code>forge.py</code>；A2 <code>search.py</code>、<code>value.py</code>；A3/A4 <code>code_policy.py</code>、<code>kb/library/code/</code>。第十六轮的工具在 <code>results/_dev16.py</code> 和 <code>results/dev16/</code>。</span>
 </footer>
 
 </div>
