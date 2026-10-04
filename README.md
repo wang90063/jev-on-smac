@@ -22,6 +22,7 @@ Only contested scenarios are kept: the generator drops fights the baseline wins 
 | Method | Win rate (test6) | 23 official SMAC maps¹ |
 |---|---:|---:|
 | Scripted baseline (attack-move) | 47.5% | 53 / 115 |
+| Hand-written rules (4 rules, tuned on the official maps) | 49.0% | *92 / 115* |
 | Value-guided macro-action switching | 51.9% | 51 / 115 |
 | LLM program synthesis, outcome feedback (Grok-4.7) | 59.5% | 62 / 115 |
 | **LLM program synthesis, source + trace feedback (Claude)** | **72.0%** | **65 / 115** |
@@ -33,9 +34,9 @@ Paired comparisons (same scenario, same seed; exact sign test):
 | Claude program vs Grok program | 170 | 45 | **+125** | < 0.001 |
 | Claude program vs scripted baseline | 305 | 60 | **+245** | < 0.001 |
 
-<sub>¹ Reference only. The official maps were used to hand-tune early rules, so they are not a clean test.</sub>
+<sub>¹ Reference only. The hand-written rules were tuned on these 23 maps, so they are not a clean test. See finding 4.</sub>
 
-## Three counter-intuitive findings
+## Four counter-intuitive findings
 
 **1. The feedback channel matters more than the model that writes the code.**
 The last two rows share the same interface, sandbox, and fallback; only the feedback differs.
@@ -54,6 +55,12 @@ In round 5, Jev and the evidence vote differed on just 2 of 600 battles.
 
 **3. Small wins on the selection seeds are mostly noise.**
 Variant g13 looked **+7** better on the seeds used to pick it. On fresh seeds it was **−14** (p = 0.049). Every improvement under ~2% of the selection battles has to be re-confirmed on seeds that played no part in choosing it.
+
+**4. The best score on the official maps is an overfit, not a skill.**
+The four hand-written rules score **92 / 115** on the 23 official SMAC maps: 39 flips and **zero** losses against the baseline.
+They were picked by looking at those same maps. On 1,000 freshly generated battles they are only +15 over the baseline (49.0% vs 47.5%, p = 0.14, not significant).
+The synthesized program goes the other way: 65 / 115 on the official maps and 72.0% on unseen battles. It never saw the official maps during development.
+That is why every claim in this project rests on frozen, procedurally generated test sets, and the official maps are reported for reference only.
 
 ## Where Jev was tried
 
