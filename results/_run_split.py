@@ -2,6 +2,7 @@ import sys, time
 from pathlib import Path
 ROOT = Path('/Users/wangzhi/Desktop/code/jev')
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / 'smaclite'))
 from macsmac.env import StarCraft2Env
 from macsmac.snapshot import snapshot

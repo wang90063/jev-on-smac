@@ -3,12 +3,7 @@
 __pycache__/
 *.pyc
 *.pid
-laya-mlx/
-laya-typed-decisions-mlx/
-models/
-third_party/
-qwen-rlcd/
-*.download.log
-download_hf.stdout.log
+# model weights, downloads, third-party checkouts
+local/
 results/*.log
 results/scenarios/maps/

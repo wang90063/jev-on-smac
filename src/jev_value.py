@@ -7,9 +7,9 @@ each action, as two-way choices with probabilities. We compare with the truth
 and with the trained value model on the same points. No games are played for
 scoring; the val episodes are only replayed to recover each moment's state.
 
-    python jev_value.py states     # local: replay val, store states for the labelled points
-    python jev_value.py ask        # TypeSafe API: ~300 calls
-    python jev_value.py score      # local: compare
+    python src/jev_value.py states     # local: replay val, store states for the labelled points
+    python src/jev_value.py ask        # TypeSafe API: ~300 calls
+    python src/jev_value.py score      # local: compare
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ from typing import Any, Dict, List
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault("JEV_QUIET", "1")
 

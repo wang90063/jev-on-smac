@@ -1,6 +1,6 @@
 """Mid-fight 'switch to push' headroom over g8, with a luck control. No Jev calls."""
 import sys, json, collections
-sys.path.insert(0, '.'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'results')
 import _dev16 as D
 
 names = ['g8', 'sw10', 'sw20', 'sw30', 'luck20']

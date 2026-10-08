@@ -5,7 +5,7 @@ then score that pick on seeds B. Swap A and B. Compare with the default on the s
     python results/dev16/headroom.py g8 g7 g10 v_aggr v_nokite v_nofocus
 """
 import sys, json, collections
-sys.path.insert(0, '.'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'results')
 import _dev16 as D
 
 names = sys.argv[1:]

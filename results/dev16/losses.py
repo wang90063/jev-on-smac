@@ -1,6 +1,6 @@
 """List fights a program loses: python results/dev16/losses.py <prog> [base] -- shows leftover kinds."""
 import sys, json, hashlib, collections
-sys.path.insert(0, '.'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'results')
 import scenarios as SC, _dev16 as D
 h = lambda p: D._h(D._src(p))
 rows = [json.loads(l) for l in open('results/dev16/cache2.jsonl')]

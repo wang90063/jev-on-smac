@@ -4,7 +4,7 @@ Labels come from offline rollouts (search.py rollout): at a state the base
 policy B reached, each action runs for 5 steps and then B plays to the end.
 The model sees only physical features, so online play never clones state.
 
-    python value.py train      # fit on results/search/rollout_train.json, grouped CV report
+    python src/value.py train      # fit on results/search/rollout_train.json, grouped CV report
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault("JEV_QUIET", "1")
 

@@ -4,7 +4,7 @@ A scenario is a spec (unit mix per side, terrain, spawn layout, limit).
 `materialize(spec, seed)` writes a map JSON with spawn jitter so different
 seeds are different fights. Specs never carry an official map name.
 
-    python scenarios.py build     # generate, filter, split -> results/scenarios/{train,test}.json
+    python src/scenarios.py build     # generate, filter, split -> results/scenarios/{train,test}.json
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "smaclite"))
 os.environ.setdefault("JEV_QUIET", "1")
 

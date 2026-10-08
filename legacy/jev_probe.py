@@ -18,8 +18,9 @@ import sys
 from multiprocessing import Pool
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "results"))
 os.environ.setdefault("JEV_QUIET", "1")
 

@@ -3,6 +3,10 @@
 
 from __future__ import annotations
 
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "src"))  # core modules live in src/
+
 import argparse
 import json
 import math
@@ -19,10 +23,10 @@ from central_micro import CentralMicro
 import numpy as np
 from gymnasium.wrappers import TimeLimit
 
-ROOT = Path(__file__).resolve().parent
-MAPS_DIR = ROOT / "maps"
+ROOT = Path(__file__).resolve().parents[1]
+MAPS_DIR = ROOT / "legacy" / "maps"
 RESULTS_DIR = ROOT / "results"
-LAYA_WEIGHTS = ROOT / "laya-mlx"
+LAYA_WEIGHTS = ROOT / "local" / "laya-mlx"
 # The git clone lives at ROOT/smaclite and would shadow the inner package.
 import sys
 _pkg_root = ROOT / "smaclite"

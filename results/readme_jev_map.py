@@ -1,11 +1,11 @@
-"""Draw the 'Where Jev was tried' map for the README -> report/jev_map.svg
+"""Draw the 'Where Jev was tried' map for the README -> docs/jev_map.svg
 
     python results/readme_jev_map.py
 """
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-OUT = Path(__file__).resolve().parent.parent / "report" / "jev_map.svg"
+OUT = Path(__file__).resolve().parent.parent / "docs" / "jev_map.svg"
 W = 960
 FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 INK, MUTED, RULE = "#1f2328", "#59636e", "#d0d7de"

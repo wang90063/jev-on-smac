@@ -1,6 +1,6 @@
 """Log g8's state at steps 10/20/30 on train+train2 seeds 1-4 -> results/dev16/states_g8.json"""
 import sys, os, json
-sys.path.insert(0, '.'); sys.path.insert(0, 'smaclite'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'smaclite'); sys.path.insert(0, 'results')
 os.environ.setdefault("JEV_QUIET", "1")
 from multiprocessing import Pool
 import scenarios as SC, code_policy as CP, _dev16 as D

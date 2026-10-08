@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 ACTION_NAMES = {0: "noop", 1: "stop", 2: "N", 3: "S", 4: "E", 5: "W"}
 MOVE_DELTA = {"N": (0.0, 2.0), "S": (0.0, -2.0), "E": (2.0, 0.0), "W": (-2.0, 0.0)}
-KB_PATH = Path(__file__).resolve().parent / "kb" / "smac_micro.txt"
+KB_PATH = Path(__file__).resolve().parents[1] / "kb" / "smac_micro.txt"
 _KB_PREFIX = KB_PATH.read_text() if KB_PATH.is_file() else ""
 TACTIC_CRITERIA = {
     "focus": "Allies and enemies are the same ranged unit (marines vs marines, including 5v6). Everyone shoots ONE target. NOT for 2v1 spine. NOT for stalkers vs zealots.",

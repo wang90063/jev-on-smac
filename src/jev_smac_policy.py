@@ -5543,7 +5543,7 @@ class OnlinePolicy(LibraryPolicy):
         import json as _json
         from pathlib import Path as _Path
 
-        lib_dir = _Path(__file__).resolve().parent / "kb" / "library"
+        lib_dir = _Path(__file__).resolve().parents[1] / "kb" / "library"
         lib_file, ev_file = self.LIBRARIES[library]
         lib = [e for e in _json.loads((lib_dir / lib_file).read_text()) if e.get("source") != "hand"]
         clusters = _json.loads((lib_dir / "clusters.json").read_text())
@@ -5669,7 +5669,7 @@ class JevSwitchPolicy(ValueOnlinePolicy):
 
             import numpy as np
 
-            base = _Path(__file__).resolve().parent / "results" / "search"
+            base = _Path(__file__).resolve().parents[1] / "results" / "search"
             X, Q = [], []
             for name in ("rollout_train.json", "rollout_train_dagger.json", "rollout_train2_B.json", "rollout_train2_dagger.json"):
                 path = base / name
@@ -5798,7 +5798,7 @@ class WrittenOnlinePolicy:
 
         import code_policy as CP
 
-        src = (_Path(__file__).resolve().parent / "kb" / "library" / "code" / program).read_text()
+        src = (_Path(__file__).resolve().parents[1] / "kb" / "library" / "code" / program).read_text()
         self.inner = CP.CodeActionPolicy(src, tag=tag)
         self.tag = tag
 
@@ -5814,7 +5814,7 @@ class CodePolicy:
         import json as _json
         from pathlib import Path as _Path
 
-        root = _Path(__file__).resolve().parent
+        root = _Path(__file__).resolve().parents[1]
         lib_path = root / "kb" / "library" / "code_programs.json"
         self.lib = _json.loads(lib_path.read_text()) if lib_path.is_file() else []
         self.clusters = _json.loads((root / "kb" / "library" / "clusters.json").read_text())

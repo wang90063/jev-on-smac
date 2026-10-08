@@ -7,8 +7,8 @@ train scenario so each entry knows where it transfers.
 
 The simulator is used only here, offline. Nothing in play clones state.
 
-    python forge.py forge      # needs the LLM gateway API (run outside sandbox, no proxy)
-    python forge.py transfer   # local only
+    python src/forge.py forge      # needs the LLM gateway API (run outside sandbox, no proxy)
+    python src/forge.py transfer   # local only
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ from multiprocessing import Pool
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "results"))
 sys.path.insert(0, str(ROOT / "smaclite"))

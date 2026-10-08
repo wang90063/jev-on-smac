@@ -12,8 +12,9 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "qwen-rlcd"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "local" / "qwen-rlcd"))
+sys.path.insert(0, str(ROOT / "src"))
 
 from smac_laya_policy import compact_state, living, hypot, execute_squad, execute_cloze, execute_plan, pick_default_target, pick_plan_target, _guns_on, labels_from_avail, attack_action, move_toward_action, move_away_action, _group_away_lab  # noqa: E402
 

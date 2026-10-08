@@ -1,6 +1,8 @@
 import time, json, sys
 from pathlib import Path
 sys.path.insert(0, "/Users/wangzhi/Desktop/code/jev")
+sys.path.insert(0, "/Users/wangzhi/Desktop/code/jev/src")
+sys.path.insert(0, "/Users/wangzhi/Desktop/code/jev/src")
 from macsmac.env import StarCraft2Env
 from macsmac.snapshot import snapshot
 from macsmac.bench import _closest_policy, _script_policy

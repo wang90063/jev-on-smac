@@ -6,8 +6,8 @@ export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 export HF_HUB_DISABLE_XET=1
 
 REPO="${1:-aac6fef/laya-typed-decisions-mlx}"
-DEST="${2:-./$(basename "$REPO")}"
-LOG="./$(basename "$DEST").download.log"
+DEST="${2:-./local/$(basename "$REPO")}"
+LOG="./local/$(basename "$DEST").download.log"
 
 mkdir -p "$DEST"
 

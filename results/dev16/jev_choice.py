@@ -13,7 +13,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-sys.path.insert(0, '.'); sys.path.insert(0, 'results'); sys.path.insert(0, 'results/dev16')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'results'); sys.path.insert(0, 'results/dev16')
 import choice_knn as CK  # noqa: E402
 
 OUT = Path('results/dev16/jev_choice.json')

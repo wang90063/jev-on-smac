@@ -19,7 +19,7 @@ def load_typesafe_key() -> str:
     if key:
         return key
     for path in (
-        Path(__file__).resolve().parent / ".typesafe_key",
+        Path(__file__).resolve().parents[1] / ".typesafe_key",
         Path.home() / ".typesafe" / "api_key",
         Path.home() / ".config" / "typesafe" / "api_key",
     ):

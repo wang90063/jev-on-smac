@@ -5,7 +5,7 @@ policy for HORIZON steps and scored; the best one runs for DECIDE steps.
 This clones simulator state, so it is an offline measuring stick and a
 teacher for distillation only. Nothing online may do this.
 
-    python search.py train        # ceiling + decision log on train, seeds 1-5
+    python src/search.py train        # ceiling + decision log on train, seeds 1-5
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from multiprocessing import Pool
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "smaclite"))
 os.environ.setdefault("JEV_QUIET", "1")

@@ -1,6 +1,6 @@
 """Print a compact step-by-step story of one fight: python results/dev16/trace.py <prog|empty> <split> <id> <seed> [every]"""
 import sys, os
-sys.path.insert(0, '.'); sys.path.insert(0, 'smaclite'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'smaclite'); sys.path.insert(0, 'results')
 os.environ.setdefault("JEV_QUIET", "1")
 import scenarios as SC, code_policy as CP, _dev16 as D
 from macsmac.snapshot import snapshot

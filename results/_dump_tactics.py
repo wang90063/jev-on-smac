@@ -5,7 +5,7 @@ from pathlib import Path
 from collections import Counter
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / "smaclite")]
+sys.path[:0] = [str(ROOT), str(ROOT / "src"), str(ROOT / "smaclite")]
 os.environ["JEV_QUIET"] = "1"
 
 from macsmac.env import StarCraft2Env

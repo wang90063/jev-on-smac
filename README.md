@@ -5,7 +5,7 @@
 > **What actually worked:** a ~150-line Python micro program, written by an LLM that read the simulator's source code. It raised the win rate on 1,000 unseen battles from **47.5% to 72.0%**.
 
 <p align="center">
-  <img src="report/fight.gif" alt="Same battle, two policies: the scripted baseline loses; the synthesized program wins with all four Stalkers alive" width="100%">
+  <img src="docs/fight.gif" alt="Same battle, two policies: the scripted baseline loses; the synthesized program wins with all four Stalkers alive" width="100%">
 </p>
 <p align="center"><sub>
 Unseen test battle <code>y0810</code>, seed 4: 4 Stalkers (blue) vs 5 Hydralisks (red), with a wall and a single gap.
@@ -91,7 +91,7 @@ The baselines, defined once:
 It cleared neither bar anywhere.
 
 <p align="center">
-  <img src="report/jev_map.svg" alt="Map of the nine places Jev was tried: for each, what Jev saw, its result, and the baselines with the same information" width="100%">
+  <img src="docs/jev_map.svg" alt="Map of the nine places Jev was tried: for each, what Jev saw, its result, and the baselines with the same information" width="100%">
 </p>
 
 The nine questions fall into two groups:
@@ -113,7 +113,7 @@ The nine questions fall into two groups:
 | ⑧ | 11 | rule picked on batch 1, rerun on a fresh batch 2 (max possible: 37.5 and 27.1) | `results/iter11_report.md` |
 | ⑨ | 4 | 73 train scenarios where the best and worst tactic differ by ≥ 3 wins of 5 | `results/iter4_report.md` |
 
-The technical report (in Chinese) has all 12 experiments: [results/tech_report.html](results/tech_report.html).
+The technical report (in Chinese) has all 12 experiments: [docs/tech_report.html](docs/tech_report.html).
 
 </details>
 
@@ -166,14 +166,20 @@ Environment: [SMAClite](smaclite/) (a lightweight Python re-implementation of SM
 
 | Path | What it is |
 |---|---|
-| `code_policy.py` | Sandbox and API for LLM-written `act(obs, mem)` programs |
+| `src/` | Core modules (flat imports; scripts add `src/` to `sys.path`) |
+| `src/code_policy.py` | Sandbox and API for LLM-written `act(obs, mem)` programs |
+| `src/jev_smac_policy.py` | Online policies, motor primitives, exam menus (A0–A4) |
+| `src/tactic_dsl.py`, `src/forge.py` | Tactic DSL and offline forging (A1, A3) |
+| `src/search.py`, `src/value.py` | Offline rollouts and the value model (A2) |
+| `src/scenarios.py` | Procedural scenario generator; frozen train / val / test splits |
+| `src/jev_api.py`, `src/jev_value.py` | Jev client and the Jev-as-judge experiments |
 | `kb/library/code/` | The programs: `general_claude.py` (current), `general.py` (Grok) |
-| `jev_smac_policy.py` | Online policies, motor primitives, exam menus (A0–A4) |
-| `tactic_dsl.py`, `forge.py` | Tactic DSL and offline forging (A1, A3) |
-| `search.py`, `value.py` | Offline rollouts and the value model (A2) |
-| `scenarios.py` | Procedural scenario generator; frozen train / val / test splits |
-| `results/iter*_report.md` | One report per round |
-| `results/tech_report.html` | Full technical report |
+| `macsmac/` | SMAClite wrapper: env, maps, state snapshot, benchmark |
+| `smaclite/` | The simulator (git submodule) |
+| `results/` | Evaluation scripts (`_regress.py`, `_dev16.py`), per-round reports `iter*_report.md`, raw logs |
+| `docs/` | Technical report, README figures |
+| `legacy/` | Early experiments (local LLM policies, SC2 runs); not used by the current system |
+| `local/` | Git-ignored: model weights and downloads |
 | `AGENTS.md` | Project conventions and evaluation rules |
 
 ## If you want to use a judgment model like Jev

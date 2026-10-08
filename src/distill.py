@@ -6,7 +6,7 @@ leaf, the macro with the highest total score over the leaf's samples; splits
 minimise the regret of that pick. Each root-to-leaf path is one DSL rule, so
 the tree is a program: physics conditions only, no map names.
 
-    python distill.py tree          # fit depths 2-4, write kb/library/distilled_programs.json
+    python src/distill.py tree          # fit depths 2-4, write kb/library/distilled_programs.json
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault("JEV_QUIET", "1")
 

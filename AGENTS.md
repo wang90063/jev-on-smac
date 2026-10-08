@@ -1,6 +1,6 @@
 # 改战术
 
-走位由代码执行，代码有两种来源：人写的走位原语（`jev_smac_policy.py`），以及大模型（Grok 或 Claude）写、在沙箱里运行的微操程序（`code_policy.py`）。战术分两层：离线锻造负责创造，在线负责执行。同一条条件每张图都用，不要这张图开、那张图关。条件只用速度、射程、人数、隘口、血量这类物理量，不写地图名。对局中永远不复制模拟器状态。
+走位由代码执行，代码有两种来源：人写的走位原语（`src/jev_smac_policy.py`），以及大模型（Grok 或 Claude）写、在沙箱里运行的微操程序（`src/code_policy.py`）。战术分两层：离线锻造负责创造，在线负责执行。同一条条件每张图都用，不要这张图开、那张图关。条件只用速度、射程、人数、隘口、血量这类物理量，不写地图名。对局中永远不复制模拟器状态。
 
 ## 在线默认：`WrittenOnlinePolicy` + Claude 写的程序（第十六轮起）
 
@@ -26,7 +26,7 @@
 ### 历任默认（保留作对照）
 
 - Grok 程序（第 15 轮）：`kb/library/code/general.py`，由 Grok-4.7 经 4 轮模拟器反馈写成；`_regress.py` 里用 `written_online_grok` 调用。test6 上 595/1000。
-- `ValueOnlinePolicy`（第 8–14 轮）：每 5 步决定一次。默认执行最近簇的程序，价值模型（`kb/library/value_model.pkl`）预测某个宏动作的优势超过 τ=0.1 时才换成它。训练标签来自离线复制状态得到的完整对局回报（`search.py rollout`）。
+- `ValueOnlinePolicy`（第 8–14 轮）：每 5 步决定一次。默认执行最近簇的程序，价值模型（`kb/library/value_model.pkl`）预测某个宏动作的优势超过 τ=0.1 时才换成它。训练标签来自离线复制状态得到的完整对局回报（`src/search.py rollout`）。
 - `OnlinePolicy`（第 5–7 轮）：第三轮战术库 + 最近簇 + `none` 兜底。
 - Dummy：每道考题都选代码默认的 Jev 路径，是所有比较的基线。
 
@@ -46,9 +46,9 @@
      - 用 `results/dev16/trace.py` 逐步追踪单局，用 `results/dev16/losses.py` 按剩余兵种列出输局；
      - 每次只改一处。挑选用种子 1–4，确认用没参与挑选的种子 5–8，然后上 val，最后在没用过的测试集上只跑一次。
      - 第十六轮的教训：在挑选种子上 +7 到 +13 的小改动，换了种子之后变成了 −14。小于 +15 的提升，一定要换种子确认。
-   - 第十五轮的做法：`forge.py code_global`，由 `FORGE_MODEL` 指定的模型（Grok-4.7，推理强度 medium）每轮写 2 个程序，最多 4 轮，两次调用之间至少隔 2 分钟。分簇版本 `forge.py code` 调用量大，暂不使用。
-2. **战术程序**（`tactic_dsl.py`、`forge.py cluster` / `outcome`）：是"物理条件 → 考题选项"的规则列表，按场景簇选拔，再用新种子确认后入库。新的走位原语只在 `_open_menu` 下出现，不能改变 Dummy 的行为。
-3. **价值模型**（`search.py rollout`、`value.py`）：离线标签允许复制模拟器状态，在线绝不允许。评估新模型时，以在线 val 为准，不以离线交叉验证为准。离线交叉验证好、在线却变差的情况已经出现过三次。
+   - 第十五轮的做法：`src/forge.py code_global`，由 `FORGE_MODEL` 指定的模型（Grok-4.7，推理强度 medium）每轮写 2 个程序，最多 4 轮，两次调用之间至少隔 2 分钟。分簇版本 `src/forge.py code` 调用量大，暂不使用。
+2. **战术程序**（`src/tactic_dsl.py`、`src/forge.py cluster` / `outcome`）：是"物理条件 → 考题选项"的规则列表，按场景簇选拔，再用新种子确认后入库。新的走位原语只在 `_open_menu` 下出现，不能改变 Dummy 的行为。
+3. **价值模型**（`src/search.py rollout`、`src/value.py`）：离线标签允许复制模拟器状态，在线绝不允许。评估新模型时，以在线 val 为准，不以离线交叉验证为准。离线交叉验证好、在线却变差的情况已经出现过三次。
 
 ## 评测
 

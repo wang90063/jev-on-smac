@@ -1,6 +1,6 @@
 """Wait (g8) vs push (v_aggr) at the start: leave-one-scenario-out kNN vote on composition features."""
 import sys, json, collections, math
-sys.path.insert(0, '.'); sys.path.insert(0, 'results')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src'); sys.path.insert(0, 'results')
 import _dev16 as D, scenarios as SC
 
 KINDS = ['MARINE', 'MARAUDER', 'STALKER', 'ZEALOT', 'COLOSSUS', 'ZERGLING', 'BANELING', 'HYDRALISK', 'MEDIVAC']

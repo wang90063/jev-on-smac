@@ -1,14 +1,14 @@
 """Side-by-side GIF of one test6 fight for the README: baseline vs the online default.
 
     python results/readme_gif.py [scenario_id] [seed]      # default y0810 seed 4
-    -> report/fight.gif
+    -> docs/fight.gif
 """
 import os
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "smaclite")); sys.path.insert(0, str(ROOT / "results"))
+sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "src")); sys.path.insert(0, str(ROOT / "smaclite")); sys.path.insert(0, str(ROOT / "results"))
 os.environ.setdefault("JEV_QUIET", "1")
 
 from PIL import Image, ImageDraw, ImageFont  # noqa: E402
@@ -141,7 +141,7 @@ def main():
             canvas.paste(r[min(i, len(r) - 1)], (x, 0))
             x += r[0].width + gap
         out.append(canvas.convert("P", palette=Image.ADAPTIVE, colors=64))
-    dest = ROOT / "report" / "fight.gif"
+    dest = ROOT / "docs" / "fight.gif"
     dest.parent.mkdir(exist_ok=True)
     out[0].save(dest, save_all=True, append_images=out[1:], duration=[160] * (n - 1) + [2500], loop=0, optimize=True)
     print(dest, f"{dest.stat().st_size / 1e6:.2f} MB", out[0].size, len(out), "frames")
