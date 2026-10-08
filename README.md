@@ -118,7 +118,21 @@ Why it fails:
 </p>
 
 Why:
-- **The headroom is small.** Even a perfect pick in hindsight is worth only +25 / 720 battles (3.5%) for hold-or-push. For choosing from the tactic program library it is +24 to +27 / 300.
+- **The headroom is small.** Even a perfect pick in hindsight is worth only +25 / 720 battles (3.5%) for hold-or-push. For choosing from the tactic program library it is +24 to +27 / 300. There are two reasons:
+  1. **In most battles, every option leads to the same result.**
+     - At 2,717 recorded decision points, we replayed all 13 options to the end. Only 284 points (10%) had *any* option that changed win into loss or back.
+     - Switching from hold to push at step 20 changed the result in 43 of 720 battles (25 won, 18 lost). The other 677 ended the same way.
+     - In round 2, picking the best of the random tactic programs per scenario, in hindsight, only raised 24 wins to 32.
+  2. **What decides the fight is not on the menu.** The outcome depends on the two armies and on per-step execution: who shoots whom, and when to step back. Every option runs the same execution code, so choosing between options never touches what matters. On the same 720 battles:
+
+     | Change | Wins | vs the full program |
+     |---|---:|---:|
+     | Full program (focus fire + kiting + hold) | 548 | – |
+     | Push instead of hold (the choice Jev was asked to make) | 521 | −27 |
+     | Turn off kiting | 505 | −43 |
+     | Turn off focus fire | 494 | −54 |
+
+     Switching off one piece of execution costs more than the tactic choice. By contrast, replacing attack-move with the whole execution program was worth +245 of 1,000 unseen battles (test6).
 - **Jev follows the evidence.** When we gave it similar battles, it agreed with the plain vote (② differed on 2 / 600). When we didn't, it did no better than random (④).
 
 ## Q3. Does Jev generalize to unseen battles?
