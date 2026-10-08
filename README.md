@@ -118,21 +118,25 @@ Why it fails:
 </p>
 
 Why:
-- **The headroom is small.** Even a perfect pick in hindsight is worth only +25 / 720 battles (3.5%) for hold-or-push. For choosing from the tactic program library it is +24 to +27 / 300. There are two reasons:
-  1. **In most battles, every option leads to the same result.**
-     - At 2,717 recorded decision points, we replayed all 13 options to the end. Only 284 points (10%) had *any* option that changed win into loss or back.
-     - Switching from hold to push at step 20 changed the result in 43 of 720 battles (25 won, 18 lost). The other 677 ended the same way.
-     - In round 2, picking the best of the random tactic programs per scenario, in hindsight, only raised 24 wins to 32.
-  2. **What decides the fight is not on the menu.** The outcome depends on the two armies and on per-step execution: who shoots whom, and when to step back. Every option runs the same execution code, so choosing between options never touches what matters. On the same 720 battles:
+- **Choosing a tactic has almost nothing to gain. The gain is in per-unit actions, and that is where Jev can't act.**
+  - *Headroom* here means: if you always picked the best option in hindsight, how many more battles would you win?
+    - For hold-or-push, only +25 / 720 battles (3.5%).
+    - For choosing from the tactic program library, +24 to +27 / 300.
+    - Even a perfect chooser could not do much better, so it doesn't matter whether Jev, a vote, or a coin picks.
+  - **Why so little: in most battles, every option ends the same way.**
+    - At 2,717 recorded decision points, we replayed all 13 options to the end. Only 284 points (10%) had *any* option that changed win into loss or back.
+    - Switching from hold to push at step 20 changed the result in 43 of 720 battles (25 won, 18 lost). The other 677 ended the same way.
+  - **What does change the outcome is per-step execution: who shoots whom, and when to step back.** Every tactic option runs the same execution code underneath, so picking between options never touches it. On the same 720 battles:
 
-     | Change | Wins | vs the full program |
-     |---|---:|---:|
-     | Full program (focus fire + kiting + hold) | 548 | – |
-     | Push instead of hold (the choice Jev was asked to make) | 521 | −27 |
-     | Turn off kiting | 505 | −43 |
-     | Turn off focus fire | 494 | −54 |
+    | Change | Wins | vs the full program |
+    |---|---:|---:|
+    | Full program (focus fire + kiting + hold) | 548 | – |
+    | Push instead of hold (the choice Jev was asked to make) | 521 | −27 |
+    | Turn off kiting | 505 | −43 |
+    | Turn off focus fire | 494 | −54 |
 
-     Switching off one piece of execution costs more than the tactic choice. By contrast, replacing attack-move with the whole execution program was worth +245 of 1,000 unseen battles (test6).
+    Replacing attack-move with the whole execution program was worth **+245 of 1,000** unseen battles (test6). That is about 10× the tactic choice.
+  - **So the room is at the action level, the level of Q1, and Jev can't fill it there.** Focus fire is a joint assignment across units, and Jev's per-unit questions are answered independently. The right action depends on exact range, cooldown, and distance, and Jev barely tells actions apart. Code does both directly, which is why the approach that worked was having an LLM write the code.
 - **Jev follows the evidence.** When we gave it similar battles, it agreed with the plain vote (② differed on 2 / 600). When we didn't, it did no better than random (④).
 
 ## Q3. Does Jev generalize to unseen battles?
