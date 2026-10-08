@@ -5,9 +5,9 @@
 >
 > | Question | Answer |
 > |---|---|
-> | 1. Can Jev act per unit, like an RL actor? | **No.** It produces legal actions and wins the easiest map, but it never beat attack-move. A public SC2 project got 3 / 105. |
-> | 2. Can it pick tactics instead? | **It can pick, but no better than chance.** In 6 setups, a random pick, a lookup, or a vote over the same information did as well. |
-> | 3. Does it generalize to unseen battles? | **No.** Its one big gain was on the maps where its options were written, and random answers got almost the same there. On unseen test sets it never significantly beat the default. |
+> | 1. Can Jev act per unit, like an RL actor? | **No.** Choosing each unit's action every step, it won 0 of 35 battles, the same as random legal actions. Attack-move won 25. A public SC2 project got 3 / 105. |
+> | 2. Can it pick tactics instead? | **It can pick, but it beat a same-information control only once.** In 5 of 6 setups, a random pick, a lookup, or a vote over the same information did as well. The exception: +17 / 115 over random answers on the official maps, where its evidence was recorded. |
+> | 3. Does it generalize to unseen battles? | **No.** On unseen battles that edge shrank to +7 / 400 (p = 0.46), and its best setup tied the hand rules (196 vs 196). Elsewhere it never significantly beat the default. |
 > | **Is Jev useful for micro?** | **Only as a judge, and in micro that judgment doesn't win battles.** It was the best predictor of *"will we win?"* (AUC 0.874). What actually worked: an LLM writes the micro **code**. Win rate on 1,000 unseen battles went from **47.5% to 72.0%**. |
 
 <p align="center">
@@ -59,59 +59,66 @@ A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an a
 **Environment.** [SMAClite](smaclite/), a Python re-implementation of SMAC that runs without StarCraft II. One step = 8 ticks ≈ 0.5 s, and a timeout counts as a loss. The game waits for the policy, so latency costs wall-clock time, not wins.
 
 **Battles.**
-- **Main evaluation:** procedurally generated scenarios with frozen splits: train (60), train2 (120), val (80), and test2–test6 (200 each).
+- **Main evaluation:** procedurally generated scenarios with frozen splits: train (60), train2 (120), val (80), and test2–test6 (200 each). Each scenario is played with 5 seeds.
   - Each test set is run **exactly once**.
-  - The generator drops fights the baseline wins 5/5, and fights that both the baseline and a random policy lose 5/5. Every remaining fight is contested.
-- **Reference only:** the 23 official SMAC maps × 5 seeds = 115 battles. Some rules were tuned on these maps, so they are not a clean test (see Q3).
+  - The generator drops fights that attack-move wins 5/5, and fights that both attack-move and a random policy lose 5/5. Every remaining fight is contested.
+- **Reference only:** the 23 official SMAC maps × 5 seeds = 115 battles. The hand rules and the evidence inside Jev's exam questions (④) were both built by looking at these maps, so for those two systems the official maps are in-sample.
 
 **Statistics.** Every comparison is paired by scenario and seed, with an exact sign test on flips vs losses.
 
-**Baselines, defined up front.** For Jev to count as useful, it had to clear two bars:
-1. beat **the default**: what the system did at that point without Jev;
-2. beat **a baseline given the same information but no Jev**. Otherwise the gain comes from what we put in the prompt, not from Jev's judgment.
+**Baselines, defined up front.** Every table below uses the same names. For Jev to count as useful at a decision, it had to beat both **the default** (what the system did there without Jev) and **a same-information control** (the same options or evidence, no Jev). Otherwise the gain comes from what we put in the prompt, not from Jev's judgment.
 
-| Baseline | What it does |
-|---|---|
-| **Attack-move** | Every unit attack-moves toward the enemy. The scripted floor, and the fallback in every system below. |
-| Random pick | A uniformly random choice among the exact options Jev was offered. |
-| Nearest-cluster lookup | Match the battle's physical features (counts, ranges, speeds, terrain) to the closest of 12 training clusters, and run that cluster's program. |
-| Evidence vote | Take the similar past battles shown to Jev, and pick the option with the best record among them, or average their outcomes. |
-| Value model | Gradient-boosted trees trained on full-battle outcomes found by offline simulation. |
-| HP ratio | Our remaining HP ÷ the enemy's, used as a win predictor. |
-| Hand rules | Four rules written by hand while looking at the 23 official maps. |
-| RL state of the art | HPN-QMIX / fine-tuned QMIX / MAPPO numbers above. Reference only: they come from a different simulator. |
+| Group | Baseline | What it does | Used in |
+|---|---|---|---|
+| Floor | **Attack-move** | Every unit attack-moves toward the enemy. The last fallback in every system here | all |
+| Same information, no Jev | **Random legal action** | A uniformly random legal SMAC action per unit per step | Q1 |
+| | **SMAC heuristic** | Shoot the closest enemy in range (or the lowest-HP one: *focus*), else walk toward it | Q1 |
+| | **Random pick** / **random answers** | A uniformly random choice among exactly the options Jev saw | Q2, Q3 |
+| | **Lookup** | Match the battle's physical features to the closest of 12 training clusters, run that cluster's program | Q2, Q3 |
+| | **Evidence vote** | Among the similar battles shown to Jev, take the option with the best record | Q2, Q3 |
+| | **HP ratio** | Our remaining HP ÷ the enemy's, as a win predictor | Final |
+| The default | – | Whatever ran there without Jev. It changed as the system grew: attack-move (rounds 0–2), lookup (3–7), value switching (8–14), Claude program (16). Each row names it | Q2, Q3 |
+| Ceiling | **Best in hindsight** | The best option per battle, known after simulating all of them | Q2 |
+| | **RL state of the art** | The published numbers above. Reference only: a different simulator | Final |
+| Non-Jev systems | **Hand rules**, **value switching**, **Grok program**, **Claude program** | The alternatives Jev competed with (see the scoreboard in the final answer) | Final |
 
 ## Q1. Can Jev directly output each unit's action?
 
-**Conclusion: No. Jev can't serve as the actor.** It returns legal actions and wins an easy map, but nothing shows it beats plain attack-move, and every step costs one network round trip.
+**Conclusion: No.** Picking each unit's raw SMAC action every step, Jev won **0 of 35** battles, the same as random legal actions. Attack-move won 25 on the same battles.
 
-| Experiment | Setup | Result | Attack-move, same setup |
-|---|---|---|---|
-| Ours: Jev per-unit actor, map 3m | One request per step, with one Choice per living unit over that unit's legal SMAC actions (move ×4, stop, attack enemy *i*) | 2 / 2 wins, 19 steps each. **0.92 s per request** end to end; 17.6 s per battle | 5 / 5 wins |
-| External: [JEV-Star](https://github.com/sc2musa/Jev_Star), real SC2 | Jev alone picks micro actions on 35 SMAC-Hard maps × 3 episodes | **3 wins / 105** | – |
-| External: JEV-Star | Same, with an LLM planner giving Jev a plan | 7 / 105 | – |
+7 official maps (3m, 8m, 5m_vs_6m, 2s3z, 3s5z, 3s_vs_3z, 10m_vs_11m) × 5 seeds, same battles for every policy. Each policy outputs raw SMAC actions (move ×4, stop, attack enemy *j*). Jev gets one request per step, with one Choice per living unit over exactly that unit's legal actions. Each option states the facts: distance to the nearest enemy after a move, or the target's type, remaining HP, distance, and whether it is in range.
 
-<sub>The JEV-Star rows are from that project's README and are not our runs.</sub>
+| Policy | Wins / 35 | Jev vs this (flips / losses) |
+|---|---:|---:|
+| **Jev per-unit actor** | **0** | – |
+| Random legal action | 0 | 0 / 0 |
+| Attack-move | 25 | 0 / 25 |
+| SMAC heuristic: shoot the closest | 25 | 0 / 25 |
+| SMAC heuristic: focus the lowest HP | 30 | 0 / 30 |
+| *External: [JEV-Star](https://github.com/sc2musa/Jev_Star), real SC2, Jev alone, 35 SMAC-Hard maps × 3* | *3 / 105* | – |
+| *External: JEV-Star, with an LLM planner* | *7 / 105* | – |
+
+<sub>Our rows: `python results/q1_unit_actor.py table` (raw rows in `results/q1_unit_actor.jsonl`). Jev used 745 requests, 1.23 s per request end to end, 26 s per battle. JEV-Star rows are from that project's README. An earlier 2-battle run with an older prompt won 3m 2/2; this rerun replaces it.</sub>
 
 Why it fails:
-- **The questions can't coordinate.** Questions in one request are scored independently and in parallel, so no answer depends on the others ([docs](https://docs.typesafe.ai/cookbooks/parallel_questions)). Focus fire, the most valuable thing in micro, is a joint assignment: who shoots whom, without overkill. Separate per-unit choices can't express it.
+- **The questions can't coordinate.** Questions in one request are scored independently and in parallel, so no answer depends on the others ([docs](https://docs.typesafe.ai/cookbooks/parallel_questions)). Focus fire, the most valuable thing in micro, is a joint assignment: who shoots whom, without overkill. Separate per-unit choices can't express it. On 3m (seed 1), Jev walked all three Marines east (P = 0.95) and, once in range, split their fire across all three enemies. The enemy didn't split, and won with 2 units left. A three-line rule, *focus the lowest HP in range*, wins 10m_vs_11m 5/5, where attack-move and Jev both lose 5/5.
 - **The difference between actions is numeric.** Range, cooldown, and distance decide the fight. We asked Jev for P(win) after each of 13 actions at 300 recorded decision points, with 8 similar examples as evidence. Its answers varied by a standard deviation of only **0.047**. Picking the top-rated action gained **+0.1**, out of a possible 37.5 (card ⑦ below).
-- **It is slow at our scale.** We measured 0.92 s per request, which is slower than a 0.5 s game step. At 17.6 s per battle, a 1,000-battle test set takes about 5 hours.
-
-*Caveat:* our own per-unit run is small: n = 2, on a map attack-move already wins. The external SC2 result (3 / 105) is the larger sample, and it points the same way.
+- **It is slow at our scale.** 1.23 s per request is longer than a 0.5 s game step. At 26 s per battle, a 1,000-battle test set takes about 7 hours.
 
 ## Q2. If not, can Jev choose the tactics?
 
-**Conclusion: It can choose, but its choices were never better than a random pick, a lookup, or a vote over the same information.** In this setup, code executes the tactic and Jev only picks which one. We tried this in six places across four generations of the system:
+**Conclusion: It can choose, but only once did it beat a same-information control, and only on the maps its evidence was recorded on.** In this setup, code executes the tactic and Jev only picks which one. We tried this in six places across four generations of the system:
 
-| # | Question Jev answered | Data | Jev | Same information, no Jev | Verdict |
-|---|---|---|---:|---|---|
-| ① | Which library program runs this battle? (5 options) | test2, 600 battles | 295 wins | lookup (default) **299**; random 273 | below the default |
-| ② | Same, plus each program's record in the 8 most similar battles | test2, 600 | +1 net | evidence vote +1. Jev and the vote differed on only 2 / 600 | copies the evidence |
-| ③ | Hold position or push? (current system) | 720 battles, leave-one-scenario-out | +6 net | evidence vote +5; best pick in hindsight +25 | = vote |
-| ④ | How should each unit group fight right now? (3–5 options) | 23 official maps, 115 | 77 wins | **random answers 74**; attack-move 53; hand rules 92 | ≈ random |
-| ⑤ | Which preset tactic for the next 5 steps? (only when the value model is unsure) | test4, 1,000 | 527 wins | value model (default) 523; random 519 | +4, p = 0.61 |
-| ⑨ | Of two tactics, which wins more here? | 73 scenarios with a known ≥ 3/5 gap | 45 correct | fixed rule *"keep attack-move"* 46; random 36.5 | = fixed rule |
+| # | Question Jev answered | Data | Jev | Default | Same-information control | Verdict |
+|---|---|---|---:|---|---|---|
+| ① | Which library program runs this battle? (5 options) | test2, 600 | 295 | lookup **299** | random pick 273 | below the default |
+| ② | Same, plus each program's record in the 8 most similar battles | test2, 600 | +1 net | lookup | evidence vote +1. Jev and the vote differed on only 2 / 600 | = vote |
+| ③ | Hold position or push? (current system) | 720, leave-one-scenario-out | +6 net | Claude program | evidence vote +5; *best in hindsight +25* | = vote |
+| ④ | How should each unit group fight right now? (3–5 options, with evidence from these maps) | 23 official maps, 115 | **91** | attack-move 53 | random answers 74 (Jev +17 / −0, p < 0.001); hand rules 92 | beats random, = hand rules; in-sample |
+| ⑤ | Which preset tactic for the next 5 steps? (only when the value model is unsure) | test4, 1,000 | 527 | value switching 523 | random pick 519 | +4, p = 0.61 |
+| ⑨ | Of two tactics, which wins more here? | 73 scenarios with a known ≥ 3/5 gap | 45 correct | – | fixed rule *"keep attack-move"* 46; random 36.5 | = fixed rule |
+
+<sub>④ was rerun on the current code for this README (`python results/baseline_rerun.py table`; earlier code gave 77). The other rows are from `results/iter4_report.md`–`iter16_report.md`.</sub>
 
 <p align="center">
   <img src="docs/jev_map.svg" alt="Map of the nine places Jev was tried: for each, what Jev saw, its result, and the baselines with the same information" width="100%">
@@ -137,49 +144,51 @@ Why:
 
     Replacing attack-move with the whole execution program was worth **+245 of 1,000** unseen battles (test6). That is about 10× the tactic choice.
   - **So the room is at the action level, the level of Q1, and Jev can't fill it there.** Focus fire is a joint assignment across units, and Jev's per-unit questions are answered independently. The right action depends on exact range, cooldown, and distance, and Jev barely tells actions apart. Code does both directly, which is why the approach that worked was having an LLM write the code.
-- **Jev follows the evidence.** When we gave it similar battles, it agreed with the plain vote (② differed on 2 / 600). When we didn't, it did no better than random (④).
+- **Jev follows the evidence it is given.** With similar battles, it agreed with the plain vote (② differed on 2 / 600). With evidence recorded on the official maps (④), it landed where the hand rules written from the same maps did: 91 vs 92 there, and 196 vs 196 on unseen battles (Q3).
 
 ## Q3. Does Jev generalize to unseen battles?
 
-Baselines here are the **default of the day** and **attack-move**. Each is compared on scenarios or seeds that played no part in designing the questions.
+**Conclusion: No.** Its one win over a same-information control (④: +17 over random answers on the official maps) shrank to **+7 / 400 (p = 0.46)** on unseen battles. There, its best setup tied the hand rules exactly. Everywhere else on unseen data it never significantly beat the default, and once it was significantly worse.
 
-**Conclusion: No.** Jev's only large gain came on the maps its options were written for, and even there random answers did almost as well. On unseen data it never significantly beat the default, and once it was significantly worse.
+Every row is reported the same way: net wins over the default on the same battles, for Jev and for the same-information control.
 
-| Where | Jev vs default | Same-information baseline |
-|---|---|---|
-| 23 official maps, where the exam options and their manual were written (④) | 77 vs attack-move 53 | random answers **74**: the gain is in the options, not the choice |
-| Generated scenarios (rounds 2–3), opening program pick | 84 / 200; 92 / 200 with a newer library | random 84 / 94; lookup 85 / 89 |
-| test2 (unseen), Jev replaces the lookup | **−4** (p = 0.73); **−24** (p = 0.009, significantly worse) | – |
-| test2 (unseen), Jev with neighbor evidence (rounds 5–6) | +1 (p = 1.0); 0 (p = 1.0) | evidence vote +1 |
-| test4 (unseen), Jev as mid-battle tie-breaker (⑤) | +4 (p = 0.61) | random pick 519, i.e. −4 vs the default |
-| Fresh decision points, *"switch only if Jev says we're losing"* (⑧) | +5.42 on the batch the rule was picked on → **+0.06** on a fresh batch | always switch +2.13; HP-ratio gate +2.07 |
+| Jev's role | Battles | Unseen? | Default | Jev | Same-information control |
+|---|---|---|---|---:|---|
+| ④ Exam answers | 23 official maps, 115 | no: its evidence came from here | attack-move 53 | **+38** | random answers +21; hand rules +39 |
+| ④ Exam answers | val, 400 | yes | attack-move 176 | **+20** (p = 0.019) | random answers +13; hand rules +20 |
+| Opening program pick, round-2 library | test, 200 | yes | attack-move 90 | −6 | random pick −6; lookup −5 |
+| Opening program pick, round-3 library | test, 200 | yes | attack-move 90 | +2 | random pick +4; lookup −1 |
+| ① Replaces the lookup, round-4 library | test2, 600 | yes | lookup 299 | −4 (p = 0.73) | random pick −26 |
+| ① Same, hinted library | test2, 600 | yes | lookup 281 | **−24** (p = 0.009) | random pick −18 |
+| ② With neighbor evidence, rounds 5–6 | test2, 600 | yes | lookup | +1; 0 | evidence vote +1 |
+| ⑤ Mid-battle tie-breaker | test4, 1,000 | yes | value switching 523 | +4 (p = 0.61) | random pick −4 |
+| ⑧ *"Switch only if Jev says we're losing"* | 300 fresh decision points | yes | no switch | +5.42 on the batch the rule was picked on → **+0.06** | always switch +2.13; HP-ratio gate +2.07 |
 
-<sub>Sources: `results/winrate_now.md`, `results/iter4_report.md`–`iter6_report.md`, `iter9_report.md`, `iter11_report.md`, and the technical report.</sub>
-
-What did generalize was the code-writing approach:
-
-| Method | test6, 1,000 unseen battles | 23 official maps¹ |
-|---|---:|---:|
-| Attack-move | 47.5% | 53 / 115 |
-| Hand rules (tuned on the official maps) | 49.0% | *92 / 115* |
-| Value-guided tactic switching | 51.9% | 51 / 115 |
-| LLM-written program, outcome feedback only (Grok-4.7) | 59.5% | 62 / 115 |
-| **LLM-written program, source + trace feedback (Claude)** | **72.0%** | **65 / 115** |
-
-<sub>¹ Reference only. The hand rules were picked by looking at these 23 maps: 39 flips and zero losses there, but on fresh battles only +15 over attack-move (p = 0.14). The Claude program never saw the official maps during development.</sub>
-
-Paired comparisons on test6 (same scenario, same seed; exact sign test):
-
-| | Flips (+) | Losses (−) | Net | p |
-|---|---:|---:|---:|---:|
-| Claude program vs attack-move | 305 | 60 | **+245** | < 0.001 |
-| Claude program vs Grok program | 170 | 45 | **+125** | < 0.001 |
+<sub>④ rows: rerun on the current code (`results/baseline_rerun.py`); val played no part in writing the exam questions or their evidence. Other rows: `results/iter2_report.md`–`iter6_report.md`, `iter9_report.md`, `iter11_report.md`. ⑧ is in reward units per decision point, not wins.</sub>
 
 ## Final answer: is Jev useful in micro?
 
-**For acting, no.** It can't output per-unit actions (Q1), it doesn't pick tactics better than chance (Q2), and nothing it did generalized (Q3).
+**For acting, no.** It can't output per-unit actions (Q1: 0 / 35). Its tactic picks were never better than a same-information control on unseen battles (Q2, Q3).
 
 **What it is good at: judging the state.** At each recorded decision point, Jev was asked *"will we win from here?"* and given the 8 most similar past moments. Its AUC was **0.874**. That beat the HP ratio (0.835) and the average outcome of the same 8 examples (0.77–0.80), though not significantly. But a judgment only matters if some action can use it. SMAC micro has no retreat, reinforcement, or surrender. A rule that switched tactics only when Jev predicted a loss did not replicate on fresh data (+5.42 → +0.06).
+
+**Scoreboard: every system on the same battles.** All rows except test6 were rerun on the current code for this README.
+
+| System | Jev? | Level | 23 official maps (115) | val (400, unseen) | test6 (1,000, unseen, run once) |
+|---|:-:|---|---:|---:|---:|
+| Attack-move | | floor | 53 | 176 | 475 |
+| Random exam answers | | tactic | 74 | 189 | – |
+| **Jev exam answers (④)** | ✓ | tactic | **91**¹ | 196 | – |
+| Hand rules | | tactic | **92**¹ | 196 | 490 |
+| Lookup (library + nearest cluster) | | tactic | 51 | 184 | – |
+| Value switching | | tactic | 51 | 190 | 519 |
+| Grok program | | code | 62 | 217 | 595 |
+| **Claude program** | | code | 65 | **247**² | **720** |
+
+<sub>¹ In-sample: built by looking at these 23 maps. ² The Claude program was checked once on val before its single test6 run. test6 was used once, in rounds 15–16, for the five systems shown; we don't add new systems to a used test set. Data: `results/rerun/`; reproduce with `python results/baseline_rerun.py local`, `jev`, `table`.</sub>
+
+- **On the maps they were built from, the Jev exams and the hand rules win** (91 and 92 vs 65).
+- **On unseen battles, the order flips.** The Claude program beat the Jev exams 247 vs 196 on val: 92 flips, 41 losses, p < 0.001. On test6 it beat attack-move by +245 (305 flips, 60 losses) and the Grok program by +125 (170 / 45), both p < 0.001.
 
 **What actually works: an LLM writes the micro program, and the simulator checks it.**
 - The current program is [`kb/library/code/general_claude.py`](kb/library/code/general_claude.py). It is about 150 lines and does five things:
@@ -188,25 +197,27 @@ Paired comparisons on test6 (same scenario, same seed; exact sign test):
   3. **Baneling screening.** Melee units intercept Banelings heading for our ranged units.
   4. **Kiting.** Units step back during weapon cooldown when they out-range or out-speed the enemy.
   5. **Stall breaker.** If no one has taken damage for 10 steps, everyone attacks, because a timeout counts as a loss.
-- **Feedback matters more than which model writes the code.** Grok saw only aggregate scores, and reached 59.5%. Claude read the simulator source, traced lost battles step by step, and re-ran a paired test after every edit, and reached 72.0%.
+- **Feedback matters more than which model writes the code.** Grok saw only aggregate scores, and reached 59.5% on test6. Claude read the simulator source, traced lost battles step by step, and re-ran a paired test after every edit, and reached 72.0%.
 - The biggest single jump came from reading the source. The API doc said `can_attack(u, e)` meant "in range"; it actually means "visible". Units ordered to attack a distant target walked into the enemy line. Fixing that one assumption moved the program from **−100 to +64** (out of 720 battles).
 
-**Did anything reach RL state of the art?** No. RL is at 96.9–100% on every one of these maps; our best systems lose whole maps outright. The table below is per map on the official maps, run in SMAClite with 5 seeds each. RL numbers are from SC2, where the built-in AI differs. For example, attack-move wins 5m_vs_6m in SMAClite, while SMAC's heuristic gets 0% there. Read across a row, not as a leaderboard.
+**Did anything reach RL state of the art?** No. RL is at 96.9–100% on every one of these maps; every system here loses whole maps outright. Per map on the official maps, SMAClite, 5 seeds each. RL numbers are from SC2, where the built-in AI differs. For example, attack-move wins 5m_vs_6m in SMAClite, while SMAC's heuristic gets 0% there. Read across a row, not as a leaderboard.
 
-| Map | Best published (SC2) | Attack-move | Jev exams (④) | Claude program |
-|---|---:|---:|---:|---:|
-| 3m | 100% | 5/5 | 5/5 | 5/5 |
-| 2s3z | 100% | 5/5 | 5/5 | 5/5 |
-| 3s5z | 100% | 5/5 | 5/5 | 5/5 |
-| 5m_vs_6m | 100% | 5/5 | 5/5 | 0/5 |
-| 3s_vs_5z | 100% | 0/5 | 5/5 | 0/5 |
-| 10m_vs_11m | 96.9% | 0/5 | 0/5 | 5/5 |
-| corridor | 100% | 0/5 | 5/5 | 0/5 |
-| MMM2 | 100% | 0/5 | 0/5 | 0/5 |
-| 3s5z_vs_3s6z | 100% | 0/5 | 0/5 | 5/5 |
-| 27m_vs_30m | 100% | 1/5 | 3/5 | 4/5 |
-| 6h_vs_8z | 98% | 0/5 | 0/5 | 0/5 |
-| **All 23 maps** | – | 53 / 115 | 77 / 115 | 65 / 115 |
+| Map | Best published (SC2) | Attack-move | Random exam answers | Jev exams (④)¹ | Hand rules¹ | Claude program |
+|---|---:|---:|---:|---:|---:|---:|
+| 3m | 100% | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 2s3z | 100% | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 3s5z | 100% | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 |
+| 5m_vs_6m | 100% | 5/5 | 5/5 | 5/5 | 5/5 | 0/5 |
+| 3s_vs_5z | 100% | 0/5 | 1/5 | 5/5 | 5/5 | 0/5 |
+| 10m_vs_11m | 96.9% | 0/5 | 4/5 | 5/5 | 5/5 | 5/5 |
+| corridor | 100% | 0/5 | 2/5 | 5/5 | 5/5 | 0/5 |
+| MMM2 | 100% | 0/5 | 0/5 | 0/5 | 0/5 | 0/5 |
+| 3s5z_vs_3s6z | 100% | 0/5 | 1/5 | 5/5 | 5/5 | 5/5 |
+| 27m_vs_30m | 100% | 1/5 | 2/5 | 3/5 | 5/5 | 4/5 |
+| 6h_vs_8z | 98% | 0/5 | 0/5 | 0/5 | 0/5 | 0/5 |
+| **All 23 maps** | – | 53 / 115 | 74 / 115 | 91 / 115 | 92 / 115 | 65 / 115 |
+
+<sub>¹ In-sample on these maps.</sub>
 
 **Where a model like Jev could fit:** tasks with a few high-stakes decisions that can be described in words, where a judgment can be turned into an action like retreat, reinforce, or skip this fight. Full-game macro fits that. In JEV-Star's real-time SC2 macro games, Jev alone went 0 / 10, while Jev choosing among actions filtered by an LLM plan went **9 / 10** (external result). Small-scale SMAC micro is the opposite of that kind of task.
 
@@ -241,6 +252,10 @@ python results/_dev16.py cmp kb/library/code/general.py kb/library/code/general_
 # Held-out evaluation, then paired statistics
 python results/_regress.py holdout --split val --policies dummy written_online --write out.jsonl
 python results/_regress.py paired --base dummy --files out.jsonl
+
+# Rerun every baseline in this README (scoreboard, ④, Q1)
+python results/baseline_rerun.py local && python results/baseline_rerun.py jev && python results/baseline_rerun.py table
+python results/q1_unit_actor.py run --policies dummy,closest,focus,random_legal,jev_unit && python results/q1_unit_actor.py table
 
 # Regenerate the GIF above
 python results/readme_gif.py y0810 4

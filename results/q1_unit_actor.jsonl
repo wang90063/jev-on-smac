@@ -1,0 +1,175 @@
+{"policy": "closest", "map": "3m", "seed": 1, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3m", "seed": 2, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3m", "seed": 3, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3m", "seed": 4, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3m", "seed": 5, "win": 1, "ret": 20.0, "steps": 16, "open": {}, "A": [1, 15], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "8m", "seed": 1, "win": 1, "ret": 20.0, "steps": 19, "open": {}, "A": [4, 90], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "8m", "seed": 2, "win": 1, "ret": 20.0, "steps": 19, "open": {}, "A": [4, 90], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "8m", "seed": 3, "win": 1, "ret": 20.0, "steps": 19, "open": {}, "A": [4, 90], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "8m", "seed": 4, "win": 1, "ret": 20.0, "steps": 19, "open": {}, "A": [4, 90], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "8m", "seed": 5, "win": 1, "ret": 20.0, "steps": 19, "open": {}, "A": [4, 84], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "5m_vs_6m", "seed": 1, "win": 1, "ret": 20.0, "steps": 23, "open": {}, "A": [1, 9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "5m_vs_6m", "seed": 2, "win": 1, "ret": 20.0, "steps": 23, "open": {}, "A": [1, 15], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "5m_vs_6m", "seed": 3, "win": 1, "ret": 20.0, "steps": 23, "open": {}, "A": [1, 9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "5m_vs_6m", "seed": 4, "win": 1, "ret": 20.0, "steps": 23, "open": {}, "A": [1, 9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "5m_vs_6m", "seed": 5, "win": 1, "ret": 20.0, "steps": 23, "open": {}, "A": [1, 9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "2s3z", "seed": 1, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 142], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "2s3z", "seed": 2, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 142], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "2s3z", "seed": 3, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 142], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "2s3z", "seed": 4, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 142], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "2s3z", "seed": 5, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 142], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s5z", "seed": 1, "win": 1, "ret": 20.0, "steps": 43, "open": {}, "A": [4, 419.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s5z", "seed": 2, "win": 1, "ret": 20.0, "steps": 43, "open": {}, "A": [4, 446.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s5z", "seed": 3, "win": 1, "ret": 20.0, "steps": 43, "open": {}, "A": [4, 418.9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s5z", "seed": 4, "win": 1, "ret": 20.0, "steps": 43, "open": {}, "A": [4, 419.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s5z", "seed": 5, "win": 1, "ret": 20.0, "steps": 43, "open": {}, "A": [4, 446.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "3s_vs_3z", "seed": 1, "win": 0, "ret": 8.382, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 175], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3s_vs_3z", "seed": 2, "win": 0, "ret": 8.382, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 175], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3s_vs_3z", "seed": 3, "win": 0, "ret": 8.382, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 175], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3s_vs_3z", "seed": 4, "win": 0, "ret": 8.382, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 175], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "closest", "map": "3s_vs_3z", "seed": 5, "win": 0, "ret": 8.382, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 175], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3m", "seed": 1, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3m", "seed": 2, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3m", "seed": 3, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3m", "seed": 4, "win": 1, "ret": 20.0, "steps": 15, "open": {}, "A": [2, 24], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3m", "seed": 5, "win": 1, "ret": 20.0, "steps": 16, "open": {}, "A": [1, 15], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "8m", "seed": 1, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [4, 96], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "8m", "seed": 2, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [4, 96], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "8m", "seed": 3, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [4, 96], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "8m", "seed": 4, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [4, 96], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "8m", "seed": 5, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [4, 96], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "5m_vs_6m", "seed": 1, "win": 1, "ret": 20.0, "steps": 21, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "5m_vs_6m", "seed": 2, "win": 1, "ret": 20.0, "steps": 21, "open": {}, "A": [2, 36], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "5m_vs_6m", "seed": 3, "win": 1, "ret": 20.0, "steps": 21, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "5m_vs_6m", "seed": 4, "win": 1, "ret": 20.0, "steps": 21, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "5m_vs_6m", "seed": 5, "win": 1, "ret": 20.0, "steps": 21, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "2s3z", "seed": 1, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 248], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "2s3z", "seed": 2, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 248], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "2s3z", "seed": 3, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 231], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "2s3z", "seed": 4, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 248], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "2s3z", "seed": 5, "win": 1, "ret": 20.0, "steps": 44, "open": {}, "A": [2, 248], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s5z", "seed": 1, "win": 1, "ret": 20.0, "steps": 71, "open": {}, "A": [1, 68.1], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s5z", "seed": 2, "win": 1, "ret": 20.0, "steps": 71, "open": {}, "A": [1, 68.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s5z", "seed": 3, "win": 1, "ret": 20.0, "steps": 71, "open": {}, "A": [1, 68.2], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s5z", "seed": 4, "win": 1, "ret": 20.0, "steps": 71, "open": {}, "A": [1, 68.0], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s5z", "seed": 5, "win": 1, "ret": 20.0, "steps": 60, "open": {}, "A": [2, 183.2], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "3s_vs_3z", "seed": 1, "win": 0, "ret": 9.029, "steps": 31, "open": {}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3s_vs_3z", "seed": 2, "win": 0, "ret": 9.029, "steps": 31, "open": {}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3s_vs_3z", "seed": 3, "win": 0, "ret": 9.029, "steps": 31, "open": {}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3s_vs_3z", "seed": 4, "win": 0, "ret": 9.029, "steps": 31, "open": {}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "focus", "map": "3s_vs_3z", "seed": 5, "win": 0, "ret": 9.029, "steps": 31, "open": {}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "3m", "seed": 1, "win": 0, "ret": 1.973, "steps": 14, "open": {}, "A": [0, 0], "E": [3, 99], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "3m", "seed": 2, "win": 0, "ret": 0.986, "steps": 19, "open": {}, "A": [0, 0], "E": [3, 117], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "3m", "seed": 3, "win": 0, "ret": 2.63, "steps": 14, "open": {}, "A": [0, 0], "E": [3, 87], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "3m", "seed": 4, "win": 0, "ret": 1.644, "steps": 15, "open": {}, "A": [0, 0], "E": [3, 105], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "3m", "seed": 5, "win": 0, "ret": 2.63, "steps": 15, "open": {}, "A": [0, 0], "E": [3, 87], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "8m", "seed": 1, "win": 0, "ret": 3.938, "steps": 15, "open": {}, "A": [0, 0], "E": [8, 234], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "8m", "seed": 2, "win": 0, "ret": 4.688, "steps": 15, "open": {}, "A": [0, 0], "E": [8, 210], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "8m", "seed": 3, "win": 0, "ret": 4.688, "steps": 15, "open": {}, "A": [0, 0], "E": [8, 210], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "8m", "seed": 4, "win": 0, "ret": 4.125, "steps": 14, "open": {}, "A": [0, 0], "E": [8, 228], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "8m", "seed": 5, "win": 0, "ret": 5.844, "steps": 15, "open": {}, "A": [0, 0], "E": [7, 183], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "5m_vs_6m", "seed": 1, "win": 0, "ret": 2.264, "steps": 13, "open": {}, "A": [0, 0], "E": [6, 210], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "5m_vs_6m", "seed": 2, "win": 0, "ret": 3.849, "steps": 15, "open": {}, "A": [0, 0], "E": [6, 168], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "5m_vs_6m", "seed": 3, "win": 0, "ret": 2.943, "steps": 12, "open": {}, "A": [0, 0], "E": [6, 192], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "5m_vs_6m", "seed": 4, "win": 0, "ret": 3.17, "steps": 12, "open": {}, "A": [0, 0], "E": [6, 186], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "5m_vs_6m", "seed": 5, "win": 0, "ret": 2.491, "steps": 14, "open": {}, "A": [0, 0], "E": [6, 204], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "2s3z", "seed": 1, "win": 0, "ret": 4.412, "steps": 30, "open": {}, "A": [0, 0], "E": [5, 545], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "2s3z", "seed": 2, "win": 0, "ret": 5.0, "steps": 30, "open": {}, "A": [0, 0], "E": [5, 520.1], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "2s3z", "seed": 3, "win": 0, "ret": 4.98, "steps": 31, "open": {}, "A": [0, 0], "E": [5, 516], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "2s3z", "seed": 4, "win": 0, "ret": 6.98, "steps": 32, "open": {}, "A": [0, 0], "E": [5, 414], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "2s3z", "seed": 5, "win": 0, "ret": 6.529, "steps": 31, "open": {}, "A": [0, 0], "E": [5, 437], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s5z", "seed": 1, "win": 0, "ret": 6.954, "steps": 33, "open": {}, "A": [0, 0], "E": [8, 705], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s5z", "seed": 2, "win": 0, "ret": 8.225, "steps": 36, "open": {}, "A": [0, 0], "E": [8, 621.6], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s5z", "seed": 3, "win": 0, "ret": 6.623, "steps": 33, "open": {}, "A": [0, 0], "E": [7, 740], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s5z", "seed": 4, "win": 0, "ret": 5.589, "steps": 34, "open": {}, "A": [0, 0], "E": [8, 819.1], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s5z", "seed": 5, "win": 0, "ret": 6.755, "steps": 34, "open": {}, "A": [0, 0], "E": [8, 720], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s_vs_3z", "seed": 1, "win": 0, "ret": 6.265, "steps": 33, "open": {}, "A": [0, 0], "E": [3, 237.8], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s_vs_3z", "seed": 2, "win": 0, "ret": 4.853, "steps": 34, "open": {}, "A": [0, 0], "E": [3, 285], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s_vs_3z", "seed": 3, "win": 0, "ret": 5.912, "steps": 49, "open": {}, "A": [0, 0], "E": [3, 271.9], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s_vs_3z", "seed": 4, "win": 0, "ret": 7.676, "steps": 40, "open": {}, "A": [0, 0], "E": [3, 189], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "3s_vs_3z", "seed": 5, "win": 0, "ret": 6.971, "steps": 30, "open": {}, "A": [0, 0], "E": [3, 213], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3m", "seed": 1, "win": 1, "ret": 20.0, "steps": 14, "open": {"tie": 1}, "A": [2, 42], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "3m", "seed": 2, "win": 1, "ret": 20.0, "steps": 14, "open": {"tie": 1}, "A": [2, 42], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "3m", "seed": 3, "win": 1, "ret": 20.0, "steps": 14, "open": {"tie": 1}, "A": [2, 42], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "3m", "seed": 4, "win": 1, "ret": 20.0, "steps": 14, "open": {"tie": 1}, "A": [2, 36], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "3m", "seed": 5, "win": 1, "ret": 20.0, "steps": 15, "open": {"tie": 1}, "A": [2, 36], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "8m", "seed": 1, "win": 1, "ret": 20.0, "steps": 19, "open": {"tie": 4}, "A": [4, 120], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "8m", "seed": 2, "win": 1, "ret": 20.0, "steps": 19, "open": {"tie": 4}, "A": [4, 132], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "8m", "seed": 3, "win": 1, "ret": 20.0, "steps": 19, "open": {"tie": 4}, "A": [4, 114], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "8m", "seed": 4, "win": 1, "ret": 20.0, "steps": 19, "open": {"tie": 4}, "A": [4, 126], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "8m", "seed": 5, "win": 1, "ret": 20.0, "steps": 19, "open": {"tie": 4}, "A": [4, 132], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "5m_vs_6m", "seed": 1, "win": 1, "ret": 20.0, "steps": 23, "open": {"tie": 1}, "A": [1, 21], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "5m_vs_6m", "seed": 2, "win": 1, "ret": 20.0, "steps": 20, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "5m_vs_6m", "seed": 3, "win": 1, "ret": 20.0, "steps": 20, "open": {"tie": 1}, "A": [2, 42], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "5m_vs_6m", "seed": 4, "win": 1, "ret": 20.0, "steps": 23, "open": {"tie": 1}, "A": [1, 21], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "5m_vs_6m", "seed": 5, "win": 1, "ret": 20.0, "steps": 20, "open": {"tie": 1}, "A": [2, 42], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "2s3z", "seed": 1, "win": 1, "ret": 20.0, "steps": 44, "open": {"target": 4}, "A": [2, 196], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "2s3z", "seed": 2, "win": 1, "ret": 20.0, "steps": 38, "open": {"target": 4}, "A": [2, 284], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "2s3z", "seed": 3, "win": 1, "ret": 20.0, "steps": 46, "open": {"target": 5}, "A": [2, 179], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "2s3z", "seed": 4, "win": 1, "ret": 20.0, "steps": 44, "open": {"target": 4}, "A": [2, 196], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "2s3z", "seed": 5, "win": 1, "ret": 20.0, "steps": 46, "open": {"target": 5}, "A": [2, 179], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3s5z", "seed": 1, "win": 1, "ret": 20.0, "steps": 47, "open": {"target": 9, "tie": 1}, "A": [3, 387.8], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.2}
+{"policy": "dummy", "map": "3s5z", "seed": 2, "win": 1, "ret": 20.0, "steps": 47, "open": {"target": 8}, "A": [3, 393.9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.2}
+{"policy": "dummy", "map": "3s5z", "seed": 3, "win": 1, "ret": 20.0, "steps": 47, "open": {"target": 9, "tie": 1}, "A": [3, 387.6], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.2}
+{"policy": "dummy", "map": "3s5z", "seed": 4, "win": 1, "ret": 20.0, "steps": 47, "open": {"target": 9, "tie": 1}, "A": [3, 387.6], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.2}
+{"policy": "dummy", "map": "3s5z", "seed": 5, "win": 1, "ret": 20.0, "steps": 47, "open": {"target": 8}, "A": [3, 393.9], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.2}
+{"policy": "dummy", "map": "3s_vs_3z", "seed": 1, "win": 0, "ret": 9.029, "steps": 31, "open": {"ranged": 4}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3s_vs_3z", "seed": 2, "win": 0, "ret": 9.029, "steps": 31, "open": {"ranged": 4}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3s_vs_3z", "seed": 3, "win": 0, "ret": 9.029, "steps": 31, "open": {"ranged": 4}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3s_vs_3z", "seed": 4, "win": 0, "ret": 9.029, "steps": 31, "open": {"ranged": 4}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "3s_vs_3z", "seed": 5, "win": 0, "ret": 9.029, "steps": 31, "open": {"ranged": 4}, "A": [0, 0], "E": [2, 153], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "10m_vs_11m", "seed": 1, "win": 0, "ret": 12.72, "steps": 25, "open": {}, "A": [0, 0], "E": [3, 63], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "10m_vs_11m", "seed": 2, "win": 0, "ret": 13.019, "steps": 26, "open": {}, "A": [0, 0], "E": [3, 51], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "10m_vs_11m", "seed": 3, "win": 0, "ret": 12.72, "steps": 25, "open": {}, "A": [0, 0], "E": [3, 63], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "10m_vs_11m", "seed": 4, "win": 0, "ret": 12.72, "steps": 25, "open": {}, "A": [0, 0], "E": [3, 63], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "closest", "map": "10m_vs_11m", "seed": 5, "win": 0, "ret": 13.019, "steps": 26, "open": {}, "A": [0, 0], "E": [3, 51], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "10m_vs_11m", "seed": 1, "win": 1, "ret": 20.0, "steps": 30, "open": {}, "A": [1, 21], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "10m_vs_11m", "seed": 2, "win": 1, "ret": 20.0, "steps": 29, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "10m_vs_11m", "seed": 3, "win": 1, "ret": 20.0, "steps": 30, "open": {}, "A": [1, 21], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "10m_vs_11m", "seed": 4, "win": 1, "ret": 20.0, "steps": 30, "open": {}, "A": [1, 21], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "focus", "map": "10m_vs_11m", "seed": 5, "win": 1, "ret": 20.0, "steps": 29, "open": {}, "A": [2, 30], "E": [0, 0], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "random_legal", "map": "10m_vs_11m", "seed": 1, "win": 0, "ret": 3.13, "steps": 15, "open": {}, "A": [0, 0], "E": [11, 369], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "10m_vs_11m", "seed": 2, "win": 0, "ret": 4.497, "steps": 14, "open": {}, "A": [0, 0], "E": [10, 324], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "10m_vs_11m", "seed": 3, "win": 0, "ret": 4.025, "steps": 14, "open": {}, "A": [0, 0], "E": [11, 333], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "10m_vs_11m", "seed": 4, "win": 0, "ret": 4.323, "steps": 14, "open": {}, "A": [0, 0], "E": [11, 321], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "random_legal", "map": "10m_vs_11m", "seed": 5, "win": 0, "ret": 3.28, "steps": 15, "open": {}, "A": [0, 0], "E": [11, 363], "calls": 0, "ov": [], "wall_s": 0.0}
+{"policy": "dummy", "map": "10m_vs_11m", "seed": 1, "win": 0, "ret": 12.894, "steps": 26, "open": {"wing": 1, "tie": 8}, "A": [0, 0], "E": [2, 66], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "10m_vs_11m", "seed": 2, "win": 0, "ret": 14.708, "steps": 32, "open": {"wing": 1, "tie": 5}, "A": [0, 0], "E": [1, 3], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "10m_vs_11m", "seed": 3, "win": 0, "ret": 13.938, "steps": 28, "open": {"wing": 1, "tie": 6}, "A": [0, 0], "E": [2, 24], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "10m_vs_11m", "seed": 4, "win": 0, "ret": 12.894, "steps": 26, "open": {"wing": 1, "tie": 8}, "A": [0, 0], "E": [2, 66], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "dummy", "map": "10m_vs_11m", "seed": 5, "win": 0, "ret": 13.938, "steps": 28, "open": {"wing": 1, "tie": 6}, "A": [0, 0], "E": [2, 24], "calls": 0, "ov": [], "wall_s": 0.1}
+{"policy": "jev_unit", "map": "3m", "seed": 1, "win": 0, "ret": 4.329, "steps": 13, "open": {}, "A": [0, 0], "E": [2, 66], "calls": 13, "ov": [], "wall_s": 16.9}
+{"policy": "jev_unit", "map": "3m", "seed": 2, "win": 0, "ret": 4.658, "steps": 13, "open": {}, "A": [0, 0], "E": [2, 60], "calls": 13, "ov": [], "wall_s": 17.2}
+{"policy": "jev_unit", "map": "3m", "seed": 3, "win": 0, "ret": 3.616, "steps": 12, "open": {}, "A": [0, 0], "E": [3, 69], "calls": 12, "ov": [], "wall_s": 12.9}
+{"policy": "jev_unit", "map": "3m", "seed": 4, "win": 0, "ret": 3.616, "steps": 12, "open": {}, "A": [0, 0], "E": [3, 69], "calls": 12, "ov": [], "wall_s": 15.9}
+{"policy": "jev_unit", "map": "3m", "seed": 5, "win": 0, "ret": 4.658, "steps": 13, "open": {}, "A": [0, 0], "E": [2, 60], "calls": 13, "ov": [], "wall_s": 14.7}
+{"policy": "jev_unit", "map": "8m", "seed": 1, "win": 0, "ret": 5.719, "steps": 15, "open": {}, "A": [0, 0], "E": [5, 207], "calls": 15, "ov": [], "wall_s": 14.5}
+{"policy": "jev_unit", "map": "8m", "seed": 2, "win": 0, "ret": 5.531, "steps": 16, "open": {}, "A": [0, 0], "E": [5, 213], "calls": 16, "ov": [], "wall_s": 37.9}
+{"policy": "jev_unit", "map": "8m", "seed": 3, "win": 0, "ret": 5.906, "steps": 15, "open": {}, "A": [0, 0], "E": [5, 201], "calls": 15, "ov": [], "wall_s": 14.0}
+{"policy": "jev_unit", "map": "8m", "seed": 4, "win": 0, "ret": 5.719, "steps": 15, "open": {}, "A": [0, 0], "E": [5, 207], "calls": 15, "ov": [], "wall_s": 19.0}
+{"policy": "jev_unit", "map": "8m", "seed": 5, "win": 0, "ret": 5.531, "steps": 15, "open": {}, "A": [0, 0], "E": [5, 213], "calls": 15, "ov": [], "wall_s": 19.0}
+{"policy": "jev_unit", "map": "5m_vs_6m", "seed": 1, "win": 0, "ret": 4.151, "steps": 13, "open": {}, "A": [0, 0], "E": [4, 180], "calls": 13, "ov": [], "wall_s": 15.3}
+{"policy": "jev_unit", "map": "5m_vs_6m", "seed": 2, "win": 0, "ret": 3.434, "steps": 12, "open": {}, "A": [0, 0], "E": [5, 189], "calls": 12, "ov": [], "wall_s": 14.5}
+{"policy": "jev_unit", "map": "5m_vs_6m", "seed": 3, "win": 0, "ret": 3.434, "steps": 12, "open": {}, "A": [0, 0], "E": [5, 189], "calls": 12, "ov": [], "wall_s": 17.7}
+{"policy": "jev_unit", "map": "5m_vs_6m", "seed": 4, "win": 0, "ret": 3.66, "steps": 11, "open": {}, "A": [0, 0], "E": [5, 183], "calls": 11, "ov": [], "wall_s": 12.6}
+{"policy": "jev_unit", "map": "5m_vs_6m", "seed": 5, "win": 0, "ret": 4.151, "steps": 13, "open": {}, "A": [0, 0], "E": [4, 180], "calls": 13, "ov": [], "wall_s": 12.7}
+{"policy": "jev_unit", "map": "2s3z", "seed": 1, "win": 0, "ret": 8.255, "steps": 31, "open": {}, "A": [0, 0], "E": [4, 372.4], "calls": 31, "ov": [], "wall_s": 38.4}
+{"policy": "jev_unit", "map": "2s3z", "seed": 2, "win": 0, "ret": 7.902, "steps": 31, "open": {}, "A": [0, 0], "E": [4, 385.0], "calls": 31, "ov": [], "wall_s": 34.4}
+{"policy": "jev_unit", "map": "2s3z", "seed": 3, "win": 0, "ret": 8.333, "steps": 34, "open": {}, "A": [0, 0], "E": [3, 381.5], "calls": 34, "ov": [], "wall_s": 45.3}
+{"policy": "jev_unit", "map": "2s3z", "seed": 4, "win": 0, "ret": 8.608, "steps": 30, "open": {}, "A": [0, 0], "E": [4, 352.5], "calls": 30, "ov": [], "wall_s": 33.2}
+{"policy": "jev_unit", "map": "2s3z", "seed": 5, "win": 0, "ret": 8.235, "steps": 31, "open": {}, "A": [0, 0], "E": [4, 373.4], "calls": 31, "ov": [], "wall_s": 40.8}
+{"policy": "jev_unit", "map": "3s5z", "seed": 1, "win": 0, "ret": 9.046, "steps": 37, "open": {}, "A": [0, 0], "E": [5, 592.0], "calls": 37, "ov": [], "wall_s": 42.6}
+{"policy": "jev_unit", "map": "3s5z", "seed": 2, "win": 0, "ret": 8.119, "steps": 34, "open": {}, "A": [0, 0], "E": [6, 649.1], "calls": 34, "ov": [], "wall_s": 37.4}
+{"policy": "jev_unit", "map": "3s5z", "seed": 3, "win": 0, "ret": 9.603, "steps": 33, "open": {}, "A": [0, 0], "E": [6, 525], "calls": 33, "ov": [], "wall_s": 45.1}
+{"policy": "jev_unit", "map": "3s5z", "seed": 4, "win": 0, "ret": 8.993, "steps": 37, "open": {}, "A": [0, 0], "E": [5, 596.1], "calls": 37, "ov": [], "wall_s": 39.0}
+{"policy": "jev_unit", "map": "3s5z", "seed": 5, "win": 0, "ret": 8.728, "steps": 33, "open": {}, "A": [0, 0], "E": [6, 602.0], "calls": 33, "ov": [], "wall_s": 39.7}
+{"policy": "jev_unit", "map": "3s_vs_3z", "seed": 1, "win": 0, "ret": 8.412, "steps": 29, "open": {}, "A": [0, 0], "E": [2, 177.4], "calls": 29, "ov": [], "wall_s": 37.4}
+{"policy": "jev_unit", "map": "3s_vs_3z", "seed": 2, "win": 0, "ret": 8.059, "steps": 30, "open": {}, "A": [0, 0], "E": [2, 186], "calls": 30, "ov": [], "wall_s": 34.2}
+{"policy": "jev_unit", "map": "3s_vs_3z", "seed": 3, "win": 0, "ret": 10.176, "steps": 36, "open": {}, "A": [0, 0], "E": [1, 124], "calls": 36, "ov": [], "wall_s": 38.6}
+{"policy": "jev_unit", "map": "3s_vs_3z", "seed": 4, "win": 0, "ret": 6.971, "steps": 24, "open": {}, "A": [0, 0], "E": [3, 213], "calls": 24, "ov": [], "wall_s": 30.8}
+{"policy": "jev_unit", "map": "3s_vs_3z", "seed": 5, "win": 0, "ret": 8.765, "steps": 29, "open": {}, "A": [0, 0], "E": [2, 162], "calls": 29, "ov": [], "wall_s": 30.1}
+{"policy": "jev_unit", "map": "10m_vs_11m", "seed": 1, "win": 0, "ret": 3.627, "steps": 12, "open": {}, "A": [0, 0], "E": [9, 369], "calls": 12, "ov": [], "wall_s": 14.6}
+{"policy": "jev_unit", "map": "10m_vs_11m", "seed": 2, "win": 0, "ret": 3.925, "steps": 13, "open": {}, "A": [0, 0], "E": [9, 357], "calls": 13, "ov": [], "wall_s": 23.0}
+{"policy": "jev_unit", "map": "10m_vs_11m", "seed": 3, "win": 0, "ret": 4.398, "steps": 14, "open": {}, "A": [0, 0], "E": [8, 348], "calls": 14, "ov": [], "wall_s": 15.2}
+{"policy": "jev_unit", "map": "10m_vs_11m", "seed": 4, "win": 0, "ret": 4.248, "steps": 14, "open": {}, "A": [0, 0], "E": [8, 354], "calls": 14, "ov": [], "wall_s": 22.2}
+{"policy": "jev_unit", "map": "10m_vs_11m", "seed": 5, "win": 0, "ret": 4.398, "steps": 13, "open": {}, "A": [0, 0], "E": [8, 348], "calls": 13, "ov": [], "wall_s": 19.0}

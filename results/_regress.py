@@ -68,6 +68,9 @@ class RandomClient:
 def make_policy(spec: str, map_name: str, seed: int):
     if spec == "dummy":
         return J.DummyActionPolicy()
+    if spec == "jev":
+        # Real Jev answers every exam (card 4 in the README). Network calls.
+        return J.JevActionPolicy(tag="jev")
     if spec == "default":
         return J.JevActionPolicy(client=DefaultClient(), tag="default")
     if spec == "random":
@@ -208,6 +211,7 @@ def run(spec: str, map_name: str, seed: int, trace: bool = False, scenario: Opti
         "steps": steps,
         "open": asked,
         **left,
+        "calls": getattr(pol, "n_calls", 0),
         "ov": (lambda o: list(o[:8]) if isinstance(o, list) else o)(getattr(pol, "overrides", [])),
     }
     if trace:

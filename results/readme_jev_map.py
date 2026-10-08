@@ -35,9 +35,9 @@ BEFORE = [
 DURING = [
     (4, ["How should each unit group fight right now?", "at decision steps; 3–5 options per question"],
      ["Battle state + the options + a manual saying which", "unit mixes each option suits"],
-     "Jev 77 / 115 wins",
+     "Jev 91 / 115 wins (in-sample)",
      [("Random answers to the same questions", "74"), ("Attack-move (default) / hand rules", "53 / 92")],
-     "≈ random", NO),
+     "beats random; +7 unseen", MEH),
     (5, ["Which preset tactic for the next 5 steps?", "mid-battle, only where the value model is unsure"],
      ["Model's top 3 tactics + keep current; for each: what", "it does, model estimate, record in 20 similar moments"],
      "Jev 527 / 1,000 wins",
@@ -136,9 +136,9 @@ def main():
         g += card(colx[1], y0 + i * (CH + gap), it)
     tx, tyy = colx[1], y0 + 2 * (CH + gap)
     g.append(f'<rect x="{tx}" y="{tyy}" width="{CW}" height="{CH}" rx="8" fill="none" stroke="{RULE}" stroke-dasharray="4 4"/>')
-    for i, line in enumerate(["Wherever Jev chose, a random pick, a lookup,",
-                              "or a vote over the same information did",
-                              "about as well.",
+    for i, line in enumerate(["Except ④ on the maps its evidence came from,",
+                              "a random pick, a lookup, or a vote over the",
+                              "same information did about as well.",
                               "",
                               "The choices themselves were worth little:",
                               "even a perfect pick in ③ adds only +25 of 720."]):
