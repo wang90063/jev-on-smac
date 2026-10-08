@@ -19,17 +19,29 @@ def _load_key() -> str:
     return key
 
 
+def _load_base_url() -> str:
+    """Gateway URL from SYSTEM2_BASE_URL, else the base_url in ~/.codex/config.toml. Kept out of the repo."""
+    url = os.environ.get("SYSTEM2_BASE_URL", "").strip()
+    if url:
+        return url
+    cfg = Path.home() / ".codex" / "config.toml"
+    m = re.search(r'^base_url\s*=\s*"([^"]+)"', cfg.read_text(), re.M) if cfg.is_file() else None
+    if not m:
+        raise RuntimeError("No gateway URL: set SYSTEM2_BASE_URL or base_url in ~/.codex/config.toml")
+    return m.group(1)
+
+
 class System2Client:
-    """Codex wire_api=responses on LLM gateway. DeepSeek-V4-Flash is ~0.8s when healthy."""
+    """Codex wire_api=responses on the configured gateway. DeepSeek-V4-Flash is ~0.8s when healthy."""
 
     def __init__(
         self,
         model: str = "DeepSeek-V4-Flash",
-        base_url: str = "https://llm-gateway.example/v1",
+        base_url: Optional[str] = None,
         timeout: float = 6.0,
     ):
         self.model = model
-        self.url = base_url.rstrip("/") + "/responses"
+        self.url = (base_url or _load_base_url()).rstrip("/") + "/responses"
         self.timeout = timeout
         self._key = _load_key()
         self.n_calls = 0
