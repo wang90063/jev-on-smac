@@ -72,26 +72,39 @@ We asked it questions at nine different points in the system. Each time, Jev had
 
 It cleared neither bar anywhere.
 
-**Choosing a tactic before or during a battle**, measured in battles won:
+<p align="center">
+  <img src="report/jev_map.svg" alt="Map of the nine places Jev was tried: five tactic choices measured in real battles, four battle judgments measured offline" width="100%">
+</p>
+
+The nine questions fall into two groups:
+- **A. Choosing a tactic** (①–⑤), measured in real battles. Wherever Jev picked, a random pick, a lookup, or a plain vote did about as well.
+- **B. Judging the battle** (⑥–⑨), measured offline. Jev was the best judge of *"will we win?"* (⑥), but using that judgment to act (⑧) gave nothing on fresh data.
+
+<details>
+<summary><b>The numbers behind each card</b></summary>
+
+**A. Choosing a tactic before or during a battle**, measured in battles won:
 
 | The question Jev was asked | Jev | Simple method, same information | Verdict |
 |---|---|---|---|
-| Every step: *"How should the ranged units fight: attack-move, kite, hold, or fall back?"* (and similar questions for melee, targets, formation) | 77 / 115 official-map battles | Random answers: 74 / 115 | ≈ random |
-| At the start: *"Which program from the tactic library suits this battle?"* | 295 / 600 | Take the program of the most similar training battles: 299 / 600 | no better (p = 0.73) |
-| Same, plus each program's record in the 8 most similar past battles | +1 net vs the lookup | Majority vote over those records: +1 | copies the evidence (they differed on 2 of 600 battles) |
-| Mid-battle, only when the value model is unsure: *"Which preset tactic for the next 5 steps?"* | +4 net / 1,000 battles (p = 0.61) | Random pick: −4 | not significant |
-| At the start, in the current system: *"Hold position or push?"*, with 8 similar battles and their real outcomes | +6 net / 720 battles | Majority vote of the same 8: +5 | = vote; the best possible pick is only +25 |
+| ① At the start: *"Which program from the tactic library suits this battle?"* | 295 / 600 | Take the program of the most similar training battles: 299 / 600 | no better (p = 0.73) |
+| ② Same, plus each program's record in the 8 most similar past battles | +1 net vs the lookup | Majority vote over those records: +1 | copies the evidence (they differed on 2 of 600 battles) |
+| ③ At the start, in the current system: *"Hold position or push?"*, with 8 similar battles and their real outcomes | +6 net / 720 battles | Majority vote of the same 8: +5 | = vote; the best possible pick is only +25 |
+| ④ Every step: *"How should the ranged units fight: attack-move, kite, hold, or fall back?"* (and similar questions for melee, targets, formation) | 77 / 115 official-map battles | Random answers: 74 / 115 | ≈ random |
+| ⑤ Mid-battle, only when the value model is unsure: *"Which preset tactic for the next 5 steps?"* | +4 net / 1,000 battles (p = 0.61) | Random pick: −4 | not significant |
 
-**Judging the battle**, measured offline on recorded decision points, with no battles played:
+**B. Judging the battle**, measured offline on recorded decision points, with no battles played:
 
 | The question Jev was asked | Jev | Simple method, same information | Verdict |
 |---|---|---|---|
-| *"Will we win from here?"*, with 8 similar examples | AUC 0.874 | Our-HP ÷ their-HP ratio: AUC 0.835 | best judge in the project, but not significant (95% CI of the gap includes 0) |
-| *"What is P(win) after each of these 13 actions?"* | Rank correlation with the true value of each action: 0.054 | Our value model: 0.305 | cannot tell actions apart; its 13 estimates barely differ (std 0.047) |
-| Use the "will we win?" judgment as a gate: switch tactics only when Jev says we are losing | +5.42 on the batch where the rule was tuned → **+0.06** on a fresh batch | Always switch when similar battles suggest it: +2.13 on the fresh batch | did not replicate |
-| Sanity check: *"One of these two programs is clearly better here (≥ 3 more wins). Which one?"* | 45 / 73 correct | "Pick the option that changes nothing": 46 / 73 | no real discrimination |
+| ⑥ *"Will we win from here?"*, with 8 similar examples | AUC 0.874 | Our-HP ÷ their-HP ratio: AUC 0.835 | best judge in the project, but not significant (95% CI of the gap includes 0) |
+| ⑦ *"What is P(win) after each of these 13 actions?"* | Rank correlation with the true value of each action: 0.054 | Our value model: 0.305 | cannot tell actions apart; its 13 estimates barely differ (std 0.047) |
+| ⑧ Use the "will we win?" judgment as a gate: switch tactics only when Jev says we are losing | +5.42 on the batch where the rule was tuned → **+0.06** on a fresh batch | Always switch when similar battles suggest it: +2.13 on the fresh batch | did not replicate |
+| ⑨ Sanity check: *"One of these two programs is clearly better here (≥ 3 more wins). Which one?"* | 45 / 73 correct | "Pick the option that changes nothing": 46 / 73 | no real discrimination |
 
 Each row is a separate round. The technical report (in Chinese) has all 12 experiments: [results/tech_report.html](results/tech_report.html).
+
+</details>
 
 ### Why it didn't help
 - **Small headroom.** The choices on offer rarely change the outcome. Even picking the best option per scenario in hindsight is worth only +25 / 720 battles (3.5%) for hold-vs-push, and +24 to +27 / 300 for choosing from the tactic program library.
