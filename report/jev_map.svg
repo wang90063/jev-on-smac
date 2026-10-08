@@ -1,103 +1,163 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 862" width="960" height="862" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1148" width="960" height="1148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#59636e"/></marker><marker id="arrj" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8250df"/></marker></defs>
-<rect width="960" height="862" fill="#ffffff"/>
-<rect x="24" y="20" width="912" height="474" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
-<text x="40" y="48" font-size="17" fill="#1f2328" font-weight="700" text-anchor="start">A.  Choosing a tactic</text>
-<text x="234" y="48" font-size="13" fill="#59636e" font-weight="400" text-anchor="start">measured in real battles: wins, or net wins vs the default</text>
-<line x1="40" y1="72" x2="920" y2="72" stroke="#59636e" stroke-width="1.5" marker-end="url(#arr)"/>
-<circle cx="40" cy="72" r="4" fill="#59636e"/>
-<text x="50" y="65" font-size="11.5" fill="#59636e" font-weight="700" text-anchor="start">BEFORE THE BATTLE</text>
-<circle cx="490" cy="72" r="4" fill="#59636e"/>
-<text x="500" y="65" font-size="11.5" fill="#59636e" font-weight="700" text-anchor="start">DURING THE BATTLE</text>
-<rect x="40" y="86" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="60" cy="108" r="11" fill="#8250df"/>
-<text x="60" y="112.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">1</text>
-<text x="80" y="113" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Which program from the tactic library</text>
-<text x="80" y="131" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">suits this battle?</text>
-<text x="80" y="157" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev 295 / 600 wins</text>
-<text x="80" y="176" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Lookup of most similar battles: 299 / 600</text>
-<rect x="386.9" y="178" width="71.1" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="422.45" y="191" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">no better</text>
-<rect x="40" y="218" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="60" cy="240" r="11" fill="#8250df"/>
-<text x="60" y="244.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">2</text>
-<text x="80" y="245" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Same, plus each program's record</text>
-<text x="80" y="263" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">in the 8 most similar past battles</text>
-<text x="80" y="289" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev +1 net</text>
-<text x="80" y="308" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Majority vote over those records: +1</text>
-<rect x="317.9" y="310" width="140.1" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="387.95" y="323" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">copies the evidence</text>
-<rect x="40" y="350" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="60" cy="372" r="11" fill="#8250df"/>
-<text x="60" y="376.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">3</text>
-<text x="80" y="377" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Hold position or push?</text>
-<text x="80" y="395" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">(current system, 8 similar battles shown)</text>
-<text x="80" y="421" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev +6 net / 720</text>
-<text x="80" y="440" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Majority vote of the same 8: +5</text>
-<rect x="407.6" y="442" width="50.400000000000006" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="432.8" y="455" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">= vote</text>
-<rect x="490" y="86" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="510" cy="108" r="11" fill="#8250df"/>
-<text x="510" y="112.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">4</text>
-<text x="530" y="113" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Every step: how should each unit group</text>
-<text x="530" y="131" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">fight? attack-move / kite / hold / fall back</text>
-<text x="530" y="157" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev 77 / 115 wins</text>
-<text x="530" y="176" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random answers: 74 / 115</text>
-<rect x="843.8" y="178" width="64.2" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="875.9" y="191" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">≈ random</text>
-<rect x="490" y="218" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="510" cy="240" r="11" fill="#8250df"/>
-<text x="510" y="244.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">5</text>
-<text x="530" y="245" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Every 5 steps, only when the value model</text>
-<text x="530" y="263" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">is unsure: which preset tactic next?</text>
-<text x="530" y="289" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev +4 net / 1,000 (p = 0.61)</text>
-<text x="530" y="308" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random pick: −4</text>
-<rect x="795.5" y="310" width="112.5" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="851.75" y="323" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">not significant</text>
-<rect x="490" y="350" width="430" height="118" rx="8" fill="none" stroke="#d0d7de" stroke-dasharray="4 4"/>
-<text x="508" y="380" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">Wherever Jev chose, a random pick, a lookup,</text>
-<text x="508" y="399" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">or a plain vote over the same information</text>
-<text x="508" y="418" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">did about as well. The best possible pick was</text>
-<text x="508" y="437" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">itself small: +25 of 720 battles for ③.</text>
-<rect x="24" y="512" width="912" height="330" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
-<text x="40" y="540" font-size="17" fill="#1f2328" font-weight="700" text-anchor="start">B.  Judging the battle</text>
-<text x="234" y="540" font-size="13" fill="#59636e" font-weight="400" text-anchor="start">measured offline on recorded decision points, no battles played</text>
-<rect x="40" y="558" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="60" cy="580" r="11" fill="#8250df"/>
-<text x="60" y="584.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">6</text>
-<text x="80" y="585" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Will we win from here?</text>
-<text x="80" y="603" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">(8 similar examples shown)</text>
-<text x="80" y="629" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev AUC 0.874</text>
-<text x="80" y="648" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">HP ratio: AUC 0.835</text>
-<rect x="262.7" y="650" width="195.3" height="18" rx="9" fill="#9a6700" fill-opacity="0.12" stroke="#9a6700" stroke-opacity="0.5"/>
-<text x="360.35" y="663" font-size="11.5" fill="#9a6700" font-weight="600" text-anchor="middle">best judge, not significant</text>
-<rect x="490" y="558" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="510" cy="580" r="11" fill="#8250df"/>
-<text x="510" y="584.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">7</text>
-<text x="530" y="585" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">What is P(win) after each</text>
-<text x="530" y="603" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">of these 13 actions?</text>
-<text x="530" y="629" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev rank corr. 0.054</text>
-<text x="530" y="648" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Our value model: 0.305</text>
-<rect x="726.5" y="650" width="181.5" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="817.25" y="663" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">cannot tell actions apart</text>
-<rect x="40" y="706" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="60" cy="728" r="11" fill="#8250df"/>
-<text x="60" y="732.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">8</text>
-<text x="80" y="733" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Switch tactics only when Jev</text>
-<text x="80" y="751" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">says we are losing (uses ⑥)</text>
-<text x="80" y="777" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev +5.42 → +0.06 on fresh data</text>
-<text x="80" y="796" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Always switch on similar-battle advice: +2.13</text>
-<rect x="331.7" y="798" width="126.30000000000001" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="394.85" y="811" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">did not replicate</text>
-<rect x="490" y="706" width="430" height="118" rx="8" fill="#ffffff" stroke="#d0d7de"/>
-<circle cx="510" cy="728" r="11" fill="#8250df"/>
-<text x="510" y="732.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">9</text>
-<text x="530" y="733" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Sanity check: one of two programs is</text>
-<text x="530" y="751" font-size="13.5" fill="#1f2328" font-weight="400" text-anchor="start">clearly better here. Which one?</text>
-<text x="530" y="777" font-size="13" fill="#8250df" font-weight="600" text-anchor="start">Jev 45 / 73 correct</text>
-<text x="530" y="796" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">“Pick the option that changes nothing”: 46 / 73</text>
-<rect x="781.7" y="798" width="126.30000000000001" height="18" rx="9" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
-<text x="844.85" y="811" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">no discrimination</text>
-<path d="M 104 676 L 104 706" stroke="#8250df" stroke-width="2" fill="none" marker-end="url(#arrj)"/>
-<text x="114" y="695.5" font-size="11.5" fill="#8250df" font-weight="700" text-anchor="start">judging well ≠ acting well</text>
+<rect width="960" height="1148" fill="#ffffff"/>
+<circle cx="32" cy="18" r="5" fill="#8250df"/>
+<text x="43" y="22" font-size="12.5" fill="#1f2328" font-weight="600" text-anchor="start">Jev's result</text>
+<rect x="136" y="13" width="10" height="10" rx="2" fill="#59636e"/>
+<text x="152" y="22" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Baselines given the same information, no Jev.  (default) = what the system did there without Jev.</text>
+<rect x="24" y="38" width="912" height="624" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="40" y="66" font-size="17" fill="#1f2328" font-weight="700" text-anchor="start">A.  Choosing a tactic</text>
+<text x="234" y="66" font-size="13" fill="#59636e" font-weight="400" text-anchor="start">measured in real battles: wins, or net wins vs the default</text>
+<line x1="40" y1="90" x2="920" y2="90" stroke="#59636e" stroke-width="1.5" marker-end="url(#arr)"/>
+<circle cx="40" cy="90" r="4" fill="#59636e"/>
+<text x="50" y="83" font-size="11.5" fill="#59636e" font-weight="700" text-anchor="start">BEFORE THE BATTLE</text>
+<circle cx="490" cy="90" r="4" fill="#59636e"/>
+<text x="500" y="83" font-size="11.5" fill="#59636e" font-weight="700" text-anchor="start">DURING THE BATTLE</text>
+<rect x="40" y="104" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="60" cy="126" r="11" fill="#8250df"/>
+<text x="60" y="130.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">1</text>
+<text x="80" y="131" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Which library program should run this battle?</text>
+<text x="80" y="149" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">once, at the start; 5 options</text>
+<text x="80" y="172" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Battle summary; per program: what it does, the fight</text>
+<text x="80" y="187" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">it was written for, its record on fresh fights</text>
+<line x1="80" y1="198" x2="456" y2="198" stroke="#d0d7de"/>
+<text x="80" y="220" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev 295 / 600 wins</text>
+<rect x="245.89999999999998" y="207" width="210.10000000000002" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="350.95" y="220.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">beats random, not the default</text>
+<text x="80" y="243" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Nearest-cluster lookup (default)</text>
+<text x="456" y="243" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">299</text>
+<text x="80" y="261" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random pick, same 5 options</text>
+<text x="456" y="261" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">273</text>
+<rect x="40" y="286" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="60" cy="308" r="11" fill="#8250df"/>
+<text x="60" y="312.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">2</text>
+<text x="80" y="313" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Same pick, plus evidence</text>
+<text x="80" y="331" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">Jev asked only when the evidence was unclear</text>
+<text x="80" y="354" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>All of ① + each program's win/loss record vs</text>
+<text x="80" y="369" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">attack-move in the 8 most similar training battles</text>
+<line x1="80" y1="380" x2="456" y2="380" stroke="#d0d7de"/>
+<text x="80" y="402" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev +1 net vs default</text>
+<rect x="314.9" y="389" width="141.1" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="385.45" y="402.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">copies the evidence</text>
+<text x="80" y="425" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Evidence vote over the same records</text>
+<text x="456" y="425" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+1</text>
+<text x="80" y="443" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Jev and the vote differed on</text>
+<text x="456" y="443" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">2 / 600</text>
+<rect x="40" y="468" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="60" cy="490" r="11" fill="#8250df"/>
+<text x="60" y="494.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">3</text>
+<text x="80" y="495" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Hold position or push?</text>
+<text x="80" y="513" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">once, at the start, in today's system</text>
+<text x="80" y="536" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Unit stat cards + the 8 most similar other battles,</text>
+<text x="80" y="551" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">each with its real hold and push results</text>
+<line x1="80" y1="562" x2="456" y2="562" stroke="#d0d7de"/>
+<text x="80" y="584" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev +6 net / 720</text>
+<rect x="404.6" y="571" width="51.400000000000006" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="430.3" y="584.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">= vote</text>
+<text x="80" y="607" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Evidence vote over the same 8 battles</text>
+<text x="456" y="607" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+5</text>
+<text x="80" y="625" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Best pick per battle in hindsight (ceiling)</text>
+<text x="456" y="625" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+25</text>
+<rect x="490" y="104" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="510" cy="126" r="11" fill="#8250df"/>
+<text x="510" y="130.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">4</text>
+<text x="530" y="131" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">How should each unit group fight right now?</text>
+<text x="530" y="149" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">at decision steps; 3–5 options per question</text>
+<text x="530" y="172" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Battle state + the options + a manual saying which</text>
+<text x="530" y="187" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">unit mixes each option suits</text>
+<line x1="530" y1="198" x2="906" y2="198" stroke="#d0d7de"/>
+<text x="530" y="220" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev 77 / 115 wins</text>
+<rect x="840.8" y="207" width="65.2" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="873.4" y="220.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">≈ random</text>
+<text x="530" y="243" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random answers to the same questions</text>
+<text x="906" y="243" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">74</text>
+<text x="530" y="261" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Attack-move (default) / hand rules</text>
+<text x="906" y="261" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">53 / 92</text>
+<rect x="490" y="286" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="510" cy="308" r="11" fill="#8250df"/>
+<text x="510" y="312.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">5</text>
+<text x="530" y="313" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Which preset tactic for the next 5 steps?</text>
+<text x="530" y="331" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">mid-battle, only where the value model is unsure</text>
+<text x="530" y="354" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Model's top 3 tactics + keep current; for each: what</text>
+<text x="530" y="369" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">it does, model estimate, record in 20 similar moments</text>
+<line x1="530" y1="380" x2="906" y2="380" stroke="#d0d7de"/>
+<text x="530" y="402" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev 527 / 1,000 wins</text>
+<rect x="813.2" y="389" width="92.80000000000001" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="859.6" y="402.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">+4, p = 0.61</text>
+<text x="530" y="425" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Value model alone (default)</text>
+<text x="906" y="425" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">523</text>
+<text x="530" y="443" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random pick, same 4 options</text>
+<text x="906" y="443" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">519</text>
+<rect x="490" y="468" width="430" height="168" rx="8" fill="none" stroke="#d0d7de" stroke-dasharray="4 4"/>
+<text x="508" y="502" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">Wherever Jev chose, a random pick, a lookup,</text>
+<text x="508" y="521" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">or a vote over the same information did</text>
+<text x="508" y="540" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">about as well.</text>
+<text x="508" y="559" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic"></text>
+<text x="508" y="578" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">The choices themselves were worth little:</text>
+<text x="508" y="597" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">even a perfect pick in ③ adds only +25 of 720.</text>
+<rect x="24" y="680" width="912" height="448" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+<text x="40" y="708" font-size="17" fill="#1f2328" font-weight="700" text-anchor="start">B.  Judging the battle</text>
+<text x="234" y="708" font-size="13" fill="#59636e" font-weight="400" text-anchor="start">offline, no new battles: recorded decision points whose true outcomes</text>
+<text x="234" y="726" font-size="13" fill="#59636e" font-weight="400" text-anchor="start">were found by simulation.  ⑦ ⑧ score = true advantage gained, summed over points</text>
+<rect x="40" y="744" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="60" cy="766" r="11" fill="#8250df"/>
+<text x="60" y="770.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">6</text>
+<text x="80" y="771" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Will we win from here?</text>
+<text x="80" y="789" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">yes / no at each recorded decision point</text>
+<text x="80" y="812" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Battle state + the 8 most similar training moments</text>
+<text x="80" y="827" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">with their real outcomes</text>
+<line x1="80" y1="838" x2="456" y2="838" stroke="#d0d7de"/>
+<text x="80" y="860" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev AUC 0.874</text>
+<rect x="259.7" y="847" width="196.3" height="19" rx="9.5" fill="#9a6700" fill-opacity="0.12" stroke="#9a6700" stroke-opacity="0.5"/>
+<text x="357.85" y="860.5" font-size="11.5" fill="#9a6700" font-weight="600" text-anchor="middle">best judge, not significant</text>
+<text x="80" y="883" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Our HP ÷ their HP</text>
+<text x="456" y="883" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">0.835</text>
+<text x="80" y="901" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Average outcome of the same 8</text>
+<text x="456" y="901" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">0.77–0.80</text>
+<rect x="490" y="744" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="510" cy="766" r="11" fill="#8250df"/>
+<text x="510" y="770.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">7</text>
+<text x="530" y="771" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">What is P(win) after each of 13 actions?</text>
+<text x="530" y="789" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">then take the action with the highest</text>
+<text x="530" y="812" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Same as ⑥, plus how each of the 8 examples</text>
+<text x="530" y="827" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">turned out under each of the 13 actions</text>
+<line x1="530" y1="838" x2="906" y2="838" stroke="#d0d7de"/>
+<text x="530" y="860" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev +0.1 (max 37.5)</text>
+<rect x="723.5" y="847" width="182.5" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="814.75" y="860.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">cannot tell actions apart</text>
+<text x="530" y="883" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Average of the same 8 examples</text>
+<text x="906" y="883" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+5.4</text>
+<text x="530" y="901" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Value model (default)</text>
+<text x="906" y="901" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+1.1</text>
+<rect x="40" y="942" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="60" cy="964" r="11" fill="#8250df"/>
+<text x="60" y="968.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">8</text>
+<text x="80" y="969" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Switch only when Jev says we are losing</text>
+<text x="80" y="987" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">rule tuned on 300 points, rerun on 300 fresh</text>
+<text x="80" y="1010" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Same as ⑥; the vote proposes the switch,</text>
+<text x="80" y="1025" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">Jev's P(win) decides whether to take it</text>
+<line x1="80" y1="1036" x2="456" y2="1036" stroke="#d0d7de"/>
+<text x="80" y="1058" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev +5.42 → +0.06</text>
+<rect x="328.7" y="1045" width="127.30000000000001" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="392.35" y="1058.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">did not replicate</text>
+<text x="80" y="1081" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">No gate: always take the vote's switch</text>
+<text x="456" y="1081" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+2.13</text>
+<text x="80" y="1099" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Gate on HP ratio instead</text>
+<text x="456" y="1099" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">+2.07</text>
+<rect x="490" y="942" width="430" height="168" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+<circle cx="510" cy="964" r="11" fill="#8250df"/>
+<text x="510" y="968.5" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">9</text>
+<text x="530" y="969" font-size="13.5" fill="#1f2328" font-weight="600" text-anchor="start">Two tactics: which one wins more here?</text>
+<text x="530" y="987" font-size="12" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">one is ≥ 3 wins of 5 better, known from simulation</text>
+<text x="530" y="1010" font-size="12" fill="#59636e"><tspan font-weight="700" fill="#1f2328">Jev saw: </tspan>Battle summary + what each of the two tactics does</text>
+<line x1="530" y1="1036" x2="906" y2="1036" stroke="#d0d7de"/>
+<text x="530" y="1058" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev 45 / 73 correct</text>
+<rect x="799.4" y="1045" width="106.60000000000001" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="852.7" y="1058.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">= a fixed rule</text>
+<text x="530" y="1081" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random</text>
+<text x="906" y="1081" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">36.5</text>
+<text x="530" y="1099" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Fixed rule: pick “keep attack-move” if offered</text>
+<text x="906" y="1099" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">46</text>
+<path d="M 104 912 L 104 942" stroke="#8250df" stroke-width="2" fill="none" marker-end="url(#arrj)"/>
+<text x="114" y="931.5" font-size="11.5" fill="#8250df" font-weight="700" text-anchor="start">judging well ≠ acting well</text>
 </svg>
