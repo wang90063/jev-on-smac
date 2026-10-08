@@ -1,0 +1,3 @@
+[submodule "smaclite"]
+	path = smaclite
+	url = https://github.com/uoe-agents/smaclite.git
