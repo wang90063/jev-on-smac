@@ -1,9 +1,18 @@
+# secrets
 .typesafe_key
+
+# OS / Python
 .DS_Store
 __pycache__/
 *.pyc
-*.pid
+
 # model weights, downloads, third-party checkouts
 local/
-results/*.log
+
+# run artifacts: logs and pid files from background runs
+*.log
+*.pid
+
+# local-only build outputs, never committed
 results/scenarios/maps/
+kb/library/ood_index.pkl
