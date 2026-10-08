@@ -178,7 +178,6 @@ Environment: [SMAClite](smaclite/) (a lightweight Python re-implementation of SM
 | `smaclite/` | The simulator (git submodule) |
 | `results/` | Evaluation scripts (`_regress.py`, `_dev16.py`), per-round reports `iter*_report.md`, raw logs |
 | `docs/` | Technical report, README figures |
-| `legacy/` | Early experiments (local LLM policies, SC2 runs); not used by the current system |
 | `local/` | Git-ignored: model weights and downloads |
 | `AGENTS.md` | Project conventions and evaluation rules |
 

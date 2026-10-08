@@ -1,5 +1,17 @@
-# secrets
+# secrets: API keys, tokens, credentials (never commit)
 .typesafe_key
+*.key
+*_key
+*_key.txt
+*api_key*
+*apikey*
+*.pem
+.env
+.env.*
+auth.json
+*secret*
+*credential*
+*token*.json
 
 # OS / Python
 .DS_Store
@@ -8,6 +20,9 @@ __pycache__/
 
 # model weights, downloads, third-party checkouts
 local/
+
+# early experiments, kept locally only
+legacy/
 
 # run artifacts: logs and pid files from background runs
 *.log
