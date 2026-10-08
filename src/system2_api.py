@@ -1,4 +1,4 @@
-"""System-2 via the same LLM gateway Responses API Codex uses. Never prints the key."""
+"""System-2 via the Responses API of the LLM gateway Codex uses. Never prints the key."""
 
 from __future__ import annotations
 

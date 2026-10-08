@@ -7,7 +7,7 @@ train scenario so each entry knows where it transfers.
 
 The simulator is used only here, offline. Nothing in play clones state.
 
-    python src/forge.py forge      # needs the LLM gateway API (run outside sandbox, no proxy)
+    python src/forge.py forge      # needs the LLM gateway (run outside sandbox, no proxy)
     python src/forge.py transfer   # local only
 """
 
