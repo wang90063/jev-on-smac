@@ -36,20 +36,23 @@ Fill = remaining HP; lines = current attack target.
 
 A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an action every step.
 
-**The target: RL state of the art on SMAC.** Published win rates on official SMAC (SC2), after millions of training steps:
+**The target: RL state of the art on SMAC.** On the original SMAC benchmark (SMACv1, in SC2), current methods reach nearly 100% on every map. HPN-QMIX (ICLR 2023) wins 100% on 9 of the 10 Hard and Super Hard maps, and 98% on the last one. Newer work has moved to SMACv2 because v1 is close to saturated. These are the numbers we aimed at:
 
-| Map | MAPPO | QMIX | SMAC's scripted heuristic |
-|---|---:|---:|---:|
-| 3m | 100% | 96.9% | – |
-| 2s3z | 100% | 95.3% | 90% |
-| 3s5z | 96.9% | 88.3% | 42% |
-| 5m_vs_6m | 89.1% | 75.8% | 0% |
-| 10m_vs_11m | 96.9% | 95.3% | 12% |
-| 27m_vs_30m | 93.8% | 39.1% | 0% |
-| corridor | 100% | 84.4% | 0% |
-| 6h_vs_8z | 88.3% | 9.4% | 0% |
+| Map | Best published | Method | MAPPO | SMAC's scripted heuristic |
+|---|---:|---|---:|---:|
+| 3m | 100% | MAPPO | 100% | – |
+| 2s3z | 100% | fine-tuned QMIX | 100% | 90% |
+| 3s5z | 100% | fine-tuned QMIX | 96.9% | 42% |
+| 5m_vs_6m | 100% | HPN-QMIX | 89.1% | 0% |
+| 3s_vs_5z | 100% | HPN-QMIX | – | 0% |
+| 10m_vs_11m | 96.9% | MAPPO | 96.9% | 12% |
+| corridor | 100% | HPN-QMIX | 100% | 0% |
+| MMM2 | 100% | HPN-QMIX | 90.6% | – |
+| 3s5z_vs_3s6z | 100% | HPN-QMIX | – | – |
+| 27m_vs_30m | 100% | HPN-QMIX | 93.8% | 0% |
+| 6h_vs_8z | 98% | HPN-QMIX | 88.3% | 0% |
 
-<sub>Sources: Yu et al. (MAPPO), the QMIX paper appendix. Full table with more maps: [results/smaclite_laya_eval.md](results/smaclite_laya_eval.md).</sub>
+<sub>Sources: HPN-QMIX from [pymarl3](https://github.com/tjuHaoXiaotian/pymarl3) (Hao et al., ICLR 2023); fine-tuned QMIX from [pymarl2](https://github.com/hijkzzz/pymarl2); MAPPO from Yu et al. (NeurIPS 2022); the heuristic (attack the closest enemy) from the original SMAC and QMIX papers. All are median test win rates after millions of training steps per map.</sub>
 
 ## Setup and baselines
 
@@ -76,7 +79,7 @@ A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an a
 | Value model | Gradient-boosted trees trained on full-battle outcomes found by offline simulation. |
 | HP ratio | Our remaining HP ÷ the enemy's, used as a win predictor. |
 | Hand rules | Four rules written by hand while looking at the 23 official maps. |
-| RL papers | MAPPO / QMIX numbers above. Reference only: they come from a different simulator. |
+| RL state of the art | HPN-QMIX / fine-tuned QMIX / MAPPO numbers above. Reference only: they come from a different simulator. |
 
 ## Q1. Can Jev directly output each unit's action?
 
@@ -170,19 +173,21 @@ Paired comparisons on test6 (same scenario, same seed; exact sign test):
 - **Feedback matters more than which model writes the code.** Grok saw only aggregate scores, and reached 59.5%. Claude read the simulator source, traced lost battles step by step, and re-ran a paired test after every edit, and reached 72.0%.
 - The biggest single jump came from reading the source. The API doc said `can_attack(u, e)` meant "in range"; it actually means "visible". Units ordered to attack a distant target walked into the enemy line. Fixing that one assumption moved the program from **−100 to +64** (out of 720 battles).
 
-**Did anything reach RL state of the art?** No. The table below is per map on the official maps, run in SMAClite with 5 seeds each. RL numbers are from SC2, where the built-in AI differs. For example, attack-move wins 5m_vs_6m in SMAClite, while SMAC's heuristic gets 0% there. Read across a row, not as a leaderboard.
+**Did anything reach RL state of the art?** No. RL is at 96.9–100% on every one of these maps; our best systems lose whole maps outright. The table below is per map on the official maps, run in SMAClite with 5 seeds each. RL numbers are from SC2, where the built-in AI differs. For example, attack-move wins 5m_vs_6m in SMAClite, while SMAC's heuristic gets 0% there. Read across a row, not as a leaderboard.
 
-| Map | MAPPO (SC2) | Attack-move | Jev exams (④) | Claude program |
+| Map | Best published (SC2) | Attack-move | Jev exams (④) | Claude program |
 |---|---:|---:|---:|---:|
 | 3m | 100% | 5/5 | 5/5 | 5/5 |
 | 2s3z | 100% | 5/5 | 5/5 | 5/5 |
-| 3s5z | 96.9% | 5/5 | 5/5 | 5/5 |
-| 5m_vs_6m | 89.1% | 5/5 | 5/5 | 0/5 |
+| 3s5z | 100% | 5/5 | 5/5 | 5/5 |
+| 5m_vs_6m | 100% | 5/5 | 5/5 | 0/5 |
+| 3s_vs_5z | 100% | 0/5 | 5/5 | 0/5 |
 | 10m_vs_11m | 96.9% | 0/5 | 0/5 | 5/5 |
-| 27m_vs_30m | 93.8% | 1/5 | 3/5 | 4/5 |
 | corridor | 100% | 0/5 | 5/5 | 0/5 |
-| 6h_vs_8z | 88.3% | 0/5 | 0/5 | 0/5 |
-| MMM2 | 90.6% | 0/5 | 0/5 | 0/5 |
+| MMM2 | 100% | 0/5 | 0/5 | 0/5 |
+| 3s5z_vs_3s6z | 100% | 0/5 | 0/5 | 5/5 |
+| 27m_vs_30m | 100% | 1/5 | 3/5 | 4/5 |
+| 6h_vs_8z | 98% | 0/5 | 0/5 | 0/5 |
 | **All 23 maps** | – | 53 / 115 | 77 / 115 | 65 / 115 |
 
 **Where a model like Jev could fit:** tasks with a few high-stakes decisions that can be described in words, where a judgment can be turned into an action like retreat, reinforce, or skip this fight. Full-game macro fits that. In JEV-Star's real-time SC2 macro games, Jev alone went 0 / 10, while Jev choosing among actions filtered by an LLM plan went **9 / 10** (external result). Small-scale SMAC micro is the opposite of that kind of task.
