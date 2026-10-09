@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Narrated video of docs/deck.html: one still per slide, macOS TTS for the voice.
 
-  python docs/make_video.py                              # writes docs/deck.mp4, online voice
+  python docs/make_video.py                              # writes video/deck.mp4, online voice
   python docs/make_video.py --voice Tingting --rate 190  # macOS `say` instead, offline
 
 Voices named like zh-CN-YunxiNeural go through edge-tts (online: the narration text is sent to
@@ -58,10 +58,11 @@ def main():
     ap.add_argument("--voice", default="zh-CN-YunxiNeural")
     ap.add_argument("--rate", type=int, default=0,
                     help="edge-tts: percent faster (+) or slower (-); say: words per minute, 0 = the voice default")
-    ap.add_argument("--out", default=str(DOCS / "deck.mp4"))
+    ap.add_argument("--out", default=str(DOCS.parent / "video" / "deck.mp4"))
     args = ap.parse_args()
 
     WORK.mkdir(exist_ok=True)
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     text = sections(DOCS / "deck_narration.md")
     segs = []
     for n in sorted(text):

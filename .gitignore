@@ -31,3 +31,6 @@ legacy/
 # local-only build outputs, never committed
 results/scenarios/maps/
 kb/library/ood_index.pkl
+
+# narrated deck video (python docs/make_video.py), kept locally only
+video/
