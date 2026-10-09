@@ -161,11 +161,31 @@ Jev's edge over random answers fell from +17 / 115 to **+7 / 400**. It still tie
 
 - **The knowledge didn't transfer.** On the official maps, the gun-line kite was the option that won; on val it was worth +1. The hand rules carry exactly this knowledge, and they lost their edge with it.
 - **Jev didn't make up for it.** On val the menu still had room, and Jev captured as much of it as random answers did (39 vs 37). On the official maps it captured 38 of 40, because its option text and its gate were written from those maps.
-- **The gate wasn't what held it back.** The gate closed 5 kinds of question: formation, kite style, bait, stand, and mark. No pin of theirs had beaten attack-move on the official maps, but they had opened in only 5–15 of the 115 battles there, so we lifted the gate and pinned each of their options on val.
-  - The ceiling rose only from +67 to **+73** of 400.
-  - Most closed options never changed a result. Of those that did, opening the formation lost more than it won (+4 / −14), and mark was a wash (+4 / −3).
-  - Random answers with the gate lifted won 186, versus 189 with it.
-  - Lifting the gate added more ways to lose than to win. (`python results/baseline_rerun.py relax`; nested kinds were pinned under their parent option.)
+
+<details>
+<summary><b>Was the evidence gate too strict?</b> No: the questions it closed add only +6 of 400 to the ceiling.</summary>
+
+<br>
+
+The gate closed 5 kinds of question: formation, kite style, bait, stand, and mark. No pin of theirs had beaten attack-move on the official maps, but they had opened in only 5–15 of the 115 battles there. So we lifted the gate and pinned each of their options on val. Kite style and stand open only under the gun-line kite, and bait only under melee snipe, so those were pinned together with their parent option and compared against the parent alone.
+
+| val, 400 battles | Wins | vs comparison (flips / losses) |
+|---|---:|---:|
+| Attack-move | 176 | – |
+| Ceiling, gated menu (best pin per battle) | 243 | +67 over attack-move |
+| **Ceiling, closed kinds added** | **249** | **+73** over attack-move |
+| Formation: open | 166 | +4 / −14 vs attack-move |
+| Mark | 177 | +4 / −3 vs attack-move |
+| Bait: two (under melee snipe) | 174 | +0 / −4 vs snipe alone |
+| Kite style, stand (under the gun-line kite) | 177 | +0 / −0 vs the kite alone (opened in ≤ 1 battle) |
+| Random answers, gated | 189 | – |
+| Random answers, gate lifted | 186 | – |
+
+On the official maps the closed kinds add nothing to the ceiling (93 either way). Even if Jev captured all 6 extra battles on val, it would reach 202 against the hand rules' 196, which is not significant. The extra options mostly add ways to lose.
+
+<sub>`python results/baseline_rerun.py relax` then `headroom`; rows in `results/rerun/relax_{official,val}.jsonl`.</sub>
+
+</details>
 
 Tactics fitted to the battles they were found on was a pattern from the start:
 - **Round 2:** an LLM forged the best program for each training scenario, worth +56 battles in-sample. Moved to other scenarios, 4 of the 33 stayed positive. On the test set the library lost to attack-move (84–85 vs 90), whether Jev, a lookup, or a coin picked the program.
