@@ -21,8 +21,8 @@ DOCS = Path(__file__).resolve().parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 WORK = Path("/tmp/deckvideo")
 PAD = 0.6  # seconds of silence after each slide's narration
-# Animated images to play over their still frame: slide -> (file, x, y, w, h) in 1920x1080 pixels (inside the border).
-OVERLAY = {13: ("fight_zoom.gif", 110, 218, 869, 747)}
+# Animated images to play over their still frame: slide -> [(file, x, y, w, h)] in 1920x1080 pixels (inside the border).
+OVERLAY = {13: [("fight_zoom.gif", 110, 218, 816, 702), ("duel.gif", 990, 780, 312, 208)]}
 
 
 def sections(path: Path) -> dict[int, str]:
@@ -75,10 +75,14 @@ def main():
         speak(text[n], args.voice, args.rate, audio)
         length = duration(audio) + PAD
         video = ["-loop", "1", "-framerate", "30", "-i", str(still)]
-        if n in OVERLAY:
-            gif, x, y, w, h = OVERLAY[n]
+        gifs = OVERLAY.get(n, [])
+        chain, last = [], "0:v"
+        for i, (gif, x, y, w, h) in enumerate(gifs, 1):
             video += ["-ignore_loop", "0", "-i", str(DOCS / gif)]
-            vf = ["-filter_complex", f"[1:v]scale={w}:{h}[g];[0:v][g]overlay={x}:{y}[v]", "-map", "[v]", "-map", "2:a"]
+            chain += [f"[{i}:v]scale={w}:{h}[g{i}]", f"[{last}][g{i}]overlay={x}:{y}[v{i}]"]
+            last = f"v{i}"
+        if gifs:
+            vf = ["-filter_complex", ";".join(chain), "-map", f"[{last}]", "-map", f"{len(gifs) + 1}:a"]
         else:
             vf = ["-map", "0:v", "-map", "1:a"]
         run("ffmpeg", "-y", *video, "-i", str(audio), *vf,
