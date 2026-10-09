@@ -12,7 +12,7 @@ from PIL import Image, ImageChops
 
 DOCS = Path(__file__).resolve().parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-CHARTS = ["speed", "step1", "s23", "head", "test6", "ontop", "why", "auc"]
+CHARTS = ["speed", "step1", "s23", "head", "test6", "ontop", "why", "auc", "qmap"]
 PAD = 24  # pixels of white kept around the content, at 2x
 
 
@@ -22,7 +22,7 @@ def main():
     for c in CHARTS:
         dest = out / f"{c}.png"
         subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=2",
-                        "--window-size=1100,900", f"--screenshot={dest}", f"file://{DOCS / 'charts.html'}?c={c}"],
+                        "--window-size=1300,900", f"--screenshot={dest}", f"file://{DOCS / 'charts.html'}?c={c}"],
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         im = Image.open(dest).convert("RGB")
         box = ImageChops.difference(im, Image.new("RGB", im.size, (255, 255, 255))).getbbox()

@@ -56,6 +56,23 @@ body { background: #fff; color: var(--ink); font-family: var(--sans); }
 .db .t b { position: absolute; top: 50%; transform: translateY(-50%); font: 600 14px var(--mono); white-space: nowrap; }
 .axis { position: relative; height: 22px; margin-left: 164px; font: 12px var(--mono); color: var(--faint); }
 .axis span { position: absolute; transform: translateX(-50%); top: 4px; }
+.qmap { position: relative; width: 1136px; height: 460px; }
+.qhead { position: absolute; top: 4px; font-size: 16px; font-weight: 700; text-align: center; }
+.qhead span { font-weight: 400; color: var(--muted); font-size: 14px; }
+.band { position: absolute; left: 190px; right: 0; height: 132px; background: #efede6; border-radius: 12px; }
+.lvl { position: absolute; left: 0; width: 186px; height: 132px; display: flex; flex-direction: column; justify-content: center; padding-left: 26px; }
+.lvl b { font-size: 18px; }
+.lvl span { font-size: 13px; line-height: 1.45; color: var(--muted); margin-top: 4px; }
+.uparrow { position: absolute; left: 6px; top: 46px; height: 396px; width: 2px; background: var(--faint); }
+.uparrow::before { content: ""; position: absolute; left: -5px; top: -2px; border: 6px solid transparent; border-bottom: 9px solid var(--faint); border-top: 0; }
+.qn { position: absolute; width: 340px; height: 96px; background: #fff; border: 2px solid var(--jev); border-radius: 12px; padding: 10px 14px 10px 62px; display: flex; flex-direction: column; justify-content: center; }
+.qn i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: var(--jev); color: #fff; font: 700 14px var(--mono); font-style: normal; display: flex; align-items: center; justify-content: center; }
+.qn b { font-size: 15.5px; line-height: 1.35; }
+.qn span { font-size: 12.5px; line-height: 1.35; color: var(--muted); margin-top: 3px; }
+.qempty { position: absolute; width: 340px; height: 96px; border: 1.5px dashed #c9c6bc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--faint); }
+.qarrows { position: absolute; left: 0; top: 0; pointer-events: none; }
+.qlab { position: absolute; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.qlab b { display: block; color: var(--jev); font-size: 14px; }
 </style>
 </head>
 <body>
@@ -138,6 +155,39 @@ body { background: #fff; color: var(--ink); font-family: var(--sans); }
 <div class="panel" id="p-auc" style="width:720px">
   <div class="chart-title">"Will we win from here?" <span>· AUC; bars start at 0.5 (chance)</span></div>
   <div id="c-auc"></div>
+</div>
+
+<div class="panel" id="p-qmap" style="width:1200px">
+  <div class="chart-title">Four questions <span>· Jev decides at a higher level each time, and the battlefield moves from the official maps to unseen battles</span></div>
+  <div class="qmap" style="margin-top:14px">
+    <div class="qhead" style="left:0; width:180px; text-align:left; color:var(--faint)">Level Jev decides</div>
+    <div class="qhead" style="left:200px; width:440px">Official maps <span>· 115 battles · questions and rules written here</span></div>
+    <div class="qhead" style="left:680px; width:456px">Unseen generated battles <span>· val and test sets</span></div>
+    <div class="band" style="top:38px"></div>
+    <div class="band" style="top:178px"></div>
+    <div class="band" style="top:318px"></div>
+    <div class="lvl" style="top:38px"><b>Pick on a system</b><span>a system plays the whole battle; Jev picks among its candidates</span></div>
+    <div class="lvl" style="top:178px"><b>Group tactics</b><span>Jev picks a tactic per unit group; code executes</span></div>
+    <div class="lvl" style="top:318px"><b>Unit actions</b><span>Jev picks every unit's action each 0.5 s</span></div>
+    <div class="uparrow"></div>
+    <div class="qn" style="left:250px; top:336px"><i>Q1</i><b>Can Jev win by giving every unit its action?</b><span>one question per unit; options are its legal actions</span></div>
+    <div class="qn" style="left:250px; top:196px"><i>Q2</i><b>Do Jev's group tactics add anything?</b><span>7 questions, 2–6 named tactics each</span></div>
+    <div class="qn" style="left:738px; top:196px"><i>Q3</i><b>Does it still hold on unseen battles?</b><span>same questions, same execution code</span></div>
+    <div class="qn" style="left:738px; top:56px"><i>Q4</i><b>Can Jev add wins on top of systems that generalize?</b><span>tactic library, value model, LLM-written programs</span></div>
+    <div class="qempty" style="left:250px; top:56px">reference only for these systems</div>
+    <div class="qempty" style="left:738px; top:336px">not run: already 0 / 35 on the official maps</div>
+    <svg class="qarrows" viewBox="0 0 1136 460" width="1136" height="460">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e8590c"/></marker></defs>
+      <line x1="420" y1="334" x2="420" y2="296" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+      <line x1="592" y1="244" x2="734" y2="244" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+      <line x1="908" y1="194" x2="908" y2="156" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+    </svg>
+    <div class="qlab" style="left:432px; top:294px"><b>Lower the dimension</b>Q1 failed: large action space, questions can't coordinate, numeric differences</div>
+    <div class="qlab" style="left:596px; top:206px; width:138px; text-align:center"><b>Change battlefield</b></div>
+    <div class="qlab" style="left:596px; top:250px; width:138px; text-align:center">questions and rules written from the official maps</div>
+    <div class="qlab" style="left:920px; top:154px; width:216px"><b>Generalize first</b>Q3 failed: tactics fit the official maps</div>
+  </div>
+  <div class="note">Same test for every question: Jev must beat, significantly, a control given the same information without Jev.</div>
 </div>
 
 <script>

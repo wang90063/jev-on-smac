@@ -338,11 +338,18 @@ The splits (train, train2, val, test–test6) are defined under *Setup → Battl
   Replacing attack-move with the whole execution program was worth **+245 of 1,000** unseen battles (test6). That is about 10× the tactic choice.
 - **So the room is at the action level, where step 1 failed.** Code fills it directly, which is why the approach that worked was having an LLM write the code.
 
-All nine places Jev was tried, with what it saw and its controls:
+Where Jev was tried: the four questions, by the level Jev decides at and the battlefield.
+
+<p align="center"><img src="docs/charts/qmap.png" alt="The four questions: Jev decides unit actions, then group tactics, then picks on top of a system; the battlefield moves from the official maps to unseen battles" width="100%"></p>
+
+<details>
+<summary>All nine places Jev was tried, with what it saw and its controls</summary>
 
 <p align="center">
   <img src="docs/jev_map.svg" alt="Map of the nine places Jev was tried: for each, what Jev saw, its result, and the baselines with the same information" width="100%">
 </p>
+
+</details>
 
 ## Conclusion: is Jev useful in micro?
 
