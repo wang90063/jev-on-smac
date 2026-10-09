@@ -67,8 +67,8 @@
 <text x="530" y="187" font-size="12" fill="#59636e" font-weight="400" text-anchor="start">unit mixes each option suits</text>
 <line x1="530" y1="198" x2="906" y2="198" stroke="#d0d7de"/>
 <text x="530" y="220" font-size="13.5" fill="#8250df" font-weight="700" text-anchor="start">Jev 91 / 115 wins (in-sample)</text>
-<rect x="737.3" y="207" width="168.70000000000002" height="19" rx="9.5" fill="#9a6700" fill-opacity="0.12" stroke="#9a6700" stroke-opacity="0.5"/>
-<text x="821.65" y="220.5" font-size="11.5" fill="#9a6700" font-weight="600" text-anchor="middle">beats random; +7 unseen</text>
+<rect x="813.2" y="207" width="92.80000000000001" height="19" rx="9.5" fill="#cf222e" fill-opacity="0.12" stroke="#cf222e" stroke-opacity="0.5"/>
+<text x="859.6" y="220.5" font-size="11.5" fill="#cf222e" font-weight="600" text-anchor="middle">= hand rules</text>
 <text x="530" y="243" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random answers to the same questions</text>
 <text x="906" y="243" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">74</text>
 <text x="530" y="261" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Attack-move (default) / hand rules</text>
@@ -89,9 +89,9 @@
 <text x="530" y="443" font-size="12.5" fill="#59636e" font-weight="400" text-anchor="start">Random pick, same 4 options</text>
 <text x="906" y="443" font-size="12.5" fill="#1f2328" font-weight="700" text-anchor="end">519</text>
 <rect x="490" y="468" width="430" height="168" rx="8" fill="none" stroke="#d0d7de" stroke-dasharray="4 4"/>
-<text x="508" y="502" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">Except ④ on the maps its evidence came from,</text>
-<text x="508" y="521" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">a random pick, a lookup, or a vote over the</text>
-<text x="508" y="540" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">same information did about as well.</text>
+<text x="508" y="502" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">Every time, a random pick, a lookup, a vote,</text>
+<text x="508" y="521" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">or hand rules with the same information</text>
+<text x="508" y="540" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">did about as well.</text>
 <text x="508" y="559" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic"></text>
 <text x="508" y="578" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">The choices themselves were worth little:</text>
 <text x="508" y="597" font-size="13" fill="#59636e" font-weight="400" text-anchor="start" font-style="italic">even a perfect pick in ③ adds only +25 of 720.</text>

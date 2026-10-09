@@ -4,6 +4,8 @@
   python results/baseline_rerun.py local          # all non-Jev systems, official maps + val (parallel, minutes)
   python results/baseline_rerun.py jev            # Jev exam answers (card 4), official maps + val (serial, network)
   python results/baseline_rerun.py table          # win counts + paired sign tests vs Jev exam answers
+  python results/baseline_rerun.py force          # pin each exam option for the whole battle (menu headroom)
+  python results/baseline_rerun.py headroom       # best pin in hindsight per battle, official vs val
 
 Rows go to results/rerun/{official,val}.jsonl. The Jev run resumes where it stopped.
 Run Jev with the proxy variables unset (see AGENTS.md).
@@ -79,6 +81,42 @@ def cmd_jev():
         print(b, key[1], key[2], r["win"], r["calls"], r["wall_s"], flush=True)
 
 
+# Every option Jev's exams could move away from the code default (EXAM_EVIDENCE kinds).
+PINS = [
+    "force:ranged=!default", "force:melee=!default", "force:bar=!default", "force:wing=!default",
+    "force:tie=!default", "force:heal=!default",
+] + [f"force:target={r}" for r in ("frontline", "weakest_in_range", "clump", "heaviest", "guns", "healer")]
+
+
+def cmd_force():
+    jobs = _jobs(PINS)
+    have = {b: _load(f"force_{b}") for b in ("official", "val")}
+    todo = [(b, j) for b, j in jobs if (j[0], j[1]["id"] if j[1] else j[2][0], j[2] if j[1] else j[2][1]) not in have[b]]
+    with Pool(8) as pool:
+        rows = pool.map(R._holdout_job, [j for _, j in todo], chunksize=4)
+    for (b, j), r in zip(todo, rows):
+        r["policy"] = j[0]
+        _write(f"force_{b}", r)
+
+
+def cmd_headroom():
+    for bench in ("official", "val"):
+        rows = {**_load(bench), **_load(f"force_{bench}")}
+        by = {}
+        for (p, m, s), r in rows.items():
+            by.setdefault(p, {})[(m, s)] = r["win"]
+        keys = list(by["dummy"])
+        oracle = {k: by["dummy"][k] or any(by[p].get(k) for p in PINS if p in by) for k in keys}
+        best_fixed = max((p for p in PINS if p in by), key=lambda p: sum(by[p].values()))
+        print(f"\n{bench} ({len(keys)} battles)")
+        print(f"  attack-move                         {sum(by['dummy'].values())}")
+        print(f"  best single pin for every battle    {sum(by[best_fixed].values())}  ({best_fixed})")
+        print(f"  best pin per battle (hindsight)     {sum(oracle.values())}")
+        for p in ("random", "jev", "prog:hand_rules"):
+            if p in by:
+                print(f"  {NAMES[p]:36s}{sum(by[p].values())}")
+
+
 def _p(f, l):
     n, k = f + l, min(f, l)
     return min(1.0, 2 * sum(comb(n, i) for i in range(k + 1)) / 2 ** n) if n else 1.0
@@ -108,4 +146,4 @@ def cmd_table():
 
 
 if __name__ == "__main__":
-    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table}[sys.argv[1]]()
+    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table, "force": cmd_force, "headroom": cmd_headroom}[sys.argv[1]]()

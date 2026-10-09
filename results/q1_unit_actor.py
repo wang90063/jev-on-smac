@@ -8,6 +8,11 @@ Every policy here outputs raw SMAC actions (0 noop, 1 stop, 2-5 N/S/E/W, 6+j att
   focus         same, but shoot the lowest-HP enemy in range
   dummy         attack-move (the floor used everywhere else in the README)
 
+Dimension ladder (same battles): shrink what Jev decides, script the rest.
+  jev_target    one Choice per living unit, options = which visible enemy to attack (no moves)
+  jev_focus     one Choice per step for the whole army: which enemy everyone focuses
+  random_target / random_focus   uniform random over exactly the same options
+
 Same maps and seeds for every policy, so results are paired.
   python results/q1_unit_actor.py run --policies closest,focus,random_legal,dummy
   python results/q1_unit_actor.py run --policies jev_unit      # network: one request per step, serial
@@ -194,6 +199,121 @@ class JevUnit(_Base):
         return out
 
 
+def _target_options(snap, i, u):
+    opts = {}
+    for a in _legal(snap, i):
+        if a >= 6:
+            e = snap["enemies"][a - 6]
+            where = "in range, shoots now if off cooldown" if _in_range(u, e) else "out of range, walks toward it first"
+            opts[f"attack_{e['id']}"] = (
+                f"Attack enemy {e['id']} ({e['name']}, {round(e['hp'] + e['shield'])} HP+shield left, "
+                f"distance {_d(u, e):.1f}, {where})."
+            )
+    return opts
+
+
+def _focus_options(snap):
+    allies = _alive(snap["allies"])
+    opts = {}
+    for e in _alive(snap["enemies"]):
+        shooters = [u for i, u in enumerate(snap["allies"]) if u["alive"] and 6 + e["id"] in _legal(snap, i)]
+        if not shooters:
+            continue
+        in_range = sum(1 for u in shooters if _in_range(u, e))
+        opts[f"attack_{e['id']}"] = (
+            f"Everyone focuses enemy {e['id']} ({e['name']}, {round(e['hp'] + e['shield'])} HP+shield left, "
+            f"damage {e['dmg']}, range {e['range']}). {in_range} of our {len(allies)} units can shoot it now; "
+            f"the rest walk toward it."
+        )
+    return opts
+
+
+class Ladder(_Base):
+    """Jev (or a random pick) decides only targets; the closest-enemy heuristic does the rest."""
+
+    def __init__(self, spec, seed):
+        super().__init__(spec)
+        self.mode = spec.split("_")[1]  # target | focus
+        self.use_jev = spec.startswith("jev_")
+        self.rng = random.Random(seed)
+        self.fallback = Heuristic("closest")
+        if self.use_jev:
+            from jev_api import JevClient
+
+            self.client = JevClient()
+
+    def _ask(self, snap, step, questions):
+        if not self.use_jev:
+            return {k: self.rng.choice(list(q["criteria"])) for k, q in questions.items()}
+        state = {
+            "step": step, "limit": snap["limit"],
+            "ours": [_unit_line(u) for u in _alive(snap["allies"])],
+            "enemies": [_unit_line(e) for e in _alive(snap["enemies"])],
+        }
+        res = self.client.system_one(state, questions)
+        self.n_calls += 1
+        answers = (res or {}).get("answers") if isinstance(res, dict) else None
+        out = {}
+        for k in questions:
+            p = answers.get(k) if isinstance(answers, dict) else None
+            pick = p.get("choice") if isinstance(p, dict) else p
+            if pick is None and isinstance(p, dict) and isinstance(p.get("probabilities"), dict):
+                pick = max(p["probabilities"], key=lambda o: float(p["probabilities"][o] or 0))
+            out[k] = pick
+        return out
+
+    def act(self, map_name, step, snap):
+        out = self.fallback.act(map_name, step, snap)
+        if not _alive(snap["enemies"]):
+            return out
+        if self.mode == "focus":
+            opts = _focus_options(snap)
+            if len(opts) < 2:
+                return out
+            q = {"focus": {
+                "type": "choice",
+                "instructions": (
+                    "Pick the one enemy our whole army should focus fire this step (0.5 s). "
+                    "Units that can't reach it fight as usual. A timeout counts as a loss."
+                ),
+                "criteria": opts,
+            }}
+            a = _label_to_action(self._ask(snap, step, q).get("focus"))
+            if a is None:
+                self.n_fallback += 1
+                return out
+            for i, u in enumerate(snap["allies"]):
+                if u["alive"] and a in _legal(snap, i):
+                    out[i] = a
+            return out
+        questions, keys = {}, {}
+        for i, u in enumerate(snap["allies"]):
+            if not u["alive"]:
+                continue
+            opts = _target_options(snap, i, u)
+            if len(opts) < 2:
+                continue
+            questions[f"unit_{u['id']}"] = {
+                "type": "choice",
+                "instructions": (
+                    f"Pick the enemy our unit {u['id']} ({u['name']}) attacks this step (0.5 s). "
+                    "Pick the target that helps our side win the battle. A timeout counts as a loss."
+                ),
+                "criteria": opts,
+            }
+            keys[f"unit_{u['id']}"] = i
+        if not questions:
+            return out
+        picks = self._ask(snap, step, questions)
+        for q, i in keys.items():
+            a = _label_to_action(picks.get(q))
+            if a is not None and a in _legal(snap, i):
+                out[i] = a
+            else:
+                self.n_fallback += 1
+        return out
+
+
 def _label_to_action(label):
     if not isinstance(label, str):
         return None
@@ -220,6 +340,8 @@ def make_policy(spec, map_name, seed):
         return RandomLegal(int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16))
     if spec == "jev_unit":
         return JevUnit()
+    if spec in ("jev_target", "random_target", "jev_focus", "random_focus"):
+        return Ladder(spec, int(hashlib.md5(f"{spec}:{map_name}:{seed}".encode()).hexdigest()[:8], 16))
     return _orig(spec, map_name, seed)
 
 
@@ -258,17 +380,17 @@ def cmd_table(args):
     for m in MAPS:
         print(f"| {m} | " + " | ".join(f"{sum(by[(p, m, s)]['win'] for s in SEEDS if (p, m, s) in by)}/5" for p in pols) + " |")
     print("| total | " + " | ".join(str(sum(r["win"] for r in rows if r["policy"] == p)) for p in pols) + " |")
-    j = [r for r in rows if r["policy"] == "jev_unit"]
-    if j:
+    for jp in [p for p in pols if p.startswith("jev_")]:
+        j = [r for r in rows if r["policy"] == jp]
         calls = sum(r["calls"] for r in j)
         wall = sum(r["wall_s"] for r in j)
-        print(f"jev_unit: {calls} requests, {wall / max(calls, 1):.2f} s/request end to end, {wall / len(j):.1f} s/battle")
+        print(f"{jp}: {calls} requests, {wall / max(calls, 1):.2f} s/request end to end, {wall / len(j):.1f} s/battle")
         for p in pols:
-            if p == "jev_unit":
+            if p.startswith("jev_"):
                 continue
             f = sum(1 for r in j if r["win"] and not by.get((p, r["map"], r["seed"]), {}).get("win"))
             l = sum(1 for r in j if not r["win"] and by.get((p, r["map"], r["seed"]), {}).get("win"))
-            print(f"jev_unit vs {p}: +{f} / -{l}")
+            print(f"  {jp} vs {p}: +{f} / -{l}")
 
 
 if __name__ == "__main__":
