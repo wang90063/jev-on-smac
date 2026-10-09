@@ -43,8 +43,8 @@ A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an a
 
 **Battles.**
 - **Official maps:** the 23 SMAC maps × 5 seeds = 115 battles. The hand rules and the exam questions in step 2 were written by looking at these maps, so for both, the official maps are in-sample.
-- **Unseen battles:** procedurally generated scenarios with frozen splits: train (60), train2 (120), val (80), and test2–test6 (200 each). Each scenario is played with 5 seeds.
-  - val was never used to write the exam questions or the hand rules. Each test set was run **exactly once**.
+- **Unseen battles:** procedurally generated scenarios with frozen splits: train (60), train2 (120), val (80), test (40), test2 (120), and test3–test6 (200 each). Each scenario is played with 5 seeds. Which split was used for what in step 4 is listed there.
+  - val was never used to write the exam questions or the hand rules. Each test set decided one thing, except test2, which decided two (step 4, ① and ②).
   - The generator drops fights that attack-move wins 5/5, and fights that both attack-move and a random policy lose 5/5. Every remaining fight is contested.
 
 **Statistics.** Every comparison is paired by scenario and seed, with an exact sign test on flips vs losses.
@@ -189,35 +189,58 @@ Tactics fitted to the battles they were found on was a pattern from the start:
 
 **Result: each system generalized better than the one before. Jev on top never added anything.**
 
-**The systems: where each was built, tuned and tested.** train (60 scenarios) and train2 (120) are for building, val (80) for tuning, and each test set is fresh and used once. Every cell is battles won.
+**The splits.** A *scenario* is one generated fight. A *seed* replays the same scenario with different randomness, so a new seed of a training scenario is still training data. Only a new scenario is unseen.
 
-| System | Built on | Tuned / confirmed on | Its own final test (used once) | Official (115) | val (400) | test6 (1,000) |
-|---|---|---|---|---:|---:|---:|
-| Attack-move | – | – | – | 53 | 176 | 475 |
-| Library + lookup | per-cluster programs forged on train, seeds 1–5 | kept only if ahead of attack-move on train seeds 6–10 | test2 (600): 299 vs attack-move 255 | 51 | 184 | – |
-| Value switching | offline rollout labels on train + train2 (~11k decision points) | threshold τ = 0.1 on val | test3, then test4 (1,000): 523 vs 433 | 51 | 190 | 519 |
-| Grok program | 4 feedback rounds on train, 2 seeds | train seeds 3–5 | test5 (1,000): 584 vs 443 | 62 | 217 | 595 |
-| **Claude program** | train + train2, seeds 1–4 | seeds 5–8, then one val comparison | test6 (1,000): **720** vs 475 | 65 | 247 | **720** |
+| Split | Scenarios | Battles (× 5 seeds) | Role in step 4 |
+|---|---:|---:|---|
+| train | 60 | 300 | **training** for all four systems (some used up to 10 seeds) |
+| train2 | 120 | 600 | **training** for value switching and the Claude program |
+| val | 80 | 400 | **validation**: thresholds, Jev variants, go / no-go for the Grok and Claude programs |
+| test | 40 | 200 | **test**: library (round 3) |
+| test2 | 120 | 600 | **test**: library (round 4); Jev ① and ② |
+| test3 | 200 | 1,000 | **test**: value switching |
+| test4 | 200 | 1,000 | **test**: value switching again, and Jev ⑤ |
+| test5 | 200 | 1,000 | **test**: Grok program |
+| test6 | 200 | 1,000 | **test**: Claude program, with the earlier systems run alongside |
+| official | 23 maps | 115 | not used to build, tune or pick anything in step 4 |
 
-<sub>Official and val were rerun on the current code (`results/baseline_rerun.py table`). test6 was generated in round 16. The value-switching and Grok rows on test6 were run there as comparators. The library was retired before test6 existed, so it has no test6 score. Build and test history: `results/iter3_report.md`–`iter16_report.md`.</sub>
+**Each system: training, validation and test.**
 
-**On the official maps, the order flips.** Every step-4 system scores 51–65 there. Jev's answers score 91 and the hand rules 92. The reason is that the official maps are in-sample for the step-2 system and out-of-sample for step 4:
-- The step-2 questions, the gate and the hand rules were all written on these 23 maps.
-- No step-4 system ever saw them.
+| System | Training (what was built on it) | Validation (what was decided on it) | Test (run once) | Result on that test, vs attack-move on the same battles |
+|---|---|---|---|---|
+| Library + lookup | **train.** Programs forged per scenario cluster and scored on seeds 1–5. A program was kept only if it was ahead of attack-move on seeds 6–10. | none; the lookup has no setting | test; then test2 | test: 89 vs 90 / 200, too small to read. test2: **299 vs 255** / 600, p < 0.001 |
+| Value switching | **train + train2.** At ~11k decision points, each of 13 tactics was replayed to the end (offline only), giving the labels for the value model. | **val**: switching threshold τ = 0.1 | test3; test4 as a repeat | test3: **496 vs 452** / 1,000. test4: **523 vs 433** / 1,000 |
+| Grok program | **train.** 4 rounds of 2 programs each, scored on seeds 1–2. The best was confirmed on seeds 3–5. | **val**: 217 vs the then-default's 190, so it was adopted | test5 | **584 vs 443** / 1,000 |
+| Claude program | **train + train2.** Each edit kept or dropped on seeds 1–4 (720 battles), then confirmed on seeds 5–8. | **val**: one comparison, 247 vs Grok's 217 | test6 | **720 vs 475** / 1,000 |
 
-So the official column measures fit to those 23 maps, not generalization. On those maps, the library and value switching fall just below attack-move (51 vs 53). The two code programs land above it (62, 65).
+**All systems on the same battles.**
 
-**Jev on top of each system: where it was tested.** Each experiment was tuned on val where it had settings, then run once on its test set.
+| System | Official (115) | val (400) | test6 (1,000) |
+|---|---:|---:|---:|
+| Attack-move | 53 | 176 | 475 |
+| Library + lookup | 51 | 184 | – |
+| Value switching | 51 | 190 | 519 |
+| Grok program | 62 | 217 | 595 |
+| **Claude program** | 65 | 247 | **720** |
 
-| | On top of | Jev's choice | Jev's evidence drawn from | Tested on | Jev vs the system alone | Same-information control |
-|---|---|---|---|---|---:|---|
-| ① | Library + lookup | pick the program instead of the lookup | program descriptions | test2 (600) | −4, p = 0.73; hinted library **−24**, p = 0.009 | random pick −26 / −18 |
-| ② | Library + lookup | same, plus each program's record | its record in the 8 most similar train battles; variant picked on val | test2 (600) | +1 | evidence vote +1; Jev and the vote differed on 2 / 600 |
-| ⑤ | Value switching | the tactic, when the value model is unsure | the 20 most similar training moments; δ picked on val | test4 (1,000) | +4, p = 0.61 | random pick −4 |
-| ③ | Claude program | hold position or push at the start | the 8 most similar *other* scenarios, leave-one-scenario-out | train + train2, seeds 1–4 (720): the program's own development battles, not a fresh set | +6 | neighbour vote +5; *best in hindsight +25* |
-| – | Grok program | not tested | – | – | – | – |
+- **test6 is the clean column.** None of these systems was trained or tuned on it. The library was retired before test6 existed, so it has no score there.
+- **The val column is a little optimistic** for value switching and the two programs, because decisions about them were made on val.
+- **On the official maps, the order flips.** Every step-4 system scores 51–65 there, while Jev's answers score 91 and the hand rules 92. The step-2 questions, the gate and the hand rules were all written on these 23 maps, so for them the maps are in-sample; no step-4 system ever saw them. The official column therefore measures fit to those maps, not generalization. There, the library and value switching fall just below attack-move (51 vs 53), and the two programs land above it (62, 65).
 
-Jev on top was never run on the official maps. In those rounds the official maps were only a reference, and the decision for each experiment was made on its fresh test set.
+<sub>Official and val were rerun on the current code (`results/baseline_rerun.py table`). Build and test history: `results/iter3_report.md`–`iter16_report.md`.</sub>
+
+**Jev on top of each system: training, validation and test.** Jev itself is never trained. Its "training data" is the set its examples are drawn from.
+
+| | On top of | Jev's choice | Jev's examples drawn from | Validation | Test | Jev vs the system alone | Same-information control |
+|---|---|---|---|---|---|---:|---|
+| ① | Library + lookup | pick the program instead of the lookup | none, only the program descriptions | none | test2 (600) | −4, p = 0.73; hinted library **−24**, p = 0.009 | random pick −26 / −18 |
+| ② | Library + lookup | same, plus each program's record | train: each program's record on the 8 most similar train battles | val: 3 variants, the best kept | test2 (600), its second use | +1 | evidence vote +1; Jev and the vote differed on 2 / 600 |
+| ⑤ | Value switching | the tactic, when the value model is unsure | train + train2: the 20 most similar training moments | val: how unsure, δ = 0.06 | test4 (1,000) | +4, p = 0.61 | random pick −4 |
+| ③ | Claude program | hold position or push at the start | the 720 development battles, leaving out the scenario being judged | none | **none**: scored on the same 720 development battles | +6 | neighbour vote +5; *best in hindsight +25* |
+| – | Grok program | not tested | – | – | – | – | – |
+
+- ③ has no unseen test. The headroom was already only +25, so it was not worth spending a test set.
+- No Jev-on-top experiment was run on the official maps. Each one was decided on its own test set.
 
 **Why: choosing among tactics has almost nothing to gain. The gain is in per-unit actions, and that is where Jev can't act.**
 - *Headroom* here means: if you always picked the best option in hindsight, how many more battles would you win?
@@ -253,7 +276,7 @@ All nine places Jev was tried, with what it saw and its controls:
 
 **Scoreboard: every system on the same battles.** All rows except test6 were rerun on the current code.
 
-| System | Jev? | Level | 23 official maps (115) | val (400, unseen) | test6 (1,000, unseen, run once) |
+| System | Jev? | Level | 23 official maps (115) | val (400) | test6 (1,000, unseen by every row) |
 |---|:-:|---|---:|---:|---:|
 | Attack-move | | floor | 53 | 176 | 475 |
 | SMAC heuristic: closest | | action | 64 | 184 | – |
@@ -266,9 +289,9 @@ All nine places Jev was tried, with what it saw and its controls:
 | Grok program | | code | 62 | 217 | 595 |
 | **Claude program** | | code | 65 | **247**² | **720** |
 
-<sub>¹ In-sample: built by looking at these 23 maps. ² The Claude program was checked once on val before its single test6 run. Data: `results/rerun/`.</sub>
+<sub>¹ In-sample: built by looking at these 23 maps. ² val was the validation set for value switching and the Grok and Claude programs (step 4), so their val scores are a little optimistic; for the other rows val is unseen. Data: `results/rerun/`.</sub>
 
-On the maps they were built from, the exams and the hand rules lead (91 and 92 vs 65). On unseen battles the order flips: the Claude program beat Jev's answers 247 vs 196 on val (92 flips, 41 losses, p < 0.001), and beat attack-move by +245 on test6 (305 / 60, p < 0.001).
+On the maps they were built from, the exams and the hand rules lead (91 and 92 vs 65). Off those maps the order flips: the Claude program beat Jev's answers 247 vs 196 on val (92 flips, 41 losses, p < 0.001), and beat attack-move by +245 on test6 (305 / 60, p < 0.001).
 
 **What actually works: an LLM writes the micro program, and the simulator checks it.**
 - The current program is [`kb/library/code/general_claude.py`](kb/library/code/general_claude.py). It is about 150 lines and does five things:
