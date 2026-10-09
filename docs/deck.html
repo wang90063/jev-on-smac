@@ -713,7 +713,8 @@ deck.addEventListener("click", e => {
   if (e.target.closest("a")) return;
   show(e.clientX > innerWidth / 3 ? cur + 1 : cur - 1);
 });
-setTimeout(() => document.getElementById("nav").classList.add("gone"), 3000);
+if (location.search.includes("video")) document.getElementById("nav").style.display = "none";  // clean frames for the narrated video
+else setTimeout(() => document.getElementById("nav").classList.add("gone"), 3000);
 fit();
 show((parseInt(location.hash.slice(1)) || 1) - 1);
 </script>
