@@ -214,6 +214,28 @@ table.t tr.hl td { background: var(--jev-soft); }
 
 .gif { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; background: #fff; }
 
+/* appendix */
+pre.code { font: 12px/1.5 var(--mono); background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow: hidden; white-space: pre; color: var(--ink); }
+pre.code .k { color: #1971c2; } pre.code .s { color: #2b8a3e; } pre.code .c { color: var(--faint); font-family: var(--sans); } pre.code .x { color: var(--jev); font-weight: 700; } pre.code .f { color: var(--sys); font-weight: 700; }
+.kv { display: grid; grid-template-columns: 112px 1fr; gap: 7px 14px; font-size: 14px; line-height: 1.5; }
+.kv dt { font: 700 13px var(--mono); color: var(--ink); padding-top: 1px; }
+.kv dd { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chips span { font: 12px var(--mono); background: #f1efe9; border-radius: 6px; padding: 2px 7px; color: var(--ink); }
+.pipe { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; align-items: stretch; margin-bottom: 10px; }
+.dag { position: relative; border: 2px dashed var(--sys); border-radius: 12px; padding: 9px 14px 9px 44px; font-size: 13.5px; line-height: 1.5; color: var(--muted); margin-bottom: 16px; }
+.dag b { color: var(--sys); margin-right: 8px; font-size: 15px; }
+.dag .ar { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--sys); font-size: 20px; font-weight: 700; }
+.pipe > div { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-right: 22px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+.pipe > div:last-child { margin-right: 0; border: 2px solid var(--sys); }
+.pipe > div:not(:last-child)::after { content: "→"; position: absolute; right: -19px; top: 50%; transform: translateY(-50%); color: var(--faint); font-size: 18px; }
+.pipe b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+.pipe .off { display: inline-block; font-size: 11.5px; color: var(--jev); border: 1px solid var(--jev); border-radius: 5px; padding: 0 5px; margin-left: 4px; font-weight: 700; }
+.parts { display: flex; flex-direction: column; gap: 6px; }
+.parts div { display: grid; grid-template-columns: 96px 1fr 44px; gap: 10px; align-items: baseline; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+.parts b { color: var(--ink); font-size: 14px; }
+.parts em { font: 12px var(--mono); color: var(--faint); font-style: normal; text-align: right; }
+
 #nav { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); font: 12px var(--sans); color: #aab; opacity: .7; transition: opacity 1s; pointer-events: none; }
 #nav.gone { opacity: 0; }
 
@@ -632,6 +654,158 @@ table.t tr.hl td { background: var(--jev-soft); }
     <div class="card"><div class="n">04</div><h3>别信调参用过的地图</h3><p>手写规则和 Jev 的题目都照着官方图写：在那里 92 和 91，到了新战斗就和 SMAC：focus 打平。泛化只看没见过的战斗。</p></div>
   </div>
   <p class="foot">完整数据和复现命令：README 与 results/rerun/。</p>
+</section>
+
+<!-- 16 appendix: the Jev request -->
+<section class="slide">
+  <div class="kicker">附录 A · Jev 的提示怎么写</div>
+  <h2 style="margin-bottom:16px">一次请求 = 局面 state + 几道选择题 questions，全是 JSON</h2>
+  <div class="row" style="gap:24px">
+<pre class="code" style="flex:1.18"><span class="c">// 第二步的真实请求（官方图 1c3s5z，第 9 步；节选）</span>
+{ <span class="k">"state"</span>: {
+    <span class="k">"objective"</span>: { <span class="k">"win"</span>: <span class="s">"Wipe every enemy before the tick limit."</span>, … },
+    <span class="k">"tick"</span>: <span class="s">"9/180"</span>,
+    <span class="k">"our_force"</span>:   { <span class="k">"alive"</span>: 8, <span class="k">"by_kind"</span>: { <span class="k">"stalker"</span>: 3, … }, … },
+    <span class="k">"enemy_force"</span>: { <span class="k">"alive"</span>: 8, … },
+    <span class="k">"situation"</span>: <span class="s">"Enemy melee is already in blade range of our blob.
+       If we stand 0.5s to fire, melee will reach us. …"</span>,
+    <span class="k">"physics"</span>: { <span class="k">"speed"</span>: <span class="s">"even"</span>, <span class="k">"reach"</span>: <span class="s">"we_outrange"</span>,
+                 <span class="k">"contact"</span>: <span class="s">"melee_on_us"</span>, <span class="k">"hp_trend"</span>: <span class="s">"trading"</span>, … },
+    <span class="k">"lines"</span>:  { <span class="k">"ranged"</span>: {…}, <span class="k">"melee"</span>: {…} },
+    <span class="k">"recent"</span>: [ <span class="s">"t=8 ranged=stack melee=charge … A[U0:200,…] E[E4:3,…]"</span>, … ] },
+  <span class="k">"questions"</span>: {
+    <span class="x">"target"</span>: { <span class="k">"type"</span>: <span class="s">"choice"</span>,
+      <span class="k">"instructions"</span>: <span class="s">"Which targeting rule should the army use this tick?
+                      Code focuses fire on the enemy that rule selects."</span>,
+      <span class="k">"criteria"</span>: {
+        <span class="x">"frontline"</span>:        { <span class="k">"rule"</span>: <span class="s">"Focus the nearest …"</span>, <span class="k">"picks"</span>: <span class="s">"E8"</span>, … },
+        <span class="x">"weakest_in_range"</span>: { <span class="k">"rule"</span>: <span class="s">"Focus the lowest-hp …"</span>, <span class="k">"picks"</span>: <span class="s">"E5"</span>, … },
+        <span class="x">"guns"</span>:             { <span class="k">"rule"</span>: <span class="s">"Focus an enemy ranged …"</span>, <span class="k">"picks"</span>: <span class="s">"E2"</span>,
+                              <span class="k">"kind"</span>: <span class="s">"stalker"</span>, <span class="k">"remaining_ehp"</span>: 142, … }, … } },
+    <span class="x">"bar"</span>: { … } } }
+<span class="c">// 回答：{"answers": {"target": {"choice": "guns", "probabilities": {…}}}}</span></pre>
+    <div class="col" style="flex:.82; gap:12px">
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:15px; margin-bottom:8px">state：只有物理，不给地图名</h3>
+        <dl class="kv">
+          <dt>objective</dt><dd>胜负规则：时限内全歼才算赢</dd>
+          <dt>*_force</dt><dd>双方存活数、兵种、角色、伤员</dd>
+          <dt>situation</dt><dd>代码写的一段英文局势描述</dd>
+          <dt>physics</dt><dd>25 个离散标签：速度、射程、接敌、站着打 / 后撤会怎样</dd>
+          <dt>lines</dt><dd>枪线、近战线各自的接敌情况和可选动作</dd>
+          <dt>recent</dt><dd>最近 6 步的战术和双方每个单位的血量</dd>
+        </dl>
+      </div>
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:15px; margin-bottom:8px">questions：每个选项写清"代码会执行什么"</h3>
+        <p style="font-size:13.5px; line-height:1.55; color:var(--muted)">只问 7 类有证据的题，局势变了才重问，平均每局 10 次左右。选项附上它会打谁、对方剩多少血；Jev 不选方向，执行全在代码里。</p>
+        <div class="chips" style="margin-top:8px"><span>ranged</span><span>melee</span><span>target</span><span>bar</span><span>wing</span><span>tie</span><span>heal</span></div>
+      </div>
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:15px; margin-bottom:6px">另外两步</h3>
+        <p style="font-size:13.5px; line-height:1.55; color:var(--muted)"><b style="color:var(--ink)">第一步</b>：每个单位一道题，选项是它的合法动作，如 <span class="mono" style="font-size:12px">"Fire now on zea E3 (hp 80, d=4.2). Legal shot."</span>、<span class="mono" style="font-size:12px">"Walk E. CLOSER to nearest enemy E2."</span>。<br><b style="color:var(--ink)">第四步</b>：选项换成程序或宏动作，附上它在 8 场相似战斗里的战绩。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 appendix: the value model -->
+<section class="slide">
+  <div class="kicker">附录 B · 价值切换怎么训练</div>
+  <h2 style="margin-bottom:18px">离线复制模拟器打标签，再用 DAgger 补上模型自己走到的局面</h2>
+  <div class="pipe">
+    <div><b>1 · 走到决策点</b>驱动策略（最近簇的程序）正常打，每 5 步停一次</div>
+    <div><b>2 · 复制模拟器 <span class="off">仅离线</span></b>13 个选项各执行 5 步，再交回驱动策略打到底</div>
+    <div><b>3 · 打标签</b>Q = 赢(1/0) + 0.1 ×（我方剩余血量比 − 敌方剩余血量比）</div>
+    <div><b>4 · 学优势</b>y = Q(选项) − Q(默认)，梯度提升树回归</div>
+    <div><b>5 · 在线使用</b>每 5 步算特征；预测优势最大且 &gt; τ = 0.1 才换，否则保持默认</div>
+  </div>
+  <div class="dag"><span class="ar">↺</span><b>6 · DAgger</b>把第 5 步的价值策略当成新的驱动策略，回到第 1 步：在它自己走到的局面上再打一轮标签，和旧数据合并重训。只用最近簇程序驱动，模型只见过"好好打"时的局面；一旦自己换了战术，就走到没见过的地方。train、train2 各做一轮。</div>
+  <div class="row" style="gap:20px">
+    <div class="col card" style="padding:16px 20px">
+      <h3 style="font-size:15px; margin-bottom:10px">数据：约 1.1 万个决策点 × 13 个选项 ≈ 14 万次回放</h3>
+      <table class="t" style="font-size:13.5px">
+        <tr><th style="font-size:13px; padding:5px 8px">场景</th><th style="font-size:13px; padding:5px 8px">谁在驱动</th><th class="num" style="font-size:13px; padding:5px 8px">决策点</th></tr>
+        <tr><td style="padding:5px 8px">train · 60 个 × 5 种子</td><td style="padding:5px 8px">最近簇程序</td><td class="num" style="padding:5px 8px">2,717</td></tr>
+        <tr><td style="padding:5px 8px"></td><td style="padding:5px 8px">价值策略自己（DAgger）</td><td class="num" style="padding:5px 8px">2,773</td></tr>
+        <tr><td style="padding:5px 8px">train2 · 120 个，种子 1–3</td><td style="padding:5px 8px">最近簇程序</td><td class="num" style="padding:5px 8px">3,484</td></tr>
+        <tr><td style="padding:5px 8px">train2 · 种子 4–5</td><td style="padding:5px 8px">价值策略自己（DAgger）</td><td class="num" style="padding:5px 8px">2,143</td></tr>
+      </table>
+      <p class="small" style="margin-top:8px">四批数据合在一起训练最终模型；DAgger 两批约占一半。</p>
+    </div>
+    <div class="col card" style="padding:16px 20px; flex:.9">
+      <h3 style="font-size:15px; margin-bottom:10px">模型</h3>
+      <dl class="kv" style="grid-template-columns:70px 1fr">
+        <dt>输入</dt><dd>78 维：30 个态势标签（展开成 68 维）+ 10 个连续量：双方剩余血量比、输出比、距离 ÷ 射程、接敌比例、分散度、人数；再加选项的独热编码</dd>
+        <dt>选项</dt><dd><div class="chips"><span>none</span><span>stutter</span><span>hold</span><span>fall_back</span><span>hold_choke</span><span>spread</span><span>threat</span><span>guns</span><span>rotate</span><span>concave</span><span>kite_combo</span><span>hand</span><span>default</span></div></dd>
+        <dt>树</dt><dd><span class="mono" style="font-size:12.5px">HistGradientBoosting</span>：深 4，学习率 0.05，300 轮，叶子 ≥ 40</dd>
+      </dl>
+    </div>
+    <div class="col card" style="padding:16px 20px; flex:.75">
+      <h3 style="font-size:15px; margin-bottom:10px">试过什么</h3>
+      <ul class="clean">
+        <li style="font-size:13.5px; line-height:1.5">按场景分组交叉验证：预测优势拿到上限的 11.2%，直接预测 Q 只有 1.0%</li>
+        <li style="font-size:13.5px; line-height:1.5">数据加倍最有效（6.8% → 11.2%）；多加特征反而变差</li>
+        <li style="font-size:13.5px; line-height:1.5">τ 在 val 上选；test3 上比 Dummy +44（p=0.006）</li>
+        <li style="font-size:13.5px; line-height:1.5">离线交叉验证好、在线变差，出现过三次：以在线 val 为准</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 18 appendix: the Claude program -->
+<section class="slide">
+  <div class="kicker">附录 C · Claude 写的程序</div>
+  <h2 style="margin-bottom:16px">每步调用一次 act(obs, mem)，返回 {单位: 动作}；核心是集火分配</h2>
+  <div class="row" style="gap:24px">
+<pre class="code" style="flex:1.15; font-size:11.8px"><span class="c"># 节选自 kb/library/code/general_claude.py（注释译成中文）</span>
+<span class="k">def</span> <span class="f">in_range</span>(u, e, slack=0.3):
+    <span class="c"># can_attack 只说明"看得见"；射程要自己算</span>
+    <span class="k">return</span> can_attack(u, e) <span class="k">and</span> dist(u, e) &lt;= u.range + u.radius + e.radius + slack
+
+<span class="k">def</span> <span class="f">threat</span>(e, A):                          <span class="c"># 敌人每秒能打掉我们多少血</span>
+    …                                              <span class="c"># 医疗艇、自爆兵另算</span>
+    cd = e.max_cooldown <span class="k">if</span> e.max_cooldown > 0 <span class="k">else</span> 1.0
+    <span class="k">return</span> e.damage * e.attacks / cd
+
+<span class="c"># 集火分配：这一步能开火、且射程内有目标的单位</span>
+ready = [u <span class="k">for</span> u <span class="k">in</span> A <span class="k">if</span> u.cooldown &lt; READY <span class="k">and</span> u.id <span class="k">not in</span> out]
+opts = {u.id: [e <span class="k">for</span> e <span class="k">in</span> E <span class="k">if</span> in_range(u, e)] <span class="k">for</span> u <span class="k">in</span> ready}
+ready.sort(key=<span class="k">lambda</span> u: (len(opts[u.id]), -u.damage))  <span class="c"># 选择少的先挑</span>
+<span class="k">for</span> u <span class="k">in</span> ready:
+    <span class="k">for</span> e <span class="k">in</span> opts[u.id]:
+        left = ehp(e) - claimed.get(e.id, 0)       <span class="c"># 扣掉队友已经认领的伤害</span>
+        h = hit(u, e)                              <span class="c"># 护甲、克制加成都算进去</span>
+        <span class="k">if</span> left &lt;= 0:  k = (1, -th[e.id] / ehp(e))  <span class="c"># 会溢出：排到最后</span>
+        <span class="k">else</span>:          k = (0, -th[e.id] / max(left, h) * (1.5 <span class="k">if</span> h >= left <span class="k">else</span> 1))
+        …                                          <span class="c"># 取 k 最小的 e；能补刀的加权 1.5</span>
+    out[u.id] = attack(u, best)
+    claimed[best.id] += hit(u, best)
+
+<span class="c"># 僵持：10 步没人掉血就全军进攻（超时算输）</span>
+<span class="k">if</span> mem[<span class="s">'quiet'</span>] >= STALL_STEPS: …</pre>
+    <div class="col" style="flex:.85; gap:12px">
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:15px; margin-bottom:8px">接口和沙箱</h3>
+        <dl class="kv" style="grid-template-columns:62px 1fr">
+          <dt>obs</dt><dd>每个单位的兵种、角色、坐标、血量护盾、冷却、射程、速度、护甲；地图网格、时限</dd>
+          <dt>辅助</dt><dd><span class="mono" style="font-size:12px">dist · attack · heal · move_toward · move_away · can_attack</span></dd>
+          <dt>沙箱</dt><dd>不能 import，只开放 math；单步限时；出错或非法动作退回默认动作，出错超过 10% 判不合格</dd>
+        </dl>
+      </div>
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:15px; margin-bottom:8px">五个部分 <span class="muted" style="font-weight:400">· 共 152 行，含辅助函数</span></h3>
+        <div class="parts">
+          <div><b>医疗艇</b><span>射程内有伤员且敌人不近就治疗，否则后撤或跟上</span><em>17</em></div>
+          <div><b>集火分配</b><span>左边这段；近战也参与</span><em>23</em></div>
+          <div><b>近战拦截</b><span>自爆兵逼近我方远程时，派最近的近战去截</span><em>16</em></div>
+          <div><b>冷却期间拉扯</b><span>射程长或速度快时，冷却中就后撤，远程敌人也拉</span><em>24</em></div>
+          <div><b>僵持就进攻</b><span>总血量 10 步没降，全军压上</span><em>13</em></div>
+        </div>
+      </div>
+      <p class="small">程序没下令的单位交给原来的默认策略。写法：读模拟器源码，逐步追踪输局，每次只改一处，在 train 上配对重测。</p>
+    </div>
+  </div>
 </section>
 
 </div>
