@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jev 微操实验</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Deck: fixed 1280x720 slides scaled to the window. Arrow keys / click to move, print = one slide per page. */
+:root {
+  --bg: #f7f6f2;
+  --card: #ffffff;
+  --ink: #1d232a;
+  --muted: #5f6b76;
+  --faint: #8a949d;
+  --line: #e3e1d9;
+  --jev: #e8590c;
+  --jev-soft: #fff0e6;
+  --floor: #ced4da;
+  --rand: #a9b2bb;
+  --rule: #6f86d6;
+  --sys: #1098ad;
+  --sys-soft: #e3f6f9;
+  --sans: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: #2b3036; color: var(--ink); font-family: var(--sans); }
+body { overflow: hidden; }
+
+#deck { position: fixed; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center center; }
+.slide { position: absolute; inset: 0; background: var(--bg); padding: 52px 72px 58px; display: none; flex-direction: column; overflow: hidden; }
+.slide.active { display: flex; }
+.pg { position: absolute; right: 40px; bottom: 22px; font: 500 13px var(--mono); color: var(--faint); }
+.brand { position: absolute; left: 72px; bottom: 22px; font-size: 13px; color: var(--faint); }
+
+.kicker { font-size: 15px; font-weight: 700; letter-spacing: .08em; color: var(--jev); margin-bottom: 10px; }
+h2 { font-size: 34px; line-height: 1.25; font-weight: 900; letter-spacing: -.01em; margin-bottom: 26px; max-width: 1100px; }
+h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+p, li { font-size: 18px; line-height: 1.6; }
+.muted { color: var(--muted); }
+.small { font-size: 14px; line-height: 1.55; color: var(--muted); }
+b.j { color: var(--jev); }
+b.s { color: var(--sys); }
+ul.clean { list-style: none; }
+ul.clean li { padding-left: 18px; position: relative; margin-bottom: 8px; }
+ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
+.row { display: flex; gap: 36px; flex: 1; min-height: 0; }
+.col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 26px; }
+.foot { margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--faint); }
+.mono { font-family: var(--mono); }
+
+/* cover */
+.cover { justify-content: center; padding-left: 96px; }
+.cover h1 { font-size: 64px; font-weight: 900; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 22px; }
+.cover .sub { font-size: 22px; line-height: 1.6; color: var(--muted); max-width: 900px; }
+.cover .meta { margin-top: 48px; font-size: 15px; color: var(--faint); }
+.cover .bar { width: 72px; height: 6px; background: var(--jev); border-radius: 3px; margin-bottom: 28px; }
+
+/* horizontal bars */
+.hb { display: flex; flex-direction: column; gap: 9px; }
+.hb .r { display: grid; grid-template-columns: var(--lw, 170px) 1fr; align-items: center; gap: 14px; }
+.hb .l { font-size: 16px; text-align: right; color: var(--ink); white-space: nowrap; }
+.hb .r.jev .l { font-weight: 700; color: var(--jev); }
+.hb .t { position: relative; height: 26px; }
+.hb .t i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 5px 5px 0; background: var(--rand); }
+.hb .t b { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font: 600 15px var(--mono); white-space: nowrap; }
+.hb .t b em { font: 400 13px var(--sans); color: var(--muted); font-style: normal; margin-left: 6px; }
+.hb .r.floor i { background: var(--floor); }
+.hb .r.rand i { background: var(--rand); }
+.hb .r.rule i { background: var(--rule); }
+.hb .r.jev i { background: var(--jev); }
+.hb .r.sys i { background: var(--sys); }
+.hb .r.ceil i { background: transparent; border: 2px dashed #495057; }
+.hb .r.gap { height: 4px; }
+.chart-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.chart-title span { font-weight: 400; color: var(--muted); }
+
+/* diverging bars */
+.db { display: flex; flex-direction: column; }
+.db .g { font-size: 15px; font-weight: 700; margin: 8px 0 4px; }
+.db .g span { font-weight: 400; color: var(--muted); font-size: 14px; }
+.db .g:first-child { margin-top: 0; }
+.db .r { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; margin-bottom: 4px; }
+.db .l { font-size: 15px; text-align: right; }
+.db .r.jev .l { color: var(--jev); font-weight: 700; }
+.db .t { position: relative; height: 22px; }
+.db .t .z { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #495057; }
+.db .t i { position: absolute; top: 0; bottom: 0; background: var(--rand); border-radius: 3px; }
+.db .r.jev i { background: var(--jev); }
+.db .r.ceil i { background: transparent; border: 2px dashed #495057; }
+.db .t b { position: absolute; top: 50%; transform: translateY(-50%); font: 600 14px var(--mono); white-space: nowrap; }
+.axis { position: relative; height: 22px; margin-left: 164px; font: 12px var(--mono); color: var(--faint); }
+.axis span { position: absolute; transform: translateX(-50%); top: 4px; }
+
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+
+/* tables */
+table.t { border-collapse: collapse; width: 100%; font-size: 16px; }
+table.t th { text-align: left; font-weight: 700; padding: 9px 12px; border-bottom: 2px solid var(--ink); font-size: 15px; }
+table.t td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.45; }
+table.t td.num, table.t th.num { text-align: right; font-family: var(--mono); }
+table.t tr.hl td { background: var(--jev-soft); }
+
+/* ladder */
+.ladder { display: flex; flex-direction: column; gap: 12px; }
+.step { display: grid; grid-template-columns: 64px 1fr 380px; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 22px; }
+.step .n { font: 900 34px var(--sans); color: var(--jev); text-align: center; }
+.step .q { font-size: 20px; font-weight: 700; line-height: 1.45; }
+.step .q span { display: block; font-size: 15px; font-weight: 400; color: var(--muted); margin-top: 3px; }
+.step .why { font-size: 14px; line-height: 1.5; color: var(--muted); border-left: 3px solid var(--line); padding-left: 14px; }
+
+/* flow diagram */
+.flow { display: flex; align-items: center; gap: 12px; margin: 10px 0 18px; }
+.flow .box { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; font-size: 15px; font-weight: 500; text-align: center; background: var(--card); }
+.flow .box.j { border-color: var(--jev); color: var(--jev); font-weight: 900; font-size: 20px; }
+.flow .arr { font-size: 22px; color: var(--faint); }
+.big { font: 900 44px var(--sans); letter-spacing: -.02em; }
+.stat { display: grid; grid-template-columns: 150px 1fr; gap: 6px 16px; align-items: baseline; }
+.stat .v { font: 700 24px var(--mono); text-align: right; }
+.stat .k { font-size: 16px; color: var(--muted); }
+
+.verdict { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 22px; }
+.verdict .card h3 { font-size: 16px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
+.verdict .card .big { font-size: 30px; margin-bottom: 6px; }
+.verdict .card p { font-size: 15px; line-height: 1.5; color: var(--muted); }
+
+.lesson { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.lesson .card { padding: 28px 32px; min-height: 200px; }
+.lesson .n { font: 900 15px var(--mono); color: var(--jev); margin-bottom: 6px; }
+.lesson h3 { font-size: 23px; margin-bottom: 10px; }
+.lesson p { font-size: 17px; line-height: 1.7; color: var(--muted); }
+
+.gif { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; background: #fff; }
+
+#nav { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); font: 12px var(--sans); color: #aab; opacity: .7; }
+
+@media print {
+  @page { size: 1280px 720px; margin: 0; }
+  html, body { background: var(--bg); overflow: visible; height: auto; }
+  #deck { position: static; transform: none !important; width: 1280px; height: auto; }
+  .slide { display: flex !important; position: relative; width: 1280px; height: 720px; page-break-after: always; break-after: page; }
+  #nav { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- 1 cover -->
+<section class="slide cover">
+  <div class="bar"></div>
+  <h1>Jev 能打星际微操吗？</h1>
+  <p class="sub">我们分四步，把一个选择题模型放进 StarCraft 多智能体微操（SMAC）。<br>每一步都和"同样信息、没有 Jev"的对照比较。</p>
+  <p class="meta">SMAClite 实验 · 2026 年 9–10 月 · github.com/wang90063/jev-on-smac</p>
+</section>
+
+<!-- 2 motivation -->
+<section class="slide">
+  <div class="kicker">动机</div>
+  <h2>Jev 看起来像一个不用训练的 RL 策略，而且足够快</h2>
+  <div class="row">
+    <div class="col card">
+      <h3>形状像 RL 的动作头</h3>
+      <div class="flow">
+        <div class="box">局面 +<br>一道选择题</div><div class="arr">→</div>
+        <div class="box j">Jev</div><div class="arr">→</div>
+        <div class="box">每个选项的<br>校准概率</div>
+      </div>
+      <ul class="clean">
+        <li>Jev（TypeSafe System One）不生成文字，只在带名字的选项里给出概率。</li>
+        <li>这和 RL 策略的离散动作头是同一个形状：状态进，动作分布出。</li>
+        <li>但它<b>不需要训练</b>：只改局面和题目，模型本身从不微调。</li>
+      </ul>
+    </div>
+    <div class="col card">
+      <h3>速度够每步做一次决定</h3>
+      <div class="stat" style="margin: 8px 0 20px">
+        <div class="v">0.27 s</div><div class="k">一次请求里 13 道题（约 5.4 万字的文档）</div>
+        <div class="v">80 /s</div><div class="k">请求限速；同一请求内的题目并行、相互独立</div>
+        <div class="v">0.4 s</div><div class="k">实时星际 2 里的中位响应（外部项目 JEV-Star）</div>
+        <div class="v" style="color:var(--jev)">0.5 s</div><div class="k">SMAC 一步的游戏时间</div>
+      </div>
+      <p class="muted" style="font-size:16px">纸面上，Jev 来得及每一步都选一次动作。</p>
+    </div>
+  </div>
+  <p class="foot">如果成立，就得到一个免训练的微操策略。</p>
+</section>
+
+<!-- 3 questions -->
+<section class="slide">
+  <div class="kicker">要验证的问题</div>
+  <h2>四个问题，每一个都由上一步失败的原因引出</h2>
+  <div class="ladder">
+    <div class="step"><div class="n">1</div><div class="q">Jev 直接给每个单位出动作，能赢吗？<span>每 0.5 秒，每个单位一道题，选项是它的合法动作</span></div><div class="why">最直接的用法</div></div>
+    <div class="step"><div class="n">2</div><div class="q">降维：Jev 给每个兵组选战术，代码执行。Jev 的选择有贡献吗？<span>7 道题，每题 2–6 个带名字的战术</span></div><div class="why">第 1 步失败：动作空间大、题目之间不能协同、动作差异都是数值</div></div>
+    <div class="step"><div class="n">3</div><div class="q">换到没见过的战斗，还成立吗？<span>同一套系统，换到生成的新战斗上</span></div><div class="why">第 2 步的题目和规则，是照着官方图写的</div></div>
+    <div class="step"><div class="n">4</div><div class="q">先做出能泛化的系统，Jev 在上面挑选，还能加分吗？<span>战术库、价值模型、LLM 写的微操程序</span></div><div class="why">第 3 步失败：战术知识过拟合官方图</div></div>
+  </div>
+  <p class="foot">每一步的判据都一样：Jev 必须显著赢过"同样信息、没有 Jev"的对照。</p>
+</section>
+
+<!-- 4 setup: env + data -->
+<section class="slide">
+  <div class="kicker">实验设置 · 环境与数据</div>
+  <h2>两类战斗：照着写规则的官方图，和谁都没看过的生成战斗</h2>
+  <div class="row">
+    <div class="col" style="flex:.85">
+      <div class="card" style="margin-bottom:16px">
+        <h3>环境</h3>
+        <ul class="clean">
+          <li><b>SMAClite</b>：Python 重写的 SMAC，不需要星际 2。</li>
+          <li>1 步 ≈ 0.5 秒游戏时间，<b>超时算输</b>。</li>
+          <li>游戏会等策略，所以延迟只花墙钟时间，不影响胜负。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>统计</h3>
+        <ul class="clean">
+          <li>同场景、同种子逐局配对；</li>
+          <li>精确符号检验：翻盘数 vs 丢盘数。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col card" style="flex:1.25">
+      <h3>数据</h3>
+      <p style="font-size:16px; margin-bottom:6px"><b>官方图</b>：23 张 SMAC 图 × 5 个种子 = 115 局。第 2 步的题目和手写规则都照着它们写，所以对它们是<b>样本内</b>。</p>
+      <p style="font-size:16px; margin-bottom:10px"><b>生成的战斗</b>：一个场景 = 随机抽的地形 + 双方兵种组合 + 时限，只留有争议的战斗。一个<b>种子</b> = 同一场战斗重打，出生点抖动不超过 1.5 格。</p>
+      <table class="t" style="font-size:15px">
+        <tr><th>角色</th><th>集合</th><th class="num">场景</th><th class="num">局（× 5 种子）</th></tr>
+        <tr><td>训练</td><td>train、train2</td><td class="num">60 + 120</td><td class="num">900</td></tr>
+        <tr><td>验证</td><td>val</td><td class="num">80</td><td class="num">400</td></tr>
+        <tr><td>测试</td><td>test、test2</td><td class="num">40、120</td><td class="num">200、600</td></tr>
+        <tr><td>测试</td><td>test3–test6</td><td class="num">各 200</td><td class="num">各 1,000</td></tr>
+      </table>
+      <p class="small" style="margin-top:10px">每个测试集只用来做一次最终判断。不同集合是不同的战斗，不只是种子不同。1,040 个验证和测试场景里，只有 4 个碰巧和训练场景相同。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 setup: baselines -->
+<section class="slide">
+  <div class="kicker">实验设置 · 对照</div>
+  <h2>每一步问同一个问题：Jev 有没有超出我们交给它的东西？</h2>
+  <p class="muted" style="margin:-10px 0 18px">交给它的是一个输出空间（可选的选项）和一些知识（选项说明、示例）。所以每一步配同样四种对照：</p>
+  <table class="t">
+    <tr><th style="width:150px">角色</th><th style="width:230px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
+    <tr><td><b>下限</b></td><td>系统本身就不行</td><td>attack-move</td><td>attack-move</td><td>attack-move</td></tr>
+    <tr><td><b>同输出空间，随机</b></td><td>收益来自选项，不是挑选</td><td>随机合法动作</td><td>对同样的题随机作答</td><td>在同样候选里随机挑</td></tr>
+    <tr><td><b>同输出空间，固定规则</b></td><td>收益来自规则已有的知识</td><td>SMAC 启发式（closest / focus）</td><td>4 条手写规则</td><td>最近簇查表；相似示例投票</td></tr>
+    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td>每局事后最优</td><td>每局事后最优</td></tr>
+  </table>
+  <ul class="clean" style="margin-top:22px">
+    <li><b>attack-move</b>：所有单位向敌人攻击移动，也是每个系统最后的兜底。</li>
+    <li><b>SMAC 启发式</b>：打射程内最近的敌人（closest）或血最少的敌人（focus），否则走过去。</li>
+  </ul>
+</section>
+
+<!-- 6 step 1 -->
+<section class="slide">
+  <div class="kicker">结果 · 第 1 步</div>
+  <h2>Jev 直接控制每个单位：35 局一局没赢，和随机动作一样</h2>
+  <div class="row">
+    <div class="col" style="flex:1.1">
+      <div class="chart-title">胜场 <span>/ 35 局（7 张官方图 × 5 个种子）</span></div>
+      <div class="legend">
+        <span><i style="background:var(--jev)"></i>Jev</span>
+        <span><i style="background:var(--floor)"></i>下限</span>
+        <span><i style="background:var(--rand)"></i>随机</span>
+        <span><i style="background:var(--rule)"></i>固定规则</span>
+      </div>
+      <div id="c-step1"></div>
+      <p class="small" style="margin-top:22px">3m（种子 1）：Jev 让三个机枪兵一起往东走（P = 0.95），然后把火力分散到三个敌人身上。敌人不分散，最后剩 2 个单位获胜。</p>
+    </div>
+    <div class="col card" style="flex:.9">
+      <h3>三个可能的原因</h3>
+      <ol style="padding-left:22px">
+        <li style="font-size:16px; margin-bottom:10px"><b>动作空间大。</b>每个单位每 0.5 秒有 6–17 个动作，一场仗要连续几十步都对。</li>
+        <li style="font-size:16px; margin-bottom:10px"><b>题目之间不能协同。</b>同一请求里的题目各自独立打分；而集火是"谁打谁"的联合分配。</li>
+        <li style="font-size:16px; margin-bottom:10px"><b>动作的差别是数值。</b>射程、冷却、距离决定胜负。300 个决策点上，Jev 对 13 个动作给出的胜率，标准差只有 0.047。</li>
+      </ol>
+      <p class="small" style="margin-top:auto">还慢：这个规模下每次请求 1.23 秒，比一步的 0.5 秒还长。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 steps 2-3 -->
+<section class="slide">
+  <div class="kicker">结果 · 第 2–3 步</div>
+  <h2>选兵组战术：官方图上赢 91 局，可手写规则赢 92；<br>换到新战斗，和手写规则、三行的 focus 规则打平</h2>
+  <div class="legend" style="margin-top:-8px">
+    <span><i style="background:var(--jev)"></i>Jev 作答</span>
+    <span><i style="background:var(--floor)"></i>下限</span>
+    <span><i style="background:var(--rand)"></i>随机</span>
+    <span><i style="background:var(--rule)"></i>固定规则</span>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="chart-title">官方图 <span>115 局 · 题目和规则照着写的（样本内）</span></div>
+      <div id="c-off"></div>
+      <p class="small" style="margin-top:14px">Jev 对随机作答 +17 / −0；对手写规则 +1 / −2。</p>
+    </div>
+    <div class="col">
+      <div class="chart-title">val <span>400 局 · 没用来写题目和规则</span></div>
+      <div id="c-val"></div>
+      <p class="small" style="margin-top:14px">Jev 对随机作答 +37 / −30（p = 0.46）；对手写规则 +20 / −20；对 focus +66 / −63（p = 0.86）。</p>
+    </div>
+  </div>
+  <p class="foot">7 道题：枪线怎么打、近战怎么打、集火规则、激光瞄哪、外侧是否让位、两个残血敌人先打谁、治疗谁。平均每局 10.5 次请求。</p>
+</section>
+
+<!-- 8 why step 3 failed -->
+<section class="slide">
+  <div class="kicker">为什么第 3 步失败</div>
+  <h2>战术知识照着官方图写；到了新战斗，Jev 拿到的和随机作答一样多</h2>
+  <div class="row">
+    <div class="col">
+      <div class="chart-title">比 attack-move 多赢的局数 <span>· 官方图（115）</span></div>
+      <div id="c-head-off"></div>
+      <div class="chart-title" style="margin-top:26px">比 attack-move 多赢的局数 <span>· val（400）</span></div>
+      <div id="c-head-val"></div>
+      <p class="small" style="margin-top:12px">上限 = 把每个选项钉住整场重打一遍，每局取事后最好的那个。虚线框是上限。</p>
+    </div>
+    <div class="col card" style="flex:.8">
+      <h3>两件事</h3>
+      <ul class="clean">
+        <li style="font-size:16px"><b>知识没迁移过去。</b>官方图上最管用的选项（枪线拉扯）比 attack-move 多赢 20 局；到 val 只多 1 局。手写规则带的正是这条知识，所以也失去了优势。</li>
+        <li style="font-size:16px"><b>Jev 没有补上。</b>val 上菜单还有空间，但 Jev 拿到的（39）和随机作答（37）差不多。</li>
+        <li style="font-size:16px"><b>放开门槛也没用。</b>把被证据门槛关掉的 5 类题也打开，val 上限只多 6 / 400，新增的选项大多是多了输的办法。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9 step 4 systems -->
+<section class="slide">
+  <div class="kicker">结果 · 第 4 步 · 系统</div>
+  <h2>先做能泛化的系统：一个比一个强，没见过的 1,000 局里从 475 赢到 720</h2>
+  <div class="row">
+    <div class="col" style="flex:1">
+      <div class="chart-title">test6 胜场 <span>/ 1,000 局 · 没有系统在上面训练或调参</span></div>
+      <div class="legend">
+        <span><i style="background:var(--floor)"></i>下限</span>
+        <span><i style="background:var(--rule)"></i>第 2 步的手写规则</span>
+        <span><i style="background:var(--sys)"></i>第 4 步的系统</span>
+      </div>
+      <div id="c-test6"></div>
+      <p class="small" style="margin-top:18px">官方图上排名反过来：这些系统只有 51–65 / 115，Jev 作答 91。官方图对第 2 步是样本内，第 4 步的系统从没见过它们。</p>
+    </div>
+    <div class="col" style="flex:1.05">
+      <table class="t" style="font-size:14.5px">
+        <tr><th>系统</th><th>训练</th><th>验证</th><th>测试（只用一次）</th></tr>
+        <tr><td><b>战术库 + 最近簇</b><br><span class="small">LLM 按场景簇锻造程序，换种子确认才入库</span></td><td>train</td><td>–</td><td>test2：299 对 255 <span class="small">/ 600</span></td></tr>
+        <tr><td><b>价值切换</b><br><span class="small">每 5 步，价值模型可换成 12 个战术之一</span></td><td>train + train2</td><td>val 选阈值</td><td>test3：496 对 452 <span class="small">/ 1,000</span></td></tr>
+        <tr><td><b>Grok 写的程序</b><br><span class="small">4 轮模拟器反馈</span></td><td>train</td><td>val</td><td>test5：584 对 443 <span class="small">/ 1,000</span></td></tr>
+        <tr><td><b>Claude 写的程序</b><br><span class="small">读源码、逐局追踪输局</span></td><td>train + train2</td><td>val</td><td>test6：<b class="s">720</b> 对 475 <span class="small">/ 1,000</span></td></tr>
+      </table>
+      <p class="small" style="margin-top:8px">"对"后面是 attack-move 在同一批战斗上的胜场。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 jev on top -->
+<section class="slide">
+  <div class="kicker">结果 · 第 4 步 · Jev 叠加</div>
+  <h2 style="margin-bottom:16px">在这些系统上让 Jev 挑：从没超过同样信息的对照</h2>
+  <div class="row">
+    <div class="col" style="flex:1.35">
+      <div class="chart-title">比系统本身多赢的局数 <span>· 同一批战斗逐局配对</span></div>
+      <div class="legend" style="margin-bottom:10px">
+        <span><i style="background:var(--jev)"></i>Jev</span>
+        <span><i style="background:var(--rand)"></i>同样信息的对照</span>
+        <span><i style="border:2px dashed #495057"></i>事后最优</span>
+      </div>
+      <div id="c-ontop"></div>
+      <div class="axis" id="ax-ontop"></div>
+    </div>
+    <div class="col card" style="flex:.65">
+      <h3>读法</h3>
+      <ul class="clean">
+        <li style="font-size:15px">每组是一个实验：Jev 替系统做某个选择，和系统自己的选择逐局配对。</li>
+        <li style="font-size:15px">有设置的实验都先在 val 上调，再在测试集上只跑一次。</li>
+        <li style="font-size:15px">最好的一次是 +6，而同样 8 个邻居直接投票是 +5。</li>
+        <li style="font-size:15px">③ 没有独立测试集：在 Claude 程序自己的 720 局开发数据上，示例按场景留一法抽取。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 why -->
+<section class="slide">
+  <div class="kicker">为什么</div>
+  <h2>挑战术的空间很小；空间在逐单位的执行里，而那正是 Jev 做不了的</h2>
+  <div class="row">
+    <div class="col" style="flex:1.25">
+      <div class="chart-title">对胜率的影响 <span>· 百分点</span></div>
+      <div class="legend">
+        <span><i style="border:2px dashed #495057"></i>挑选：事后最优的上限</span>
+        <span><i style="background:var(--sys)"></i>执行：实际测得</span>
+      </div>
+      <div id="c-why"></div>
+      <p class="small" style="margin-top:16px">挑选是上限（事后最好的选项），执行是实际测到的差值，所以这张图对挑选是偏宽的。</p>
+    </div>
+    <div class="col card" style="flex:.75">
+      <h3>大多数战斗，选哪个都一样</h3>
+      <ul class="clean">
+        <li style="font-size:16px">2,717 个决策点，每个把 13 个选项都打到底：只有 284 个（10%）存在能改变胜负的选项。</li>
+        <li style="font-size:16px">第 20 步从"等"切到"压"：720 局里只有 43 局结果变了（25 赢、18 输）。</li>
+        <li style="font-size:16px">所有战术选项底下跑的是同一套执行代码：谁打谁、什么时候后撤。挑哪个都碰不到它。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 12 what works -->
+<section class="slide">
+  <div class="kicker">有效的做法</div>
+  <h2>LLM 直接写微操代码，用模拟器检验</h2>
+  <img class="gif" src="fight.gif" alt="同一场战斗：左边 attack-move 全灭，右边 Claude 写的程序一个不死">
+  <p class="small" style="margin:6px 0 14px">没见过的测试战斗 y0810，种子 4：4 个追猎者（蓝）对 5 个刺蛇（红），墙上只有一个缺口。左：attack-move，火力分散，全灭。右：程序守住缺口，逐个集火，一个不死。</p>
+  <div class="row" style="gap:20px">
+    <div class="col card" style="padding:16px 22px">
+      <h3 style="font-size:17px; margin-bottom:6px">程序做的五件事（约 150 行）</h3>
+      <p style="font-size:14.5px; line-height:1.65">集火分配（敌方输出 ÷ 剩余有效血量，记账防溢出）· 医疗艇治疗或后撤 · 近战拦截自爆兵 · 冷却期间拉扯 · 10 步没人掉血就全军进攻</p>
+    </div>
+    <div class="col card" style="padding:16px 22px">
+      <h3 style="font-size:17px; margin-bottom:6px">反馈比换模型更重要</h3>
+      <p style="font-size:14.5px; line-height:1.65">Grok 只看汇总分数：test6 <b>59.5%</b>。Claude 读源码、逐局追踪、每改一处配对重测：<b class="s">72.0%</b>。最大一次跃升是发现 <span class="mono">can_attack</span> 意思是"可见"不是"在射程内"：−100 → +64 / 720。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 takeaway: verdict -->
+<section class="slide">
+  <div class="kicker">Take away · 结论</div>
+  <h2>Jev 不适合做 SMAC 微操：三种用法都没赢过对照</h2>
+  <div class="verdict">
+    <div class="card"><h3>直接出动作</h3><div class="big" style="color:var(--jev)">0 / 35</div><p>和随机动作一样；attack-move 赢 25。</p></div>
+    <div class="card"><h3>选兵组战术</h3><div class="big">= 手写规则</div><p>官方图 91 对 92；新战斗 196 对 196，也和三行的 focus 规则（193）打平。</p></div>
+    <div class="card"><h3>在能泛化的系统上挑选</h3><div class="big">≤ 对照</div><p>四个实验里最好 +6，同样信息的投票 +5。</p></div>
+  </div>
+  <div class="row" style="gap:24px">
+    <div class="col card">
+      <h3>唯一的长处：判断"能不能赢"</h3>
+      <div id="c-auc"></div>
+      <p class="small" style="margin-top:10px">每个决策点问"从这里能赢吗"，附 8 个最相似的历史时刻。AUC 条从 0.5（瞎猜）画起。Jev 最好，但不显著。而且微操里没有能用上这个判断的动作：不能撤退、增援、投降。</p>
+    </div>
+    <div class="col card" style="flex:.8">
+      <h3>Jev 可能适合的地方</h3>
+      <p style="font-size:16px; line-height:1.65">少量、高代价、能用文字描述的决策，而且判断能变成动作：撤退、增援、这仗不打。全局宏观运营符合这些条件；小规模微操正好相反。</p>
+      <p class="small" style="margin-top:10px">外部结果（JEV-Star，实时星际 2 宏观）：Jev 单独 0 / 10；在 LLM 计划过滤后的动作里挑，9 / 10。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 takeaway: method -->
+<section class="slide">
+  <div class="kicker">Take away · 方法</div>
+  <h2>下次用判断模型之前</h2>
+  <div class="lesson">
+    <div class="card"><div class="n">01</div><h3>先量上限</h3><p>在一部分种子上为每个场景挑最好的选项，再到别的种子上验证。如果只值几个百分点，谁来挑都无所谓。这里"等还是压"的上限只有 3.5%。</p></div>
+    <div class="card"><div class="n">02</div><h3>永远对照"同样信息、没有模型"</h3><p>四种对照：同样候选里随机挑、同样示例直接投票、用同样知识写的固定规则、什么都不改。Jev 在每一步都被其中一个追平。</p></div>
+    <div class="card"><div class="n">03</div><h3>小提升要换种子确认</h3><p>一个改动在挑选种子上 +7，换了种子变成 −14（p = 0.049）。小于 +15 的提升，一定要在没参与挑选的种子上再测。</p></div>
+    <div class="card"><div class="n">04</div><h3>别信调参用过的地图</h3><p>手写规则和 Jev 的题目都照着官方图写：在那里 92 和 91，到了新战斗就和三行的 focus 规则打平。泛化只看没见过的战斗。</p></div>
+  </div>
+  <p class="foot">完整数据和复现命令：README 与 results/rerun/。</p>
+</section>
+
+</div>
+<div id="nav">← → 翻页 · 打印 = 每页一张</div>
+
+<script>
+// ---- charts ----
+function hbars(id, rows, max, lw) {
+  const el = document.getElementById(id);
+  el.className = "hb";
+  if (lw) el.style.setProperty("--lw", lw + "px");
+  el.innerHTML = rows.map(r => {
+    if (r.gap) return '<div class="r gap"></div>';
+    const w = Math.max(0, r.v) / max * 88;  // leave room for the value label
+    const shown = r.show !== undefined ? r.show : r.v;
+    return `<div class="r ${r.c}"><span class="l">${r.l}</span><span class="t"><i style="width:${w}%"></i><b style="left:${w}%">${shown}${r.n ? `<em>${r.n}</em>` : ""}</b></span></div>`;
+  }).join("");
+}
+function dbars(id, axisId, groups, lo, hi, ticks) {
+  const el = document.getElementById(id);
+  el.className = "db";
+  const pos = v => (v - lo) / (hi - lo) * 100;
+  const z = pos(0);
+  el.innerHTML = groups.map(g => `<div class="g">${g.g} <span>${g.s}</span></div>` + g.rows.map(r => {
+    const p = pos(r.v), left = Math.min(z, p), w = Math.abs(p - z);
+    const lab = (r.v > 0 ? "+" : r.v < 0 ? "−" : "") + Math.abs(r.v);
+    const b = r.v >= 0 ? `<b style="left:calc(${p}% + 6px)">${lab}</b>` : `<b style="right:calc(${100 - p}% + 6px)">${lab}</b>`;
+    return `<div class="r ${r.c}"><span class="l">${r.l}</span><span class="t"><span class="z" style="left:${z}%"></span><i style="left:${left}%;width:${w}%"></i>${b}</span></div>`;
+  }).join("")).join("");
+  document.getElementById(axisId).innerHTML = ticks.map(t => `<span style="left:${pos(t)}%">${t > 0 ? "+" + t : t}</span>`).join("");
+}
+
+hbars("c-step1", [
+  { l: "Jev，逐单位动作", v: 0, c: "jev" },
+  { l: "随机合法动作", v: 0, c: "rand" },
+  { l: "attack-move", v: 25, c: "floor" },
+  { l: "SMAC：closest", v: 25, c: "rule" },
+  { l: "SMAC：focus", v: 30, c: "rule" },
+], 35, 160);
+
+const s23 = (off) => [
+  { l: "随机合法动作", v: off ? 8 : 31, c: "rand" },
+  { l: "attack-move", v: off ? 53 : 176, c: "floor" },
+  { l: "SMAC：closest", v: off ? 64 : 184, c: "rule" },
+  { l: "SMAC：focus", v: off ? 58 : 193, c: "rule" },
+  { l: "随机作答", v: off ? 74 : 189, c: "rand" },
+  { l: "手写规则", v: off ? 92 : 196, c: "rule" },
+  { l: "Jev 作答", v: off ? 91 : 196, c: "jev" },
+];
+hbars("c-off", s23(true), 115, 120);
+hbars("c-val", s23(false), 400, 120);
+
+const head = (off) => [
+  { l: "菜单上限", v: off ? 40 : 67, c: "ceil" },
+  { l: "Jev 作答", v: off ? 38 : 39, c: "jev" },
+  { l: "手写规则", v: off ? 39 : 36, c: "rule" },
+  { l: "随机作答", v: off ? 23 : 37, c: "rand" },
+];
+hbars("c-head-off", head(true), 70, 110);
+hbars("c-head-val", head(false), 70, 110);
+
+hbars("c-test6", [
+  { l: "attack-move", v: 475, c: "floor" },
+  { l: "手写规则（第 2 步）", v: 490, c: "rule" },
+  { l: "价值切换", v: 519, c: "sys" },
+  { l: "Grok 写的程序", v: 595, c: "sys" },
+  { l: "Claude 写的程序", v: 720, c: "sys" },
+], 1000, 160);
+
+dbars("c-ontop", "ax-ontop", [
+  { g: "① 战术库：Jev 替最近簇挑程序", s: "test2 · 600 局", rows: [
+    { l: "Jev", v: -4, c: "jev" }, { l: "随机挑", v: -26, c: "rand" } ] },
+  { g: "① 带提示蒸馏的战术库", s: "test2 · 600 局", rows: [
+    { l: "Jev", v: -24, c: "jev" }, { l: "随机挑", v: -18, c: "rand" } ] },
+  { g: "② 再给每个程序在 8 场相似战斗里的战绩", s: "test2 · 600 局", rows: [
+    { l: "Jev", v: 1, c: "jev" }, { l: "战绩投票", v: 1, c: "rand" } ] },
+  { g: "⑤ 价值模型拿不准时，让 Jev 挑战术", s: "test4 · 1,000 局", rows: [
+    { l: "Jev", v: 4, c: "jev" }, { l: "随机挑", v: -4, c: "rand" } ] },
+  { g: "③ Claude 程序：开局等还是压", s: "开发集 · 720 局", rows: [
+    { l: "Jev", v: 6, c: "jev" }, { l: "邻居投票", v: 5, c: "rand" }, { l: "事后最优", v: 25, c: "ceil" } ] },
+], -30, 30, [-30, -20, -10, 0, 10, 20, 30]);
+
+hbars("c-why", [
+  { l: "开局等还是压", v: 3.5, c: "ceil", show: "3.5", n: "+25 / 720" },
+  { l: "从战术库挑程序", v: 8.5, c: "ceil", show: "≈8.5", n: "+24~27 / 300" },
+  { gap: true },
+  { l: "拉扯", v: 6.0, c: "sys", show: "6.0", n: "关掉少赢 43 / 720" },
+  { l: "集火分配", v: 7.5, c: "sys", show: "7.5", n: "关掉少赢 54 / 720" },
+  { l: "整个执行程序", v: 24.5, c: "sys", show: "24.5", n: "比 attack-move +245 / 1,000" },
+], 36, 140);
+
+hbars("c-auc", [
+  { l: "Jev + 8 个相似时刻", v: 0.874 - 0.5, c: "jev", show: "0.874" },
+  { l: "血量比", v: 0.835 - 0.5, c: "rule", show: "0.835" },
+  { l: "8 个时刻的平均结果", v: 0.80 - 0.5, c: "rand", show: "0.77–0.80" },
+], 0.42, 170);
+
+// ---- navigation ----
+const deck = document.getElementById("deck");
+const slides = [...document.querySelectorAll(".slide")];
+slides.forEach((s, i) => {
+  const pg = document.createElement("div");
+  pg.className = "pg"; pg.textContent = `${i + 1} / ${slides.length}`;
+  s.appendChild(pg);
+  if (i > 0) { const b = document.createElement("div"); b.className = "brand"; b.textContent = "Jev 微操实验"; s.appendChild(b); }
+});
+let cur = 0;
+function show(i) {
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+  try { history.replaceState(null, "", "#" + (cur + 1)); } catch (e) {}
+}
+function fit() {
+  const s = Math.min(innerWidth / 1280, innerHeight / 720);
+  deck.style.transform = `translate(-50%, -50%) scale(${s})`;
+}
+addEventListener("resize", fit);
+addEventListener("hashchange", () => { const n = (parseInt(location.hash.slice(1)) || 1) - 1; if (n !== cur) show(n); });
+addEventListener("keydown", e => {
+  if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+  else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+  else if (e.key === "Home") show(0);
+  else if (e.key === "End") show(slides.length - 1);
+});
+deck.addEventListener("click", e => {
+  if (e.target.closest("a")) return;
+  show(e.clientX > innerWidth / 3 ? cur + 1 : cur - 1);
+});
+fit();
+show((parseInt(location.hash.slice(1)) || 1) - 1);
+</script>
+</body>
+</html>
