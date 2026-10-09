@@ -169,6 +169,21 @@ table.t tr.hl td { background: var(--jev-soft); }
 .ag .pp::before { content: "第 "; font-family: var(--sans); } .ag .pp::after { content: " 页"; font-family: var(--sans); }
 .ag.main { border: 2px solid var(--jev); background: #fffaf6; }
 
+/* what works */
+.five { display: flex; flex-wrap: wrap; gap: 6px; }
+.five span { font-size: 12.5px; color: var(--muted); background: var(--sys-soft); border-radius: 8px; padding: 4px 9px; line-height: 1.35; }
+.five b { color: var(--ink); margin-right: 6px; font-size: 13.5px; }
+.loop { display: grid; grid-template-columns: 50px auto 1fr 48px; gap: 8px 8px; align-items: center; }
+.loop .who { font-weight: 700; font-size: 14px; color: var(--muted); }
+.loop .who.s, .loop b.s { color: var(--sys); }
+.loop .fl { font-size: 12.5px; color: var(--faint); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.loop .fl i { font-style: normal; color: var(--ink); border: 1.5px solid var(--line); border-radius: 6px; padding: 2px 6px; background: #fff; }
+.loop .fl i.s { border-color: var(--sys); color: var(--sys); font-weight: 700; }
+.loop .lb { position: relative; height: 14px; min-width: 40px; background: #f1efe9; border-radius: 4px; }
+.loop .lb em { position: absolute; left: 0; top: 0; bottom: 0; background: var(--rand); border-radius: 4px; }
+.loop .lb em.s { background: var(--sys); }
+.loop > b { font: 700 13px var(--mono); text-align: right; }
+
 /* ladder */
 .ladder { display: flex; flex-direction: column; gap: 12px; }
 .step { display: grid; grid-template-columns: 64px 1fr 380px; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 22px; }
@@ -559,13 +574,23 @@ table.t tr.hl td { background: var(--jev-soft); }
   <img class="gif" src="fight.gif" alt="同一场战斗：左边 attack-move 全灭，右边 Claude 写的程序一个不死">
   <p class="small" style="margin:6px 0 14px">没见过的测试战斗 y0810，种子 4：4 个追猎者（蓝）对 5 个刺蛇（红），墙上只有一个缺口。左：attack-move，火力分散，全灭。右：程序守住缺口，逐个集火，一个不死。</p>
   <div class="row" style="gap:20px">
-    <div class="col card" style="padding:16px 22px">
-      <h3 style="font-size:17px; margin-bottom:6px">程序做的五件事（约 150 行）</h3>
-      <p style="font-size:14.5px; line-height:1.65">集火分配（敌方输出 ÷ 剩余有效血量，记账防溢出）· 医疗艇治疗或后撤 · 近战拦截自爆兵 · 冷却期间拉扯 · 10 步没人掉血就全军进攻</p>
+    <div class="col card" style="padding:14px 20px; flex:.8">
+      <h3 style="font-size:16px; margin-bottom:8px">程序做的五件事 <span class="muted" style="font-weight:400">· 约 150 行</span></h3>
+      <div class="five">
+        <span><b>集火分配</b>敌方输出 ÷ 剩余有效血量，记账防溢出</span>
+        <span><b>冷却期间拉扯</b>射程、速度占优时</span>
+        <span><b>医疗艇</b>治疗或后撤</span>
+        <span><b>近战拦截</b>冲向远程的自爆兵</span>
+        <span><b>僵持就进攻</b>10 步没人掉血</span>
+      </div>
     </div>
-    <div class="col card" style="padding:16px 22px">
-      <h3 style="font-size:17px; margin-bottom:6px">反馈比换模型更重要</h3>
-      <p style="font-size:14.5px; line-height:1.65">Grok 只看汇总分数：test6 <b>59.5%</b>。Claude 读源码、逐局追踪、每改一处配对重测：<b class="s">72.0%</b>。最大一次跃升是发现 <span class="mono">can_attack</span> 意思是"可见"不是"在射程内"：−100 → +64 / 720。</p>
+    <div class="col card" style="padding:14px 20px; flex:1.2">
+      <h3 style="font-size:16px; margin-bottom:8px">反馈比换模型更重要 <span class="muted" style="font-weight:400">· test6 胜率</span></h3>
+      <div class="loop">
+        <span class="who">Grok</span><span class="fl"><i>写程序</i>→<i>模拟器</i>→<i>只看汇总分数</i>↺</span><span class="lb"><em style="width:59.5%"></em></span><b>59.5%</b>
+        <span class="who s">Claude</span><span class="fl"><i>写程序</i>→<i>模拟器</i>→<i class="s">源码 + 逐局追踪 + 配对重测</i>↺</span><span class="lb"><em class="s" style="width:72%"></em></span><b class="s">72.0%</b>
+      </div>
+      <p class="small" style="margin-top:6px">最大一次跃升：发现 <span class="mono">can_attack</span> 是"可见"，不是"在射程内"（−100 → +64 / 720）。</p>
     </div>
   </div>
 </section>
