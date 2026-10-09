@@ -41,11 +41,47 @@ A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an a
 
 **Environment.** [SMAClite](smaclite/), a Python re-implementation of SMAC that runs without StarCraft II. One step = 8 ticks ≈ 0.5 s, and a timeout counts as a loss. The game waits for the policy, so latency costs wall-clock time, not wins.
 
-**Battles.**
-- **Official maps:** the 23 SMAC maps × 5 seeds = 115 battles. The hand rules and the exam questions in step 2 were written by looking at these maps, so for both, the official maps are in-sample.
-- **Unseen battles:** procedurally generated scenarios with frozen splits: train (60), train2 (120), val (80), test (40), test2 (120), and test3–test6 (200 each). Each scenario is played with 5 seeds. Which split was used for what in step 4 is listed there.
-  - val was never used to write the exam questions or the hand rules. Each test set decided one thing, except test2, which decided two (step 4, ① and ②).
-  - The generator drops fights that attack-move wins 5/5, and fights that both attack-move and a random policy lose 5/5. Every remaining fight is contested.
+**Battles.** Every score in this README is battles won, out of a fixed set of battles from one of two sources.
+
+**1. Official maps: 115 battles.**
+- The 23 SMAC maps (3m, 2s3z, MMM2, corridor, …), designed by hand by the SMAC authors, × 5 seeds.
+- The step-2 questions, the gate and the hand rules were written by looking at these maps, so for all three the official maps are in-sample.
+- Step 1's 35 battles are 7 of these maps × 5 seeds: 3m, 8m, 5m_vs_6m, 2s3z, 3s5z, 3s_vs_3z, 10m_vs_11m.
+
+**2. Generated battles: fights nobody looked at while writing rules.** Built by [`src/scenarios.py`](src/scenarios.py).
+
+- **A scenario is one fight, drawn at random:**
+
+  | Part | How it is drawn |
+  |---|---|
+  | Terrain | open field (47% of scenarios), wall with a gap (29%), ravine (10%), octagon (7%), corridor (7%) |
+  | Our army | 1–3 of 8 unit types (Marine, Marauder, Stalker, Zealot, Colossus, Zergling, Baneling, Hydralisk), sometimes plus Medivacs; 2–30 units, median 10 |
+  | Enemy army | drawn the same way, independently, worth 0.8–1.3× our army; 1–40 units, median 12 |
+  | Time limit | 150 steps, or 220 with 40+ units in total; a timeout is a loss |
+
+  Example, `y0999`: open field, 4 Stalkers vs 2 Stalkers + 1 Colossus.
+- **Only contested fights are kept.** A fight is dropped if attack-move wins it on all 5 seeds, or if attack-move and random answers both lose all 5.
+- **A seed replays the same scenario.** The armies and terrain stay the same. Both spawn points move by up to 1.5, and the engine's randomness changes. So a new seed of a training scenario is still training data.
+- **A split is a batch of scenarios drawn separately,** with its own random seed and id prefix.
+  - Different splits hold **different fights**, not the same fights with new seeds.
+  - All splits come from the same generator, so "unseen" means new fights from the same distribution. The official maps are a different distribution.
+  - Overlap: 4 of the 1,040 val and test scenarios happen to equal a train or train2 scenario (small armies drawn twice).
+
+| Split | id prefix | Scenarios | Battles (× 5 seeds) | Role | Used for |
+|---|:-:|---:|---:|---|---|
+| train | g | 60 | 300 | training | step 4: all four systems (some used up to 10 seeds) |
+| train2 | t | 120 | 600 | training | step 4: value switching, the Claude program |
+| val | v | 80 | 400 | validation | steps 1–3: the unseen check, since nothing in steps 1–3 was built or tuned on it. Step 4: thresholds, Jev variants, go / no-go for the two programs |
+| test | g¹ | 40 | 200 | test | step 4: library (round 3) |
+| test2 | h | 120 | 600 | test | step 4: library (round 4); Jev ① and ② |
+| test3 | u | 200 | 1,000 | test | step 4: value switching |
+| test4 | w | 200 | 1,000 | test | step 4: value switching again; Jev ⑤ |
+| test5 | x | 200 | 1,000 | test | step 4: Grok program |
+| test6 | y | 200 | 1,000 | test | step 4: Claude program. Run in the same pass: value switching, Grok program, attack-move, hand rules (step 3) |
+
+<sub>¹ train and test were drawn as one batch and then split, so they share a prefix but no scenarios.</sub>
+
+Each test set was run once and decided one thing. The exception is test2, which decided two things (① in round 4, ② in round 5).
 
 **Statistics.** Every comparison is paired by scenario and seed, with an exact sign test on flips vs losses.
 
@@ -189,25 +225,7 @@ Tactics fitted to the battles they were found on was a pattern from the start:
 
 **Result: each system generalized better than the one before. Jev on top never added anything.**
 
-**The splits.**
-- **Scenario:** one generated fight, with a terrain layout, a unit mix for each side, and an army size.
-- **Seed:** the same fight again, with both spawn points moved by up to 1.5 and different engine randomness. A new seed of a training scenario is still training data.
-- **How the splits differ:** each split was drawn separately from the same generator, with its own generator seed and id prefix. The splits differ in their fights, not just their seeds.
-- **Overlap:** across all the test sets, 4 of 1,240 scenarios happen to match a train or train2 fight exactly.
-- **What "unseen" means here:** new fights from the same distribution. The official maps are a different distribution.
-
-| Split | Scenarios | Battles (× 5 seeds) | Role in step 4 |
-|---|---:|---:|---|
-| train | 60 | 300 | **training** for all four systems (some used up to 10 seeds) |
-| train2 | 120 | 600 | **training** for value switching and the Claude program |
-| val | 80 | 400 | **validation**: thresholds, Jev variants, go / no-go for the Grok and Claude programs |
-| test | 40 | 200 | **test**: library (round 3) |
-| test2 | 120 | 600 | **test**: library (round 4); Jev ① and ② |
-| test3 | 200 | 1,000 | **test**: value switching |
-| test4 | 200 | 1,000 | **test**: value switching again, and Jev ⑤ |
-| test5 | 200 | 1,000 | **test**: Grok program |
-| test6 | 200 | 1,000 | **test**: Claude program, with the earlier systems run alongside |
-| official | 23 maps | 115 | not used to build, tune or pick anything in step 4 |
+The splits (train, train2, val, test–test6) are defined under *Setup → Battles*.
 
 **Each system: training, validation and test.**
 
