@@ -107,6 +107,25 @@ table.t td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-a
 table.t td.num, table.t th.num { text-align: right; font-family: var(--mono); }
 table.t tr.hl td { background: var(--jev-soft); }
 
+/* question map */
+.qmap { position: relative; width: 1136px; height: 460px; }
+.qhead { position: absolute; top: 4px; font-size: 16px; font-weight: 700; text-align: center; }
+.qhead span { font-weight: 400; color: var(--muted); font-size: 14px; }
+.band { position: absolute; left: 190px; right: 0; height: 132px; background: #efede6; border-radius: 12px; }
+.lvl { position: absolute; left: 0; width: 176px; height: 132px; display: flex; flex-direction: column; justify-content: center; padding-left: 26px; }
+.lvl b { font-size: 18px; }
+.lvl span { font-size: 13px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
+.uparrow { position: absolute; left: 6px; top: 46px; height: 396px; width: 2px; background: var(--faint); }
+.uparrow::before { content: ""; position: absolute; left: -5px; top: -2px; border: 6px solid transparent; border-bottom: 9px solid var(--faint); border-top: 0; }
+.qn { position: absolute; width: 340px; height: 96px; background: var(--card); border: 2px solid var(--jev); border-radius: 12px; padding: 12px 16px 12px 62px; display: flex; flex-direction: column; justify-content: center; }
+.qn i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: var(--jev); color: #fff; font: 700 14px var(--mono); font-style: normal; display: flex; align-items: center; justify-content: center; }
+.qn b { font-size: 16.5px; line-height: 1.4; }
+.qn span { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.qempty { position: absolute; width: 340px; height: 96px; border: 1.5px dashed #c9c6bc; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--faint); }
+.qarrows { position: absolute; left: 0; top: 0; pointer-events: none; }
+.qlab { position: absolute; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.qlab b { display: block; color: var(--jev); font-size: 14px; }
+
 /* ladder */
 .ladder { display: flex; flex-direction: column; gap: 12px; }
 .step { display: grid; grid-template-columns: 64px 1fr 380px; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 22px; }
@@ -195,14 +214,39 @@ table.t tr.hl td { background: var(--jev-soft); }
 <!-- 3 questions -->
 <section class="slide">
   <div class="kicker">要验证的问题</div>
-  <h2>四个问题，每一个都由上一步失败的原因引出</h2>
-  <div class="ladder">
-    <div class="step"><div class="n">1</div><div class="q">Jev 直接给每个单位出动作，能赢吗？<span>每 0.5 秒，每个单位一道题，选项是它的合法动作</span></div><div class="why">最直接的用法</div></div>
-    <div class="step"><div class="n">2</div><div class="q">降维：Jev 给每个兵组选战术，代码执行。Jev 的选择有贡献吗？<span>7 道题，每题 2–6 个带名字的战术</span></div><div class="why">第 1 步失败：动作空间大、题目之间不能协同、动作差异都是数值</div></div>
-    <div class="step"><div class="n">3</div><div class="q">换到没见过的战斗，还成立吗？<span>同一套系统，换到生成的新战斗上</span></div><div class="why">第 2 步的题目和规则，是照着官方图写的</div></div>
-    <div class="step"><div class="n">4</div><div class="q">先做出能泛化的系统，Jev 在上面挑选，还能加分吗？<span>战术库、价值模型、LLM 写的微操程序</span></div><div class="why">第 3 步失败：战术知识过拟合官方图</div></div>
+  <h2 style="margin-bottom:14px">四个问题：Jev 管的层级越来越高，战场从官方图换到没见过的战斗</h2>
+  <div class="qmap">
+    <div class="qhead" style="left:0; width:180px; text-align:left; color:var(--faint)">Jev 决定的层级</div>
+    <div class="qhead" style="left:200px; width:440px">官方图 <span>· 115 局 · 题目和规则照着它们写</span></div>
+    <div class="qhead" style="left:680px; width:456px">没见过的生成战斗 <span>· val 和测试集</span></div>
+
+    <div class="band" style="top:38px"></div>
+    <div class="band" style="top:178px"></div>
+    <div class="band" style="top:318px"></div>
+    <div class="lvl" style="top:38px"><b>在系统上挑选</b><span>系统执行一整局，Jev 只在它的候选里挑一个</span></div>
+    <div class="lvl" style="top:178px"><b>兵组战术</b><span>Jev 给每个兵组选战术，代码执行</span></div>
+    <div class="lvl" style="top:318px"><b>单位动作</b><span>Jev 每 0.5 秒给每个单位选动作</span></div>
+    <div class="uparrow"></div>
+
+    <div class="qn" style="left:250px; top:336px"><i>Q1</i><b>Jev 给每个单位出动作，能赢吗？</b><span>每个单位一道题，选项是它的合法动作</span></div>
+    <div class="qn" style="left:250px; top:196px"><i>Q2</i><b>Jev 选兵组战术，有贡献吗？</b><span>7 道题，每题 2–6 个带名字的战术</span></div>
+    <div class="qn" style="left:738px; top:196px"><i>Q3</i><b>换到没见过的战斗，还成立吗？</b><span>同一套题目、同一套执行代码</span></div>
+    <div class="qn" style="left:738px; top:56px"><i>Q4</i><b>Jev 在能泛化的系统上挑选，<br>还能加分吗？</b><span>战术库、价值模型、LLM 写的微操程序</span></div>
+    <div class="qempty" style="left:250px; top:56px">官方图对这些系统只作参考</div>
+    <div class="qempty" style="left:738px; top:336px">没做：官方图上已经 0 / 35</div>
+
+    <svg class="qarrows" viewBox="0 0 1136 460" width="1136" height="460">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e8590c"/></marker></defs>
+      <line x1="420" y1="334" x2="420" y2="296" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+      <line x1="592" y1="244" x2="734" y2="244" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+      <line x1="908" y1="194" x2="908" y2="156" stroke="#e8590c" stroke-width="2.5" marker-end="url(#ah)"/>
+    </svg>
+    <div class="qlab" style="left:432px; top:295px"><b>降维</b>Q1 失败：动作空间大、题目之间不能协同、差别都是数值</div>
+    <div class="qlab" style="left:596px; top:206px; width:138px; text-align:center"><b>换战场</b></div>
+    <div class="qlab" style="left:596px; top:250px; width:138px; text-align:center">题目和规则照官方图写</div>
+    <div class="qlab" style="left:920px; top:155px"><b>先做能泛化的系统</b>Q3 失败：战术知识过拟合官方图</div>
   </div>
-  <p class="foot">每一步的判据都一样：Jev 必须显著赢过"同样信息、没有 Jev"的对照。</p>
+  <p class="foot">每个问题的判据都一样：Jev 必须显著赢过"同样信息、没有 Jev"的对照。</p>
 </section>
 
 <!-- 4 setup: env + data -->
