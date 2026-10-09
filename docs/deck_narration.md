@@ -1,6 +1,6 @@
 # 讲稿：Jev 微操实验
 
-每页一段，`## N` 对应 deck.html 的第 N 页。生成视频：`python docs/make_video.py`。
+每页一段，`## N` 对应 deck.html 的第 N 页。生成视频：`python docs/make_video.py`（默认在线语音 云希，`--voice Tingting` 用本地语音）。
 
 ## 1
 

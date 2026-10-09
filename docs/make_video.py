@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """Narrated video of docs/deck.html: one still per slide, macOS TTS for the voice.
 
-  python docs/make_video.py            # writes docs/deck.mp4
-  python docs/make_video.py --rate 190 # words per minute for `say`
+  python docs/make_video.py                              # writes docs/deck.mp4, online voice
+  python docs/make_video.py --voice Tingting --rate 190  # macOS `say` instead, offline
 
-Needs macOS `say` (voice Tingting), Google Chrome and ffmpeg.
+Voices named like zh-CN-YunxiNeural go through edge-tts (online: the narration text is sent to
+Microsoft's speech service); any other name goes to macOS `say`. Needs Google Chrome and ffmpeg.
 """
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
+import sys
+import time
 from pathlib import Path
 
 DOCS = Path(__file__).resolve().parent
@@ -30,6 +34,19 @@ def run(*cmd):
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
+def speak(text: str, voice: str, rate: int, out: Path):
+    if "Neural" not in voice:
+        run("say", "-v", voice, "-o", str(out), *(["-r", str(rate)] if rate else []), text)
+        return
+    env = {k: v for k, v in os.environ.items() if "proxy" not in k.lower()}
+    cmd = [sys.executable, "-m", "edge_tts", "--voice", voice, "--rate", f"{rate:+d}%", "--text", text, "--write-media", str(out)]
+    for attempt in range(3):  # the service now and then returns no audio; one request at a time, with a pause
+        if subprocess.run(cmd, env=env, capture_output=True).returncode == 0 and out.stat().st_size > 0:
+            return
+        time.sleep(5)
+    raise RuntimeError(f"edge-tts gave no audio for {out.name}")
+
+
 def duration(path: Path) -> float:
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
                          check=True, capture_output=True, text=True).stdout
@@ -38,8 +55,9 @@ def duration(path: Path) -> float:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--rate", type=int, default=0, help="say -r rate; 0 = the voice default (about 180), clearest")
-    ap.add_argument("--voice", default="Tingting")
+    ap.add_argument("--voice", default="zh-CN-YunxiNeural")
+    ap.add_argument("--rate", type=int, default=0,
+                    help="edge-tts: percent faster (+) or slower (-); say: words per minute, 0 = the voice default")
     ap.add_argument("--out", default=str(DOCS / "deck.mp4"))
     args = ap.parse_args()
 
@@ -47,13 +65,13 @@ def main():
     text = sections(DOCS / "deck_narration.md")
     segs = []
     for n in sorted(text):
-        shot, still, audio, seg = (WORK / f"{n:02d}{s}" for s in ("_raw.png", ".png", ".aiff", ".mp4"))
+        ext = ".mp3" if "Neural" in args.voice else ".aiff"
+        shot, still, audio, seg = (WORK / f"{n:02d}{s}" for s in ("_raw.png", ".png", ext, ".mp4"))
         # The headless viewport is 87 px shorter than the window; this makes it exactly 1920x1080.
         run(CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1920,1167",
             "--virtual-time-budget=4000", f"--screenshot={shot}", f"file://{DOCS / 'deck.html'}?video#{n}")
         run("ffmpeg", "-y", "-i", str(shot), "-vf", "crop=1920:1080:0:0", str(still))
-        say = ["say", "-v", args.voice, "-o", str(audio)] + (["-r", str(args.rate)] if args.rate else []) + [text[n]]
-        run(*say)
+        speak(text[n], args.voice, args.rate, audio)
         length = duration(audio) + PAD
         video = ["-loop", "1", "-framerate", "30", "-i", str(still)]
         if n in OVERLAY:
