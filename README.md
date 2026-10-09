@@ -133,7 +133,7 @@ Steps 1 and 2 give Jev two different things to choose; step 3 takes the step-2 s
 **Result: 0 / 35 wins, the same as random legal actions** (full table under *Results of steps 1–3*). On 3m (seed 1), it walked all three Marines east (P = 0.95), then split their fire across all three enemies; the enemy didn't split, and won with 2 units left. Three candidate causes:
 1. **The action space is large.** Each unit has 6–17 actions every 0.5 s, and a battle needs dozens of steps in a row to go right.
 2. **The questions can't coordinate.** Questions in one request are scored independently ([docs](https://docs.typesafe.ai/cookbooks/parallel_questions)). Focus fire, the most valuable thing in micro, is a joint assignment of who shoots whom. A three-line rule, *focus the lowest HP in range*, wins 10m_vs_11m 5/5, where attack-move and Jev both lose 5/5.
-3. **The differences between actions are numeric.** Range, cooldown, and distance decide the fight. Asked for P(win) after each of 13 actions at 300 recorded decision points, Jev's answers varied by a standard deviation of only 0.047 (card ⑦ below).
+3. **The differences between actions are numeric.** Range, cooldown, and distance decide the fight. Asked for P(win) after each of 13 actions at 300 recorded decision points, Jev's answers varied by a standard deviation of only 0.047.
 
 It is also slow at this scale. 1.23 s per request is longer than a 0.5 s step.
 
@@ -342,15 +342,6 @@ Where Jev was tried: the four questions, by the level Jev decides at and the bat
 
 <p align="center"><img src="docs/charts/qmap.png" alt="The four questions: Jev decides unit actions, then group tactics, then picks on top of a system; the battlefield moves from the official maps to unseen battles" width="100%"></p>
 
-<details>
-<summary>All nine places Jev was tried, with what it saw and its controls</summary>
-
-<p align="center">
-  <img src="docs/jev_map.svg" alt="Map of the nine places Jev was tried: for each, what Jev saw, its result, and the baselines with the same information" width="100%">
-</p>
-
-</details>
-
 ## Conclusion: is Jev useful in micro?
 
 **No, not for acting.** It can't output per-unit actions (step 1: 0 / 35). As a tactic chooser it matched hand rules written from the same knowledge, on the official maps and off them (steps 2–3). And it added nothing on top of systems that do generalize (step 4).
@@ -401,7 +392,7 @@ On the maps they were built from, the exams and the hand rules lead (91 and 92 v
 
 ```
 A0  Exams + motor primitives      Jev answers tactical questions; primitives execute           (step 2)
-A1  Tactic program library        offline LLM forging per scenario cluster; online: nearest     (step 4 ①②⑨)
+A1  Tactic program library        offline LLM forging per scenario cluster; online: nearest     (step 4 ①②)  
 A2  Value-guided macro switching  every 5 steps, a GBDT value model may swap in 1 of 12 tactics (step 4 ⑤)
 A3  LLM program synthesis (Grok)  act(obs, mem) in a sandbox, overriding A2 unit by unit     (step 4)
 A4  LLM program synthesis (Claude) same runtime as A3; source reading + trace-driven dev loop   ← current
