@@ -64,22 +64,11 @@ The controls change from step to step only because Jev's output space changes: a
 - **SMAC heuristic:** shoot the closest enemy in range (*closest*) or the lowest-HP one (*focus*), else walk toward it.
 - **Hand rules:** 4 fixed picks, written by looking at the official maps. Whenever the question is open: gun lines kite, melee holds the choke, the laser aims at the bar, outer guns step aside.
 
-**All fixed baselines on all battles.** So that the steps can be compared with one another, every baseline that doesn't call Jev was run on every battle set: the 35 battles of step 1 (7 official maps × 5 seeds), all 115 official battles, and the 400 val battles.
+## Steps 1–3. Jev as the policy
 
-| | Role | Step 1's 35 battles | 23 official maps (115) | val (400, unseen) |
-|---|---|---:|---:|---:|
-| Attack-move | floor | 25 | 53 | 176 |
-| Random legal action | random, step-1 output | 0 | 8 | 31 |
-| SMAC heuristic: closest | fixed rule, step-1 output | 25 | 64 | 184 |
-| SMAC heuristic: focus | fixed rule, step-1 output | 30 | 58 | 193 |
-| Random answers | random, step-2 output | 34 | 74 | 189 |
-| Hand rules | fixed rule, step-2 output | 35 | 92¹ | 196 |
-| **Jev, every unit's action (step 1)** | | **0** | – | – |
-| **Jev's answers (steps 2–3)** | | **35** | **91**¹ | **196** |
+Steps 1 and 2 give Jev two different things to choose; step 3 takes the step-2 system to unseen battles. All three are read off one table below.
 
-<sub>¹ In-sample: the hand rules and the exam questions were written by looking at these maps. Jev per unit was run on the 35 battles only: it costs 26 s per battle and already tied random actions there. `python results/baseline_rerun.py unit` / `local` / `jev`, then `table`; rows in `results/rerun/`.</sub>
-
-## Step 1. Jev controls every unit's action
+### Step 1. Jev controls every unit's action
 
 **Setup.** One Jev request per step, with one Choice per living unit.
 - **Input:** every unit on both sides: type, HP, shield, position, range, speed, damage, weapon cooldown.
@@ -89,27 +78,14 @@ The controls change from step to step only because Jev's output space changes: a
   - attack enemy *j*, with its type, remaining HP, distance, and whether it is in range.
 - **Output:** one action per unit, applied for 0.5 s.
 
-**Result: Jev won none.** 7 official maps (3m, 8m, 5m_vs_6m, 2s3z, 3s5z, 3s_vs_3z, 10m_vs_11m) × 5 seeds; every policy plays the same battles.
-
-| Policy | Wins / 35 | Jev vs this (flips / losses) |
-|---|---:|---:|
-| **Jev, every unit's action** | **0** | – |
-| Random legal action | 0 | 0 / 0 |
-| Attack-move | 25 | 0 / 25 |
-| SMAC heuristic: shoot the closest | 25 | 0 / 25 |
-| SMAC heuristic: focus the lowest HP | 30 | 0 / 30 |
-| *External: [JEV-Star](https://github.com/sc2musa/Jev_Star), real SC2, Jev alone, 35 SMAC-Hard maps × 3* | *3 / 105* | – |
-
-<sub>`python results/q1_unit_actor.py table`; raw rows in `results/q1_unit_actor.jsonl`. 745 requests, 1.23 s each end to end, 26 s per battle. The JEV-Star row is from that project's README.</sub>
-
-**Why.** Jev's actions were no better than random ones. On 3m (seed 1), it walked all three Marines east (P = 0.95), then split their fire across all three enemies; the enemy didn't split, and won with 2 units left. Three candidate causes:
+**Result: 0 / 35 wins, the same as random legal actions** (full table under *Results of steps 1–3*). On 3m (seed 1), it walked all three Marines east (P = 0.95), then split their fire across all three enemies; the enemy didn't split, and won with 2 units left. Three candidate causes:
 1. **The action space is large.** Each unit has 6–17 actions every 0.5 s, and a battle needs dozens of steps in a row to go right.
 2. **The questions can't coordinate.** Questions in one request are scored independently ([docs](https://docs.typesafe.ai/cookbooks/parallel_questions)). Focus fire, the most valuable thing in micro, is a joint assignment of who shoots whom. A three-line rule, *focus the lowest HP in range*, wins 10m_vs_11m 5/5, where attack-move and Jev both lose 5/5.
 3. **The differences between actions are numeric.** Range, cooldown, and distance decide the fight. Asked for P(win) after each of 13 actions at 300 recorded decision points, Jev's answers varied by a standard deviation of only 0.047 (card ⑦ below).
 
 It is also slow at this scale. 1.23 s per request is longer than a 0.5 s step.
 
-## Step 2. Reduce the dimensions: Jev picks tactics per unit group, code executes
+### Step 2. Reduce the dimensions: Jev picks tactics per unit group, code executes
 
 **Why this step.** It removes all three candidate causes at once:
 - Units are grouped by role, and each group gets 2–6 named tactics instead of per-unit actions every step.
@@ -135,35 +111,30 @@ This is how a human commander works, with control groups instead of per-unit cli
 - **Gate:** a question reaches Jev only if pinning one of its options beat attack-move somewhere on the official maps. Otherwise code answers with its default.
 - **Cost:** 10.5 requests per battle (0.23 per step), instead of 1 per step.
 
-**Result: it works on these maps, but Jev is not the reason.**
+### Results of steps 1–3
 
-| | Same 35 battles as step 1 | 23 official maps (115) | Jev vs this, 115 (flips / losses) |
-|---|---:|---:|---:|
-| Attack-move | 25 | 53 | +38 / −0 |
-| SMAC heuristic: focus (step 1's best fixed rule) | 30 | 58 | +33 / −0 |
-| Random answers to the same questions | 34 | 74 | **+17 / −0** (p < 0.001) |
-| **Jev's answers** | **35** | **91** | – |
-| Hand rules (same options, same knowledge) | 35 | 92 | +1 / −2 (p = 1.0) |
+Every policy plays the same battles: step 1's 35 (7 official maps × 5 seeds: 3m, 8m, 5m_vs_6m, 2s3z, 3s5z, 3s_vs_3z, 10m_vs_11m), all 115 official battles, and the 400 val battles, which were never used to write the questions or the rules. The last two columns pair Jev's step-2 answers with each row (flips / losses).
 
-<sub>Rerun on the current code: `python results/baseline_rerun.py table`.</sub>
+| | Role | Step 1's 35 | Official (115) | val (400) | Jev's answers vs this, official | Jev's answers vs this, val |
+|---|---|---:|---:|---:|---:|---:|
+| Attack-move | floor | 25 | 53 | 176 | +38 / −0 | +43 / −23 (p = 0.019) |
+| Random legal action | random, step-1 options | 0 | 8 | 31 | +83 / −0 | +177 / −12 |
+| SMAC heuristic: closest | fixed rule, step-1 options | 25 | 64 | 184 | +29 / −2 | +69 / −57 (p = 0.33) |
+| SMAC heuristic: focus | fixed rule, step-1 options | 30 | 58 | 193 | +33 / −0 | +66 / −63 (p = 0.86) |
+| **Jev, every unit's action (step 1)** | | **0** | – | – | | |
+| Random answers | random, step-2 options | 34 | 74 | 189 | **+17 / −0** (p < 0.001) | +37 / −30 (p = 0.46) |
+| Hand rules | fixed rule, step-2 options | 35 | 92¹ | 196 | +1 / −2 (p = 1.0) | +20 / −20 (p = 1.0) |
+| **Jev's answers (steps 2–3)** | | **35** | **91**¹ | **196** | – | – |
 
-Lowering the dimensions moved Jev from 0 to 35 on the same battles. That fits cause 1 but does not prove it: random answers went to 34 as well, so the code made most of the jump. Jev did beat random answers. But 4 fixed rules, written from the same official maps that the questions and their option text came from, did just as well with no requests at all.
+<sub>¹ In-sample: the hand rules and the exam questions were written by looking at the official maps. Jev per unit ran on the 35 battles only (745 requests, 1.23 s each, 26 s per battle), where it already tied random actions. External reference: in real SC2, [JEV-Star](https://github.com/sc2musa/Jev_Star)'s Jev alone won 3 / 105 on 35 SMAC-Hard maps. Rerun everything: `python results/baseline_rerun.py unit` / `local` / `jev`, then `table`; step 1's Jev rows: `python results/q1_unit_actor.py table`.</sub>
 
-## Step 3. Does it hold on unseen battles?
+**Step 1: Jev won none.** It tied random legal actions, and every fixed rule beat it (0 / 25 against attack-move).
 
-**Result: no.** On val, battles never used to write the questions or the rules:
+**Step 2: on the official maps it works, but Jev is not the reason.** Lowering the dimensions moved Jev from 0 to 35 of the same 35 battles. That fits cause 1 but does not prove it: random answers went to 34 as well, so the code made most of the jump. Jev did beat random answers (+17 / −0 over 115). But 4 fixed rules, written from the same official maps that the questions and their option text came from, did just as well with no requests at all.
 
-| val, 400 battles | Wins | vs attack-move | Jev vs this |
-|---|---:|---:|---:|
-| Attack-move | 176 | – | +43 / −23 (p = 0.019) |
-| SMAC heuristic: focus | 193 | +17 | +66 / −63 (p = 0.86) |
-| Random answers | 189 | +13 | +37 / −30 (p = 0.46) |
-| **Jev's answers** | **196** | +20 | – |
-| Hand rules | 196 | +20 | +20 / −20 (p = 1.0) |
+**Step 3: on unseen battles it doesn't hold.** Jev's edge over random answers fell from +17 / 115 to **+7 / 400**, and it still tied the hand rules exactly. The whole step-2 system, with Jev, was no better than step 1's three-line focus-fire rule (196 vs 193), which it had beaten +33 / −0 on the official maps. On test6 (1,000 unseen battles), the hand rules won 490 vs attack-move's 475, also not significant.
 
-Jev's edge over random answers fell from +17 / 115 to **+7 / 400**. It still tied the hand rules exactly. The whole step-2 system, with Jev, was no better than step 1's three-line focus-fire rule (196 vs 193); on the official maps it had beaten that rule by +33 / −0. On test6 (1,000 unseen battles), the hand rules won 490 vs attack-move's 475, also not significant.
-
-**Why: the tactical knowledge was fitted to the official maps, and Jev added none of its own.** We pinned each option of the menu for the whole battle and played every battle again. The best pin per battle, in hindsight, is a ceiling for what any answerer could get from this menu:
+**Why step 3 failed: the tactical knowledge was fitted to the official maps, and Jev added none of its own.** We pinned each option of the menu for the whole battle and played every battle again. The best pin per battle, in hindsight, is a ceiling for what any answerer could get from this menu:
 
 | | Official maps (115) | val (400) |
 |---|---:|---:|
