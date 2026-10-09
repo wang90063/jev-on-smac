@@ -158,6 +158,15 @@ def make_policy(spec: str, map_name: str, seed: int):
     if spec.startswith("force:"):
         picks = dict(kv.split("=", 1) for kv in spec[6:].split(","))
         return J.ForceActionPolicy(picks)
+    if spec.startswith("forceopen:") or spec == "random_open":
+        # The evidence gate lifted: kinds EXAM_EVIDENCE closed reach the client too.
+        if spec == "random_open":
+            h = int(hashlib.md5(f"{map_name}:{seed}".encode()).hexdigest()[:8], 16)
+            pol = J.JevActionPolicy(client=RandomClient(h), tag="random_open")
+        else:
+            pol = J.ForceActionPolicy(dict(kv.split("=", 1) for kv in spec[10:].split(",")))
+        pol.gate_evidence = False
+        return pol
     raise ValueError(spec)
 
 

@@ -4805,6 +4805,9 @@ class JevActionPolicy:
         # full_menu: every legal exam, every tick, no evidence gate. For
         # program clients whose picks change with the situation.
         self.full_menu = full_menu
+        # gate_evidence=False opens the kinds EXAM_EVIDENCE closed, keeping the
+        # rest of the gated path (results/baseline_rerun.py relax).
+        self.gate_evidence = True
         self.n_calls = 0
         self.n_fallback = 0
         self.n_guard = 0
@@ -4977,7 +4980,7 @@ class JevActionPolicy:
             }
         # Only exams with Force evidence reach Jev. Closed ones still run the
         # same path, answered with the code default, exactly like Dummy.
-        exams = catalog if self.full_menu else {kind: spec for kind, spec in catalog.items() if kind in EXAM_EVIDENCE}
+        exams = catalog if self.full_menu or not self.gate_evidence else {kind: spec for kind, spec in catalog.items() if kind in EXAM_EVIDENCE}
         snap["_catalog_options"] = {kind: spec["options"] for kind, spec in exams.items()}
         snap["_catalog_defaults"] = {kind: spec["default"] for kind, spec in exams.items()}
         questions = catalog_questions(exams) if exams else {}

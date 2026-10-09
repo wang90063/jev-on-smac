@@ -6,6 +6,7 @@
   python results/baseline_rerun.py table          # win counts + paired sign tests vs Jev exam answers
   python results/baseline_rerun.py force          # pin each exam option for the whole battle (menu headroom)
   python results/baseline_rerun.py headroom       # best pin in hindsight per battle, official vs val
+  python results/baseline_rerun.py relax          # lift the evidence gate: pin each closed kind, random answers
 
 Rows go to results/rerun/{official,val}.jsonl. The Jev run resumes where it stopped.
 Run Jev with the proxy variables unset (see AGENTS.md).
@@ -99,9 +100,32 @@ def cmd_force():
         _write(f"force_{b}", r)
 
 
+# Kinds the evidence gate closed (EXAM_EVIDENCE comment), pinned with the gate lifted.
+CLOSED = [
+    "forceopen:formation=keep", "forceopen:formation=open", "forceopen:kite=all", "forceopen:kite=bait_one",
+    "forceopen:bait=bait_one", "forceopen:bait=bait_two", "forceopen:stand=shoot", "forceopen:stand=step",
+    "forceopen:mark=!default",
+    # Nested kinds open only under a parent pick: kite and stand under ranged=stutter, bait under melee=snipe.
+    "forceopen:ranged=stutter", "forceopen:ranged=stutter,kite=all", "forceopen:ranged=stutter,kite=bait_one",
+    "forceopen:ranged=stutter,stand=shoot", "forceopen:ranged=stutter,stand=step",
+    "forceopen:melee=snipe", "forceopen:melee=snipe,bait=bait_one", "forceopen:melee=snipe,bait=bait_two",
+]
+
+
+def cmd_relax():
+    jobs = _jobs(CLOSED + ["random_open"])
+    have = {b: _load(f"relax_{b}") for b in ("official", "val")}
+    todo = [(b, j) for b, j in jobs if (j[0], j[1]["id"] if j[1] else j[2][0], j[2] if j[1] else j[2][1]) not in have[b]]
+    with Pool(8) as pool:
+        rows = pool.map(R._holdout_job, [j for _, j in todo], chunksize=4)
+    for (b, j), r in zip(todo, rows):
+        r["policy"] = j[0]
+        _write(f"relax_{b}", r)
+
+
 def cmd_headroom():
     for bench in ("official", "val"):
-        rows = {**_load(bench), **_load(f"force_{bench}")}
+        rows = {**_load(bench), **_load(f"force_{bench}"), **_load(f"relax_{bench}")}
         by = {}
         for (p, m, s), r in rows.items():
             by.setdefault(p, {})[(m, s)] = r["win"]
@@ -112,6 +136,16 @@ def cmd_headroom():
         print(f"  attack-move                         {sum(by['dummy'].values())}")
         print(f"  best single pin for every battle    {sum(by[best_fixed].values())}  ({best_fixed})")
         print(f"  best pin per battle (hindsight)     {sum(oracle.values())}")
+        closed = [p for p in CLOSED if p in by]
+        if closed:
+            both = {k: oracle[k] or any(by[p].get(k) for p in closed) for k in keys}
+            print(f"  ... with the closed kinds too       {sum(both.values())}")
+            for p in closed:
+                f = sum(1 for k in keys if by[p].get(k) and not by["dummy"][k])
+                l = sum(1 for k in keys if by["dummy"][k] and not by[p].get(k))
+                print(f"    {p:34s}{sum(by[p].values()):4d}  +{f} -{l}")
+            if "random_open" in by:
+                print(f"  random answers, gate lifted         {sum(by['random_open'].values())}")
         for p in ("random", "jev", "prog:hand_rules"):
             if p in by:
                 print(f"  {NAMES[p]:36s}{sum(by[p].values())}")
@@ -146,4 +180,4 @@ def cmd_table():
 
 
 if __name__ == "__main__":
-    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table, "force": cmd_force, "headroom": cmd_headroom}[sys.argv[1]]()
+    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table, "force": cmd_force, "headroom": cmd_headroom, "relax": cmd_relax}[sys.argv[1]]()

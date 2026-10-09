@@ -161,6 +161,11 @@ Jev's edge over random answers fell from +17 / 115 to **+7 / 400**. It still tie
 
 - **The knowledge didn't transfer.** On the official maps, the gun-line kite was the option that won; on val it was worth +1. The hand rules carry exactly this knowledge, and they lost their edge with it.
 - **Jev didn't make up for it.** On val the menu still had room, and Jev captured as much of it as random answers did (39 vs 37). On the official maps it captured 38 of 40, because its option text and its gate were written from those maps.
+- **The gate wasn't what held it back.** The gate closed 5 kinds of question: formation, kite style, bait, stand, and mark. No pin of theirs had beaten attack-move on the official maps, but they had opened in only 5–15 of the 115 battles there, so we lifted the gate and pinned each of their options on val.
+  - The ceiling rose only from +67 to **+73** of 400.
+  - Most closed options never changed a result. Of those that did, opening the formation lost more than it won (+4 / −14), and mark was a wash (+4 / −3).
+  - Random answers with the gate lifted won 186, versus 189 with it.
+  - Lifting the gate added more ways to lose than to win. (`python results/baseline_rerun.py relax`; nested kinds were pinned under their parent option.)
 
 Tactics fitted to the battles they were found on was a pattern from the start:
 - **Round 2:** an LLM forged the best program for each training scenario, worth +56 battles in-sample. Moved to other scenarios, 4 of the 33 stayed positive. On the test set the library lost to attack-move (84–85 vs 90), whether Jev, a lookup, or a coin picked the program.
