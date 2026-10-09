@@ -54,13 +54,13 @@ ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; widt
 .mono { font-family: var(--mono); }
 
 /* baseline names: same swatch as the charts */
-table.bl td { padding: 8px 12px; }
+table.bl { font-size: 15px; } table.bl th { padding: 7px 12px; } table.bl td { padding: 6px 12px; line-height: 1.35; }
 .nm { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; white-space: nowrap; }
 .nm i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
 .nm.jev i { background: var(--jev); } .nm.jev { color: var(--jev); } table.bl tr.jevrow td { background: #fff4ec; }
 .nm.floor i { background: var(--floor); }
 .nm.rand i { background: var(--rand); }
-.nm.rule i { background: var(--rule); }
+.nm.rule i { background: var(--rule); } .nm.sys i { background: var(--sys); }
 .nm.ceil i { border: 2px dashed #495057; }
 .nm.zero i { width: 3px; border-radius: 0; background: #495057; }
 table.bl small { display: block; font-size: 13px; color: var(--muted); margin: 2px 0 0 20px; }
@@ -356,16 +356,17 @@ table.t tr.hl td { background: var(--jev-soft); }
 <section class="slide">
   <div class="kicker">实验设置 · 对照</div>
   <h2>每一步问同一个问题：Jev 有没有超出我们交给它的东西？</h2>
-  <p class="muted" style="margin:-10px 0 16px">交给它的是可选的选项和一些知识（说明、示例）。选项都合法：Jev 只在第一行的集合里选，随机对照也在同一集合里选。</p>
+  <p class="muted" style="margin:-12px 0 10px">交给它的是可选的选项和一些知识（说明、示例）。选项都合法：Jev 只在第一行的集合里选，随机对照也在同一集合里选。</p>
   <table class="t bl">
-    <tr><th style="width:96px">角色</th><th style="width:150px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
+    <tr><th style="width:100px">角色</th><th style="width:190px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
     <tr class="jevrow"><td><b>Jev</b></td><td>被检验的对象</td><td><span class="nm jev"><i></i>Jev，逐单位动作</span><small>每个单位此刻的合法动作，6–17 个</small></td><td><span class="nm jev"><i></i>Jev 作答</span><small>每道考题列出的选项，都能执行</small></td><td><span class="nm jev"><i></i>Jev 挑</span><small>系统给的几个候选</small></td></tr>
     <tr><td><b>下限</b></td><td>系统本身就不行</td><td><span class="nm floor"><i></i>attack-move</span><small>所有单位向敌人攻击移动</small></td><td><span class="nm floor"><i></i>attack-move</span></td><td><span class="nm zero"><i></i>系统默认</span><small>Jev 不插手；图里的 0 线</small></td></tr>
-    <tr><td><b>随机</b></td><td>收益来自选项，不是挑选</td><td><span class="nm rand"><i></i>随机合法动作</span><small>同样的合法动作里随机（不含原地不动）</small></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，同样的选项里随机选</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
-    <tr><td><b>固定规则</b></td><td>收益来自规则已有的知识</td><td><span class="nm rule"><i></i>SMAC：closest</span><br><span class="nm rule"><i></i>SMAC：focus</span><small>打射程内最近 / 血最少的敌人</small></td><td><span class="nm rule"><i></i>手写规则</span><small>4 条固定选择，照官方图写</small></td><td><span class="nm rule"><i></i>示例投票</span><small>Jev 拿到的同样示例，直接投票</small></td></tr>
+    <tr><td><b>随机</b></td><td>收益来自选项本身</td><td><span class="nm rand"><i></i>随机合法动作</span><small>同样的合法动作里随机（不含原地不动）</small></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，同样的选项里随机选</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
+    <tr><td><b>固定规则</b></td><td>收益来自规则里的知识</td><td><span class="nm rule"><i></i>SMAC：closest</span><br><span class="nm rule"><i></i>SMAC：focus</span><small>打射程内最近 / 血最少的敌人</small></td><td><span class="nm rule"><i></i>手写规则</span><small>4 条固定选择，照官方图写</small></td><td><span class="nm rule"><i></i>示例投票</span><small>Jev 拿到的同样示例，直接投票</small></td></tr>
+    <tr><td><b>学习</b></td><td>用模拟器训练就学得到</td><td>–</td><td><span class="nm sys"><i></i>价值切换</span><small>每 5 步从 12 个战术里选，训练见下</small></td><td><small style="margin-left:0">– （⑤ 叠加在它上面）</small></td></tr>
     <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td><span class="nm ceil"><i></i>事后最优</span><small>每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
   </table>
-  <p class="small" style="margin-top:10px">表里的名字和颜色与后面所有图一一对应。</p>
+  <p class="small" style="margin-top:8px"><b>价值切换怎么训练（只在离线复制模拟器状态）：</b>约 1.1 万个决策点，每点把 13 个选项（12 个战术 + 不换）各打 5 步、再由基准策略打到底，共约 14 万次回放，得到标签；梯度提升树学"换成某个战术比不换好多少"；两轮 DAgger 在模型自己走到的局面上补标签。</p>
 </section>
 
 <!-- 6 step 1 -->
@@ -405,17 +406,18 @@ table.t tr.hl td { background: var(--jev-soft); }
     <span><i style="background:var(--floor)"></i>下限</span>
     <span><i style="background:var(--rand)"></i>随机</span>
     <span><i style="background:var(--rule)"></i>固定规则</span>
+    <span><i style="background:var(--sys)"></i>学习</span>
   </div>
   <div class="row">
     <div class="col">
       <div class="chart-title">官方图 <span>115 局 · 题目和规则照着写的（样本内）</span></div>
       <div id="c-off"></div>
-      <p class="small" style="margin-top:14px">Jev 对随机作答 +17 / −0；对手写规则 +1 / −2。</p>
+      <p class="small" style="margin-top:14px">Jev 对随机作答 +17 / −0；对手写规则 +1 / −2；对价值切换 +41 / −1。</p>
     </div>
     <div class="col">
       <div class="chart-title">val <span>400 局 · 没用来写题目和规则</span></div>
       <div id="c-val"></div>
-      <p class="small" style="margin-top:14px">Jev 对随机作答 +37 / −30（p = 0.46）；对手写规则 +20 / −20；对 SMAC：focus +66 / −63（p = 0.86）。</p>
+      <p class="small" style="margin-top:14px">Jev 对随机作答 +37 / −30（p = 0.46）；对手写规则 +20 / −20；对 SMAC：focus +66 / −63（p = 0.86）；对价值切换 +45 / −39（p = 0.59，价值切换的阈值是在 val 上选的）。</p>
     </div>
   </div>
   <p class="foot">7 道题：枪线怎么打、近战怎么打、集火规则、激光瞄哪、外侧是否让位、两个残血敌人先打谁、治疗谁。平均每局 10.5 次请求。</p>
@@ -628,6 +630,7 @@ const s23 = (off) => [
   { l: "SMAC：closest", v: off ? 64 : 184, c: "rule" },
   { l: "SMAC：focus", v: off ? 58 : 193, c: "rule" },
   { l: "随机作答", v: off ? 74 : 189, c: "rand" },
+  { l: "价值切换", v: off ? 51 : 190, c: "sys" },
   { l: "手写规则", v: off ? 92 : 196, c: "rule" },
   { l: "Jev 作答", v: off ? 91 : 196, c: "jev" },
 ];
