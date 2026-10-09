@@ -172,16 +172,16 @@ table.t tr.hl td { background: var(--jev-soft); }
 .five { display: flex; flex-wrap: wrap; gap: 6px; }
 .five span { font-size: 12.5px; color: var(--muted); background: var(--sys-soft); border-radius: 8px; padding: 4px 9px; line-height: 1.35; }
 .five b { color: var(--ink); margin-right: 6px; font-size: 13.5px; }
-.loop { display: grid; grid-template-columns: 50px auto 1fr 48px; gap: 8px 8px; align-items: center; }
-.loop .who { font-weight: 700; font-size: 14px; color: var(--muted); }
-.loop .who.s, .loop b.s { color: var(--sys); }
-.loop .fl { font-size: 12.5px; color: var(--faint); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-.loop .fl i { font-style: normal; color: var(--ink); border: 1.5px solid var(--line); border-radius: 6px; padding: 2px 6px; background: #fff; }
-.loop .fl i.s { border-color: var(--sys); color: var(--sys); font-weight: 700; }
-.loop .lb { position: relative; height: 14px; min-width: 40px; background: #f1efe9; border-radius: 4px; }
-.loop .lb em { position: absolute; left: 0; top: 0; bottom: 0; background: var(--rand); border-radius: 4px; }
-.loop .lb em.s { background: var(--sys); }
-.loop > b { font: 700 13px var(--mono); text-align: right; }
+.loop2 > div { display: grid; grid-template-columns: 54px 1fr 52px; gap: 8px; align-items: center; }
+.loop2 .who { font-weight: 700; font-size: 14px; color: var(--muted); }
+.loop2 .who.s, .loop2 b.s { color: var(--sys); }
+.loop2 b { font: 700 13px var(--mono); text-align: right; }
+.loop2 .lb { position: relative; height: 14px; background: #f1efe9; border-radius: 4px; }
+.loop2 .lb em { position: absolute; left: 0; top: 0; bottom: 0; background: var(--rand); border-radius: 4px; }
+.loop2 .lb em.s { background: var(--sys); }
+.loop2 .fl { font-size: 12.5px; color: var(--faint); display: flex; align-items: center; gap: 4px; margin: 5px 0 10px 62px; line-height: 1; }
+.loop2 .fl i { font-style: normal; color: var(--ink); border: 1.5px solid var(--line); border-radius: 6px; padding: 3px 6px; background: #fff; }
+.loop2 .fl i.s { border-color: var(--sys); color: var(--sys); font-weight: 700; }
 
 /* ladder */
 .ladder { display: flex; flex-direction: column; gap: 12px; }
@@ -569,27 +569,31 @@ table.t tr.hl td { background: var(--jev-soft); }
 <!-- 13 what works -->
 <section class="slide">
   <div class="kicker">有效的做法</div>
-  <h2>LLM 直接写微操代码，用模拟器检验</h2>
-  <img class="gif" src="fight.gif" alt="同一场战斗：左边 attack-move 全灭，右边 Claude 写的程序一个不死">
-  <p class="small" style="margin:6px 0 14px">没见过的测试战斗 y0810，种子 4：4 个追猎者（蓝）对 5 个刺蛇（红），墙上只有一个缺口。左：attack-move，火力分散，全灭。右：程序守住缺口，逐个集火，一个不死。</p>
-  <div class="row" style="gap:20px">
-    <div class="col card" style="padding:14px 20px; flex:.8">
-      <h3 style="font-size:16px; margin-bottom:8px">程序做的五件事 <span class="muted" style="font-weight:400">· 约 150 行</span></h3>
-      <div class="five">
-        <span><b>集火分配</b>敌方输出 ÷ 剩余有效血量，记账防溢出</span>
-        <span><b>冷却期间拉扯</b>射程、速度占优时</span>
-        <span><b>医疗艇</b>治疗或后撤</span>
-        <span><b>近战拦截</b>冲向远程的自爆兵</span>
-        <span><b>僵持就进攻</b>10 步没人掉血</span>
+  <h2 style="margin-bottom:18px">LLM 直接写微操代码，用模拟器检验</h2>
+  <div class="row" style="gap:26px">
+    <img class="gif" src="fight_zoom.gif" style="width:auto; height:100%; max-height:500px; flex:none" alt="同一场战斗：上面 attack-move 全灭，下面 Claude 写的程序一个不死">
+    <div class="col" style="gap:12px">
+      <p style="font-size:15px; line-height:1.6; color:var(--muted)">没见过的测试战斗：4 个追猎者（蓝）对 5 个刺蛇（红），墙上只有一个缺口。<br><b style="color:var(--ink)">上：attack-move</b>，火力分散，全灭。<br><b class="s">下：Claude 写的程序</b>，守住缺口、逐个集火，一个不死。</p>
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:16px; margin-bottom:8px">程序做的五件事 <span class="muted" style="font-weight:400">· 约 150 行</span></h3>
+        <div class="five">
+          <span><b>集火分配</b>敌方输出 ÷ 剩余有效血量</span>
+          <span><b>冷却期间拉扯</b>射程、速度占优时</span>
+          <span><b>医疗艇</b>治疗或后撤</span>
+          <span><b>近战拦截</b>冲向远程的自爆兵</span>
+          <span><b>僵持就进攻</b>10 步没人掉血</span>
+        </div>
       </div>
-    </div>
-    <div class="col card" style="padding:14px 20px; flex:1.2">
-      <h3 style="font-size:16px; margin-bottom:8px">反馈比换模型更重要 <span class="muted" style="font-weight:400">· test6 胜率</span></h3>
-      <div class="loop">
-        <span class="who">Grok</span><span class="fl"><i>写程序</i>→<i>模拟器</i>→<i>只看汇总分数</i>↺</span><span class="lb"><em style="width:59.5%"></em></span><b>59.5%</b>
-        <span class="who s">Claude</span><span class="fl"><i>写程序</i>→<i>模拟器</i>→<i class="s">源码 + 逐局追踪 + 配对重测</i>↺</span><span class="lb"><em class="s" style="width:72%"></em></span><b class="s">72.0%</b>
+      <div class="card" style="padding:14px 18px">
+        <h3 style="font-size:16px; margin-bottom:10px">反馈比换模型更重要 <span class="muted" style="font-weight:400">· test6 胜率</span></h3>
+        <div class="loop2">
+          <div><span class="who">Grok</span><span class="lb"><em style="width:59.5%"></em></span><b>59.5%</b></div>
+          <p class="fl"><i>写程序</i>→<i>模拟器</i>→<i>只看汇总分数</i>↺</p>
+          <div><span class="who s">Claude</span><span class="lb"><em class="s" style="width:72%"></em></span><b class="s">72.0%</b></div>
+          <p class="fl"><i>写程序</i>→<i>模拟器</i>→<i class="s">源码 + 逐局追踪 + 配对重测</i>↺</p>
+        </div>
+        <p class="small" style="margin-top:8px">最大一次跃升：发现 <span class="mono">can_attack</span> 是"可见"，不是"在射程内"（−100 → +64 / 720）。</p>
       </div>
-      <p class="small" style="margin-top:6px">最大一次跃升：发现 <span class="mono">can_attack</span> 是"可见"，不是"在射程内"（−100 → +64 / 720）。</p>
     </div>
   </div>
 </section>

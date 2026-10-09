@@ -2,6 +2,7 @@
 
     python results/readme_gif.py [scenario_id] [seed]      # default y0810 seed 4
     -> docs/fight.gif
+    JEV_GIF_CELL=40 JEV_GIF_PAD=1 JEV_GIF_STACK=1 JEV_GIF_OUT=fight_zoom.gif python results/readme_gif.py   # tighter, larger: the deck's copy
 """
 import os
 import sys
@@ -21,7 +22,8 @@ SID = sys.argv[1] if len(sys.argv) > 1 else "y0810"
 SEED = int(sys.argv[2]) if len(sys.argv) > 2 else 4
 PANELS = [("dummy", "Scripted baseline (attack-move)"),
           ("code:kb/library/code/general_claude.py", "LLM-synthesized program (Claude)")]
-CELL = 26
+CELL = int(os.environ.get("JEV_GIF_CELL", 26))  # pixels per map cell
+PAD = float(os.environ.get("JEV_GIF_PAD", 4))  # cells of margin around everything the units touched
 HEAD = 54
 BG, GROUND, WALL = (250, 250, 248), (236, 238, 233), (92, 98, 108)
 OURS, THEIRS, LINE = (37, 120, 220), (222, 72, 62), (90, 90, 90)
@@ -116,7 +118,7 @@ def play(spec, title):
 
 def main():
     runs = [play(spec, title) for spec, title in PANELS]
-    pad = 4 * CELL
+    pad = PAD * CELL
     x0 = max(0, min(x for x, _ in SEEN) - pad); x1 = min(runs[0][0].width, max(x for x, _ in SEEN) + pad)
     y0 = max(HEAD, min(y for _, y in SEEN) - pad); y1 = min(runs[0][0].height, max(y for _, y in SEEN) + pad)
 
@@ -132,16 +134,18 @@ def main():
     hold = 10
     n = max(len(r) for r in runs) + hold
     gap = 8
-    w = sum(r[0].width for r in runs) + gap * (len(runs) - 1)
+    stack = os.environ.get("JEV_GIF_STACK") == "1"  # panels one above the other instead of side by side
+    w = runs[0][0].width if stack else sum(r[0].width for r in runs) + gap * (len(runs) - 1)
+    h = sum(r[0].height for r in runs) + gap * (len(runs) - 1) if stack else runs[0][0].height
     out = []
     for i in range(n):
-        canvas = Image.new("RGB", (w, runs[0][0].height), (255, 255, 255))
+        canvas = Image.new("RGB", (w, h), (255, 255, 255))
         x = 0
         for r in runs:
-            canvas.paste(r[min(i, len(r) - 1)], (x, 0))
-            x += r[0].width + gap
+            canvas.paste(r[min(i, len(r) - 1)], (0, x) if stack else (x, 0))
+            x += (r[0].height if stack else r[0].width) + gap
         out.append(canvas.convert("P", palette=Image.ADAPTIVE, colors=64))
-    dest = ROOT / "docs" / "fight.gif"
+    dest = ROOT / "docs" / os.environ.get("JEV_GIF_OUT", "fight.gif")
     dest.parent.mkdir(exist_ok=True)
     out[0].save(dest, save_all=True, append_images=out[1:], duration=[160] * (n - 1) + [2500], loop=0, optimize=True)
     print(dest, f"{dest.stat().st_size / 1e6:.2f} MB", out[0].size, len(out), "frames")
