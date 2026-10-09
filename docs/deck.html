@@ -157,6 +157,18 @@ table.t tr.hl td { background: var(--jev-soft); }
 .qlab { position: absolute; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 .qlab b { display: block; color: var(--jev); font-size: 14px; }
 
+/* agenda */
+.agenda { display: flex; flex-direction: column; gap: 12px; }
+.ag { display: grid; grid-template-columns: 60px 1fr 90px; gap: 20px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 24px; }
+.ag .n { font: 900 26px var(--mono); color: var(--jev); }
+.ag .q { font-size: 21px; font-weight: 700; }
+.ag .q span { display: block; font-size: 15px; font-weight: 400; color: var(--muted); margin-top: 3px; }
+.ag .q .qs b { color: var(--jev); font-family: var(--mono); font-size: 14px; margin-right: 4px; }
+.ag .q .qs em { font-style: normal; color: var(--faint); margin: 0 10px; }
+.ag .pp { font: 500 14px var(--mono); color: var(--faint); text-align: right; }
+.ag .pp::before { content: "第 "; font-family: var(--sans); } .ag .pp::after { content: " 页"; font-family: var(--sans); }
+.ag.main { border: 2px solid var(--jev); background: #fffaf6; }
+
 /* ladder */
 .ladder { display: flex; flex-direction: column; gap: 12px; }
 .step { display: grid; grid-template-columns: 64px 1fr 380px; gap: 22px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 22px; }
@@ -250,7 +262,20 @@ table.t tr.hl td { background: var(--jev-soft); }
   <div class="cover-title"><h1>Jev 能做 SMAC 微操吗？</h1><p>从选单位动作到在系统上挑选：四步实验</p></div>
 </section>
 
-<!-- 2 motivation -->
+<!-- 2 agenda -->
+<section class="slide">
+  <div class="kicker">目录</div>
+  <h2>今天讲五部分：从为什么拿 Jev 当策略，到四步实验和结论</h2>
+  <div class="agenda">
+    <div class="ag"><span class="n">01</span><div class="q">动机与问题<span>Jev 的形状像强化学习策略；要回答哪四个问题</span></div><span class="pp">3–4</span></div>
+    <div class="ag"><span class="n">02</span><div class="q">实验设置<span>两类战斗，和每一步都要赢过的对照</span></div><span class="pp">5–6</span></div>
+    <div class="ag main"><span class="n">03</span><div class="q">四步实验<span class="qs"><b>Q1</b> 逐单位动作<em>→</em><b>Q2</b> 兵组战术<em>→</em><b>Q3</b> 换到新战斗<em>→</em><b>Q4</b> 在系统上挑选</span></div><span class="pp">7–12</span></div>
+    <div class="ag"><span class="n">04</span><div class="q">什么有效<span>让大模型直接写微操代码，用模拟器检验</span></div><span class="pp">13</span></div>
+    <div class="ag"><span class="n">05</span><div class="q">结论与教训<span>Jev 适合什么样的决策；四条方法上的教训</span></div><span class="pp">14–15</span></div>
+  </div>
+</section>
+
+<!-- 3 motivation -->
 <section class="slide">
   <div class="kicker">动机</div>
   <h2>Jev 的形状像 RL 策略，但不用训练，而且够快</h2>
@@ -276,7 +301,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 3 questions -->
+<!-- 4 questions -->
 <section class="slide">
   <div class="kicker">要验证的问题</div>
   <h2 style="margin-bottom:14px">四个问题：Jev 管的层级越来越高，战场从官方图换到没见过的战斗</h2>
@@ -314,7 +339,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   <p class="foot">每个问题的判据都一样：Jev 必须显著赢过"同样信息、没有 Jev"的对照。</p>
 </section>
 
-<!-- 4 setup: env + data -->
+<!-- 5 setup: env + data -->
 <section class="slide">
   <div class="kicker">实验设置 · 环境与数据</div>
   <h2>两类战斗：照着写规则的官方图，和谁都没看过的生成战斗</h2>
@@ -352,7 +377,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 5 setup: baselines -->
+<!-- 6 setup: baselines -->
 <section class="slide">
   <div class="kicker">实验设置 · 对照</div>
   <h2>每一步问同一个问题：Jev 有没有超出我们交给它的东西？</h2>
@@ -369,7 +394,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   <p class="small" style="margin-top:8px"><b>价值切换怎么训练（只在离线复制模拟器状态）：</b>约 1.1 万个决策点，每点把 13 个选项（12 个战术 + 不换）各打 5 步、再由基准策略打到底，共约 14 万次回放，得到标签；梯度提升树学"换成某个战术比不换好多少"；两轮 DAgger 在模型自己走到的局面上补标签。</p>
 </section>
 
-<!-- 6 step 1 -->
+<!-- 7 step 1 -->
 <section class="slide">
   <div class="kicker">结果 · 第 1 步</div>
   <h2>Jev 直接控制每个单位：35 局一局没赢，和随机合法动作一样</h2>
@@ -397,7 +422,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 7 steps 2-3 -->
+<!-- 8 steps 2-3 -->
 <section class="slide">
   <div class="kicker">结果 · 第 2–3 步</div>
   <h2>选兵组战术：官方图上赢 91 局，可手写规则赢 92；<br>换到新战斗，和手写规则、SMAC：focus 打平</h2>
@@ -423,7 +448,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   <p class="foot">7 道题：枪线怎么打、近战怎么打、集火规则、激光瞄哪、外侧是否让位、两个残血敌人先打谁、治疗谁。平均每局 10.5 次请求。</p>
 </section>
 
-<!-- 8 why step 3 failed -->
+<!-- 9 why step 3 failed -->
 <section class="slide">
   <div class="kicker">为什么第 3 步失败</div>
   <h2>战术知识照着官方图写；到了新战斗，Jev 拿到的和随机作答一样多</h2>
@@ -446,7 +471,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 9 step 4 systems -->
+<!-- 10 step 4 systems -->
 <section class="slide">
   <div class="kicker">结果 · 第 4 步 · 系统</div>
   <h2>先做能泛化的系统：一个比一个强，没见过的 1,000 局里从 475 赢到 720</h2>
@@ -474,7 +499,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 10 jev on top -->
+<!-- 11 jev on top -->
 <section class="slide">
   <div class="kicker">结果 · 第 4 步 · Jev 叠加</div>
   <h2 style="margin-bottom:16px">在这些系统上让 Jev 挑：从没超过同样信息的对照</h2>
@@ -502,7 +527,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 11 why -->
+<!-- 12 why -->
 <section class="slide">
   <div class="kicker">为什么</div>
   <h2>挑战术的空间很小；空间在逐单位的执行里，而那正是 Jev 做不了的</h2>
@@ -527,7 +552,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 12 what works -->
+<!-- 13 what works -->
 <section class="slide">
   <div class="kicker">有效的做法</div>
   <h2>LLM 直接写微操代码，用模拟器检验</h2>
@@ -545,7 +570,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 13 takeaway: verdict -->
+<!-- 14 takeaway: verdict -->
 <section class="slide">
   <div class="kicker">Take away · 结论</div>
   <h2>Jev 不适合做 SMAC 微操：三种用法都没赢过对照</h2>
@@ -568,7 +593,7 @@ table.t tr.hl td { background: var(--jev-soft); }
   </div>
 </section>
 
-<!-- 14 takeaway: method -->
+<!-- 15 takeaway: method -->
 <section class="slide">
   <div class="kicker">Take away · 方法</div>
   <h2>下次用判断模型之前</h2>

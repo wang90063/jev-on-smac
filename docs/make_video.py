@@ -22,7 +22,7 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 WORK = Path("/tmp/deckvideo")
 PAD = 0.6  # seconds of silence after each slide's narration
 # Animated images to play over their still frame: slide -> (file, x, y, w, h) in 1920x1080 pixels (inside the border).
-OVERLAY = {12: ("fight.gif", 110, 230, 1700, 476)}
+OVERLAY = {13: ("fight.gif", 110, 230, 1700, 476)}
 
 
 def sections(path: Path) -> dict[int, str]:
