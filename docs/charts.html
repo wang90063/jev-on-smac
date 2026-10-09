@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Deck charts (English)</title>
+<!-- The deck's bar charts with English labels, one per page (?c=<id>), for the README.
+     Render all of them to docs/charts/*.png: python docs/make_charts.py -->
+<style>
+:root {
+  --ink: #1d232a; --muted: #5f6b76; --faint: #8a949d;
+  --jev: #e8590c; --floor: #ced4da; --rand: #a9b2bb; --rule: #6f86d6; --sys: #1098ad;
+  --sans: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; color: var(--ink); font-family: var(--sans); }
+.panel { display: none; padding: 22px 30px 24px; width: 900px; }
+.panel.on { display: block; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.chart-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.chart-title span { font-weight: 400; color: var(--muted); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+.note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+.hb { display: flex; flex-direction: column; gap: 9px; }
+.hb .r { display: grid; grid-template-columns: var(--lw, 170px) 1fr; align-items: center; gap: 14px; }
+.hb .l { font-size: 15px; text-align: right; color: var(--ink); white-space: nowrap; line-height: 1.3; }
+.hb .r.jev .l { font-weight: 700; color: var(--jev); }
+.hb .t { position: relative; height: 26px; }
+.hb .t i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 5px 5px 0; background: var(--rand); }
+.hb .t b { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font: 600 15px var(--mono); white-space: nowrap; }
+.hb .t b em { font: 400 13px var(--sans); color: var(--muted); font-style: normal; margin-left: 6px; }
+.hb .r.floor i { background: var(--floor); }
+.hb .r.rand i { background: var(--rand); }
+.hb .r.rule i { background: var(--rule); }
+.hb .r.jev i { background: var(--jev); }
+.hb .r.sys i { background: var(--sys); }
+.hb .r.ceil i { background: transparent; border: 2px dashed #495057; }
+.hb .r.gap { height: 4px; }
+#c-speed .t { height: 40px; }
+#c-speed .t b { font-size: 20px; }
+.db { display: flex; flex-direction: column; }
+.db .g { font-size: 15px; font-weight: 700; margin: 10px 0 4px; }
+.db .g span { font-weight: 400; color: var(--muted); font-size: 14px; }
+.db .g:first-child { margin-top: 0; }
+.db .r { display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; margin-bottom: 4px; }
+.db .l { font-size: 15px; text-align: right; }
+.db .r.jev .l { color: var(--jev); font-weight: 700; }
+.db .t { position: relative; height: 22px; }
+.db .t .z { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #495057; }
+.db .t i { position: absolute; top: 0; bottom: 0; background: var(--rand); border-radius: 3px; }
+.db .r.jev i { background: var(--jev); }
+.db .r.rule i { background: var(--rule); }
+.db .r.ceil i { background: transparent; border: 2px dashed #495057; }
+.db .t b { position: absolute; top: 50%; transform: translateY(-50%); font: 600 14px var(--mono); white-space: nowrap; }
+.axis { position: relative; height: 22px; margin-left: 164px; font: 12px var(--mono); color: var(--faint); }
+.axis span { position: absolute; transform: translateX(-50%); top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="panel" id="p-speed" style="width:640px">
+  <div class="chart-title">Seconds <span>· Jev's official figure vs one SMAC step</span></div>
+  <div id="c-speed"></div>
+</div>
+
+<div class="panel" id="p-step1" style="width:720px">
+  <div class="chart-title">Step 1: wins <span>/ 35 battles (7 official maps × 5 seeds)</span></div>
+  <div class="legend">
+    <span><i style="background:var(--jev)"></i>Jev</span>
+    <span><i style="background:var(--floor)"></i>floor</span>
+    <span><i style="background:var(--rand)"></i>random</span>
+    <span><i style="background:var(--rule)"></i>fixed rule</span>
+  </div>
+  <div id="c-step1"></div>
+</div>
+
+<div class="panel" id="p-s23" style="width:1000px">
+  <div class="legend">
+    <span><i style="background:var(--jev)"></i>Jev's answers</span>
+    <span><i style="background:var(--floor)"></i>floor</span>
+    <span><i style="background:var(--rand)"></i>random</span>
+    <span><i style="background:var(--rule)"></i>fixed rule</span>
+    <span><i style="background:var(--sys)"></i>learned</span>
+  </div>
+  <div class="pair">
+    <div><div class="chart-title">Official maps <span>· 115 · the questions and rules were written here</span></div><div id="c-off"></div></div>
+    <div><div class="chart-title">val <span>· 400 · unseen by the questions and rules</span></div><div id="c-val"></div></div>
+  </div>
+</div>
+
+<div class="panel" id="p-head" style="width:900px">
+  <div class="legend">
+    <span><i style="border:2px dashed #495057"></i>ceiling: best option per battle in hindsight</span>
+    <span><i style="background:var(--jev)"></i>Jev's answers</span>
+    <span><i style="background:var(--rule)"></i>hand rules</span>
+    <span><i style="background:var(--rand)"></i>random answers</span>
+  </div>
+  <div class="pair">
+    <div><div class="chart-title">Battles over attack-move <span>· official (115)</span></div><div id="c-head-off"></div></div>
+    <div><div class="chart-title">Battles over attack-move <span>· val (400)</span></div><div id="c-head-val"></div></div>
+  </div>
+</div>
+
+<div class="panel" id="p-test6" style="width:720px">
+  <div class="chart-title">test6 wins <span>/ 1,000 · no system was trained or tuned on it</span></div>
+  <div class="legend">
+    <span><i style="background:var(--floor)"></i>floor</span>
+    <span><i style="background:var(--rule)"></i>hand rules (step 2)</span>
+    <span><i style="background:var(--sys)"></i>step-4 systems</span>
+  </div>
+  <div id="c-test6"></div>
+</div>
+
+<div class="panel" id="p-ontop" style="width:860px">
+  <div class="chart-title">Battles over the system alone <span>· 0 = the system's own choice · paired per battle</span></div>
+  <div class="legend">
+    <span><i style="background:var(--jev)"></i>Jev picks</span>
+    <span><i style="background:var(--rand)"></i>random pick</span>
+    <span><i style="background:var(--rule)"></i>evidence vote</span>
+    <span><i style="border:2px dashed #495057"></i>best in hindsight</span>
+  </div>
+  <div id="c-ontop"></div>
+  <div class="axis" id="ax-ontop"></div>
+</div>
+
+<div class="panel" id="p-why" style="width:820px">
+  <div class="chart-title">Effect on win rate <span>· percentage points</span></div>
+  <div class="legend">
+    <span><i style="border:2px dashed #495057"></i>choosing: ceiling (best in hindsight)</span>
+    <span><i style="background:var(--sys)"></i>execution: measured</span>
+  </div>
+  <div id="c-why"></div>
+  <p class="note">Choosing is drawn at its ceiling and execution at its measured effect, so the chart is generous to choosing.</p>
+</div>
+
+<div class="panel" id="p-auc" style="width:720px">
+  <div class="chart-title">"Will we win from here?" <span>· AUC; bars start at 0.5 (chance)</span></div>
+  <div id="c-auc"></div>
+</div>
+
+<script>
+function hbars(id, rows, max, lw) {
+  const el = document.getElementById(id);
+  el.className = "hb";
+  if (lw) el.style.setProperty("--lw", lw + "px");
+  el.innerHTML = rows.map(r => {
+    if (r.gap) return '<div class="r gap"></div>';
+    const w = Math.max(0, r.v) / max * 88;
+    const shown = r.show !== undefined ? r.show : r.v;
+    return `<div class="r ${r.c}"><span class="l">${r.l}</span><span class="t"><i style="width:${w}%"></i><b style="left:${w}%">${shown}${r.n ? `<em>${r.n}</em>` : ""}</b></span></div>`;
+  }).join("");
+}
+function dbars(id, axisId, groups, lo, hi, ticks) {
+  const el = document.getElementById(id);
+  el.className = "db";
+  const pos = v => (v - lo) / (hi - lo) * 100;
+  const z = pos(0);
+  el.innerHTML = groups.map(g => `<div class="g">${g.g} <span>${g.s}</span></div>` + g.rows.map(r => {
+    const p = pos(r.v), left = Math.min(z, p), w = Math.abs(p - z);
+    const lab = (r.v > 0 ? "+" : r.v < 0 ? "−" : "") + Math.abs(r.v);
+    const b = r.v >= 0 ? `<b style="left:calc(${p}% + 6px)">${lab}</b>` : `<b style="right:calc(${100 - p}% + 6px)">${lab}</b>`;
+    return `<div class="r ${r.c}"><span class="l">${r.l}</span><span class="t"><span class="z" style="left:${z}%"></span><i style="left:${left}%;width:${w}%"></i>${b}</span></div>`;
+  }).join("")).join("");
+  document.getElementById(axisId).innerHTML = ticks.map(t => `<span style="left:${pos(t)}%">${t > 0 ? "+" + t : t}</span>`).join("");
+}
+
+hbars("c-speed", [
+  { l: "Jev<br>13 questions, one request", v: 0.27, c: "jev", show: "0.27 s" },
+  { l: "SMAC<br>one game step", v: 0.5, c: "floor", show: "0.5 s" },
+], 0.56, 200);
+
+hbars("c-step1", [
+  { l: "Jev, per-unit actions", v: 0, c: "jev" },
+  { l: "Random legal action", v: 0, c: "rand" },
+  { l: "Attack-move", v: 25, c: "floor" },
+  { l: "SMAC: closest", v: 25, c: "rule" },
+  { l: "SMAC: focus", v: 30, c: "rule" },
+], 35, 170);
+
+const s23 = (off) => [
+  { l: "Random legal action", v: off ? 8 : 31, c: "rand" },
+  { l: "Attack-move", v: off ? 53 : 176, c: "floor" },
+  { l: "SMAC: closest", v: off ? 64 : 184, c: "rule" },
+  { l: "SMAC: focus", v: off ? 58 : 193, c: "rule" },
+  { l: "Random answers", v: off ? 74 : 189, c: "rand" },
+  { l: "Value switching", v: off ? 51 : 190, c: "sys" },
+  { l: "Hand rules", v: off ? 92 : 196, c: "rule" },
+  { l: "Jev's answers", v: off ? 91 : 196, c: "jev" },
+];
+hbars("c-off", s23(true), 115, 150);
+hbars("c-val", s23(false), 400, 150);
+
+const head = (off) => [
+  { l: "Ceiling", v: off ? 40 : 67, c: "ceil" },
+  { l: "Jev's answers", v: off ? 38 : 39, c: "jev" },
+  { l: "Hand rules", v: off ? 39 : 36, c: "rule" },
+  { l: "Random answers", v: off ? 23 : 37, c: "rand" },
+];
+hbars("c-head-off", head(true), 70, 130);
+hbars("c-head-val", head(false), 70, 130);
+
+hbars("c-test6", [
+  { l: "Attack-move", v: 475, c: "floor" },
+  { l: "Hand rules", v: 490, c: "rule" },
+  { l: "Value switching", v: 519, c: "sys" },
+  { l: "Grok program", v: 595, c: "sys" },
+  { l: "Claude program", v: 720, c: "sys" },
+], 1000, 150);
+
+dbars("c-ontop", "ax-ontop", [
+  { g: "① Library: Jev picks the program instead of the lookup", s: "test2 · 600", rows: [
+    { l: "Jev picks", v: -4, c: "jev" }, { l: "random pick", v: -26, c: "rand" } ] },
+  { g: "① The same, hinted library", s: "test2 · 600", rows: [
+    { l: "Jev picks", v: -24, c: "jev" }, { l: "random pick", v: -18, c: "rand" } ] },
+  { g: "② Plus each program's record on 8 similar battles", s: "test2 · 600", rows: [
+    { l: "Jev picks", v: 1, c: "jev" }, { l: "evidence vote", v: 1, c: "rule" } ] },
+  { g: "⑤ Value switching: Jev picks the tactic when the model is unsure", s: "test4 · 1,000", rows: [
+    { l: "Jev picks", v: 4, c: "jev" }, { l: "random pick", v: -4, c: "rand" } ] },
+  { g: "③ Claude program: hold or push at the start", s: "development set · 720", rows: [
+    { l: "Jev picks", v: 6, c: "jev" }, { l: "neighbour vote", v: 5, c: "rule" }, { l: "best in hindsight", v: 25, c: "ceil" } ] },
+], -30, 30, [-30, -20, -10, 0, 10, 20, 30]);
+
+hbars("c-why", [
+  { l: "Hold or push at the start", v: 3.5, c: "ceil", show: "3.5", n: "+25 / 720" },
+  { l: "Pick a library program", v: 8.5, c: "ceil", show: "≈8.5", n: "+24–27 / 300" },
+  { gap: true },
+  { l: "Kiting", v: 6.0, c: "sys", show: "6.0", n: "turned off: −43 / 720" },
+  { l: "Focus-fire allocation", v: 7.5, c: "sys", show: "7.5", n: "turned off: −54 / 720" },
+  { l: "Whole execution program", v: 24.5, c: "sys", show: "24.5", n: "+245 / 1,000 over attack-move" },
+], 36, 200);
+
+hbars("c-auc", [
+  { l: "Jev + 8 similar moments", v: 0.874 - 0.5, c: "jev", show: "0.874" },
+  { l: "HP ratio", v: 0.835 - 0.5, c: "rule", show: "0.835" },
+  { l: "Evidence vote", v: 0.80 - 0.5, c: "rule", show: "0.77–0.80" },
+], 0.42, 190);
+
+const want = new URLSearchParams(location.search).get("c");
+document.querySelectorAll(".panel").forEach(p => p.classList.toggle("on", !want || p.id === "p-" + want));
+</script>
+</body>
+</html>
