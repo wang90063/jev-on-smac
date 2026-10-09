@@ -7,6 +7,7 @@
   python results/baseline_rerun.py force          # pin each exam option for the whole battle (menu headroom)
   python results/baseline_rerun.py headroom       # best pin in hindsight per battle, official vs val
   python results/baseline_rerun.py relax          # lift the evidence gate: pin each closed kind, random answers
+  python results/baseline_rerun.py unit           # step-1 action-level baselines on the same battles
 
 Rows go to results/rerun/{official,val}.jsonl. The Jev run resumes where it stopped.
 Run Jev with the proxy variables unset (see AGENTS.md).
@@ -25,11 +26,16 @@ sys.path.insert(0, str(ROOT / "results"))
 sys.path.insert(0, str(ROOT / "src"))
 import _regress as R  # noqa: E402
 import scenarios as SC  # noqa: E402
+import q1_unit_actor  # noqa: E402,F401  (registers closest / focus / random_legal with R.make_policy)
 
 OUT = ROOT / "results" / "rerun"
+UNIT = ["random_legal", "closest", "focus"]
 LOCAL = ["dummy", "random", "prog:hand_rules", "online", "value_online", "written_online_grok", "written_online"]
 NAMES = {
     "dummy": "Attack-move",
+    "random_legal": "Random legal action",
+    "closest": "SMAC heuristic: closest",
+    "focus": "SMAC heuristic: focus",
     "random": "Random exam answers",
     "jev": "Jev exam answers",
     "prog:hand_rules": "Hand rules",
@@ -58,8 +64,16 @@ def _load(bench):
     return {(r["policy"], r["map"], r["seed"]): r for r in rows}
 
 
+def cmd_unit():
+    _run_local(UNIT)
+
+
 def cmd_local():
-    jobs = _jobs(LOCAL)
+    _run_local(LOCAL)
+
+
+def _run_local(policies):
+    jobs = _jobs(policies)
     have = {b: _load(b) for b in ("official", "val")}
     todo = [(b, j) for b, j in jobs if (j[0], j[1]["id"] if j[1] else j[2][0], j[2] if j[1] else j[2][1]) not in have[b]]
     with Pool(8) as pool:
@@ -164,7 +178,7 @@ def cmd_table():
             by.setdefault(p, {})[(m, s)] = r["win"]
         print(f"\n{bench}")
         jev = by.get("jev", {})
-        for p in ["dummy", "random", "jev", "prog:hand_rules", "online", "value_online", "written_online_grok", "written_online"]:
+        for p in ["dummy", "random_legal", "closest", "focus", "random", "jev", "prog:hand_rules", "online", "value_online", "written_online_grok", "written_online"]:
             if p not in by:
                 continue
             line = f"  {NAMES[p]:36s} {sum(by[p].values()):4d}/{len(by[p])}"
@@ -180,4 +194,4 @@ def cmd_table():
 
 
 if __name__ == "__main__":
-    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table, "force": cmd_force, "headroom": cmd_headroom, "relax": cmd_relax}[sys.argv[1]]()
+    {"local": cmd_local, "jev": cmd_jev, "table": cmd_table, "force": cmd_force, "headroom": cmd_headroom, "relax": cmd_relax, "unit": cmd_unit}[sys.argv[1]]()

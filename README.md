@@ -7,7 +7,7 @@
 > |---|---|---|
 > | 1. Every unit's action | Each unit's raw action, every 0.5 s step | **0 / 35 wins**, the same as random actions. Attack-move won 25. |
 > | 2. Tactics per unit group | 2–6 named tactics per group (how to fight, whom to focus); code executes | **91 / 115** on the official maps. But random answers to the same questions won 74, and 4 hand-written rules built from the same knowledge won 92. The credit belongs to the code and the rules, not to Jev. |
-> | 3. The same, on unseen battles | – | **196 / 400**, tied with the hand rules (196). Both fail together: the tactical knowledge was fitted to the official maps, and Jev added no judgment of its own. |
+> | 3. The same, on unseen battles | – | **196 / 400**, tied with the hand rules (196) and with SMAC's three-line focus-fire rule (193). The tactical knowledge was fitted to the official maps, and Jev added no judgment of its own. |
 > | 4. Choosing on top of systems built to generalize | Library programs, value-model tactics, hold or push | Each system generalized better than the one before (**475 → 720 / 1,000** unseen battles). Jev never added anything on top. |
 > | **Is Jev useful for micro?** | | **No.** Its one strength is judging *"will we win?"* (AUC 0.874, best of all methods, not significant), and in micro that judgment doesn't turn into wins. What worked: an LLM writes the micro **code**. |
 
@@ -49,17 +49,35 @@ A SMAC step is 0.5 s of game time, so on paper Jev is fast enough to choose an a
 
 **Statistics.** Every comparison is paired by scenario and seed, with an exact sign test on flips vs losses.
 
-**Baselines.** For Jev to count as useful at a decision, it has to beat the controls that share its information but not Jev. Otherwise the gain comes from what we put in the prompt, not from Jev's judgment. Every table uses these names:
+**How the baselines are designed.** Every step asks the same question: *does Jev add judgment beyond what we hand it?* What we hand it is an output space (the options it picks from) and some knowledge (the option text, the manual, the examples). So each step gets the same four kinds of control:
 
-| Baseline | What it does | Shares with Jev | Used in |
-|---|---|---|---|
-| **Attack-move** | Every unit attack-moves toward the enemy. The last fallback in every system here | – | all |
-| **Random legal action** | A uniformly random legal action per unit per step | the same actions | step 1 |
-| **SMAC heuristic** | Shoot the closest enemy in range (or the lowest-HP one: *focus*), else walk toward it | – | step 1 |
-| **Random answers** / **random pick** | A uniformly random choice among exactly the options Jev saw | the same options | steps 2–4 |
-| **Hand rules** | 4 fixed picks, written by looking at the official maps: whenever the question is open, gun lines kite, melee holds the choke, the laser aims at the bar, outer guns step aside | the same options and the same knowledge | steps 2–3 |
-| **Lookup** / **evidence vote** | The closest cluster's program / the option with the best record among the similar battles shown to Jev | the same options and evidence | step 4 |
-| **Best in hindsight** | The best option per battle, known after playing all of them. A ceiling | – | steps 3–4 |
+| Role | What it rules out | Step 1 (Jev picks each unit's action) | Steps 2–3 (Jev picks group tactics) | Step 4 (Jev picks among systems) |
+|---|---|---|---|---|
+| **Floor** | the system is no good at all | attack-move | attack-move | attack-move |
+| **Random, same output space** | the gain comes from the options, not from choosing | random legal action | random answers to the same questions | random pick among the same candidates |
+| **Fixed rule, same output space** | the gain comes from knowledge a rule already encodes | SMAC heuristic (*closest*, *focus*) | hand rules | lookup / evidence vote over the same examples |
+| **Ceiling** | there was nothing to gain anyway | – | best option per battle in hindsight | best option per battle in hindsight |
+
+The controls change from step to step only because Jev's output space changes: a "random answer" means something different when the answer is a unit's action than when it is a tactic. The roles stay fixed.
+
+- **Attack-move:** every unit attack-moves toward the enemy. The last fallback in every system here.
+- **SMAC heuristic:** shoot the closest enemy in range (*closest*) or the lowest-HP one (*focus*), else walk toward it.
+- **Hand rules:** 4 fixed picks, written by looking at the official maps. Whenever the question is open: gun lines kite, melee holds the choke, the laser aims at the bar, outer guns step aside.
+
+**All fixed baselines on all battles.** So that the steps can be compared with one another, every baseline that doesn't call Jev was run on every battle set: the 35 battles of step 1 (7 official maps × 5 seeds), all 115 official battles, and the 400 val battles.
+
+| | Role | Step 1's 35 battles | 23 official maps (115) | val (400, unseen) |
+|---|---|---:|---:|---:|
+| Attack-move | floor | 25 | 53 | 176 |
+| Random legal action | random, step-1 output | 0 | 8 | 31 |
+| SMAC heuristic: closest | fixed rule, step-1 output | 25 | 64 | 184 |
+| SMAC heuristic: focus | fixed rule, step-1 output | 30 | 58 | 193 |
+| Random answers | random, step-2 output | 34 | 74 | 189 |
+| Hand rules | fixed rule, step-2 output | 35 | 92¹ | 196 |
+| **Jev, every unit's action (step 1)** | | **0** | – | – |
+| **Jev's answers (steps 2–3)** | | **35** | **91**¹ | **196** |
+
+<sub>¹ In-sample: the hand rules and the exam questions were written by looking at these maps. Jev per unit was run on the 35 battles only: it costs 26 s per battle and already tied random actions there. `python results/baseline_rerun.py unit` / `local` / `jev`, then `table`; rows in `results/rerun/`.</sub>
 
 ## Step 1. Jev controls every unit's action
 
@@ -119,15 +137,13 @@ This is how a human commander works, with control groups instead of per-unit cli
 
 **Result: it works on these maps, but Jev is not the reason.**
 
-| | Same 35 battles as step 1 | 23 official maps (115) |
-|---|---:|---:|
-| Attack-move | 25 | 53 |
-| Random answers to the same questions | 34 | 74 |
-| **Jev's answers** | **35** | **91** |
-| Hand rules (same options, same knowledge) | 35 | 92 |
-
-- Jev vs random answers: **+17 / −0** (p < 0.001).
-- Jev vs hand rules: +1 / −2. Same outcome in 112 of 115 battles.
+| | Same 35 battles as step 1 | 23 official maps (115) | Jev vs this, 115 (flips / losses) |
+|---|---:|---:|---:|
+| Attack-move | 25 | 53 | +38 / −0 |
+| SMAC heuristic: focus (step 1's best fixed rule) | 30 | 58 | +33 / −0 |
+| Random answers to the same questions | 34 | 74 | **+17 / −0** (p < 0.001) |
+| **Jev's answers** | **35** | **91** | – |
+| Hand rules (same options, same knowledge) | 35 | 92 | +1 / −2 (p = 1.0) |
 
 <sub>Rerun on the current code: `python results/baseline_rerun.py table`.</sub>
 
@@ -140,11 +156,12 @@ Lowering the dimensions moved Jev from 0 to 35 on the same battles. That fits ca
 | val, 400 battles | Wins | vs attack-move | Jev vs this |
 |---|---:|---:|---:|
 | Attack-move | 176 | – | +43 / −23 (p = 0.019) |
+| SMAC heuristic: focus | 193 | +17 | +66 / −63 (p = 0.86) |
 | Random answers | 189 | +13 | +37 / −30 (p = 0.46) |
 | **Jev's answers** | **196** | +20 | – |
 | Hand rules | 196 | +20 | +20 / −20 (p = 1.0) |
 
-Jev's edge over random answers fell from +17 / 115 to **+7 / 400**. It still tied the hand rules exactly. On test6 (1,000 unseen battles), the hand rules won 490 vs attack-move's 475, also not significant.
+Jev's edge over random answers fell from +17 / 115 to **+7 / 400**. It still tied the hand rules exactly. The whole step-2 system, with Jev, was no better than step 1's three-line focus-fire rule (196 vs 193); on the official maps it had beaten that rule by +33 / −0. On test6 (1,000 unseen battles), the hand rules won 490 vs attack-move's 475, also not significant.
 
 **Why: the tactical knowledge was fitted to the official maps, and Jev added none of its own.** We pinned each option of the menu for the whole battle and played every battle again. The best pin per battle, in hindsight, is a ceiling for what any answerer could get from this menu:
 
@@ -249,6 +266,8 @@ All nine places Jev was tried, with what it saw and its controls:
 | System | Jev? | Level | 23 official maps (115) | val (400, unseen) | test6 (1,000, unseen, run once) |
 |---|:-:|---|---:|---:|---:|
 | Attack-move | | floor | 53 | 176 | 475 |
+| SMAC heuristic: closest | | action | 64 | 184 | – |
+| SMAC heuristic: focus | | action | 58 | 193 | – |
 | Random answers | | tactic | 74 | 189 | – |
 | **Jev's answers (step 2)** | ✓ | tactic | **91**¹ | 196 | – |
 | Hand rules | | tactic | **92**¹ | 196 | 490 |
@@ -306,7 +325,7 @@ python results/_regress.py holdout --split val --policies dummy written_online -
 python results/_regress.py paired --base dummy --files out.jsonl
 
 # Rerun every baseline in this README (scoreboard, steps 1-3)
-python results/baseline_rerun.py local && python results/baseline_rerun.py jev && python results/baseline_rerun.py table
+python results/baseline_rerun.py local && python results/baseline_rerun.py unit && python results/baseline_rerun.py jev && python results/baseline_rerun.py table
 python results/baseline_rerun.py force && python results/baseline_rerun.py headroom
 python results/q1_unit_actor.py run --policies dummy,closest,focus,random_legal,jev_unit && python results/q1_unit_actor.py table
 
