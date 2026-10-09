@@ -2,7 +2,7 @@
 
     python results/readme_gif.py [scenario_id] [seed]      # default y0810 seed 4
     -> docs/fight.gif
-    JEV_GIF_CELL=40 JEV_GIF_PAD=1 JEV_GIF_STACK=1 JEV_GIF_OUT=fight_zoom.gif python results/readme_gif.py   # tighter, larger: the deck's copy
+    JEV_GIF_CELL=40 JEV_GIF_PAD=1 JEV_GIF_STACK=1 JEV_GIF_ZH=1 JEV_GIF_OUT=fight_zoom.gif python results/readme_gif.py   # tighter, larger: the deck's copy
 """
 import os
 import sys
@@ -20,18 +20,24 @@ from macsmac.snapshot import snapshot  # noqa: E402
 
 SID = sys.argv[1] if len(sys.argv) > 1 else "y0810"
 SEED = int(sys.argv[2]) if len(sys.argv) > 2 else 4
-PANELS = [("dummy", "Scripted baseline (attack-move)"),
-          ("code:kb/library/code/general_claude.py", "LLM-synthesized program (Claude)")]
+ZH = os.environ.get("JEV_GIF_ZH") == "1"  # Chinese labels, larger type, result in the header (the deck's copy)
+PANELS = [("dummy", "attack-move（脚本基线）" if ZH else "Scripted baseline (attack-move)"),
+          ("code:kb/library/code/general_claude.py", "Claude 写的程序" if ZH else "LLM-synthesized program (Claude)")]
 CELL = int(os.environ.get("JEV_GIF_CELL", 26))  # pixels per map cell
 PAD = float(os.environ.get("JEV_GIF_PAD", 4))  # cells of margin around everything the units touched
-HEAD = 54
+HEAD = 72 if ZH else 54
 BG, GROUND, WALL = (250, 250, 248), (236, 238, 233), (92, 98, 108)
 OURS, THEIRS, LINE = (37, 120, 220), (222, 72, 62), (90, 90, 90)
 ABBR = {"STALKER": "S", "HYDRALISK": "H", "MARINE": "m", "MARAUDER": "M", "ZEALOT": "Z", "ZERGLING": "z",
         "BANELING": "B", "COLOSSUS": "C", "MEDIVAC": "+"}
 
 
-def font(size):
+def font(size, bold=False):
+    if ZH:
+        try:
+            return ImageFont.truetype("/System/Library/Fonts/Hiragino Sans GB.ttc", size, index=1 if bold else 0)
+        except OSError:
+            pass
     for p in ("/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/SFNS.ttf"):
         try:
             return ImageFont.truetype(p, size)
@@ -40,7 +46,7 @@ def font(size):
     return ImageFont.load_default()
 
 
-F_TITLE, F_SUB, F_UNIT, F_BIG = font(16), font(13), font(13), font(34)
+F_TITLE, F_SUB, F_UNIT, F_BIG = (font(26, True), font(18), font(15), font(30, True)) if ZH else (font(16), font(13), font(13), font(34))
 SEEN = []  # unit pixel positions over both fights, for a shared crop
 
 
@@ -81,16 +87,24 @@ def frame(g, title, sub, banner=None):
         d = ImageDraw.Draw(img)
         d.text((cx, cy), ABBR.get(u.type.stats.name.upper(), "?"), fill=(20, 20, 20), font=F_UNIT, anchor="mm")
     d.rectangle([0, 0, img.width, HEAD - 1], fill=(255, 255, 255))
-    d.text((10, 9), title, fill=(25, 25, 25), font=F_TITLE)
-    d.text((10, 31), sub, fill=(110, 110, 110), font=F_SUB)
+    d.text((12, 8), title, fill=(25, 25, 25), font=F_TITLE)
+    d.text((12, 42 if ZH else 31), sub, fill=(110, 110, 110), font=F_SUB)
     img.info["banner"] = banner
     return img
 
 
 def stamp(img, banner):
     text, col = banner
+    if ZH:  # in the header, clear of the map
+        ImageDraw.Draw(img).text((img.width - 14, HEAD / 2), text, fill=col, font=F_BIG, anchor="rm")
+        return
     ImageDraw.Draw(img).text((img.width / 2, HEAD + 34), text, fill=col, font=F_BIG, anchor="mm",
                              stroke_width=4, stroke_fill=(255, 255, 255))
+
+
+def status(step, g):
+    ours, theirs = (sum(u.hp > 0 for u in us) for us in (g.agents.values(), g.enemies.values()))
+    return f"第 {step} 步　我方 {ours}　敌方 {theirs}" if ZH else f"step {step:3d}   ours {ours}   theirs {theirs}"
 
 
 def play(spec, title):
@@ -103,13 +117,13 @@ def play(spec, title):
     alive = lambda us: sum(u.hp > 0 for u in us)  # noqa: E731
     try:
         while not done:
-            frames.append(frame(g, title, f"step {step:3d}   ours {alive(g.agents.values())}   theirs {alive(g.enemies.values())}"))
+            frames.append(frame(g, title, status(step, g)))
             _, done, info = env.step(pol.act(SID, step, snapshot(env)))
             step += 1
         won = bool(info.get("battle_won"))
         a, n = alive(g.agents.values()), len(g.agents)
-        sub = f"step {step:3d}   ours {a}   theirs {alive(g.enemies.values())}"
-        frames.append(frame(g, title, sub, (f"WIN  {a}/{n} alive" if won else "LOSS", (30, 140, 70) if won else (200, 50, 45))))
+        text = (f"胜 · {a}/{n} 存活" if ZH else f"WIN  {a}/{n} alive") if won else ("负 · 全灭" if ZH else "LOSS")
+        frames.append(frame(g, title, status(step, g), (text, (30, 140, 70) if won else (200, 50, 45))))
     finally:
         env.close()
     print(spec, "won" if won else "lost", "steps", step)
