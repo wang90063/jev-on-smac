@@ -402,8 +402,8 @@ table.t tr.hl td { background: var(--jev-soft); }
     <tr><td><b>下限</b></td><td>系统本身就不行</td><td><span class="nm floor"><i></i>attack-move</span><small>所有单位向敌人攻击移动</small></td><td><span class="nm floor"><i></i>attack-move</span></td><td><span class="nm zero"><i></i>系统默认</span><small>Jev 不插手；图里的 0 线</small></td></tr>
     <tr><td><b>随机</b></td><td>收益来自选项本身</td><td><span class="nm rand"><i></i>随机合法动作</span><small>同样的合法动作里随机（不含原地不动）</small></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，同样的选项里随机选</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
     <tr><td><b>固定规则</b></td><td>收益来自规则里的知识</td><td><span class="nm rule"><i></i>SMAC：closest</span><br><span class="nm rule"><i></i>SMAC：focus</span><small>打射程内最近 / 血最少的敌人</small></td><td><span class="nm rule"><i></i>手写规则</span><small>4 条固定选择，照官方图写</small></td><td><span class="nm rule"><i></i>示例投票</span><small>Jev 拿到的同样示例，直接投票</small></td></tr>
-    <tr><td><b>学习</b></td><td>用模拟器训练就学得到</td><td>–</td><td><span class="nm sys"><i></i>价值切换</span><small>每 5 步从 12 个战术里选，训练见下</small></td><td><small style="margin-left:0">– （⑤ 叠加在它上面）</small></td></tr>
-    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td><span class="nm ceil"><i></i>事后最优</span><small>每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
+    <tr><td><b>学习</b></td><td>用模拟器训练就学得到</td><td><small style="margin-left:0">– 没跑：Jev 连下限都没赢</small></td><td><span class="nm sys"><i></i>价值切换</span><small>每 5 步从 12 个战术里选，训练见下</small></td><td><small style="margin-left:0">– （⑤ 叠加在它上面）</small></td></tr>
+    <tr><td><b>上限</b></td><td>本来就没有空间</td><td><small style="margin-left:0">– 同上</small></td><td><span class="nm ceil"><i></i>事后最优</span><small>每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
   </table>
   <p class="small" style="margin-top:8px"><b>价值切换怎么训练（只在离线复制模拟器状态）：</b>约 1.1 万个决策点，每点把 13 个选项（12 个战术 + 不换）各打 5 步、再由基准策略打到底，共约 14 万次回放，得到标签；梯度提升树学"换成某个战术比不换好多少"；两轮 DAgger 在模型自己走到的局面上补标签。</p>
 </section>
