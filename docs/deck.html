@@ -53,6 +53,17 @@ ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; widt
 .foot { margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--faint); }
 .mono { font-family: var(--mono); }
 
+/* baseline names: same swatch as the charts */
+table.bl td { padding: 10px 12px; }
+.nm { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; white-space: nowrap; }
+.nm i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+.nm.floor i { background: var(--floor); }
+.nm.rand i { background: var(--rand); }
+.nm.rule i { background: var(--rule); }
+.nm.ceil i { border: 2px dashed #495057; }
+.nm.zero i { width: 3px; border-radius: 0; background: #495057; }
+table.bl small { display: block; font-size: 13px; color: var(--muted); margin: 2px 0 0 20px; }
+
 /* motivation */
 .mrow { display: grid; grid-template-columns: 78px 170px 28px 120px 28px 1fr; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 36px 28px; }
 .mrow .who { width: 74px; font-size: 17px; font-weight: 700; color: var(--muted); }
@@ -106,6 +117,7 @@ ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; widt
 .db .t .z { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #495057; }
 .db .t i { position: absolute; top: 0; bottom: 0; background: var(--rand); border-radius: 3px; }
 .db .r.jev i { background: var(--jev); }
+.db .r.rule i { background: var(--rule); }
 .db .r.ceil i { background: transparent; border: 2px dashed #495057; }
 .db .t b { position: absolute; top: 50%; transform: translateY(-50%); font: 600 14px var(--mono); white-space: nowrap; }
 .axis { position: relative; height: 22px; margin-left: 164px; font: 12px var(--mono); color: var(--faint); }
@@ -339,24 +351,21 @@ table.t tr.hl td { background: var(--jev-soft); }
 <section class="slide">
   <div class="kicker">实验设置 · 对照</div>
   <h2>每一步问同一个问题：Jev 有没有超出我们交给它的东西？</h2>
-  <p class="muted" style="margin:-10px 0 18px">交给它的是一个输出空间（可选的选项）和一些知识（选项说明、示例）。所以每一步配同样四种对照：</p>
-  <table class="t">
-    <tr><th style="width:150px">角色</th><th style="width:230px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
-    <tr><td><b>下限</b></td><td>系统本身就不行</td><td>attack-move</td><td>attack-move</td><td>attack-move</td></tr>
-    <tr><td><b>同输出空间，随机</b></td><td>收益来自选项，不是挑选</td><td>随机合法动作</td><td>对同样的题随机作答</td><td>在同样候选里随机挑</td></tr>
-    <tr><td><b>同输出空间，固定规则</b></td><td>收益来自规则已有的知识</td><td>SMAC 启发式（closest / focus）</td><td>4 条手写规则</td><td>最近簇查表；相似示例投票</td></tr>
-    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td>每局事后最优</td><td>每局事后最优</td></tr>
+  <p class="muted" style="margin:-10px 0 16px">交给它的是一个输出空间（可选的选项）和一些知识（选项说明、示例）。所以每一步配四种对照：</p>
+  <table class="t bl">
+    <tr><th style="width:130px">角色</th><th style="width:190px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
+    <tr><td><b>下限</b></td><td>系统本身就不行</td><td><span class="nm floor"><i></i>attack-move</span><small>所有单位向敌人攻击移动</small></td><td><span class="nm floor"><i></i>attack-move</span></td><td><span class="nm zero"><i></i>系统默认</span><small>Jev 不插手；图里的 0 线</small></td></tr>
+    <tr><td><b>随机</b></td><td>收益来自选项，不是挑选</td><td><span class="nm rand"><i></i>随机合法动作</span></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，随机选一个选项</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
+    <tr><td><b>固定规则</b></td><td>收益来自规则已有的知识</td><td><span class="nm rule"><i></i>SMAC：closest</span><br><span class="nm rule"><i></i>SMAC：focus</span><small>打射程内最近 / 血最少的敌人</small></td><td><span class="nm rule"><i></i>手写规则</span><small>4 条固定选择，照官方图写</small></td><td><span class="nm rule"><i></i>示例投票</span><small>Jev 拿到的同样示例，直接投票</small></td></tr>
+    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td><span class="nm ceil"><i></i>事后最优</span><small>每局把每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
   </table>
-  <ul class="clean" style="margin-top:22px">
-    <li><b>attack-move</b>：所有单位向敌人攻击移动，也是每个系统最后的兜底。</li>
-    <li><b>SMAC 启发式</b>：打射程内最近的敌人（closest）或血最少的敌人（focus），否则走过去。</li>
-  </ul>
+  <p class="small" style="margin-top:14px">表里的名字和后面所有图里的名字一一对应，颜色也一样。</p>
 </section>
 
 <!-- 6 step 1 -->
 <section class="slide">
   <div class="kicker">结果 · 第 1 步</div>
-  <h2>Jev 直接控制每个单位：35 局一局没赢，和随机动作一样</h2>
+  <h2>Jev 直接控制每个单位：35 局一局没赢，和随机合法动作一样</h2>
   <div class="row">
     <div class="col" style="flex:1.1">
       <div class="chart-title">胜场 <span>/ 35 局（7 张官方图 × 5 个种子）</span></div>
@@ -384,7 +393,7 @@ table.t tr.hl td { background: var(--jev-soft); }
 <!-- 7 steps 2-3 -->
 <section class="slide">
   <div class="kicker">结果 · 第 2–3 步</div>
-  <h2>选兵组战术：官方图上赢 91 局，可手写规则赢 92；<br>换到新战斗，和手写规则、三行的 focus 规则打平</h2>
+  <h2>选兵组战术：官方图上赢 91 局，可手写规则赢 92；<br>换到新战斗，和手写规则、SMAC：focus 打平</h2>
   <div class="legend" style="margin-top:-8px">
     <span><i style="background:var(--jev)"></i>Jev 作答</span>
     <span><i style="background:var(--floor)"></i>下限</span>
@@ -400,7 +409,7 @@ table.t tr.hl td { background: var(--jev-soft); }
     <div class="col">
       <div class="chart-title">val <span>400 局 · 没用来写题目和规则</span></div>
       <div id="c-val"></div>
-      <p class="small" style="margin-top:14px">Jev 对随机作答 +37 / −30（p = 0.46）；对手写规则 +20 / −20；对 focus +66 / −63（p = 0.86）。</p>
+      <p class="small" style="margin-top:14px">Jev 对随机作答 +37 / −30（p = 0.46）；对手写规则 +20 / −20；对 SMAC：focus +66 / −63（p = 0.86）。</p>
     </div>
   </div>
   <p class="foot">7 道题：枪线怎么打、近战怎么打、集火规则、激光瞄哪、外侧是否让位、两个残血敌人先打谁、治疗谁。平均每局 10.5 次请求。</p>
@@ -438,7 +447,7 @@ table.t tr.hl td { background: var(--jev-soft); }
       <div class="chart-title">test6 胜场 <span>/ 1,000 局 · 没有系统在上面训练或调参</span></div>
       <div class="legend">
         <span><i style="background:var(--floor)"></i>下限</span>
-        <span><i style="background:var(--rule)"></i>第 2 步的手写规则</span>
+        <span><i style="background:var(--rule)"></i>手写规则（第 2 步）</span>
         <span><i style="background:var(--sys)"></i>第 4 步的系统</span>
       </div>
       <div id="c-test6"></div>
@@ -463,10 +472,11 @@ table.t tr.hl td { background: var(--jev-soft); }
   <h2 style="margin-bottom:16px">在这些系统上让 Jev 挑：从没超过同样信息的对照</h2>
   <div class="row">
     <div class="col" style="flex:1.35">
-      <div class="chart-title">比系统本身多赢的局数 <span>· 同一批战斗逐局配对</span></div>
+      <div class="chart-title">比系统默认多赢的局数 <span>· 0 线 = 系统默认 · 逐局配对</span></div>
       <div class="legend" style="margin-bottom:10px">
         <span><i style="background:var(--jev)"></i>Jev</span>
-        <span><i style="background:var(--rand)"></i>同样信息的对照</span>
+        <span><i style="background:var(--rand)"></i>随机挑</span>
+        <span><i style="background:var(--rule)"></i>示例投票</span>
         <span><i style="border:2px dashed #495057"></i>事后最优</span>
       </div>
       <div id="c-ontop"></div>
@@ -477,7 +487,7 @@ table.t tr.hl td { background: var(--jev-soft); }
       <ul class="clean">
         <li style="font-size:15px">每组是一个实验：Jev 替系统做某个选择，和系统自己的选择逐局配对。</li>
         <li style="font-size:15px">有设置的实验都先在 val 上调，再在测试集上只跑一次。</li>
-        <li style="font-size:15px">最好的一次是 +6，而同样 8 个邻居直接投票是 +5。</li>
+        <li style="font-size:15px">最好的一次是 +6，而示例投票是 +5。</li>
         <li style="font-size:15px">③ 没有独立测试集：在 Claude 程序自己的 720 局开发数据上，示例按场景留一法抽取。</li>
       </ul>
     </div>
@@ -532,9 +542,9 @@ table.t tr.hl td { background: var(--jev-soft); }
   <div class="kicker">Take away · 结论</div>
   <h2>Jev 不适合做 SMAC 微操：三种用法都没赢过对照</h2>
   <div class="verdict">
-    <div class="card"><h3>直接出动作</h3><div class="big" style="color:var(--jev)">0 / 35</div><p>和随机动作一样；attack-move 赢 25。</p></div>
-    <div class="card"><h3>选兵组战术</h3><div class="big">= 手写规则</div><p>官方图 91 对 92；新战斗 196 对 196，也和三行的 focus 规则（193）打平。</p></div>
-    <div class="card"><h3>在能泛化的系统上挑选</h3><div class="big">≤ 对照</div><p>四个实验里最好 +6，同样信息的投票 +5。</p></div>
+    <div class="card"><h3>直接出动作</h3><div class="big" style="color:var(--jev)">0 / 35</div><p>和随机合法动作一样；attack-move 赢 25。</p></div>
+    <div class="card"><h3>选兵组战术</h3><div class="big">= 手写规则</div><p>官方图 91 对 92；新战斗 196 对 196，也和 SMAC：focus（193）打平。</p></div>
+    <div class="card"><h3>在能泛化的系统上挑选</h3><div class="big">≤ 对照</div><p>四个实验里最好 +6，示例投票 +5。</p></div>
   </div>
   <div class="row" style="gap:24px">
     <div class="col card">
@@ -556,9 +566,9 @@ table.t tr.hl td { background: var(--jev-soft); }
   <h2>下次用判断模型之前</h2>
   <div class="lesson">
     <div class="card"><div class="n">01</div><h3>先量上限</h3><p>在一部分种子上为每个场景挑最好的选项，再到别的种子上验证。如果只值几个百分点，谁来挑都无所谓。这里"等还是压"的上限只有 3.5%。</p></div>
-    <div class="card"><div class="n">02</div><h3>永远对照"同样信息、没有模型"</h3><p>四种对照：同样候选里随机挑、同样示例直接投票、用同样知识写的固定规则、什么都不改。Jev 在每一步都被其中一个追平。</p></div>
+    <div class="card"><div class="n">02</div><h3>永远对照"同样信息、没有模型"</h3><p>四种对照：随机挑、示例投票、手写规则、系统默认。Jev 在每一步都被其中一个追平。</p></div>
     <div class="card"><div class="n">03</div><h3>小提升要换种子确认</h3><p>一个改动在挑选种子上 +7，换了种子变成 −14（p = 0.049）。小于 +15 的提升，一定要在没参与挑选的种子上再测。</p></div>
-    <div class="card"><div class="n">04</div><h3>别信调参用过的地图</h3><p>手写规则和 Jev 的题目都照着官方图写：在那里 92 和 91，到了新战斗就和三行的 focus 规则打平。泛化只看没见过的战斗。</p></div>
+    <div class="card"><div class="n">04</div><h3>别信调参用过的地图</h3><p>手写规则和 Jev 的题目都照着官方图写：在那里 92 和 91，到了新战斗就和 SMAC：focus 打平。泛化只看没见过的战斗。</p></div>
   </div>
   <p class="foot">完整数据和复现命令：README 与 results/rerun/。</p>
 </section>
@@ -619,7 +629,7 @@ hbars("c-off", s23(true), 115, 120);
 hbars("c-val", s23(false), 400, 120);
 
 const head = (off) => [
-  { l: "菜单上限", v: off ? 40 : 67, c: "ceil" },
+  { l: "事后最优", v: off ? 40 : 67, c: "ceil" },
   { l: "Jev 作答", v: off ? 38 : 39, c: "jev" },
   { l: "手写规则", v: off ? 39 : 36, c: "rule" },
   { l: "随机作答", v: off ? 23 : 37, c: "rand" },
@@ -629,7 +639,7 @@ hbars("c-head-val", head(false), 70, 110);
 
 hbars("c-test6", [
   { l: "attack-move", v: 475, c: "floor" },
-  { l: "手写规则（第 2 步）", v: 490, c: "rule" },
+  { l: "手写规则", v: 490, c: "rule" },
   { l: "价值切换", v: 519, c: "sys" },
   { l: "Grok 写的程序", v: 595, c: "sys" },
   { l: "Claude 写的程序", v: 720, c: "sys" },
@@ -641,11 +651,11 @@ dbars("c-ontop", "ax-ontop", [
   { g: "① 带提示蒸馏的战术库", s: "test2 · 600 局", rows: [
     { l: "Jev", v: -24, c: "jev" }, { l: "随机挑", v: -18, c: "rand" } ] },
   { g: "② 再给每个程序在 8 场相似战斗里的战绩", s: "test2 · 600 局", rows: [
-    { l: "Jev", v: 1, c: "jev" }, { l: "战绩投票", v: 1, c: "rand" } ] },
+    { l: "Jev", v: 1, c: "jev" }, { l: "示例投票", v: 1, c: "rule" } ] },
   { g: "⑤ 价值模型拿不准时，让 Jev 挑战术", s: "test4 · 1,000 局", rows: [
     { l: "Jev", v: 4, c: "jev" }, { l: "随机挑", v: -4, c: "rand" } ] },
   { g: "③ Claude 程序：开局等还是压", s: "开发集 · 720 局", rows: [
-    { l: "Jev", v: 6, c: "jev" }, { l: "邻居投票", v: 5, c: "rand" }, { l: "事后最优", v: 25, c: "ceil" } ] },
+    { l: "Jev", v: 6, c: "jev" }, { l: "示例投票", v: 5, c: "rule" }, { l: "事后最优", v: 25, c: "ceil" } ] },
 ], -30, 30, [-30, -20, -10, 0, 10, 20, 30]);
 
 hbars("c-why", [
@@ -660,7 +670,7 @@ hbars("c-why", [
 hbars("c-auc", [
   { l: "Jev + 8 个相似时刻", v: 0.874 - 0.5, c: "jev", show: "0.874" },
   { l: "血量比", v: 0.835 - 0.5, c: "rule", show: "0.835" },
-  { l: "8 个时刻的平均结果", v: 0.80 - 0.5, c: "rand", show: "0.77–0.80" },
+  { l: "示例投票", v: 0.80 - 0.5, c: "rule", show: "0.77–0.80" },
 ], 0.42, 170);
 
 // ---- navigation ----
