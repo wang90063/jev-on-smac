@@ -54,9 +54,10 @@ ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; widt
 .mono { font-family: var(--mono); }
 
 /* baseline names: same swatch as the charts */
-table.bl td { padding: 10px 12px; }
+table.bl td { padding: 8px 12px; }
 .nm { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; white-space: nowrap; }
 .nm i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+.nm.jev i { background: var(--jev); } .nm.jev { color: var(--jev); } table.bl tr.jevrow td { background: #fff4ec; }
 .nm.floor i { background: var(--floor); }
 .nm.rand i { background: var(--rand); }
 .nm.rule i { background: var(--rule); }
@@ -351,15 +352,16 @@ table.t tr.hl td { background: var(--jev-soft); }
 <section class="slide">
   <div class="kicker">实验设置 · 对照</div>
   <h2>每一步问同一个问题：Jev 有没有超出我们交给它的东西？</h2>
-  <p class="muted" style="margin:-10px 0 16px">交给它的是一个输出空间（可选的选项）和一些知识（选项说明、示例）。所以每一步配四种对照：</p>
+  <p class="muted" style="margin:-10px 0 16px">交给它的是可选的选项和一些知识（说明、示例）。选项都合法：Jev 只在第一行的集合里选，随机对照也在同一集合里选。</p>
   <table class="t bl">
-    <tr><th style="width:130px">角色</th><th style="width:190px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
+    <tr><th style="width:96px">角色</th><th style="width:150px">排除的是</th><th>第 1 步：选单位动作</th><th>第 2–3 步：选兵组战术</th><th>第 4 步：在系统上挑选</th></tr>
+    <tr class="jevrow"><td><b>Jev</b></td><td>被检验的对象</td><td><span class="nm jev"><i></i>Jev，逐单位动作</span><small>每个单位此刻的合法动作，6–17 个</small></td><td><span class="nm jev"><i></i>Jev 作答</span><small>每道考题列出的选项，都能执行</small></td><td><span class="nm jev"><i></i>Jev 挑</span><small>系统给的几个候选</small></td></tr>
     <tr><td><b>下限</b></td><td>系统本身就不行</td><td><span class="nm floor"><i></i>attack-move</span><small>所有单位向敌人攻击移动</small></td><td><span class="nm floor"><i></i>attack-move</span></td><td><span class="nm zero"><i></i>系统默认</span><small>Jev 不插手；图里的 0 线</small></td></tr>
-    <tr><td><b>随机</b></td><td>收益来自选项，不是挑选</td><td><span class="nm rand"><i></i>随机合法动作</span></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，随机选一个选项</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
+    <tr><td><b>随机</b></td><td>收益来自选项，不是挑选</td><td><span class="nm rand"><i></i>随机合法动作</span><small>同样的合法动作里随机（不含原地不动）</small></td><td><span class="nm rand"><i></i>随机作答</span><small>同样的题，同样的选项里随机选</small></td><td><span class="nm rand"><i></i>随机挑</span><small>在同样的候选里随机挑</small></td></tr>
     <tr><td><b>固定规则</b></td><td>收益来自规则已有的知识</td><td><span class="nm rule"><i></i>SMAC：closest</span><br><span class="nm rule"><i></i>SMAC：focus</span><small>打射程内最近 / 血最少的敌人</small></td><td><span class="nm rule"><i></i>手写规则</span><small>4 条固定选择，照官方图写</small></td><td><span class="nm rule"><i></i>示例投票</span><small>Jev 拿到的同样示例，直接投票</small></td></tr>
-    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td><span class="nm ceil"><i></i>事后最优</span><small>每局把每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
+    <tr><td><b>上限</b></td><td>本来就没有空间</td><td>–</td><td><span class="nm ceil"><i></i>事后最优</span><small>每个选项都打一遍，取最好</small></td><td><span class="nm ceil"><i></i>事后最优</span></td></tr>
   </table>
-  <p class="small" style="margin-top:14px">表里的名字和后面所有图里的名字一一对应，颜色也一样。</p>
+  <p class="small" style="margin-top:10px">表里的名字和颜色与后面所有图一一对应。</p>
 </section>
 
 <!-- 6 step 1 -->
@@ -474,7 +476,7 @@ table.t tr.hl td { background: var(--jev-soft); }
     <div class="col" style="flex:1.35">
       <div class="chart-title">比系统默认多赢的局数 <span>· 0 线 = 系统默认 · 逐局配对</span></div>
       <div class="legend" style="margin-bottom:10px">
-        <span><i style="background:var(--jev)"></i>Jev</span>
+        <span><i style="background:var(--jev)"></i>Jev 挑</span>
         <span><i style="background:var(--rand)"></i>随机挑</span>
         <span><i style="background:var(--rule)"></i>示例投票</span>
         <span><i style="border:2px dashed #495057"></i>事后最优</span>
@@ -647,15 +649,15 @@ hbars("c-test6", [
 
 dbars("c-ontop", "ax-ontop", [
   { g: "① 战术库：Jev 替最近簇挑程序", s: "test2 · 600 局", rows: [
-    { l: "Jev", v: -4, c: "jev" }, { l: "随机挑", v: -26, c: "rand" } ] },
+    { l: "Jev 挑", v: -4, c: "jev" }, { l: "随机挑", v: -26, c: "rand" } ] },
   { g: "① 带提示蒸馏的战术库", s: "test2 · 600 局", rows: [
-    { l: "Jev", v: -24, c: "jev" }, { l: "随机挑", v: -18, c: "rand" } ] },
+    { l: "Jev 挑", v: -24, c: "jev" }, { l: "随机挑", v: -18, c: "rand" } ] },
   { g: "② 再给每个程序在 8 场相似战斗里的战绩", s: "test2 · 600 局", rows: [
-    { l: "Jev", v: 1, c: "jev" }, { l: "示例投票", v: 1, c: "rule" } ] },
+    { l: "Jev 挑", v: 1, c: "jev" }, { l: "示例投票", v: 1, c: "rule" } ] },
   { g: "⑤ 价值模型拿不准时，让 Jev 挑战术", s: "test4 · 1,000 局", rows: [
-    { l: "Jev", v: 4, c: "jev" }, { l: "随机挑", v: -4, c: "rand" } ] },
+    { l: "Jev 挑", v: 4, c: "jev" }, { l: "随机挑", v: -4, c: "rand" } ] },
   { g: "③ Claude 程序：开局等还是压", s: "开发集 · 720 局", rows: [
-    { l: "Jev", v: 6, c: "jev" }, { l: "示例投票", v: 5, c: "rule" }, { l: "事后最优", v: 25, c: "ceil" } ] },
+    { l: "Jev 挑", v: 6, c: "jev" }, { l: "示例投票", v: 5, c: "rule" }, { l: "事后最优", v: 25, c: "ceil" } ] },
 ], -30, 30, [-30, -20, -10, 0, 10, 20, 30]);
 
 hbars("c-why", [
