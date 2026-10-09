@@ -21,6 +21,15 @@ Fill = remaining HP; lines = current attack target.
 <b>Right:</b> the LLM-written program holds back and focuses one Hydralisk at a time as they come through the gap. No Stalker dies.
 </sub></p>
 
+<p align="center">
+  <img src="docs/duel_en.gif" alt="Claude's program (blue) against Grok's program (red) on the 1c3s5z mirror: Claude wins with 4 of 9 units left" width="80%">
+</p>
+<p align="center"><sub>
+And the two LLM-written programs against each other: Claude's (blue) vs Grok's (red), the same army on both sides (<code>1c3s5z</code>, seed 1).
+Over 9 mirror maps × 3 seeds, each program playing each side once: <b>Claude 48, Grok 5, 1 draw</b>
+(<code>python results/duel.py tally</code>; the simulator is unchanged, the red side's orders come from Grok's program each step).
+</sub></p>
+
 ## Why we tried this
 
 **Jev looks like an RL actor.** Jev ([TypeSafe](https://docs.typesafe.ai) System One) does not generate text. You give it a state and a question with named options, and it returns a calibrated probability for each option. That is the same shape as the discrete action head of an RL policy: a state goes in, and a distribution over actions comes out. Unlike an RL policy, it needs no training. Jev is never fine-tuned; you only change the state and the question.

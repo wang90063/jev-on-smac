@@ -1,7 +1,8 @@
 """Claude's program vs Grok's program, one per side, on mirror fights.
 
     python results/duel.py tally                      # every mirror official map + mirror scenario, both seats
-    JEV_GIF_CELL=22 JEV_GIF_PAD=1 python results/duel.py gif 1c3s5z 1   # -> docs/duel.gif, Claude blue
+    JEV_GIF_CELL=28 JEV_GIF_PAD=1 python results/duel.py gif 1c3s5z 1   # -> docs/duel.gif, Claude blue (deck)
+    JEV_GIF_CELL=28 JEV_GIF_PAD=1 JEV_GIF_ZH=0 JEV_GIF_OUT=duel_en.gif python results/duel.py gif 1c3s5z 1   # README
 
 The blue side goes through env.step as usual. The red side normally runs the engine's
 attack-move; here its program sees a mirrored snapshot (sides swapped, red legal-action
@@ -165,25 +166,28 @@ def tally(seeds=(1, 2, 3)):
 
 def gif(name, seed, out="duel.gif"):
     """One fight, Claude blue vs Grok red, drawn with readme_gif's renderer."""
-    os.environ.setdefault("JEV_GIF_ZH", "1")
+    os.environ.setdefault("JEV_GIF_ZH", "1")  # JEV_GIF_ZH=0: English labels (the README copy)
     sys.argv = sys.argv[:1]  # readme_gif reads its own scenario and seed from argv
     import readme_gif as G
     from PIL import Image
 
-    title = "Claude（蓝）对 Grok（红）"
+    zh = G.ZH
+    title = "Claude（蓝）对 Grok（红）" if zh else "Claude (blue) vs Grok (red)"
     frames, n = [], {}
 
     def on_frame(step, g, final=False):
         b = sum(u.hp > 0 for u in g.agents.values()); r = sum(u.hp > 0 for u in g.enemies.values())
         n.setdefault("b", b); n.setdefault("r", r)  # dead units leave the dicts, so keep the starting sizes
-        sub = f"{name} 镜像　第 {step} 步　蓝 {b}　红 {r}"
+        sub = f"{name} 镜像　第 {step} 步　蓝 {b}　红 {r}" if zh else f"{name} mirror   step {step:3d}   blue {b}   red {r}"
         banner = None
         if final:
-            banner = ((f"Claude 胜 {b}/{n['b']}", (37, 120, 220)) if b and not r else
-                      (f"Grok 胜 {r}/{n['r']}", (222, 72, 62)) if r and not b else ("平局", (110, 110, 110)))
+            won, lost = ("胜", "平局") if zh else ("WINS", "DRAW")
+            banner = ((f"Claude {won} {b}/{n['b']}", (37, 120, 220)) if b and not r else
+                      (f"Grok {won} {r}/{n['r']}", (222, 72, 62)) if r and not b else (lost, (110, 110, 110)))
         frames.append(G.frame(g, title, sub, banner))
 
     print(fight(name, seed, CLAUDE, GROK, on_frame))
+    out = os.environ.get("JEV_GIF_OUT", out)
     pad = G.PAD * G.CELL
     x0 = max(0, min(x for x, _ in G.SEEN) - pad); x1 = min(frames[0].width, max(x for x, _ in G.SEEN) + pad)
     y0 = max(G.HEAD, min(y for _, y in G.SEEN) - pad); y1 = min(frames[0].height, max(y for _, y in G.SEEN) + pad)
