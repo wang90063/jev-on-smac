@@ -53,6 +53,23 @@ ul.clean li::before { content: ""; position: absolute; left: 0; top: .72em; widt
 .foot { margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--faint); }
 .mono { font-family: var(--mono); }
 
+/* motivation */
+.mrow { display: grid; grid-template-columns: 78px 170px 28px 120px 28px 1fr; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 36px 28px; }
+.mrow .who { width: 74px; font-size: 17px; font-weight: 700; color: var(--muted); }
+.mrow.j { border: 2px solid var(--jev); }
+.mrow.j .who { color: var(--jev); }
+.mbox { border: 2px solid var(--ink); border-radius: 10px; padding: 14px 10px; font-size: 18px; font-weight: 500; background: var(--card); text-align: center; white-space: nowrap; }
+.mbox em { display: block; font-style: normal; font-size: 13px; color: var(--muted); margin-top: 2px; }
+.mrow.j .mbox:nth-of-type(2) { border-color: var(--jev); color: var(--jev); font-weight: 900; }
+.mrow.j .mbox:nth-of-type(2) em { color: var(--jev); font-weight: 700; }
+.marr { font-size: 22px; color: var(--faint); text-align: center; }
+#c-speed { gap: 18px; }
+#c-speed .t { height: 46px; }
+#c-speed .l { font-size: 17px; white-space: normal; line-height: 1.35; }
+#c-speed .t b { font-size: 22px; }
+.mb { flex: 1; display: flex; flex-direction: column; gap: 7px; min-width: 110px; }
+.mb i { display: block; height: 11px; border-radius: 6px; }
+
 /* cover */
 .cover { padding: 0; }
 .cover-art { position: absolute; inset: 0; display: block; }
@@ -219,33 +236,27 @@ table.t tr.hl td { background: var(--jev-soft); }
 <!-- 2 motivation -->
 <section class="slide">
   <div class="kicker">动机</div>
-  <h2>Jev 看起来像一个不用训练的 RL 策略，而且足够快</h2>
-  <div class="row">
-    <div class="col card">
-      <h3>形状像 RL 的动作头</h3>
-      <div class="flow">
-        <div class="box">局面 +<br>一道选择题</div><div class="arr">→</div>
-        <div class="box j">Jev</div><div class="arr">→</div>
-        <div class="box">每个选项的<br>校准概率</div>
+  <h2>Jev 的形状像 RL 策略，但不用训练，而且够快</h2>
+  <div class="row" style="gap:48px; align-items:center">
+    <div class="col" style="flex:1.25; gap:26px">
+      <div class="mrow">
+        <span class="who">RL 策略</span>
+        <div class="mbox">状态</div><span class="marr">→</span>
+        <div class="mbox">策略网络<em>要训练</em></div><span class="marr">→</span>
+        <div class="mb"><i style="width:80%;background:var(--rule)"></i><i style="width:46%;background:var(--floor)"></i><i style="width:30%;background:var(--floor)"></i><i style="width:14%;background:var(--floor)"></i></div>
       </div>
-      <ul class="clean">
-        <li>Jev（TypeSafe System One）不生成文字，只在带名字的选项里给出概率。</li>
-        <li>这和 RL 策略的离散动作头是同一个形状：状态进，动作分布出。</li>
-        <li>但它<b>不需要训练</b>：只改局面和题目，模型本身从不微调。</li>
-      </ul>
+      <div class="mrow j">
+        <span class="who">Jev</span>
+        <div class="mbox">局面 + 选择题</div><span class="marr">→</span>
+        <div class="mbox">Jev<em>不训练</em></div><span class="marr">→</span>
+        <div class="mb"><i style="width:88%;background:var(--jev)"></i><i style="width:40%;background:var(--floor)"></i><i style="width:24%;background:var(--floor)"></i><i style="width:12%;background:var(--floor)"></i></div>
+      </div>
     </div>
-    <div class="col card">
-      <h3>速度够每步做一次决定</h3>
-      <div class="stat" style="margin: 8px 0 20px">
-        <div class="v">0.27 s</div><div class="k">一次请求里 13 道题（约 5.4 万字的文档）</div>
-        <div class="v">80 /s</div><div class="k">请求限速；同一请求内的题目并行、相互独立</div>
-        <div class="v">0.4 s</div><div class="k">实时星际 2 里的中位响应（外部项目 JEV-Star）</div>
-        <div class="v" style="color:var(--jev)">0.5 s</div><div class="k">SMAC 一步的游戏时间</div>
-      </div>
-      <p class="muted" style="font-size:16px">纸面上，Jev 来得及每一步都选一次动作。</p>
+    <div class="col" style="flex:.75">
+      <div class="chart-title" style="font-size:18px; margin-bottom:22px">时间 <span>· 秒</span></div>
+      <div id="c-speed"></div>
     </div>
   </div>
-  <p class="foot">如果成立，就得到一个免训练的微操策略。</p>
 </section>
 
 <!-- 3 questions -->
@@ -581,6 +592,11 @@ function dbars(id, axisId, groups, lo, hi, ticks) {
   }).join("")).join("");
   document.getElementById(axisId).innerHTML = ticks.map(t => `<span style="left:${pos(t)}%">${t > 0 ? "+" + t : t}</span>`).join("");
 }
+
+hbars("c-speed", [
+  { l: "Jev<br>13 道题一次请求", v: 0.27, c: "jev", show: "0.27" },
+  { l: "SMAC<br>游戏里的一步", v: 0.5, c: "floor", show: "0.5" },
+], 0.56, 140);
 
 hbars("c-step1", [
   { l: "Jev，逐单位动作", v: 0, c: "jev" },
