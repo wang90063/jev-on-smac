@@ -189,7 +189,12 @@ Tactics fitted to the battles they were found on was a pattern from the start:
 
 **Result: each system generalized better than the one before. Jev on top never added anything.**
 
-**The splits.** A *scenario* is one generated fight. A *seed* replays the same scenario with different randomness, so a new seed of a training scenario is still training data. Only a new scenario is unseen.
+**The splits.**
+- **Scenario:** one generated fight, with a terrain layout, a unit mix for each side, and an army size.
+- **Seed:** the same fight again, with both spawn points moved by up to 1.5 and different engine randomness. A new seed of a training scenario is still training data.
+- **How the splits differ:** each split was drawn separately from the same generator, with its own generator seed and id prefix. The splits differ in their fights, not just their seeds.
+- **Overlap:** across all the test sets, 4 of 1,240 scenarios happen to match a train or train2 fight exactly.
+- **What "unseen" means here:** new fights from the same distribution. The official maps are a different distribution.
 
 | Split | Scenarios | Battles (× 5 seeds) | Role in step 4 |
 |---|---:|---:|---|
